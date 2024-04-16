@@ -91,8 +91,8 @@ class _AddressScreenState extends State<AddressScreen> {
                           child: GridView.builder(
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisSpacing: Dimensions.paddingSizeLarge,
-                              mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0.01,
-                              childAspectRatio: ResponsiveHelper.isDesktop(context) ? 4 : 5,
+                              mainAxisSpacing:  0.01,
+                              childAspectRatio:  4,
                               crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isTab(context) ? 2 : 3,
                             ),
                             physics: const NeverScrollableScrollPhysics(),

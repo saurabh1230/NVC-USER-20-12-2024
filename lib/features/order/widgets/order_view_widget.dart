@@ -73,10 +73,10 @@ class OrderViewWidget extends StatelessWidget {
                   children: [
                     GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeOverLarge : Dimensions.paddingSizeLarge,
-                        mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeOverLarge : 0,
-                        childAspectRatio: ResponsiveHelper.isDesktop(context) ? 5 : 4.5,
-                        crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : 2,
+                        crossAxisSpacing:  Dimensions.paddingSizeLarge,
+                        mainAxisSpacing: 0,
+                        childAspectRatio: 3.3,
+                        crossAxisCount:  1,
                       ),
                       padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeLarge) : const EdgeInsets.all(Dimensions.paddingSizeSmall),
                       itemCount: orderList.length,

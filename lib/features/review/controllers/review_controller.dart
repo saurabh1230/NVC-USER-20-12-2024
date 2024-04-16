@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 class ReviewController extends GetxController implements GetxService {
   final ReviewServiceInterface reviewServiceInterface;
-
   ReviewController({required this.reviewServiceInterface});
 
   bool _isLoading = false;
