@@ -12,9 +12,12 @@ class Images {
   static const String lock = 'assets/image/lock.png';
   static const String mail = 'assets/image/mail.png';
   static const String map = 'assets/image/map.png';
-  static const String onboard_1 = 'assets/image/onboard_1.png';
-  static const String onboard_2 = 'assets/image/onboard_2.png';
-  static const String onboard_3 = 'assets/image/onboard_3.png';
+  // static const String onboard_1 = 'assets/image/onboard_1.png';
+  // static const String onboard_2 = 'assets/image/onboard_2.png';
+  // static const String onboard_3 = 'assets/image/onboard_3.png';
+  static const String onboard_1 = 'assets/image/onboard1.png';
+  static const String onboard_2 = 'assets/image/onboard2.png';
+  static const String onboard_3 = 'assets/image/onboard3.png';
   static const String restaurantMarker = 'assets/image/restaurant_marker.png';
   static const String deliveryManMarker = 'assets/image/delivery_man_marker.png';
   static const String user = 'assets/image/user.png';
