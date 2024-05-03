@@ -35,6 +35,7 @@ Future<void> main() async {
   if(ResponsiveHelper.isMobilePhone()) {
     HttpOverrides.global = MyHttpOverrides();
   }
+
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
