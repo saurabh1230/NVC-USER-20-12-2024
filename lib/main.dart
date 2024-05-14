@@ -62,6 +62,8 @@ Future<void> main() async {
   }else {
     await Firebase.initializeApp();
 
+
+
     // try {
     //   String initialLink = await getInitialLink();
     //   print('======initial link ===>  $initialLink');
@@ -111,8 +113,31 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    initializeFirebaseService();
+
+
 
     _route();
+  }
+
+  String _fcmToken = '';
+  Future<void> initializeFirebaseService() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    String firebaseAppToken = await messaging.getToken(
+      vapidKey: "BFeo9ZFLcgwLz7kOufx_eKpD6s3Tbkr-7dRQNgxB81bbStGreH7rMpsIltxBFeONaCobTuRL09k9sgvN6dBJIGs",) ?? '';
+    if (!mounted) {
+      _fcmToken = _fcmToken;
+    } else {
+      setState(() {
+        _fcmToken = _fcmToken;
+      });
+    }
+
+    // var prefs = await SharedPreferences.getInstance();
+    // prefs.setString(Keys().fcmToken, _fcmToken);
+    print('Firebase token: ==============>>>> $firebaseAppToken');
+    //NotificationTokenApi().get();
   }
 
   Future<void> _route() async {
