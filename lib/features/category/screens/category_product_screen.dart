@@ -166,149 +166,154 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
             ],
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
-          body: Column(children: [
-
-            (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-              height: 40, width: Dimensions.webMaxWidth, color: Theme.of(context).cardColor,
-              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: catController.subCategoryList!.length,
-                padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                      margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                        color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-                      ),
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Text(
-                          catController.subCategoryList![index].name!,
-                          style: index == catController.subCategoryIndex
-                              ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
-                              : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
+          body: SingleChildScrollView(
+            child: Column(children: [
+            
+              (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
+                height: 40, width: Dimensions.webMaxWidth, color: Theme.of(context).cardColor,
+                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: catController.subCategoryList!.length,
+                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                        margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                          color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
                         ),
-                      ]),
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          Text(
+                            catController.subCategoryList![index].name!,
+                            style: index == catController.subCategoryIndex
+                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
+                          ),
+                        ]),
+                      ),
+                    );
+                  },
+                ),
+              )) : const SizedBox(),
+            
+                     /*   Center(child: Container(
+                width: Dimensions.webMaxWidth,
+                color: Theme.of(context).cardColor,
+                child: Align(
+                  alignment: ResponsiveHelper.isDesktop(context) ? Alignment.centerLeft : Alignment.center,
+                  child: Container(
+                    width: ResponsiveHelper.isDesktop(context) ? 350 : Dimensions.webMaxWidth,
+                    color: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).cardColor,
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorColor: Theme.of(context).primaryColor,
+                      indicatorWeight: 3,
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Theme.of(context).disabledColor,
+                      unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
+                      labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                      tabs: [
+                        Tab(text: 'food'.tr),
+                        // Tab(text: 'restaurants'.tr),
+                      ],
                     ),
-                  );
-                },
-              ),
-            )) : const SizedBox(),
-
-            Center(child: Container(
-              width: Dimensions.webMaxWidth,
-              color: Theme.of(context).cardColor,
-              child: Align(
-                alignment: ResponsiveHelper.isDesktop(context) ? Alignment.centerLeft : Alignment.center,
-                child: Container(
-                  width: ResponsiveHelper.isDesktop(context) ? 350 : Dimensions.webMaxWidth,
-                  color: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).cardColor,
-                  child: TabBar(
-                    controller: _tabController,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    indicatorWeight: 3,
-                    labelColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Theme.of(context).disabledColor,
-                    unselectedLabelStyle: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                    labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
-                    tabs: [
-                      Tab(text: 'food'.tr),
-                      Tab(text: 'restaurants'.tr),
-                    ],
                   ),
                 ),
+              )),*/
+              ProductViewWidget(
+                isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
               ),
-            )),
-
-            Expanded(child: NotificationListener(
-              onNotification: (dynamic scrollNotification) {
-                if (scrollNotification is ScrollEndNotification) {
-                  if((_tabController!.index == 1 && !catController.isRestaurant) || _tabController!.index == 0 && catController.isRestaurant) {
-                    catController.setRestaurant(_tabController!.index == 1);
-                    if(catController.isSearching) {
-                      catController.searchData(
-                        catController.searchText, catController.subCategoryIndex == 0 ? widget.categoryID
-                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), catController.type,
-                      );
-                    }else {
-                      if(_tabController!.index == 1) {
-                        catController.getCategoryRestaurantList(
-                          catController.subCategoryIndex == 0 ? widget.categoryID
-                              : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
-                          1, catController.type, false,
+            
+                    /*    Expanded(child: NotificationListener(
+                onNotification: (dynamic scrollNotification) {
+                  if (scrollNotification is ScrollEndNotification) {
+                    if((_tabController!.index == 1 && !catController.isRestaurant) || _tabController!.index == 0 && catController.isRestaurant) {
+                      catController.setRestaurant(_tabController!.index == 1);
+                      if(catController.isSearching) {
+                        catController.searchData(
+                          catController.searchText, catController.subCategoryIndex == 0 ? widget.categoryID
+                            : catController.subCategoryList![catController.subCategoryIndex].id.toString(), catController.type,
                         );
                       }else {
-                        catController.getCategoryProductList(
-                          catController.subCategoryIndex == 0 ? widget.categoryID
-                              : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
-                          1, catController.type, false,
-                        );
+                        if(_tabController!.index == 1) {
+                          catController.getCategoryRestaurantList(
+                            catController.subCategoryIndex == 0 ? widget.categoryID
+                                : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
+                            1, catController.type, false,
+                          );
+                        }else {
+                          catController.getCategoryProductList(
+                            catController.subCategoryIndex == 0 ? widget.categoryID
+                                : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
+                            1, catController.type, false,
+                          );
+                        }
                       }
                     }
                   }
-                }
-                return false;
-              },
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  SingleChildScrollView(
-                    controller: scrollController,
-                    child: FooterViewWidget(
-                      child: Center(
-                        child: SizedBox(
-                          width: Dimensions.webMaxWidth,
-                          child: Column(
-                            children: [
-                              ProductViewWidget(
-                                isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
-                              ),
-
-                              catController.isLoading ? Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                  return false;
+                },
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    SingleChildScrollView(
+                      controller: scrollController,
+                      child: FooterViewWidget(
+                        child: Center(
+                          child: SizedBox(
+                            width: Dimensions.webMaxWidth,
+                            child: Column(
+                              children: [
+                                ProductViewWidget(
+                                  isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
                                 ),
-                              ) : const SizedBox(),
-                            ],
+            
+                                catController.isLoading ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                                  ),
+                                ) : const SizedBox(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SingleChildScrollView(
-                    controller: restaurantScrollController,
-                    child: FooterViewWidget(
-                      child: Center(
-                        child: SizedBox(
-                          width: Dimensions.webMaxWidth,
-                          child: Column(
-                            children: [
-                              ProductViewWidget(
-                                isRestaurant: true, products: null, restaurants: restaurants, noDataText: 'no_category_restaurant_found'.tr,
-                              ),
-
-                              catController.isLoading ? Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                    SingleChildScrollView(
+                      controller: restaurantScrollController,
+                      child: FooterViewWidget(
+                        child: Center(
+                          child: SizedBox(
+                            width: Dimensions.webMaxWidth,
+                            child: Column(
+                              children: [
+                                ProductViewWidget(
+                                  isRestaurant: true, products: null, restaurants: restaurants, noDataText: 'no_category_restaurant_found'.tr,
                                 ),
-                              ) : const SizedBox(),
-                            ],
+            
+                                catController.isLoading ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                                  ),
+                                ) : const SizedBox(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-          ]),
+                  ],
+                ),
+              )),*/
+            ]),
+          ),
         ),
       );
     });
