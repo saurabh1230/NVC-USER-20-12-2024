@@ -138,73 +138,73 @@ class _MenuScreenState extends State<MenuScreen> {
                         // PortionWidget(icon: Images.languageIcon, title: 'language'.tr, hideDivider: true, route: RouteHelper.getLanguageRoute('menu')),
                       ],),),],),
 
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                      child: Text(
-                        'promotional_activity'.tr,
-                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
-                      ),
-                    ),
+                  // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  //   Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                  //     child: Text(
+                  //       'promotional_activity'.tr,
+                  //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                  //     ),
+                  //   ),
+                  //
+                  //   Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).cardColor,
+                  //       borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                  //       boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
+                  //     ),
+                  //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeDefault),
+                  //     margin: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                  //     child: Column(children: [
+                  //       PortionWidget(icon: Images.couponIcon, title: 'coupon'.tr, route: RouteHelper.getCouponRoute(fromCheckout: false)),
+                  //
+                  //       (Get.find<SplashController>().configModel!.loyaltyPointStatus == 1) ? PortionWidget(
+                  //         icon: Images.pointIcon, title: 'loyalty_points'.tr, route: RouteHelper.getLoyaltyRoute(),
+                  //         hideDivider: Get.find<SplashController>().configModel!.customerWalletStatus == 1 ? false : true,
+                  //         suffix: !isLoggedIn ? null : '${profileController.userInfoModel?.loyaltyPoint != null ? Get.find<ProfileController>().userInfoModel!.loyaltyPoint.toString() : '0'} ${'points'.tr}' ,
+                  //       ) : const SizedBox(),
+                  //
+                  //       (Get.find<SplashController>().configModel!.customerWalletStatus == 1) ? PortionWidget(
+                  //         icon: Images.walletIcon, title: 'my_wallet'.tr, hideDivider: true, route: RouteHelper.getWalletRoute(),
+                  //         suffix: !isLoggedIn ? null : PriceConverter.convertPrice(profileController.userInfoModel != null ? Get.find<ProfileController>().userInfoModel!.walletBalance : 0),
+                  //       ) : const SizedBox(),
+                  //     ]),
+                  //   )
+                  // ]),
 
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeDefault),
-                      margin: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                      child: Column(children: [
-                        PortionWidget(icon: Images.couponIcon, title: 'coupon'.tr, route: RouteHelper.getCouponRoute(fromCheckout: false)),
-
-                        (Get.find<SplashController>().configModel!.loyaltyPointStatus == 1) ? PortionWidget(
-                          icon: Images.pointIcon, title: 'loyalty_points'.tr, route: RouteHelper.getLoyaltyRoute(),
-                          hideDivider: Get.find<SplashController>().configModel!.customerWalletStatus == 1 ? false : true,
-                          suffix: !isLoggedIn ? null : '${profileController.userInfoModel?.loyaltyPoint != null ? Get.find<ProfileController>().userInfoModel!.loyaltyPoint.toString() : '0'} ${'points'.tr}' ,
-                        ) : const SizedBox(),
-
-                        (Get.find<SplashController>().configModel!.customerWalletStatus == 1) ? PortionWidget(
-                          icon: Images.walletIcon, title: 'my_wallet'.tr, hideDivider: true, route: RouteHelper.getWalletRoute(),
-                          suffix: !isLoggedIn ? null : PriceConverter.convertPrice(profileController.userInfoModel != null ? Get.find<ProfileController>().userInfoModel!.walletBalance : 0),
-                        ) : const SizedBox(),
-                      ]),
-                    )
-                  ]),
-
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                      child: Text(
-                        'earnings'.tr,
-                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
-                      ),
-                    ),
-
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeDefault),
-                      margin: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                      child: Column(children: [
-
-                        (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? PortionWidget(
-                          icon: Images.referIcon, title: 'refer_and_earn'.tr, route: RouteHelper.getReferAndEarnRoute(),
-                        ) : const SizedBox(),
-
-                        (Get.find<SplashController>().configModel!.toggleDmRegistration! && !ResponsiveHelper.isDesktop(context)) ? PortionWidget(
-                          icon: Images.dmIcon, title: 'join_as_a_delivery_man'.tr, route: RouteHelper.getDeliverymanRegistrationRoute(),
-                        ) : const SizedBox(),
-
-                        (Get.find<SplashController>().configModel!.toggleRestaurantRegistration! && !ResponsiveHelper.isDesktop(context)) ? PortionWidget(
-                          icon: Images.storeIcon, title: 'open_store'.tr, hideDivider: true, route: RouteHelper.getRestaurantRegistrationRoute(),
-                        ) : const SizedBox(),
-                      ]),
-                    )
-                  ]),
+                  // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  //   Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                  //     child: Text(
+                  //       'earnings'.tr,
+                  //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor.withOpacity(0.5)),
+                  //     ),
+                  //   ),
+                  //
+                  //   Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).cardColor,
+                  //       borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                  //       boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
+                  //     ),
+                  //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeDefault),
+                  //     margin: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                  //     child: Column(children: [
+                  //
+                  //       (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? PortionWidget(
+                  //         icon: Images.referIcon, title: 'refer_and_earn'.tr, route: RouteHelper.getReferAndEarnRoute(),
+                  //       ) : const SizedBox(),
+                  //
+                  //       (Get.find<SplashController>().configModel!.toggleDmRegistration! && !ResponsiveHelper.isDesktop(context)) ? PortionWidget(
+                  //         icon: Images.dmIcon, title: 'join_as_a_delivery_man'.tr, route: RouteHelper.getDeliverymanRegistrationRoute(),
+                  //       ) : const SizedBox(),
+                  //
+                  //       (Get.find<SplashController>().configModel!.toggleRestaurantRegistration! && !ResponsiveHelper.isDesktop(context)) ? PortionWidget(
+                  //         icon: Images.storeIcon, title: 'open_store'.tr, hideDivider: true, route: RouteHelper.getRestaurantRegistrationRoute(),
+                  //       ) : const SizedBox(),
+                  //     ]),
+                  //   )
+                  // ]),
 
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Padding(
