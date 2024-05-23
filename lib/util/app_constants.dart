@@ -118,6 +118,7 @@ class AppConstants {
   static const String offlineMethodListUri = '/api/v1/offline_payment_method_list';
   static const String offlinePaymentSaveInfoUri = '/api/v1/customer/order/offline-payment';
   static const String offlinePaymentUpdateInfoUri = '/api/v1/customer/order/offline-payment-update';
+  static const String allProductsUri = '/api/v1/products/all';
 
   /// Cart
   static const String getCartListUri = '/api/v1/customer/cart/list';

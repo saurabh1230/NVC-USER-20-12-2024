@@ -78,7 +78,7 @@ class BannerViewWidget extends StatelessWidget {
                       child: GetBuilder<SplashController>(builder: (splashController) {
                         return CustomImageWidget(
                           image: '$baseUrl/${homeController.bannerImageList![index]}',
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         );
                       },
                       ),

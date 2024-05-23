@@ -39,4 +39,9 @@ class CategoryService implements CategoryServiceInterface {
     return await categoryRepositoryInterface.getSearchData(query, categoryID, isRestaurant, type);
   }
 
+  @override
+  Future<ProductModel?> getAllProductList(int offset,String type) async {
+    return await categoryRepositoryInterface.getAllProductList(offset,type);
+  }
+
 }

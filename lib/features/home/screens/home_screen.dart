@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
@@ -135,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
 
+
                 /// App Bar
                 SliverAppBar(
                   pinned: true, toolbarHeight: 10, expandedHeight: ResponsiveHelper.isTab(context) ? 72 : GetPlatform.isWeb ? 72 : 50,
@@ -271,14 +273,58 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
                       const BannerViewWidget(),
+                      Padding(
+                        padding:  const EdgeInsets.only(left: Dimensions.paddingSizeDefault,right: Dimensions.paddingSizeDefault,bottom: 0,top: Dimensions.paddingSizeDefault),
+                        child: Row(children: [
+                          Expanded(
+                              child: InkWell(
+                                onTap: ()  { Get.find<CategoryController>().getAllProductList(1, true,"cooked");
+                                              Get.toNamed(RouteHelper.getCookedProductScreen("cooked"));
+                                            },
+                                child: Column(
+                                  children: [
+                                    Container(height: 100,
+                                    width: Get.size.width,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration :  BoxDecoration(
+                                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
+                                    child: Image.asset("assets/image/cookedcategory.jpg",fit: BoxFit.cover,)),
+                                    const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                                    Text('Cooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
+                                  ],
+                                ),
+                              )),
+                          const SizedBox(width: Dimensions.paddingSizeDefault,),
+                          Expanded(child: InkWell(
+                            onTap: () {
+                              Get.find<CategoryController>().getAllProductList(1, true,"uncooked");
+                              Get.toNamed(RouteHelper.getCookedProductScreen("uncooked"));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                    height: 100,
+                                    width: Get.size.width,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration :  BoxDecoration(
+                                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)
+                                    ),
+                                    child: Image.asset("assets/image/uncookedcategory.jpg",fit: BoxFit.cover,)),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                                Text('UnCooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                          )),
+                        ],),
+                      ),
 
-                      const BadWeatherWidget(),
+                    
 
                       const WhatOnYourMindViewWidget(),
 
                       const TodayTrendsViewWidget(),
 
-                      const LocationBannerViewWidget(),
+                      // const LocationBannerViewWidget(),
 
                       _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
 
@@ -288,13 +334,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       _configModel.popularRestaurant == 1 ? const PopularRestaurantsViewWidget() : const SizedBox(),
 
-                      const ReferBannerViewWidget(),
+                     
 
                       _isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: true) : const SizedBox(),
 
                       _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
 
-                      _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
+                      // _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
 
                       const PromotionalBannerViewWidget(),
 

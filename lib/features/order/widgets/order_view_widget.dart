@@ -72,7 +72,7 @@ class OrderViewWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing:  Dimensions.paddingSizeLarge,
                         mainAxisSpacing: 0,
                         childAspectRatio: 3.3,
@@ -102,15 +102,22 @@ class OrderViewWidget extends StatelessWidget {
                             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
 
                               Row(children: [
+                                // ClipRRect(
+                                //   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                //   child: CustomImageWidget(
+                                //     image: '${orderList![index].id}',
+                                //     height: ResponsiveHelper.isDesktop(context) ? 80 : 60, width: ResponsiveHelper.isDesktop(context) ? 80 : 60, fit: BoxFit.cover,
+                                //   ),
+                                // ),
 
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                  child: CustomImageWidget(
-                                    image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}'
-                                        '/${orderList![index].restaurant != null ? orderList[index].restaurant!.logo : ''}',
-                                    height: ResponsiveHelper.isDesktop(context) ? 80 : 60, width: ResponsiveHelper.isDesktop(context) ? 80 : 60, fit: BoxFit.cover,
-                                  ),
-                                ),
+                                // ClipRRect(
+                                //   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                //   child: CustomImageWidget(
+                                //     image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}'
+                                //         '/${orderList![index].restaurant != null ? orderList[index].restaurant!.logo : ''}',
+                                //     height: ResponsiveHelper.isDesktop(context) ? 80 : 60, width: ResponsiveHelper.isDesktop(context) ? 80 : 60, fit: BoxFit.cover,
+                                //   ),
+                                // ),
                                 const SizedBox(width: Dimensions.paddingSizeSmall),
 
                                 Expanded(
@@ -118,7 +125,12 @@ class OrderViewWidget extends StatelessWidget {
                                     Row(children: [
                                       Text('${'order_id'.tr}:', style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
                                       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                                      Text('#${orderList[index].id}', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall)),
+                                      Text('#${orderList![index].id}', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall)),
+                                    ]),
+                                    Row(children: [
+                                      Text('${'Order Amount'.tr}:', style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
+                                      const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                                      Text('₹${orderList[index].orderAmount}', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall)),
                                     ]),
                                     const SizedBox(height: Dimensions.paddingSizeSmall),
 
@@ -126,6 +138,7 @@ class OrderViewWidget extends StatelessWidget {
                                       fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor,
                                     )) : const SizedBox(),
                                     SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0),
+
 
                                     Text(
                                       DateConverter.dateTimeStringToDateTime(orderList[index].createdAt!),

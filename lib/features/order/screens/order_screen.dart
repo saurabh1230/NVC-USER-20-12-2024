@@ -74,7 +74,7 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
                           labelStyle: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
                           tabs: [
                             Tab(text: 'running'.tr),
-                            Tab(text: 'subscription'.tr),
+                            // Tab(text: 'subscription'.tr),
                             Tab(text: 'history'.tr),
                           ],
                         ),
@@ -90,7 +90,7 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
               controller: _tabController,
               children: const [
                 OrderViewWidget(isRunning: true),
-                OrderViewWidget(isRunning: false, isSubscription: true),
+                // OrderViewWidget(isRunning: false, isSubscription: true),
                 OrderViewWidget(isRunning: false),
               ],
             )),

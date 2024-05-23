@@ -40,6 +40,16 @@ class CategoryRepository implements CategoryRepositoryInterface {
   }
 
   @override
+  Future<ProductModel?> getAllProductList(int offset,type) async {
+    ProductModel? productModel;
+    Response response = await apiClient.getData('${AppConstants.allProductsUri}?limit=10&offset=$offset&type=$type');
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    }
+    return productModel;
+  }
+
+  @override
   Future<List<CategoryModel>?> getSubCategoryList(String? parentID) async {
     List<CategoryModel>? subCategoryList;
     Response response = await apiClient.getData('${AppConstants.subCategoryUri}$parentID');
@@ -99,4 +109,6 @@ class CategoryRepository implements CategoryRepositoryInterface {
   Future update(Map<String, dynamic> body, int? id) {
     throw UnimplementedError();
   }
+
+
 }

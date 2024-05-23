@@ -4,6 +4,7 @@ import 'package:stackfood_multivendor/features/category/domain/models/category_m
 import 'package:stackfood_multivendor/features/category/domain/services/category_service_interface.dart';
 import 'package:get/get.dart';
 
+
 class CategoryController extends GetxController implements GetxService {
   final CategoryServiceInterface categoryServiceInterface;
   CategoryController({required this.categoryServiceInterface});
@@ -16,6 +17,10 @@ class CategoryController extends GetxController implements GetxService {
 
   List<Product>? _categoryProductList;
   List<Product>? get categoryProductList => _categoryProductList;
+
+
+  // List<CookedProduct>? _cookedCategoryProductList;
+  // List<CookedProduct>? get cookedCategoryProductList => _cookedCategoryProductList;
 
   List<Restaurant>? _categoryRestaurantList;
   List<Restaurant>? get categoryRestaurantList => _categoryRestaurantList;
@@ -67,11 +72,19 @@ class CategoryController extends GetxController implements GetxService {
       update();
     }
   }
+  // Future<void> getCookedCategoryList(bool reload) async {
+  //   if(_categoryList == null || reload) {
+  //     _categoryList = await categoryServiceInterface.getCookedCategoryList(reload, _categoryList);
+  //     // _interestCategorySelectedList = categoryServiceInterface.processCategorySelectedList(_categoryList);
+  //     update();
+  //   }
+  // }
 
   void getSubCategoryList(String? categoryID) async {
     _subCategoryIndex = 0;
     _subCategoryList = null;
     _categoryProductList = null;
+    // _cookedCategoryProductList =null;
     _isRestaurant = false;
     _subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
     if(_subCategoryList != null) {
@@ -99,18 +112,163 @@ class CategoryController extends GetxController implements GetxService {
         update();
       }
       _categoryProductList = null;
+      // _cookedCategoryProductList = null;
     }
     ProductModel? productModel = await categoryServiceInterface.getCategoryProductList(categoryID, offset, type);
+    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
     if(productModel != null) {
       if (offset == 1) {
         _categoryProductList = [];
+        // _cookedCategoryProductList = [];
       }
       _categoryProductList!.addAll(productModel.products!);
+      // _cookedCategoryProductList!.addAll(categoryProductModel!.cookedproducts!);
       _pageSize = productModel.totalSize;
       _isLoading = false;
     }
     update();
   }
+
+  ProductModel? _productModel;
+  ProductModel? get productModel => _productModel;
+
+  Future<void> getAllProductList(int offset, bool reload,type ) async {
+    if(reload) {
+      _productModel = null;
+      update();
+    }
+    ProductModel? productModel = await categoryServiceInterface.getAllProductList(offset,type);
+    if (productModel != null) {
+      if (offset == 1) {
+        _productModel = productModel;
+      }else {
+        _productModel!.totalSize = productModel.totalSize;
+        _productModel!.offset = productModel.offset;
+        _productModel!.products!.addAll(productModel.products!);
+      }
+      update();
+    }
+  }
+
+  List<Product>? _allProductList;
+  List<Product>? get allProductList => _allProductList;
+
+  // Future<void>  getAllProductList(int offset, bool notify) async {
+  //   _offset = offset;
+  //   if(offset == 1) {
+  //     _allProductList = null;
+  //   }
+  //   ProductModel? productModel = await categoryServiceInterface.getAllProductList(offset);
+  //   // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+  //   // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+  //   if(productModel != null) {
+  //     if (offset == 1) {
+  //       _allProductList = [];
+  //       // _cookedCategoryProductList = [];
+  //     }
+  //     _allProductList!.addAll(productModel.products!);
+  //     print("CHECK LENGHT ============>>>>>>>>>>");
+  //     print(_allProductList!.length);
+  //     // _cookedCategoryProductList!.addAll(categoryProductModel!.cookedproducts!);
+  //     _pageSize = productModel.totalSize;
+  //     _isLoading = false;
+  //   }
+  //   update();
+  // }
+
+  /*void getCookedCategoryProductList(String? categoryID, int offset, String type, bool notify) async {
+    _offset = offset;
+    if(offset == 1) {
+      if(_type == type) {
+        _isSearching = false;
+      }
+      _type = type;
+      if(notify) {
+        update();
+      }
+      _cookedCategoryProductList = null;
+      // _cookedCategoryProductList = null;
+    }
+    ProductModel? productModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+    if(productModel != null) {
+      if (offset == 1) {
+        _cookedCategoryProductList = [];
+        // _cookedCategoryProductList = [];
+      }
+      _cookedCategoryProductList!.addAll(productModel.products!);
+      // _cookedCategoryProductList!.addAll(productModel.products!);
+      _pageSize = productModel.totalSize;
+      _isLoading = false;
+    }
+    update();
+  }
+*/
+
+
+
+
+  //
+  // void getCookedCategoryList(String? categoryID) async {
+  //   _subCategoryIndex = 0;
+  //   _subCategoryList = null;
+  //   _cookedCategoryProductList = null;
+  //   _isRestaurant = false;
+  //   _subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
+  //   if(_subCategoryList != null) {
+  //     getCookedCategoryProductList(categoryID, 1, 'all', false);
+  //   }
+  // }
+
+
+  // void getCookedCategoryProductList(String? categoryID, int offset, String type, bool notify) async {
+  //   _offset = offset;
+  //   if(offset == 1) {
+  //     if(_type == type) {
+  //       _isSearching = false;
+  //     }
+  //     _type = type;
+  //     if(notify) {
+  //       update();
+  //     }
+  //     _cookedCategoryProductList = null;
+  //   }
+  //   ProductModel? productModel = await categoryServiceInterface.getCookedCategoryProductList("7", offset, type);
+  //   if(productModel != null) {
+  //     if (offset == 1) {
+  //       _cookedCategoryProductList = [];
+  //     }
+  //     _cookedCategoryProductList!.addAll(productModel.products!);
+  //     _pageSize = productModel.totalSize;
+  //     _isLoading = false;
+  //   }
+  //   update();
+  // }
+
+
+  // void getHomeCategoryList(String? categoryID) async {
+  //   // _offset = offset;
+  //   // if(offset == 1) {
+  //   //   if(_type == type) {
+  //   //     _isSearching = false;
+  //   //   }
+  //   //   _type = type;
+  //   //   if(notify) {
+  //   //     update();
+  //   //   }
+  //   //   _categoryProductList = null;
+  //   // }
+  //   ProductModel? productModel = await categoryServiceInterface.getHomeCategoryProductList(categoryID,);
+  //   if(productModel != null) {
+  //     if (offset == 1) {
+  //       _categoryProductList = [];
+  //     }
+  //     _categoryProductList!.addAll(productModel.products!);
+  //     // _pageSize = productModel.totalSize;
+  //     _isLoading = false;
+  //   }
+  //   update();
+  // }
 
   void getCategoryRestaurantList(String? categoryID, int offset, String type, bool notify) async {
     _offset = offset;
@@ -172,6 +330,9 @@ class CategoryController extends GetxController implements GetxService {
     }
   }
 
+
+
+
   void toggleSearch() {
     _isSearching = !_isSearching;
     _searchProductList = [];
@@ -204,5 +365,15 @@ class CategoryController extends GetxController implements GetxService {
     _isRestaurant = isRestaurant;
     update();
   }
+
+  // List<Category>? categoryList;
+  int? selectedCategoryId;
+
+  void selectCategory(int categoryId) {
+    selectedCategoryId = categoryId;
+    update();
+  }
+
+
 
 }

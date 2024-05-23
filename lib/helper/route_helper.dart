@@ -78,6 +78,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta_seo/meta_seo.dart';
 
+import '../features/category/screens/cooked_product_list.dart';
+
 class RouteHelper {
   static const String initial = '/';
   // static const String main = 'main';
@@ -138,6 +140,7 @@ class RouteHelper {
   static const String subscriptionSuccess = '/subscription-success';
   static const String offlinePaymentScreen = '/offline-payment-screen';
   static const String guestTrackOrderScreen = '/guest-track-order-screen';
+  static const String cookedProductList = '/cooked-product-list';
 
   static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body, DeepLinkBody? linkBody) {
@@ -271,6 +274,12 @@ class RouteHelper {
     return '$offlinePaymentScreen?order_body=$data&zone_id=$zoneId&total=$total&max_cod_amount=$maxCodOrderAmount&from_cart=$fromCart&cod_active=$isCodActive&pricing_body=$pricingData';
   }
   static String getGuestTrackOrderScreen(String orderId, String number) => '$guestTrackOrderScreen?order_id=$orderId&number=$number';
+
+  // static String getCookedProductScreen() => cookedProductList;
+  // static String getCookedProductScreen() => cookedProductList;
+  // static String getCookedProductScreen(String? cookedUncooked,) => '$cookedProductList?cookedUncooked=$cookedUncooked';
+  static String getCookedProductScreen(String? phone,) => '$cookedProductList?phone=$phone';
+
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: (Get.parameters['from-splash'] == 'true')))),
@@ -489,6 +498,8 @@ class RouteHelper {
     GetPage(name: guestTrackOrderScreen, page: () => GuestTrackOrderScreen(
       orderId: Get.parameters['order_id']!, number: Get.parameters['number']!,
     )),
+    GetPage(name: cookedProductList, page: () =>   CookedProductScreen(number: Get.parameters['phone'],)),
+    // GetPage(name: cookedProductList, page: () =>  CookedProductScreen(cookedUncookedCategory:  Get.parameters['cookedUncooked'],)),
   ];
 
   static getRoute(Widget? navigateTo, {bool byPuss = false}) {

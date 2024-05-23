@@ -18,6 +18,8 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../order/screens/order_details_screen.dart';
+
 class OrderSuccessfulScreen extends StatefulWidget {
   final String? orderID;
   final int status;
@@ -118,6 +120,16 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
 
               ]) : const SizedBox.shrink() ,
               const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                child: CustomButtonWidget(
+                  width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
+                  buttonText: 'Order Details'.tr,
+                  onPressed: () =>
+                      Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(widget.orderID!), contactNumber: "9999999999")),
+                      // Get.offAllNamed(RouteHelper.getInitialRoute()
+                      ),
+                ),
 
               Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
