@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -9,31 +10,31 @@ class FilterViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RestaurantController>(builder: (restaurant) {
-      return restaurant.restaurantModel != null ? PopupMenuButton(
+    return GetBuilder<CategoryController>(builder: (restaurant) {
+      return restaurant.productModel != null ? PopupMenuButton(
         itemBuilder: (context) {
           return [
             PopupMenuItem(
-              value: 'all',
+              value: 'cooked',
               child: Text(
-                'all'.tr,
+                'cooked'.tr,
                 style: robotoMedium.copyWith(
-                  color: restaurant.restaurantType == 'all' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
+                  color: restaurant.mainCategoryType == 'cooked' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
                 ),
               ),
 
             ),
 
             PopupMenuItem(
-              value: 'take_away',
+              value: 'uncooked',
               child: Text(
-                'take_away'.tr,
+                'uncooked'.tr,
                 style: robotoMedium.copyWith(
-                  color: restaurant.restaurantType == 'take_away' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
+                  color: restaurant.mainCategoryType == 'uncooked' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
                 ),
               ),
             ),
-            PopupMenuItem(
+      /*      PopupMenuItem(
               value: 'delivery',
               child: Text(
                 'delivery'.tr,
@@ -59,7 +60,7 @@ class FilterViewWidget extends StatelessWidget {
                   color: restaurant.restaurantType == 'popular' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
                 ),
               ),
-            ),
+            ),*/
           ];
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
@@ -73,7 +74,7 @@ class FilterViewWidget extends StatelessWidget {
           ),
           child: Icon(Icons.tune, color: Theme.of(context).primaryColor, size: 20),
         ),
-        onSelected: (dynamic value) => restaurant.setRestaurantType(value),
+        onSelected: (dynamic value) => restaurant.setMainCategoryType(value),
       ) : const SizedBox();
     });
   }

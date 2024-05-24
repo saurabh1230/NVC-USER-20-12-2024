@@ -5,17 +5,12 @@ import 'package:stackfood_multivendor/features/home/controllers/home_controller.
 import 'package:stackfood_multivendor/features/home/screens/web_home_screen.dart';
 import 'package:stackfood_multivendor/features/home/widgets/all_restaurant_filter_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/all_restaurants_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/bad_weather_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/banner_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/best_review_item_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/cuisine_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/enjoy_off_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/location_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/new_on_stackfood_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/order_again_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/popular_foods_nearby_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/popular_restaurants_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/refer_banner_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/screens/theme1_home_screen.dart';
 import 'package:stackfood_multivendor/features/home/widgets/today_trends_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
@@ -66,6 +61,7 @@ class HomeScreen extends StatefulWidget {
     if(Get.find<SplashController>().configModel!.mostReviewedFoods == 1) {
       Get.find<ReviewController>().getReviewedProductList(reload, 'all', false);
     }
+    Get.find<CategoryController>().getAllProductList(1, reload,'');
     Get.find<RestaurantController>().getRestaurantList(1, reload);
     if(Get.find<AuthController>().isLoggedIn()) {
       Get.find<RestaurantController>().getRecentlyViewedRestaurantList(reload, 'all', false);
@@ -278,9 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(children: [
                           Expanded(
                               child: InkWell(
-                                onTap: ()  { Get.find<CategoryController>().getAllProductList(1, true,"cooked");
-                                              Get.toNamed(RouteHelper.getCookedProductScreen("cooked"));
-                                            },
+                                onTap: () {
+                                  Get.find<CategoryController>().getAllProductList(1, true,"cooked");
+                                  Get.toNamed(RouteHelper.getCookedProductScreen("cooked"));},
                                 child: Column(
                                   children: [
                                     Container(height: 100,

@@ -9,6 +9,22 @@ class CategoryController extends GetxController implements GetxService {
   final CategoryServiceInterface categoryServiceInterface;
   CategoryController({required this.categoryServiceInterface});
 
+  String _mainCategoryType = 'cooked';
+  String get mainCategoryType => _mainCategoryType;
+
+  void setMainCategoryType(String type) {
+    _mainCategoryType = type;
+     getAllProductList(1, true,type);
+    // getRestaurantList(1, true);
+  }
+
+  // void setMainCategoryType(String type) {
+  //   _mainCategoryType = type;
+  //   getRestaurantList(1, true);
+  // }
+  // String _restaurantType = 'all';
+  // String get restaurantType => _restaurantType;
+
   List<CategoryModel>? _categoryList;
   List<CategoryModel>? get categoryList => _categoryList;
 

@@ -153,12 +153,12 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                   if(catController.isRestaurant) {
                     catController.getCategoryRestaurantList(
                       catController.subCategoryIndex == 0 ? widget.categoryID
-                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,
+                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 2, type, true,
                     );
-                  }else {
+                  } else {
                     catController.getCategoryProductList(
                       catController.subCategoryIndex == 0 ? widget.categoryID
-                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,
+                          : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, 'uncooked', true,
                     );
                   }
                 }
