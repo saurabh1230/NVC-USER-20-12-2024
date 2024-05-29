@@ -71,7 +71,7 @@ class SearchScreenState extends State<SearchScreen> {
                     SizedBox(width: ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeExtraSmall),
 
                     ResponsiveHelper.isDesktop(context) ? const SizedBox() : IconButton(onPressed: () => searchController.isSearchMode ? Get.back() : searchController.setSearchMode(true),
-                        icon: const Icon(Icons.arrow_back_ios)),
+                        icon: const Icon(Icons.arrow_back)),
 
                     Expanded(child: SearchFieldWidget(
                       controller: _searchController,
@@ -260,7 +260,7 @@ class SearchScreenState extends State<SearchScreen> {
         prices.sort();
       }
       double? maxValue = prices.isNotEmpty ? prices[prices.length-1] : 1000;
-       Get.bottomSheet(FilterWidget(maxValue: maxValue, isRestaurant: searchController.isRestaurant), isScrollControlled: true);
+       if(!searchController.isRestaurant) Get.bottomSheet(FilterWidget(maxValue: maxValue, isRestaurant: searchController.isRestaurant), isScrollControlled: true);
 
     }
   }

@@ -39,7 +39,7 @@ class FilterWidget extends StatelessWidget {
             Flexible(
               child: ListView(
                 children: [
-                  buildFilterOptions(context, searchController),
+                  if (!isRestaurant) buildFilterOptions(context, searchController),
                   const SizedBox(height: Dimensions.paddingSizeLarge),
                   if (!isRestaurant) buildPriceFilter(context, searchController),
                 ],
