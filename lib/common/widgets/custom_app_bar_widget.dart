@@ -21,14 +21,20 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: bgColor == null ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).cardColor)),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
+          bottomRight: Radius.circular(20.0), // Adjust the radius as needed
+        ),
+      ),
+      title: Text(title, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: bgColor == null ? Colors.white : Theme.of(context).cardColor)),
       centerTitle: true,
       leading: isBackButtonExist ? IconButton(
-        icon: const Icon(Icons.arrow_back_ios),
+        icon: const Icon(Icons.arrow_back,color: Colors.white,),
         color: bgColor == null ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).cardColor,
         onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
       ) : const SizedBox(),
-      backgroundColor: bgColor ?? Theme.of(context).cardColor,
+      backgroundColor: bgColor ?? Theme.of(context).primaryColor,
       elevation: 0,
       actions: showCart || onVegFilterTap != null ? [
         showCart ? IconButton(

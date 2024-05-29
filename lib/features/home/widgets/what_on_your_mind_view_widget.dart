@@ -45,38 +45,11 @@ class WhatOnYourMindViewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtraSmall),
             itemCount: categoryController.categoryList!.length > 10 ? 11 : categoryController.categoryList!.length,
             itemBuilder: (context, index) {
-
-              if(index == 10) {
-                return ResponsiveHelper.isDesktop(context) ? Padding(
-                  padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
-                  child: Container(
-                    width: 70,
-                    padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtraSmall, right: Dimensions.paddingSizeExtraSmall, top: Dimensions.paddingSizeSmall, bottom: Dimensions.paddingSizeSmall),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        hoverColor: Colors.transparent,
-                        onTap: () => Get.toNamed(RouteHelper.getCategoryRoute()),
-                        child: Container(
-                          height: 40, width: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.3)),
-                          ),
-                          child: Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
-                        ),
-                      ),
-                    ),
-                  ),
-                ): const SizedBox();
-              }
-
               return Padding(
                 padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall),
                 child: Container(
-                  width: ResponsiveHelper.isMobile(context) ? 70 : 100,
-                  height: ResponsiveHelper.isMobile(context) ? 70 : 100,
+                  width:  70,
+                  height: 70,
                   decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(Dimensions.radiusSmall)

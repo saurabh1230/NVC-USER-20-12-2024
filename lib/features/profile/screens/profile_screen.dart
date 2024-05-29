@@ -53,8 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         || Get.find<SplashController>().configModel!.loyaltyPointStatus == 1;
 
     return Scaffold(
-      appBar: isDesktop ? const WebMenuBar() : null,
-      endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       backgroundColor: isDesktop ? Theme.of(context).colorScheme.background : Theme.of(context).cardColor,
       body: GetBuilder<ProfileController>(builder: (profileController) {
         return (isLoggedIn && profileController.userInfoModel == null) ? const Center(
@@ -75,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         !isDesktop ? IconButton(
                           onPressed: () => Get.back(),
-                          icon: const Icon(Icons.arrow_back_ios),
+                          icon: const Icon(Icons.arrow_back),
                         ) : const SizedBox(),
 
                         Text('profile'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
@@ -244,6 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             Text(AppConstants.appVersion.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)),
                           ]),
+                          const SizedBox(height: Dimensions.paddingSizeExtraLarge,),
                         ]),
                       ),
                     ),

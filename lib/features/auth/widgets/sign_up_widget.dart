@@ -92,7 +92,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
               ),
             )
           ]),
-          const SizedBox(height: Dimensions.paddingSizeLarge),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
 
           Row(children: [
             ResponsiveHelper.isDesktop(context) ? Expanded(
@@ -107,11 +107,11 @@ class SignUpWidgetState extends State<SignUpWidget> {
                 showTitle: ResponsiveHelper.isDesktop(context),
               ),
             ) : const SizedBox(),
-            SizedBox(width: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0),
+            const SizedBox(height: Dimensions.paddingSizeDefault),
 
             Expanded(
               child: CustomTextFieldWidget(
-                titleText: ResponsiveHelper.isDesktop(context) ? 'phone'.tr : 'enter_phone_number'.tr,
+                titleText:  'enter_phone_number'.tr,
                 controller: _phoneController,
                 focusNode: _phoneFocus,
                 nextFocus: ResponsiveHelper.isDesktop(context) ? _passwordFocus : _emailFocus,
@@ -129,7 +129,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
             ),
 
           ]),
-          const SizedBox(height: Dimensions.paddingSizeLarge),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
 
           !ResponsiveHelper.isDesktop(context) ? CustomTextFieldWidget(
             titleText: 'email'.tr,
@@ -141,7 +141,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
             prefixIcon: Icons.mail_outline_rounded,
             divider: false,
           ) : const SizedBox(),
-          SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
 
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Expanded(
@@ -159,7 +159,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ]),
             ),
-            SizedBox(width: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0),
+            const SizedBox(height: Dimensions.paddingSizeDefault),
 
             ResponsiveHelper.isDesktop(context) ? Expanded(child: CustomTextFieldWidget(
               titleText: 'confirm_password'.tr,
@@ -176,7 +176,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
             )) : const SizedBox()
 
           ]),
-          const SizedBox(height: Dimensions.paddingSizeLarge),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
 
           !ResponsiveHelper.isDesktop(context) ? CustomTextFieldWidget(
             titleText: 'confirm_password'.tr,
@@ -192,7 +192,6 @@ class SignUpWidgetState extends State<SignUpWidget> {
           ) : const SizedBox(),
           SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0),
 
-
           (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? CustomTextFieldWidget(
             hintText: 'refer_code'.tr,
             titleText: 'refer_code'.tr,
@@ -206,10 +205,11 @@ class SignUpWidgetState extends State<SignUpWidget> {
             prefixSize: 14,
             showTitle: ResponsiveHelper.isDesktop(context),
           ) : const SizedBox(),
-          const SizedBox(height: Dimensions.paddingSizeLarge),
+          // const SizedBox(height: Dimensions.paddingSizeDefault),
 
           TramsConditionsCheckBoxWidget(authController: authController, fromSignUp : true, fromDialog: ResponsiveHelper.isDesktop(context) ? true : false),
-          SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
+          // SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
 
           CustomButtonWidget(
             height: ResponsiveHelper.isDesktop(context) ? 45 : null,

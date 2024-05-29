@@ -115,7 +115,7 @@ class CartProductWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                                 color: Theme.of(context).primaryColor.withOpacity(0.2),
                               ),
-                              child: Text( cart.product!.veg == 0 ? 'non_veg'.tr : 'veg'.tr,
+                              child: Text( cart.product!.food_type == 1 ? 'cooked' : 'uncooked',
                                 style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
                               ),
                             ),

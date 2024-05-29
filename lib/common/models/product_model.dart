@@ -61,6 +61,7 @@ class Product {
   double? avgRating;
   int? ratingCount;
   int? veg;
+  int? food_type;
   int? quantityLimit;
 
   Product(
@@ -87,6 +88,7 @@ class Product {
         this.avgRating,
         this.ratingCount,
         this.veg,
+        this.food_type,
         this.quantityLimit,
       });
 
@@ -140,6 +142,7 @@ class Product {
     avgRating = json['avg_rating'].toDouble();
     ratingCount = json['rating_count'];
     veg = json['veg'] != null ? int.parse(json['veg'].toString()) : 0;
+    food_type = json['food_type'] != null ? int.parse(json['food_type'].toString()) : 2;
     quantityLimit = json['maximum_cart_quantity'];
   }
 
@@ -177,6 +180,7 @@ class Product {
     data['avg_rating'] = avgRating;
     data['rating_count'] = ratingCount;
     data['veg'] = veg;
+    data['food_type'] = food_type;
     data['maximum_cart_quantity'] = quantityLimit;
     return data;
   }

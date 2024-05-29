@@ -45,10 +45,10 @@ class SearchService implements SearchServiceInterface {
       searchProductList.removeWhere((product) => product.avgRating! < rating);
     }
     if(!veg && nonVeg) {
-      searchProductList.removeWhere((product) => product.veg == 1);
+      searchProductList.removeWhere((product) => product.food_type == 1);
     }
     if(!nonVeg && veg) {
-      searchProductList.removeWhere((product) => product.veg == 0);
+      searchProductList.removeWhere((product) => product.food_type == 2);
     }
     if(isAvailableFoods || isDiscountedFoods) {
       if(isAvailableFoods) {
@@ -78,10 +78,10 @@ class SearchService implements SearchServiceInterface {
       searchRestaurantList.removeWhere((restaurant) => restaurant.avgRating! < rating);
     }
     if(!veg && nonVeg) {
-      searchRestaurantList.removeWhere((product) => product.nonVeg == 0);
+      searchRestaurantList.removeWhere((product) => product.food_type == 0);
     }
     if(!nonVeg && veg) {
-      searchRestaurantList.removeWhere((product) => product.veg == 0);
+      searchRestaurantList.removeWhere((product) => product.food_type == 0);
     }
     if(isAvailableRestaurants || isDiscountedRestaurants) {
       if(isAvailableRestaurants) {

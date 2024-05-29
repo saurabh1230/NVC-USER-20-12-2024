@@ -58,15 +58,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Widget build(BuildContext context) {
     bool isLoggedIn = Get.find<AuthController>().isLoggedIn();
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : AppBar(
+      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+      appBar:  AppBar(
         title: Text('update_profile'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),),
         centerTitle: true,
         leading: IconButton(
           onPressed: () =>Get.back(),
           icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).textTheme.bodyLarge!.color),
         ),
-        elevation: 0, backgroundColor: Theme.of(context).cardColor, actions: const [SizedBox()],),
+        elevation: 0, backgroundColor: Theme.of(context).primaryColor.withOpacity(0.02), actions: const [SizedBox()],),
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       body: Column(
         children: [

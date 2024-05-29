@@ -1,14 +1,11 @@
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/home/widgets/cuisine_card_widget.dart';
 import 'package:stackfood_multivendor/features/search/controllers/search_controller.dart' as search;
 import 'package:stackfood_multivendor/features/search/widgets/filter_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/search_field_widget.dart';
 import 'package:stackfood_multivendor/features/search/widgets/search_result_widget.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/cuisine/controllers/cuisine_controller.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/bottom_cart_widget.dart';
@@ -36,7 +33,6 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-
     _isLoggedIn = Get.find<AuthController>().isLoggedIn();
     Get.find<search.SearchController>().setSearchMode(true, canUpdate: false);
     if(_isLoggedIn) {
@@ -57,15 +53,15 @@ class SearchScreenState extends State<SearchScreen> {
         }
       },
       child: Scaffold(
-        appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
-        endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
+        // appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+        // endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
         body: SafeArea(child: GetBuilder<search.SearchController>(builder: (searchController) {
           _searchController.text = searchController.searchText;
           return Column(children: [
 
-            Container(
-              height: ResponsiveHelper.isDesktop(context) ? 130 : 80,
-              color: ResponsiveHelper.isDesktop(context) ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+            Container(margin: const EdgeInsets.only(top: 20),
+              // height: ResponsiveHelper.isDesktop(context) ? 130 : 80,
+              color:  Colors.transparent,
               child: Center(child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -264,11 +260,8 @@ class SearchScreenState extends State<SearchScreen> {
         prices.sort();
       }
       double? maxValue = prices.isNotEmpty ? prices[prices.length-1] : 1000;
-      ResponsiveHelper.isMobile(context) ? Get.bottomSheet(FilterWidget(maxValue: maxValue, isRestaurant: searchController.isRestaurant), isScrollControlled: true)
-      : Get.dialog(Dialog(
-        insetPadding: const EdgeInsets.all(30),
-        child: FilterWidget(maxValue: maxValue, isRestaurant: searchController.isRestaurant),
-      ));
+       Get.bottomSheet(FilterWidget(maxValue: maxValue, isRestaurant: searchController.isRestaurant), isScrollControlled: true);
+
     }
   }
 }

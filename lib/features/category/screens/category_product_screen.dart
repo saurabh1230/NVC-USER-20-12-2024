@@ -98,7 +98,13 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
           }else {}
         },
         child: Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context) ?  const WebMenuBar() : AppBar(
+          appBar: AppBar(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
+                bottomRight: Radius.circular(20.0), // Adjust the radius as needed
+              ),
+            ),
             title: catController.isSearching ? TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
@@ -113,12 +119,12 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                 catController.type,
               ),
             ) : Text(widget.categoryName, style: robotoRegular.copyWith(
-              fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
+              fontSize: Dimensions.fontSizeLarge, color: Colors.white,
             )),
             centerTitle: true,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              color: Theme.of(context).textTheme.bodyLarge!.color,
+              icon: const Icon(Icons.arrow_back,color: Colors.white,),
+              color: Colors.white,
               onPressed: () {
                 if(catController.isSearching) {
                   catController.toggleSearch();
@@ -127,20 +133,20 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                 }
               },
             ),
-            backgroundColor: Theme.of(context).cardColor,
+            backgroundColor: Theme.of(context).primaryColor,
             elevation: 0,
             actions: [
               IconButton(
                 onPressed: () => catController.toggleSearch(),
                 icon: Icon(
                   catController.isSearching ? Icons.close_sharp : Icons.search,
-                  color: Theme.of(context).textTheme.bodyLarge!.color,
+                  color: Colors.white,
                 ),
               ),
 
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
-                icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
+                icon: const CartWidget(color: Colors.white, size: 25),
               ),
 
               VegFilterWidget(type: catController.type, fromAppBar: true, onSelected: (String type) {

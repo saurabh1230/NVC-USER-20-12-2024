@@ -169,21 +169,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                   physics: const BouncingScrollPhysics(),
                   controller: scrollController,
                   child: FooterViewWidget(child: SizedBox(width: Dimensions.webMaxWidth,
-                    child: ResponsiveHelper.isDesktop(context) ? Padding(
-                      padding: const EdgeInsets.only(top: Dimensions.paddingSizeLarge),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                        Expanded(flex: 6, child: OrderInfoSection(order: order, orderController: orderController, schedules: schedules, showChatPermission: showChatPermission, contactNumber: widget.contactNumber,)),
-                        const SizedBox(width: Dimensions.paddingSizeLarge),
-
-                        Expanded(flex: 4,child: OrderPricingSection(
-                          itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
-                          couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: deliveryCharge,
-                          total: total, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
-                        ))
-
-                      ]),
-                    ) : Column(children: [
+                    child: Column(children: [
 
                       OrderInfoSection(order: order, orderController: orderController, schedules: schedules, showChatPermission: showChatPermission, contactNumber: widget.contactNumber,),
 
@@ -192,6 +178,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                         couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: deliveryCharge,
                         total: total, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
                       ),
+                      const SizedBox(height: Dimensions.paddingSizeExtraLarge,)
 
                     ]),
                   )),

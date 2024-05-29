@@ -79,6 +79,10 @@ class HomeProductWidget extends StatelessWidget {
           ),
           child: CustomInkWellWidget(
             onTap: () {
+              Get.bottomSheet(
+                ProductBottomSheetWidget(product: product, isCampaign: false),
+                backgroundColor: Colors.transparent, isScrollControlled: true,
+              );
               // if(isRestaurant) {
               //   if(restaurant != null && restaurant!.restaurantStatus == 1){
               //     ResponsiveHelper.isMobile(context) ? Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant)) :

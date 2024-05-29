@@ -255,19 +255,19 @@ class OrderInfoSection extends StatelessWidget {
               ),
               // const Divider(height: Dimensions.paddingSizeLarge),
 
-              Column(children: [
-                const Divider(height: Dimensions.paddingSizeLarge),
-
-                Row(children: [
-                  Text('${'cutlery'.tr}: ', style: robotoRegular),
-                  const Expanded(child: SizedBox()),
-
-                  Text(
-                    order.cutlery! ? 'yes'.tr : 'no'.tr,
-                    style: robotoRegular,
-                  ),
-                ]),
-              ]),
+              // Column(children: [
+              //   const Divider(height: Dimensions.paddingSizeLarge),
+              //
+              //   Row(children: [
+              //     Text('${'cutlery'.tr}: ', style: robotoRegular),
+              //     const Expanded(child: SizedBox()),
+              //
+              //     Text(
+              //       order.cutlery! ? 'yes'.tr : 'no'.tr,
+              //       style: robotoRegular,
+              //     ),
+              //   ]),
+              // ]),
 
               order.unavailableItemNote != null ? Column(
                 children: [

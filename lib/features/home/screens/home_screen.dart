@@ -325,19 +325,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
 
                       _configModel!.mostReviewedFoods == 1 ?  const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
-
                       /*const CuisineViewWidget(),*/
 
                       _configModel.popularRestaurant == 1 ? const PopularRestaurantsViewWidget() : const SizedBox(),
 
-                     
-
-                      _isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: true) : const SizedBox(),
+                      // _isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: true) : const SizedBox(),
 
                       _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
 
                       // _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
-
                       const PromotionalBannerViewWidget(),
 
                     ]),
@@ -347,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverDelegate(
-                    height: 85,
+                    height: 60,
                     child: const AllRestaurantFilterWidget(),
                   ),
                 ),

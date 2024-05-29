@@ -19,7 +19,7 @@ class FilterViewWidget extends StatelessWidget {
               child: Text(
                 'cooked'.tr,
                 style: robotoMedium.copyWith(
-                  color: restaurant.mainCategoryType == 'cooked' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
+                  color: /*restaurant.mainCategoryType == 'cooked' ?*/ Theme.of(context).textTheme.bodyLarge!.color/* : Theme.of(context).disabledColor*/,
                 ),
               ),
 
@@ -30,7 +30,7 @@ class FilterViewWidget extends StatelessWidget {
               child: Text(
                 'uncooked'.tr,
                 style: robotoMedium.copyWith(
-                  color: restaurant.mainCategoryType == 'uncooked' ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).disabledColor,
+                  color:/* restaurant.mainCategoryType == 'uncooked' ?*/ Theme.of(context).textTheme.bodyLarge!.color /*: Theme.of(context).disabledColor*/,
                 ),
               ),
             ),
