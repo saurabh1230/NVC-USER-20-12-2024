@@ -79,7 +79,7 @@ class SearchScreenState extends State<SearchScreen> {
                       suffixIcon: !searchController.isSearchMode ? Icons.filter_list : Icons.search,
                       iconPressed: () => _actionSearch(searchController, false),
                       onSubmit: (text) => _actionSearch(searchController, true),
-                    )),
+                      )),
                     SizedBox(width: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeSmall : 0),
                   ])),
                 ],
@@ -248,7 +248,7 @@ class SearchScreenState extends State<SearchScreen> {
     if(searchController.isSearchMode || isSubmit) {
       if(_searchController.text.trim().isNotEmpty) {
         searchController.searchData(_searchController.text.trim());
-      }else {
+      } else {
         showCustomSnackBar('search_food_or_restaurant'.tr);
       }
     }else {
