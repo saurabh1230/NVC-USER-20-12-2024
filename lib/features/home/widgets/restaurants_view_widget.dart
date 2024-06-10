@@ -104,7 +104,6 @@ class RestaurantsViewWidget extends StatelessWidget {
               child: Row(children: [
                 Icon(Icons.access_time, size: 12, color: Theme.of(context).cardColor),
                 const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-
                 Text('closed_now'.tr, style: robotoMedium.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall)),
               ]),
             )) : const SizedBox(),
