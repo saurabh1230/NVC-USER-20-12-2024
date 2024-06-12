@@ -12,4 +12,6 @@ abstract class CategoryServiceInterface{
   Future<ProductModel?> getAllProductList(int offset,String type);
   Future<ProductModel?> getCAllProductList(int offset,type);
   Future<ProductModel?> getUnCookedAllProductList(int offset,type);
+  Future<List<CategoryModel>?> getFilCategoryList(String? type,List<CategoryModel>? fetchedCategoryList);
+  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type,List<CategoryModel>? fetchedCategoryList);
 }

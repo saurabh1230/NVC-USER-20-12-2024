@@ -13,7 +13,9 @@ import 'package:stackfood_multivendor/features/checkout/screens/offline_payment_
 import 'package:stackfood_multivendor/features/checkout/screens/order_successful_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/payment_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/payment_webview_screen.dart';
+import 'package:stackfood_multivendor/features/home/screens/cooked/cooked_particle_product_view.dart';
 import 'package:stackfood_multivendor/features/home/screens/map_view_screen.dart';
+import 'package:stackfood_multivendor/features/home/screens/uncooked/uncooked_particle_product_view.dart';
 import 'package:stackfood_multivendor/features/html/enums/html_type.dart';
 import 'package:stackfood_multivendor/features/html/screens/html_viewer_screen.dart';
 import 'package:stackfood_multivendor/features/language/screens/language_screen.dart';
@@ -147,6 +149,8 @@ class RouteHelper {
 
   static const String mainProductView = '/main-product-view';
   static const String uncookedProductView = '/uncooked-product-view';
+  static const String cookedCategoryProduct = '/cooked-category-product';
+  static const String uncookedCategoryProduct = '/uncooked-category-product';
 
   static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body, DeepLinkBody? linkBody) {
@@ -287,9 +291,21 @@ class RouteHelper {
   static String getCookedProductScreen(String? phone,) => '$cookedProductList?phone=$phone';
   static String getMainProductView() => mainProductView;
   static String getUncookedProductView() => uncookedProductView;
+  static String getCookedCategoryProductRoute(int? id, String name) {
+    List<int> encoded = utf8.encode(name);
+    String data = base64Encode(encoded);
+    return '$cookedCategoryProduct?id=$id&name=$data';
+  }
+
+  static String getUnCookedCategoryProductRoute(int? id, String name) {
+    List<int> encoded = utf8.encode(name);
+    String data = base64Encode(encoded);
+    return '$uncookedCategoryProduct?id=$id&name=$data';
+  }
 
 
   static List<GetPage> routes = [
+
     GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: (Get.parameters['from-splash'] == 'true')))),
     GetPage(name: splash, page: () {
       NotificationBodyModel? data;
@@ -509,6 +525,19 @@ class RouteHelper {
     GetPage(name: cookedProductList, page: () =>   CookedProductScreen(number: Get.parameters['phone'],)),
     GetPage(name: mainProductView, page: () => MainProductViewWidget()),
     GetPage(name: uncookedProductView, page: () => UNCookedProductViewWidget()),
+
+    GetPage(name: cookedCategoryProduct, page: () {
+      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return getRoute(CookedParticleProductScreen(
+          categoryID: Get.parameters['id'], categoryName: data));
+    }),
+    GetPage(name: uncookedCategoryProduct, page: () {
+      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return getRoute(UnCookedParticleProductScreen(
+          categoryID: Get.parameters['id'], categoryName: data));
+    }),
 
 
     // GetPage(name: cookedProductList, page: () =>  CookedProductScreen(cookedUncookedCategory:  Get.parameters['cookedUncooked'],)),

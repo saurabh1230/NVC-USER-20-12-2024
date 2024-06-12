@@ -12,4 +12,6 @@ abstract class CategoryRepositoryInterface implements RepositoryInterface {
   Future<ProductModel?> getAllProductList(int offset, type,);
   Future<ProductModel?> getCAllProductList(int offset,type);
   Future<ProductModel?> getUnCookedAllProductList(int offset,type);
+  Future<List<CategoryModel>?> getFilCategoryList(String? type);
+  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type);
 }

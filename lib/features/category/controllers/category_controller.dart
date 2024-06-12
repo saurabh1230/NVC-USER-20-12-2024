@@ -82,6 +82,7 @@ class CategoryController extends GetxController implements GetxService {
 
 
   Future<void> getCategoryList(bool reload) async {
+    _categoryProductList = null;
     if(_categoryList == null || reload) {
       _categoryList = await categoryServiceInterface.getCategoryList(reload, _categoryList);
       // _interestCategorySelectedList = categoryServiceInterface.processCategorySelectedList(_categoryList);
@@ -100,6 +101,7 @@ class CategoryController extends GetxController implements GetxService {
     _subCategoryIndex = 0;
     _subCategoryList = null;
     _categoryProductList = null;
+
     // _cookedCategoryProductList =null;
     _isRestaurant = false;
     _subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
@@ -413,6 +415,7 @@ class CategoryController extends GetxController implements GetxService {
   ProductModel? _uncookedList;
   ProductModel? get uncooked => _uncookedList;
   Future<void> getUnCookedProductList(int offset, bool reload,type) async {
+
     if(reload) {
       _uncookedList = null;
       update();
@@ -429,6 +432,61 @@ class CategoryController extends GetxController implements GetxService {
       update();
     }
   }
+
+  int? selectedCookedCategoryId;
+
+  void selectCookedCategory(int categoryCookedId) {
+    selectedCookedCategoryId = categoryCookedId;
+    update();
+  }
+
+  int? selectedUnCookedCategoryId;
+
+  void selectUncookedCategory(int categoryUncookedId) {
+    selectedUnCookedCategoryId = categoryUncookedId;
+    update();
+  }
+
+
+  List<CategoryModel>? _cat;
+  List<CategoryModel>? get cat => _cat;
+  void getFilCategoryList(String? type) async {
+    selectedCookedCategoryId = null;
+    // update();
+    _subCategoryIndex = 0;
+    _cat = null;
+    _categoryProductList = null;
+
+    // // _cookedCategoryProductList =null;
+    // _isRestaurant = false;
+    _cat = await categoryServiceInterface.getFilCategoryList(type,_cat);
+
+    update();
+    // if(_subCategoryList != null) {
+    //   getCategoryProductList(categoryID, 1, 'all', false);
+    // }
+  }
+
+  List<CategoryModel>? _unCookedCat;
+  List<CategoryModel>? get unCookedCat => _unCookedCat;
+  void getFilUncookedCategoryList(String? type) async {
+    selectedUnCookedCategoryId = null;
+    // _subCategoryIndex = 0;
+    _unCookedCat = null;
+    _categoryProductList = null;
+    // _cookedCategoryProductList =null;
+    // _isRestaurant = false;
+    _unCookedCat = await categoryServiceInterface.getFilUncookedCategoryList(type,_unCookedCat);
+    // Get.find<CategoryController>().getSubCategoryList(_unCookedCat![0].id.toString());
+    update();
+    // if(_subCategoryList != null) {
+    //   getCategoryProductList(categoryID, 1, 'all', false);
+    // }
+  }
+
+
+
+
 
 
 

@@ -129,5 +129,36 @@ class CategoryRepository implements CategoryRepositoryInterface {
   }
 
 
+  @override
+  Future<List<CategoryModel>?> getFilCategoryList(String? type) async {
+    List<CategoryModel>? categoryList;
+    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=$type');
+    if (response.statusCode == 200) {
+      categoryList= [];
+      response.body.forEach((category) => categoryList!.add(CategoryModel.fromJson(category)));
+      print("filter");
+      print(categoryList.length);
+    }
+    return categoryList;
+  }
+
+
+  @override
+  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type) async {
+    List<CategoryModel>? categoryList;
+    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=$type');
+    if (response.statusCode == 200) {
+      categoryList= [];
+      response.body.forEach((category) => categoryList!.add(CategoryModel.fromJson(category)));
+      print("filter");
+      print(categoryList.length);
+    }
+    return categoryList;
+  }
+
+
+
+
+
 
 }

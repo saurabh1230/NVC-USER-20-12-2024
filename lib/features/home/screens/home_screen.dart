@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/cooked_and_uncooked_banner_Widget.dart';
 import 'package:stackfood_multivendor/features/home/screens/uncooked_particle_view_widget.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
@@ -50,6 +51,8 @@ class HomeScreen extends StatefulWidget {
   static Future<void> loadData(bool reload) async {
     Get.find<HomeController>().getBannerList(reload);
     Get.find<CategoryController>().getCategoryList(reload);
+    Get.find<CategoryController>().getFilCategoryList("1");
+    Get.find<CategoryController>().getFilUncookedCategoryList("2");
     Get.find<CuisineController>().getCuisineList();
     if(Get.find<SplashController>().configModel!.popularRestaurant == 1) {
       Get.find<RestaurantController>().getPopularRestaurantList(reload, 'all', false);
@@ -272,50 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
                       const BannerViewWidget(),
-                      Padding(
-                        padding:  const EdgeInsets.only(left: Dimensions.paddingSizeDefault,right: Dimensions.paddingSizeDefault,bottom: 0,top: Dimensions.paddingSizeDefault),
-                        child: Row(children: [
-                          Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  Get.find<CategoryController>().getAllProductList(1, true,"cooked");
-                                  Get.toNamed(RouteHelper.getCookedProductScreen("cooked"));},
-                                child: Column(
-                                  children: [
-                                    Container(height: 100,
-                                    width: Get.size.width,
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration :  BoxDecoration(
-                                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
-                                    child: Image.asset(Images.foodTypeCookedBanner,fit: BoxFit.cover,)),
-                                    const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                                    Text('Cooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                              )),
-                          const SizedBox(width: Dimensions.paddingSizeDefault,),
-                          Expanded(child: InkWell(
-                            onTap: () {
-                              Get.find<CategoryController>().getAllProductList(1, true,"uncooked");
-                              Get.toNamed(RouteHelper.getCookedProductScreen("uncooked"));
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                    height: 100,
-                                    width: Get.size.width,
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration :  BoxDecoration(
-                                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)
-                                    ),
-                                    child: Image.asset(Images.foodTypeUncookedBanner,fit: BoxFit.cover,)),
-                                const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                                Text('UnCooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
-                              ],
-                            ),
-                          )),
-                        ],),
-                      ),
+                      const CookedAndUncookedBannerWidget(),
+
 
                     
 
