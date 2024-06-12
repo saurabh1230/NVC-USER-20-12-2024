@@ -206,4 +206,6 @@ class Images {
   static const String documentIcon = 'assets/image/documents.png';
   static const String pdfIcon = 'assets/image/pdf.png';
   static const String orderMenuIcon = 'assets/image/order_menu_icon.png';
+  static const String foodTypeCookedBanner = 'assets/image/foodtypecookedbanner.png';
+  static const String foodTypeUncookedBanner = 'assets/image/foodtypeuncookedbanner.png';
 }

@@ -4,6 +4,8 @@ import 'package:stackfood_multivendor/common/widgets/image_viewer_screen_widget.
 import 'package:stackfood_multivendor/common/widgets/not_found_widget.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/screens/cart_screen.dart';
+import 'package:stackfood_multivendor/features/category/screens/product_view.dart';
+import 'package:stackfood_multivendor/features/category/screens/uncooked_products_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/pricing_view_model.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/checkout_screen.dart';
@@ -142,6 +144,10 @@ class RouteHelper {
   static const String guestTrackOrderScreen = '/guest-track-order-screen';
   static const String cookedProductList = '/cooked-product-list';
 
+
+  static const String mainProductView = '/main-product-view';
+  static const String uncookedProductView = '/uncooked-product-view';
+
   static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body, DeepLinkBody? linkBody) {
     String data = 'null';
@@ -279,6 +285,8 @@ class RouteHelper {
   // static String getCookedProductScreen() => cookedProductList;
   // static String getCookedProductScreen(String? cookedUncooked,) => '$cookedProductList?cookedUncooked=$cookedUncooked';
   static String getCookedProductScreen(String? phone,) => '$cookedProductList?phone=$phone';
+  static String getMainProductView() => mainProductView;
+  static String getUncookedProductView() => uncookedProductView;
 
 
   static List<GetPage> routes = [
@@ -499,6 +507,10 @@ class RouteHelper {
       orderId: Get.parameters['order_id']!, number: Get.parameters['number']!,
     )),
     GetPage(name: cookedProductList, page: () =>   CookedProductScreen(number: Get.parameters['phone'],)),
+    GetPage(name: mainProductView, page: () => MainProductViewWidget()),
+    GetPage(name: uncookedProductView, page: () => UNCookedProductViewWidget()),
+
+
     // GetPage(name: cookedProductList, page: () =>  CookedProductScreen(cookedUncookedCategory:  Get.parameters['cookedUncooked'],)),
   ];
 

@@ -110,5 +110,24 @@ class CategoryRepository implements CategoryRepositoryInterface {
     throw UnimplementedError();
   }
 
+  Future<ProductModel?> getCAllProductList(int offset,type) async {
+    ProductModel? productModel;
+    Response response = await apiClient.getData('${AppConstants.allProductsUri}?limit=10&offset=$offset&type=$type');
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    }
+    return productModel;
+  }
+
+  Future<ProductModel?> getUnCookedAllProductList(int offset,type) async {
+    ProductModel? productModel;
+    Response response = await apiClient.getData('${AppConstants.allProductsUri}?limit=10&offset=$offset&type=$type');
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    }
+    return productModel;
+  }
+
+
 
 }

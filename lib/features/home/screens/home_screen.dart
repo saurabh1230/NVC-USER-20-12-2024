@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/uncooked_particle_view_widget.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/web_home_screen.dart';
@@ -39,6 +40,8 @@ import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'cooked_particle_view_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -284,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     clipBehavior: Clip.hardEdge,
                                     decoration :  BoxDecoration(
                                         borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
-                                    child: Image.asset("assets/image/cookedcategory.jpg",fit: BoxFit.cover,)),
+                                    child: Image.asset(Images.foodTypeCookedBanner,fit: BoxFit.cover,)),
                                     const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
                                     Text('Cooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
                                   ],
@@ -305,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     decoration :  BoxDecoration(
                                         borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)
                                     ),
-                                    child: Image.asset("assets/image/uncookedcategory.jpg",fit: BoxFit.cover,)),
+                                    child: Image.asset(Images.foodTypeUncookedBanner,fit: BoxFit.cover,)),
                                 const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
                                 Text('UnCooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
                               ],
@@ -324,14 +327,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
 
+                      const CookedParticleViewWidget(isPopular: false,),
+                      const UNCookedParticleViewWidget(isPopular: false,),
                       _configModel!.mostReviewedFoods == 1 ?  const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
+
                       /*const CuisineViewWidget(),*/
 
                       _configModel.popularRestaurant == 1 ? const PopularRestaurantsViewWidget() : const SizedBox(),
 
                       // _isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: true) : const SizedBox(),
 
-                      _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
+                      // _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
 
                       // _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
                       const PromotionalBannerViewWidget(),

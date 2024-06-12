@@ -10,4 +10,6 @@ abstract class CategoryServiceInterface{
   Future<RestaurantModel?> getCategoryRestaurantList(String? categoryID, int offset, String type);
   Future<Response> getSearchData(String? query, String? categoryID, bool isRestaurant, String type);
   Future<ProductModel?> getAllProductList(int offset,String type);
+  Future<ProductModel?> getCAllProductList(int offset,type);
+  Future<ProductModel?> getUnCookedAllProductList(int offset,type);
 }

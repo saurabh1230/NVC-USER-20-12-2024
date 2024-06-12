@@ -17,7 +17,7 @@ class CookedProductViewWidget extends StatelessWidget {
         totalSize: categoryController.productModel?.totalSize,
         offset: categoryController.productModel?.offset,
         onPaginate: (int? offset) async => await categoryController.getAllProductList(offset!, false,cookedUncookedType),
-        productView:    ProductViewWidget(
+        productView:  ProductViewWidget(
           isScrollable: false,
           isRestaurant: false, products: categoryController.productModel?.products, restaurants: null, noDataText: 'no_category_food_found'.tr,
         ),
