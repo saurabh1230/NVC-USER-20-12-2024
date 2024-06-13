@@ -1,6 +1,7 @@
 import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_widget.dart';
 import 'package:stackfood_multivendor/features/category/screens/category_product_screen.dart';
+import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import '../cooked/cooked_whats_on_your_mind_widget.dart';
+
 class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
   final bool isTitle;
   final ScrollController _scrollController = ScrollController();
@@ -21,210 +24,86 @@ class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (categoryController) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              ResponsiveHelper.isMobile(context) ?
-              const SizedBox() :
-              Container(decoration:  BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.10),
-              ),
-                child: IconButton(
-                  icon:  Icon(Icons.arrow_back,color: Theme.of(context).primaryColor,),
-                  onPressed: () {
-                    _scrollController.animateTo(
-                      _scrollController.offset -
-                          MediaQuery.of(context).size.width,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
+      return SizedBox(
+        height: 130,
+        child: categoryController.unCookedCat != null
+            ? ListView.separated(
+          controller: _scrollController,
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+        /*  padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.paddingSizeSmall),*/
+          itemCount: categoryController.unCookedCat!.length,
+          itemBuilder: (context, index) {
+            var category = categoryController.unCookedCat![index];
+            return GestureDetector(
+              onTap: () {
+                Get.find<CategoryController>().getSubCategoryList(category.id!.toString());
+                categoryController.selectCookedCategory(category.id!);
+              },
+              child: Container(
+                width:  90,
+                height: 90,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.radiusSmall),
+                  border:
+                  categoryController.selectedCookedCategoryId ==
+                      category.id
+                      ? Border(
+                      bottom: BorderSide(
+                          color: Theme.of(context)
+                              .primaryColor,
+                          width: 5.0))
+                      : null,
                 ),
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: ResponsiveHelper.isMobile(context) ? 140 : 200,
-                  child: categoryController.unCookedCat != null
-                      ? ListView.separated(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.paddingSizeDefault),
-                    itemCount: categoryController.unCookedCat!.length,
-                    itemBuilder: (context, index) {
-                      var category = categoryController.unCookedCat![index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
-                        child: Container(
-                          width: 90,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.radiusSmall),
-                            border: categoryController.selectedUnCookedCategoryId ==
-                                category.id ? Border(
-                                bottom: BorderSide(color: Theme.of(context).primaryColor,width: 5.0)) : null,
-                          ),
-                          child: CustomInkWellWidget(
-                            onTap: () {
-                              Get.find<CategoryController>().getSubCategoryList(category.id!.toString());
-                              categoryController.selectUncookedCategory(category.id!);
-                              _scrollController.animateTo(
-                                index * (90),
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  child: Column(children: [
 
-                              // Get.toNamed(
-                              //     RouteHelper.getCategoryProductRoute(
-                              //       category.id!,
-                              //       category.name!,
-                              //     ));
-                            },
-                            radius: Dimensions.radiusSmall,
-                            child: Padding(
-                              padding: const EdgeInsets.all(
-                                  Dimensions.paddingSizeExtraSmall),
-                              child: Column(children: [
-                                HoverZoom(
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    clipBehavior: Clip.hardEdge,
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: const BoxDecoration(),
-                                    child: ClipOval(
-                                      child: CustomImageWidget(
-                                        image:
-                                        '${Get.find<SplashController>().configModel!.baseUrls!.categoryImageUrl}/${category.image}',
-                                        fit: BoxFit.cover,
-
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: ResponsiveHelper.isMobile(
-                                        context)
-                                        ? Dimensions.paddingSizeDefault
-                                        : Dimensions.paddingSizeLarge),
-                                Expanded(
-                                  child: Text(
-                                    category.name!,
-                                    style: robotoMedium.copyWith(
-                                      fontSize: Dimensions.fontSizeSmall,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ]),
-                            ),
-                          ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                          color: Theme.of(context).cardColor,
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)]
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        child: CustomImageWidget(
+                          image: '${Get.find<SplashController>().configModel!.baseUrls!.categoryImageUrl}/${category.image}',
+                          height: ResponsiveHelper.isMobile(context) ? 70 : 100, width: ResponsiveHelper.isMobile(context) ? 70 : 100, fit: BoxFit.cover,
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        SizedBox(
-                            width: ResponsiveHelper.isMobile(context)
-                                ? Dimensions.paddingSizeDefault
-                                : Dimensions.paddingSizeDefault),
-                  )
-                      : WebWhatOnYourMindViewShimmer(
-                      categoryController: categoryController),
+                      ),
+                    ),
+                    SizedBox(height: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
+
+                    Expanded(child: Text(
+                      category.name!,
+                      style: robotoMedium.copyWith(
+                        fontSize: Dimensions.fontSizeSmall,
+                        // color:Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                      maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                    )),
+
+                  ]),
                 ),
               ),
-              ResponsiveHelper.isMobile(context) ?
-              const SizedBox() :
-              Container(decoration:  BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.10),
-              ),
-                child: IconButton(
-                  icon:  Icon(Icons.arrow_forward,color: Theme.of(context).primaryColor,),
-                  onPressed: () {
-                    _scrollController.animateTo(
-                      _scrollController.offset +
-                          MediaQuery.of(context).size.width,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-          // const SizedBox(height: Dimensions.paddingSizeLarge),
-        ],
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              SizedBox(
+                  width: ResponsiveHelper.isMobile(context)
+                      ? 0
+                      : Dimensions.paddingSizeDefault),
+        )
+            : WebWhatOnYourMindViewShimmer(
+            categoryController: categoryController),
       );
     });
   }
 }
 
-class WebWhatOnYourMindViewShimmer extends StatelessWidget {
-  final CategoryController categoryController;
 
-  const WebWhatOnYourMindViewShimmer(
-      {super.key, required this.categoryController});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: GridView.builder(
-        shrinkWrap: true,
-        itemCount: 8,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: ResponsiveHelper.isMobile(context)
-              ? 8
-              : ResponsiveHelper.isTab(context)
-              ? 4
-              : 4,
-          crossAxisSpacing: Dimensions.paddingSizeSmall,
-          mainAxisSpacing: Dimensions.paddingSizeSmall,
-          mainAxisExtent: ResponsiveHelper.isMobile(context) ? 160 : 200,
-        ),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(
-                bottom: Dimensions.paddingSizeSmall,
-                right: Dimensions.paddingSizeSmall,
-                top: Dimensions.paddingSizeSmall),
-            child: Container(
-              width: ResponsiveHelper.isMobile(context) ? 110 : 140,
-              height: ResponsiveHelper.isMobile(context) ? 110 : 140,
-              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-              margin: EdgeInsets.only(
-                  top: ResponsiveHelper.isMobile(context)
-                      ? 0
-                      : Dimensions.paddingSizeSmall),
-              child: Shimmer(
-                duration: const Duration(seconds: 2),
-                enabled: categoryController.cat == null,
-                child: Column(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(Dimensions.radiusSmall),
-                        color: Colors.grey[300]),
-                    width: ResponsiveHelper.isMobile(context) ? 120 : 120,
-                    height: ResponsiveHelper.isMobile(context) ? 100 : 120,
-                  ),
-                  const SizedBox(height: Dimensions.paddingSizeSmall),
-                  Container(
-                      height: ResponsiveHelper.isMobile(context) ? 10 : 15,
-                      width: 150,
-                      color: Colors.grey[300]),
-                ]),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}

@@ -3,7 +3,7 @@ import 'package:stackfood_multivendor/util/images.dart';
 import 'package:get/get.dart';
 
 class AppConstants {
-  static const String appName = 'StackFood';
+  static const String appName = 'Non Veg City';
   static const double appVersion = 1;
 
   static const String fontFamily = 'Roboto';

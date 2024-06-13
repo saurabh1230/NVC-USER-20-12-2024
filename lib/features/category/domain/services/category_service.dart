@@ -59,7 +59,7 @@ class CategoryService implements CategoryServiceInterface {
     return await categoryRepositoryInterface.getFilCategoryList(type);
   }
   @override
-  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type,List<CategoryModel>? fetchedCategoryList) async {
+  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type,List<CategoryModel>? fetchedUnCategoryList) async {
     return await categoryRepositoryInterface.getFilUncookedCategoryList(type);
   }
 

@@ -34,7 +34,12 @@ class UNCookedParticleViewWidget extends StatelessWidget {
                 const Spacer(),
 
                 ArrowIconButtonWidget(
-                  onTap: () => Get.toNamed(RouteHelper.getUncookedProductView()),
+                  onTap: () {
+                    Get.toNamed(RouteHelper.getUnCookedCategoryProductRoute(
+                      cookedController.unCookedCat![0].id, "uncooked",
+                    ));
+                    Get.find<CategoryController>().getSubCategoryList(cookedController.unCookedCat![0].id.toString());
+                  },
                 ),
               ],
               ),

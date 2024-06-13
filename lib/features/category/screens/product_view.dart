@@ -27,7 +27,7 @@ class MainProductViewWidget extends StatelessWidget {
                 scrollController: _scrollController,
                 totalSize: cookedController.cookedList!.totalSize,
                 offset: cookedController.cookedList!.offset,
-                onPaginate: (int? offset) async => await cookedController.getCookedProductList(offset!, false,""),
+                onPaginate: (int? offset) async => await cookedController.getCookedProductList(offset!, false,"cooked"),
                 productView: HomeAllProductViewWidget(
                   isRestaurant: false,
                   products: cookedController.cookedList?.products,

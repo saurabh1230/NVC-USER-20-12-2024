@@ -1,3 +1,4 @@
+
 import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
@@ -111,39 +112,42 @@ class WebWhatOnYourMindViewShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: ResponsiveHelper.isMobile(context) ? 120 : 170,
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: 10,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
-            child: Container(
-              width: ResponsiveHelper.isMobile(context) ? 70 : 108,
-              height: ResponsiveHelper.isMobile(context) ? 70 : 100,
-              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-              margin: EdgeInsets.only(top: ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeSmall),
-              child: Shimmer(
-                duration: const Duration(seconds: 2),
-                enabled: categoryController.categoryList == null,
-                child: Column(children: [
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+      child: SizedBox(
+        height: ResponsiveHelper.isMobile(context) ? 120 : 170,
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 10,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
+              child: Container(
+                width: ResponsiveHelper.isMobile(context) ? 70 : 108,
+                height: ResponsiveHelper.isMobile(context) ? 70 : 100,
+                padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                margin: EdgeInsets.only(top: ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeSmall),
+                child: Shimmer(
+                  duration: const Duration(seconds: 2),
+                  enabled: categoryController.categoryList == null,
+                  child: Column(children: [
 
-                  Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.grey[300]),
-                    height: ResponsiveHelper.isMobile(context) ? 70 : 80, width: 70,
-                  ),
-                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                    Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.grey[300]),
+                      height: ResponsiveHelper.isMobile(context) ? 70 : 80, width: 70,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                  Container(height: ResponsiveHelper.isMobile(context) ? 10 : 15, width: 150, color: Colors.grey[300]),
+                    Container(height: ResponsiveHelper.isMobile(context) ? 10 : 15, width: 150, color: Colors.grey[300]),
 
-                ]),
+                  ]),
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

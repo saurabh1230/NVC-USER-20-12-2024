@@ -47,6 +47,8 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
     // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     Get.find<CategoryController>().getFilUncookedCategoryList("2");
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    print('Print Category ID${widget.categoryID}');
+    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent

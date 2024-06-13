@@ -18,10 +18,13 @@ class CookedAndUncookedBannerWidget extends StatelessWidget {
           Expanded(
               child: InkWell(
                 onTap: () {
-                  Get.find<CategoryController>().getAllProductList(1, true,"cooked");
+                  // Get.find<CategoryController>().getAllProductList(1, true,"cooked");
+
+
                   Get.toNamed(RouteHelper.getCookedCategoryProductRoute(
                     categoryController.cat![0].id,
-                    "cooked",));},
+                    "cooked",));
+                  },
                 child: Column(
                   children: [
                     Container(height: 100,
@@ -30,19 +33,22 @@ class CookedAndUncookedBannerWidget extends StatelessWidget {
                         decoration :  BoxDecoration(
                             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
                         child: Image.asset(Images.foodTypeCookedBanner,fit: BoxFit.cover,)),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                    Text('Cooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
+                    // const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                    // Text('Cooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
                   ],
                 ),
               )),
           const SizedBox(width: Dimensions.paddingSizeDefault,),
           Expanded(child: InkWell(
             onTap: () {
+
               // Get.find<CategoryController>().getAllProductList(1, true,"uncooked");
+              // Get.find<CategoryController>().getFilCategoryList("1");
+
               Get.toNamed(RouteHelper.getUnCookedCategoryProductRoute(
                 categoryController.unCookedCat![0].id, "uncooked",
               ));
-              Get.find<CategoryController>().getSubCategoryList(categoryController.unCookedCat![0].id.toString());
+              // Get.find<CategoryController>().getSubCategoryList(categoryController.unCookedCat![0].id.toString());
             },
             child: Column(
               children: [
@@ -54,8 +60,8 @@ class CookedAndUncookedBannerWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)
                     ),
                     child: Image.asset(Images.foodTypeUncookedBanner,fit: BoxFit.cover,)),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                Text('UnCooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
+                // const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                // Text('UnCooked', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
               ],
             ),
           )),

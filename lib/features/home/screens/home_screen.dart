@@ -277,9 +277,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       const BannerViewWidget(),
                       const CookedAndUncookedBannerWidget(),
 
-
-                    
-
                       const WhatOnYourMindViewWidget(),
 
                       const TodayTrendsViewWidget(),

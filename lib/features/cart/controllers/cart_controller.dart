@@ -195,15 +195,48 @@ class CartController extends GetxController implements GetxService {
   Future<void> updateCartOnline(OnlineCart cart) async {
     _isLoading = true;
     update();
-    List<OnlineCartModel> onlineCartList = cartServiceInterface.updateCartOnline(cart, AuthHelper.isLoggedIn() ? null : int.parse(AuthHelper.getGuestId())) as List<OnlineCartModel>;
-    if(onlineCartList.isNotEmpty) {
-      _cartList = [];
-      _cartList.addAll(cartServiceInterface.formatOnlineCartToLocalCart(onlineCartModel: onlineCartList));
-      calculationCart();
+
+    try {
+      List<OnlineCartModel> onlineCartList;
+
+      // Adding type checking and casting to debug
+      var result = await cartServiceInterface.updateCartOnline(
+          cart,
+          AuthHelper.isLoggedIn() ? null : int.parse(AuthHelper.getGuestId())
+      );
+
+      if (result is List<OnlineCartModel>) {
+        onlineCartList = result;
+      } else {
+        throw TypeError();
+      }
+
+      if (onlineCartList.isNotEmpty) {
+        _cartList = [];
+        _cartList.addAll(cartServiceInterface.formatOnlineCartToLocalCart(onlineCartModel: onlineCartList));
+        calculationCart();
+      }
+    } catch (e) {
+      print('Error updating cart online: $e');
+      // Handle the error accordingly
+    } finally {
+      _isLoading = false;
+      update();
     }
-    _isLoading = false;
-    update();
   }
+
+  // Future<void> updateCartOnline(OnlineCart cart) async {
+  //   _isLoading = true;
+  //   update();
+  //   List<OnlineCartModel> onlineCartList = cartServiceInterface.updateCartOnline(cart, AuthHelper.isLoggedIn() ? null : int.parse(AuthHelper.getGuestId())) as List<OnlineCartModel>;
+  //   if(onlineCartList.isNotEmpty) {
+  //     _cartList = [];
+  //     _cartList.addAll(cartServiceInterface.formatOnlineCartToLocalCart(onlineCartModel: onlineCartList));
+  //     calculationCart();
+  //   }
+  //   _isLoading = false;
+  //   update();
+  // }
 
   Future<void> updateCartQuantityOnline(int cartId, double price, int quantity) async {
     _isLoading = true;

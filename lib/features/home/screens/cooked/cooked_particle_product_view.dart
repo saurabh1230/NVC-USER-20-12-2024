@@ -23,9 +23,11 @@ import 'package:get/get.dart';
 class CookedParticleProductScreen extends StatefulWidget {
   final String? categoryID;
   final String categoryName;
-  // final String? categoryImage;
-  const CookedParticleProductScreen({super.key, required this.categoryID, required this.categoryName, });
-
+  const CookedParticleProductScreen({
+    super.key,
+    required this.categoryID,
+    required this.categoryName,
+  });
   @override
   CookedParticleProductScreenState createState() => CookedParticleProductScreenState();
 }
@@ -39,15 +41,13 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Get.find<CategoryController>().getCookedProductList(1, true,widget.categoryName);
       Get.find<CategoryController>().getFilUncookedCategoryList("1");
-      // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     });
 
-    // Get.find<CategoryController>().getCategoryList(true);
 
 
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    print('Print Category ID${widget.categoryID}');
     Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent
@@ -113,7 +113,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
           }else {}
         },
         child: Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context) ?   WebMenuBar() : AppBar(
+          appBar: ResponsiveHelper.isDesktop(context) ?   const WebMenuBar() : AppBar(
             title: catController.isSearching ? TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
@@ -226,7 +226,6 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                   },
                 ),
               )) : const SizedBox(),
-
               // AllRestaurantsWidget(scrollController: scrollController),
 
               FooterViewWidget(
