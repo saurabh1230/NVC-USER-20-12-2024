@@ -19,8 +19,6 @@ class CookedAndUncookedBannerWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   // Get.find<CategoryController>().getAllProductList(1, true,"cooked");
-
-
                   Get.toNamed(RouteHelper.getCookedCategoryProductRoute(
                     categoryController.cat![0].id,
                     "cooked",));

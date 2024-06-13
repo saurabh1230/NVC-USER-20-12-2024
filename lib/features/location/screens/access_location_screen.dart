@@ -62,7 +62,20 @@ class AccessLocationScreen extends StatelessWidget {
                     },
                   )));
                 },
-              ) : NoDataScreen(title: 'no_saved_address_found'.tr) : const Center(child: CircularProgressIndicator()),
+              ) :
+
+              Column(children: [
+                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
+                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
+                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
+
+                Image.asset(Images.address),
+                const SizedBox(height: Dimensions.paddingSizeDefault,),
+                 Text("Pick address to continue",
+                  style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black.withOpacity(0.60))
+                )
+              ],)
+                  : const Center(child: CircularProgressIndicator()),
               SizedBox(height: (addressController.addressList != null && addressController.addressList!.length < 4) ? 200 : Dimensions.paddingSizeLarge),
 
               ResponsiveHelper.isDesktop(context) ? BottomButton(addressController: addressController, fromSignUp: fromSignUp, route: route) : const SizedBox(),

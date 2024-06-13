@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:stackfood_multivendor/common/widgets/confirmation_dialog_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
@@ -5,6 +10,7 @@ import 'package:stackfood_multivendor/features/location/controllers/location_con
 import 'package:stackfood_multivendor/features/location/widgets/location_search_dialog.dart';
 import 'package:stackfood_multivendor/features/location/widgets/permission_dialog.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
+import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -35,6 +41,8 @@ class _PickMapScreenState extends State<PickMapScreen> {
   CameraPosition? _cameraPosition;
   late LatLng _initialPosition;
 
+  bool _canExit = false;
+
   @override
   void initState() {
     super.initState();
@@ -48,92 +56,130 @@ class _PickMapScreenState extends State<PickMapScreen> {
     );
   }
 
+  Future<bool> _showExitConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) => ConfirmationDialogWidget(
+        title: 'Are you sure you want to go back?',
+        icon: Images.warning,
+        description: 'Please choose a location to continue login.',
+        onYesPressed: () {
+          Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+          // Navigator.of(context).pop(true);
+        },
+      ),
+    ) ?? false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
-      body: SafeArea(child: Center(child: SizedBox(
-        width: Dimensions.webMaxWidth,
-        child: GetBuilder<LocationController>(builder: (locationController) {
-          return Stack(children: [
+    return WillPopScope(
+      onWillPop: () async {
+        if (_canExit) {
+          if (GetPlatform.isAndroid) {
+            SystemNavigator.pop();
+          } else if (GetPlatform.isIOS) {
+            exit(0);
+          }
+        } else {
+          bool shouldExit = await _showExitConfirmationDialog(context);
+          if (shouldExit) {
+            _canExit = true;
+            if (GetPlatform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (GetPlatform.isIOS) {
+              exit(0);
+            }
+          }
+        }
+        return false;
+      },
+      child: Scaffold(
+        appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+        body: SafeArea(child: Center(child: SizedBox(
+          width: Dimensions.webMaxWidth,
+          child: GetBuilder<LocationController>(builder: (locationController) {
+            return Stack(children: [
 
-            GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: widget.fromAddAddress ? LatLng(locationController.position.latitude, locationController.position.longitude)
-                    : _initialPosition,
-                zoom: 16,
+              GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: widget.fromAddAddress ? LatLng(locationController.position.latitude, locationController.position.longitude)
+                      : _initialPosition,
+                  zoom: 16,
+                ),
+                minMaxZoomPreference: const MinMaxZoomPreference(0, 16),
+                onMapCreated: (GoogleMapController mapController) {
+                  _mapController = mapController;
+                  if(!widget.fromAddAddress) {
+                    Get.find<LocationController>().getCurrentLocation(false, mapController: mapController);
+                  }
+                },
+                zoomControlsEnabled: false,
+                onCameraMove: (CameraPosition cameraPosition) {
+                  _cameraPosition = cameraPosition;
+                },
+                onCameraMoveStarted: () {
+                  locationController.disableButton();
+                },
+                onCameraIdle: () {
+                  Get.find<LocationController>().updatePosition(_cameraPosition, false);
+                },
               ),
-              minMaxZoomPreference: const MinMaxZoomPreference(0, 16),
-              onMapCreated: (GoogleMapController mapController) {
-                _mapController = mapController;
-                if(!widget.fromAddAddress) {
-                  Get.find<LocationController>().getCurrentLocation(false, mapController: mapController);
-                }
-              },
-              zoomControlsEnabled: false,
-              onCameraMove: (CameraPosition cameraPosition) {
-                _cameraPosition = cameraPosition;
-              },
-              onCameraMoveStarted: () {
-                locationController.disableButton();
-              },
-              onCameraIdle: () {
-                Get.find<LocationController>().updatePosition(_cameraPosition, false);
-              },
-            ),
 
-            Center(child: !locationController.loading ? Image.asset(Images.pickMarker, height: 50, width: 50)
-                : const CircularProgressIndicator()),
+              Center(child: !locationController.loading ? Image.asset(Images.pickMarker, height: 50, width: 50)
+                  : const CircularProgressIndicator()),
 
-            Positioned(
-              top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
-              child: InkWell(
-                onTap: () => Get.dialog(LocationSearchDialog(mapController: _mapController)),
-                child: Container(
-                  height: 50,
-                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                  decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
-                  child: Row(children: [
-                    Icon(Icons.location_on, size: 25, color: Theme.of(context).primaryColor),
-                    const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                    Expanded(
-                      child: Text(
-                        locationController.pickAddress!,
-                        style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge), maxLines: 1, overflow: TextOverflow.ellipsis,
+              Positioned(
+                top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
+                child: InkWell(
+                  onTap: () => Get.dialog(LocationSearchDialog(mapController: _mapController)),
+                  child: Container(
+                    height: 50,
+                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                    decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
+                    child: Row(children: [
+                      Icon(Icons.location_on, size: 25, color: Theme.of(context).primaryColor),
+                      const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                      Expanded(
+                        child: Text(
+                          locationController.pickAddress!,
+                          style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge), maxLines: 1, overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: Dimensions.paddingSizeSmall),
-                    Icon(Icons.search, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
-                  ]),
+                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                      Icon(Icons.search, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
+                    ]),
+                  ),
                 ),
               ),
-            ),
 
-            Positioned(
-              bottom: 80, right: Dimensions.paddingSizeSmall,
-              child: FloatingActionButton(
-                mini: true, backgroundColor: Theme.of(context).cardColor,
-                onPressed: () => _checkPermission(() {
-                  Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);
-                }),
-                child: Icon(Icons.my_location, color: Theme.of(context).primaryColor),
+              Positioned(
+                bottom: 80, right: Dimensions.paddingSizeSmall,
+                child: FloatingActionButton(
+                  mini: true, backgroundColor: Theme.of(context).cardColor,
+                  onPressed: () => _checkPermission(() {
+                    Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);
+                  }),
+                  child: Icon(Icons.my_location, color: Theme.of(context).primaryColor),
+                ),
               ),
-            ),
 
-            Positioned(
-              bottom: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
-              child: CustomButtonWidget(
-                buttonText: locationController.inZone ? widget.fromAddAddress ? 'pick_address'.tr : 'pick_location'.tr
-                    : 'service_not_available_in_this_area'.tr,
-                isLoading: locationController.isLoading,
-                onPressed: (locationController.buttonDisabled || locationController.loading) ? null
-                    : () => _onPickAddressButtonPressed(locationController),
+              Positioned(
+                bottom: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
+                child: CustomButtonWidget(
+                  buttonText: locationController.inZone ? widget.fromAddAddress ? 'pick_address'.tr : 'pick_location'.tr
+                      : 'service_not_available_in_this_area'.tr,
+                  isLoading: locationController.isLoading,
+                  onPressed: (locationController.buttonDisabled || locationController.loading) ? null
+                      : () => _onPickAddressButtonPressed(locationController),
+                ),
               ),
-            ),
 
-          ]);
-        }),
-      ))),
+            ]);
+          }),
+        ))),
+      ),
     );
   }
 

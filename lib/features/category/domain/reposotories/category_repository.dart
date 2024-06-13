@@ -132,7 +132,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
   @override
   Future<List<CategoryModel>?> getFilCategoryList(String? type) async {
     List<CategoryModel>? categoryList;
-    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=$type');
+    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=1');
     if (response.statusCode == 200) {
       categoryList= [];
       response.body.forEach((category) => categoryList!.add(CategoryModel.fromJson(category)));
@@ -146,7 +146,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
   @override
   Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type) async {
     List<CategoryModel>? categoryList;
-    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=$type');
+    Response response = await apiClient.getData('${AppConstants.categoryUri}?food_type=2');
     if (response.statusCode == 200) {
       categoryList= [];
       response.body.forEach((category) => categoryList!.add(CategoryModel.fromJson(category)));

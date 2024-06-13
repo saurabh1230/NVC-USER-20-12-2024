@@ -52,11 +52,12 @@ class HomeScreen extends StatefulWidget {
     Get.find<HomeController>().getBannerList(reload);
     Get.find<CategoryController>().getCategoryList(reload);
     Get.find<CategoryController>().getFilCategoryList("1");
-    Get.find<CategoryController>().getFilUncookedCategoryList("2");
+
     Get.find<CuisineController>().getCuisineList();
     if(Get.find<SplashController>().configModel!.popularRestaurant == 1) {
       Get.find<RestaurantController>().getPopularRestaurantList(reload, 'all', false);
     }
+    Get.find<CategoryController>().getFilUncookedCategoryList("2");
     Get.find<CampaignController>().getItemCampaignList(reload);
     if(Get.find<SplashController>().configModel!.popularFood == 1) {
       Get.find<ProductController>().getPopularProductList(reload, 'all', false);
