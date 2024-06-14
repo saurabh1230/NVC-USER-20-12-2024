@@ -38,7 +38,7 @@ class WhatOnYourMindViewWidget extends StatelessWidget {
         ),
 
         SizedBox(
-          height: ResponsiveHelper.isMobile(context) ? 120 : 170,
+          height: ResponsiveHelper.isMobile(context) ? 130 : 170,
           child: categoryController.categoryList != null ? ListView.builder(
             physics: ResponsiveHelper.isMobile(context) ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -46,51 +46,48 @@ class WhatOnYourMindViewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtraSmall),
             itemCount: categoryController.categoryList!.length > 10 ? 11 : categoryController.categoryList!.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall),
-                child: Container(
-                  width:  70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(Dimensions.radiusSmall)
-                  ),
-                  child: CustomInkWellWidget(
-                    onTap: () => Get.toNamed(RouteHelper.getCategoryProductRoute(
-                      categoryController.categoryList![index].id, categoryController.categoryList![index].name!,
-                    )),
-                    radius: Dimensions.radiusSmall,
-                    child: Padding(
-                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                      child: Column(children: [
+              return Container(
+                width:  90,
+                height: 90,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall)
+                ),
+                child: CustomInkWellWidget(
+                  onTap: () => Get.toNamed(RouteHelper.getCategoryProductRoute(
+                    categoryController.categoryList![index].id, categoryController.categoryList![index].name!,
+                  )),
+                  radius: Dimensions.radiusSmall,
+                  child: Padding(
+                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                    child: Column(children: [
 
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                              color: Theme.of(context).cardColor,
-                              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)]
-                          ),
-                          child: ClipRRect(
+                      Container(
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                            child: CustomImageWidget(
-                              image: '${Get.find<SplashController>().configModel!.baseUrls!.categoryImageUrl}/${categoryController.categoryList![index].image}',
-                              height: ResponsiveHelper.isMobile(context) ? 70 : 100, width: ResponsiveHelper.isMobile(context) ? 70 : 100, fit: BoxFit.cover,
-                            ),
+                            color: Theme.of(context).cardColor,
+                            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)]
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                          child: CustomImageWidget(
+                            image: '${Get.find<SplashController>().configModel!.baseUrls!.categoryImageUrl}/${categoryController.categoryList![index].image}',
+                            height: ResponsiveHelper.isMobile(context) ? 70 : 100, width: ResponsiveHelper.isMobile(context) ? 70 : 100, fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(height: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
+                      ),
+                      SizedBox(height: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
 
-                        Expanded(child: Text(
-                          categoryController.categoryList![index].name!,
-                          style: robotoMedium.copyWith(
-                            fontSize: Dimensions.fontSizeSmall,
-                            // color:Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
-                          maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
-                        )),
+                      Expanded(child: Text(
+                        categoryController.categoryList![index].name!,
+                        style: robotoMedium.copyWith(
+                          fontSize: Dimensions.fontSizeSmall,
+                          // color:Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                        maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                      )),
 
-                      ]),
-                    ),
+                    ]),
                   ),
                 ),
               );
@@ -107,47 +104,40 @@ class WhatOnYourMindViewWidget extends StatelessWidget {
 
 
 class WebWhatOnYourMindViewShimmer extends StatelessWidget {
-  final CategoryController categoryController;
-  const WebWhatOnYourMindViewShimmer({super.key, required this.categoryController});
+  final CategoryController? categoryController;
+  const WebWhatOnYourMindViewShimmer({super.key,  this.categoryController});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-      child: SizedBox(
-        height: ResponsiveHelper.isMobile(context) ? 120 : 170,
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 10,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
-              child: Container(
-                width: ResponsiveHelper.isMobile(context) ? 70 : 108,
-                height: ResponsiveHelper.isMobile(context) ? 70 : 100,
-                padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                margin: EdgeInsets.only(top: ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeSmall),
-                child: Shimmer(
-                  duration: const Duration(seconds: 2),
-                  enabled: categoryController.categoryList == null,
-                  child: Column(children: [
-
-                    Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.grey[300]),
-                      height: ResponsiveHelper.isMobile(context) ? 70 : 80, width: 70,
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                    Container(height: ResponsiveHelper.isMobile(context) ? 10 : 15, width: 150, color: Colors.grey[300]),
-
-                  ]),
+    return SizedBox(
+      height: ResponsiveHelper.isMobile(context) ? 130 : 170,
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 10,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Container(
+            width: ResponsiveHelper.isMobile(context) ? 90 : 108,
+            height: ResponsiveHelper.isMobile(context) ? 90 : 100,
+            padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+            margin: EdgeInsets.only(top: ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeSmall),
+            child: Shimmer(
+              duration: const Duration(seconds: 2),
+              enabled: categoryController!.categoryList == null,
+              child: Column(children: [
+                Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.grey[300]),
+                  height: ResponsiveHelper.isMobile(context) ? 70 : 100, width: ResponsiveHelper.isMobile(context) ? 70 : 100,
                 ),
-              ),
-            );
-          },
-        ),
+                const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                Container(height: ResponsiveHelper.isMobile(context) ? 10 : 15, width: 150, color: Colors.grey[300]),
+
+              ]),
+            ),
+          );
+        },
       ),
     );
   }

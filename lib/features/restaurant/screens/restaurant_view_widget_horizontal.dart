@@ -265,6 +265,7 @@ import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart
 import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/icon_with_text_row_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
@@ -574,14 +575,15 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: Dimensions.paddingSizeOverLarge),
               child: Text('no_restaurant_available'.tr, style: robotoMedium),
             ),
-          )
-              : ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 12,
-            itemBuilder: (context, index) {
-              return const PopularRestaurantShimmer();
-            },
-          ),
+          ) :
+          const PopularRestaurantShimmer(),
+          //     : ListView.builder(
+          //   scrollDirection: Axis.horizontal,
+          //   itemCount: 12,
+          //   itemBuilder: (context, index) {
+          //     return const WebWhatOnYourMindViewShimmer();
+          //   },
+          // ),
         ),
       ],
     );
@@ -766,7 +768,7 @@ class PopularRestaurantShimmer extends StatelessWidget {
                 margin: EdgeInsets.only(left: index == 0 ? 0 : Dimensions.paddingSizeDefault),
                 height: 172, width: 253,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
+                  color: Theme.of(context).cardColor.withOpacity(0.50),
                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                 ),
                 child: Stack(
@@ -792,17 +794,17 @@ class PopularRestaurantShimmer extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 15, width: 100,
-                              color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
-
-                            ),
-                            const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                            Container(
-                              height: 15, width: 200,
-                              color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
-                            ),
+                            // Container(
+                            //   height: 10, width: 100,
+                            //   color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                            //
+                            // ),
+                            // const SizedBox(height: Dimensions.paddingSizeSmall),
+                            //
+                            // Container(
+                            //   height: 10, width: 150,
+                            //   color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                            // ),
 
                             const SizedBox(height: Dimensions.paddingSizeSmall),
                           ],

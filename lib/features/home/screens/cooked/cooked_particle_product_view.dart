@@ -132,7 +132,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
             )),
             centerTitle: true,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back),
               color: Theme.of(context).textTheme.bodyLarge!.color,
               onPressed: () {
                 if(catController.isSearching) {

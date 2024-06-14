@@ -335,6 +335,7 @@ import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_wi
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/home/widgets/restaurants_view_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_view_widget_horizontal.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/helper/extensions.dart';
@@ -469,7 +470,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
             )),
             centerTitle: true,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back),
               color: Theme.of(context).textTheme.bodyLarge!.color,
               onPressed: () {
                 if(catController.isSearching) {
@@ -531,10 +532,10 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                 child: Center(child: Column(
                   children: [
                     (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-                      height: 160,
+                      height: 130,
                       width: Dimensions.webMaxWidth, /*color: Theme.of(context).cardColor,*/
                       padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                      child: ListView.builder(
+                      child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: catController.subCategoryList!.length,
                         padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
@@ -543,61 +544,111 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                           return InkWell(
                             onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                              margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+                              width:  90,
+                              height: 90,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radiusSmall),
+                                border:
+                                index == catController.subCategoryIndex ?
+                                     Border(
+                                    bottom: BorderSide(
+                                        color: Theme.of(context)
+                                            .primaryColor,
+                                        width: 5.0))
+                                    : null,
                               ),
+                              // padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                              // margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                              //   color: index == catController.subCategoryIndex ?
+                              //   Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+                              // ),
                               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      width:
-                                      ResponsiveHelper.isMobile(context)
-                                          ? 80
-                                          : 120,
-                                      height:
-                                      ResponsiveHelper.isMobile(context)
-                                          ? 80
-                                          : 120,
-                                      clipBehavior: Clip.hardEdge,
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: const BoxDecoration(),
-                                      child: ClipOval(
-                                        child: CachedNetworkImage(
-                                          imageUrl: catController.subCategoryList != null &&
-                                              index < catController.subCategoryList!.length &&
-                                              catController.subCategoryList![index].name != "All" &&
-                                              catController.subCategoryList![index].image != null &&
-                                              catController.subCategoryList![index].image!.isNotEmpty
-                                              ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
-                                              : 'assets/image/dish-svgrepo-com.png',
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
-                                          errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height: ResponsiveHelper.isMobile(
-                                            context)
-                                            ? Dimensions.paddingSizeDefault
-                                            : Dimensions.paddingSizeLarge),
-                                    Text(
-                                      catController.subCategoryList![index].name!,
-                                      style: index == catController.subCategoryIndex
-                                          ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
-                                          : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                                    ),
-                                  ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                      color: Theme.of(context).cardColor,
+                                      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)]
+                                  ),
+                                  child: ClipRRect( borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                    child: CachedNetworkImage(
+                                      height: ResponsiveHelper.isMobile(context) ? 70 : 100, width: ResponsiveHelper.isMobile(context) ? 70 : 100,
+                                      imageUrl: catController.subCategoryList != null &&
+                                          index < catController.subCategoryList!.length &&
+                                          catController.subCategoryList![index].name != "All" &&
+                                          catController.subCategoryList![index].image != null &&
+                                          catController.subCategoryList![index].image!.isNotEmpty
+                                          ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
+                                          : 'assets/image/dish-svgrepo-com.png', fit: BoxFit.cover,
+                                                placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
+                                                errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
+                                              ),
+                                  ),
                                 ),
+                                SizedBox(height: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
+                                Expanded(child: Text(
+                                  catController.subCategoryList![index].name!,
+                                  style: robotoMedium.copyWith(
+                                    fontSize: Dimensions.fontSizeSmall,
+                                    // color:Theme.of(context).textTheme.bodyMedium!.color,
+                                  ),
+                                  maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                                )),
+
+                                // Column(
+                                //   children: [
+                                //     Container(
+                                //       width:
+                                //       ResponsiveHelper.isMobile(context)
+                                //           ? 80
+                                //           : 120,
+                                //       height:
+                                //       ResponsiveHelper.isMobile(context)
+                                //           ? 80
+                                //           : 120,
+                                //       clipBehavior: Clip.hardEdge,
+                                //       padding: const EdgeInsets.all(8),
+                                //       decoration: const BoxDecoration(),
+                                //       child: ClipOval(
+                                //         child: CachedNetworkImage(
+                                //           imageUrl: catController.subCategoryList != null &&
+                                //               index < catController.subCategoryList!.length &&
+                                //               catController.subCategoryList![index].name != "All" &&
+                                //               catController.subCategoryList![index].image != null &&
+                                //               catController.subCategoryList![index].image!.isNotEmpty
+                                //               ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
+                                //               : 'assets/image/dish-svgrepo-com.png',
+                                //           fit: BoxFit.cover,
+                                //           placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
+                                //           errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //     SizedBox(
+                                //         height: ResponsiveHelper.isMobile(
+                                //             context)
+                                //             ? Dimensions.paddingSizeDefault
+                                //             : Dimensions.paddingSizeLarge),
+                                //     Text(
+                                //       catController.subCategoryList![index].name!,
+                                //       style: index == catController.subCategoryIndex
+                                //           ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                //           : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
+                                //     ),
+                                //   ],
+                                // ),
                               ]),
                             ),
                           );
-                        },
+                        }, separatorBuilder: (BuildContext context, int index)  => SizedBox(
+                          width: ResponsiveHelper.isMobile(context)
+                          ? 0
+                          : Dimensions.paddingSizeDefault),
                       ),
-                    )) :  CategoryViewShimmer(categoryController: catController,),
+                    )) :  WebWhatOnYourMindViewShimmer(categoryController: catController,),
                   ],
                 )),
               ),
