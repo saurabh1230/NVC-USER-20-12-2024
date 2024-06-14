@@ -325,6 +325,7 @@
 //     });
 //   }
 // }
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:stackfood_multivendor/common/models/product_model.dart';
@@ -340,6 +341,7 @@ import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
+import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/cart_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
@@ -517,6 +519,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
           body: SingleChildScrollView(
+            controller: scrollController,
             child: Column(children: [
               Container(
                 width: Get.size.width,
@@ -549,30 +552,30 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                                 Column(
                                   children: [
-                                    HoverZoom(
-                                      child: Container(
-                                        width:
-                                        ResponsiveHelper.isMobile(context)
-                                            ? 80
-                                            : 120,
-                                        height:
-                                        ResponsiveHelper.isMobile(context)
-                                            ? 80
-                                            : 120,
-                                        clipBehavior: Clip.hardEdge,
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: const BoxDecoration(),
-                                        child: ClipOval(
-                                          child: CustomImageWidget(
-                                            image: catController.subCategoryList != null &&
-                                                index < catController.subCategoryList!.length &&
-                                                catController.subCategoryList![index].name != "All" &&
-                                                catController.subCategoryList![index].image != null &&
-                                                catController.subCategoryList![index].image!.isNotEmpty
-                                                ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
-                                                : 'assets/image/dish-svgrepo-com.png', // Provide a fallback image URL
-                                            fit: BoxFit.cover,
-                                          ),
+                                    Container(
+                                      width:
+                                      ResponsiveHelper.isMobile(context)
+                                          ? 80
+                                          : 120,
+                                      height:
+                                      ResponsiveHelper.isMobile(context)
+                                          ? 80
+                                          : 120,
+                                      clipBehavior: Clip.hardEdge,
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: const BoxDecoration(),
+                                      child: ClipOval(
+                                        child: CachedNetworkImage(
+                                          imageUrl: catController.subCategoryList != null &&
+                                              index < catController.subCategoryList!.length &&
+                                              catController.subCategoryList![index].name != "All" &&
+                                              catController.subCategoryList![index].image != null &&
+                                              catController.subCategoryList![index].image!.isNotEmpty
+                                              ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
+                                              : 'assets/image/dish-svgrepo-com.png',
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
+                                          errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
                                         ),
                                       ),
                                     ),

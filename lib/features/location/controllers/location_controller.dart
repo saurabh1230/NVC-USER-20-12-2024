@@ -187,7 +187,7 @@ class LocationController extends GetxController implements GetxService {
         autoNavigate(address, fromSignUp, route, canRoute, isDesktop);
       } else {
         Get.back();
-        showCustomSnackBar(response.message);
+        // showCustomSnackBar(response.message);
       }
     });
   }

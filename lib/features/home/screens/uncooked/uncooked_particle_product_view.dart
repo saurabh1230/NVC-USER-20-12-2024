@@ -114,7 +114,7 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
           }else {}
         },
         child: Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context) ?   WebMenuBar() : AppBar(
+          appBar: ResponsiveHelper.isDesktop(context) ?   const WebMenuBar() : AppBar(
             title: catController.isSearching ? TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
@@ -147,12 +147,19 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
             elevation: 0,
             actions: [
               IconButton(
-                onPressed: () => catController.toggleSearch(),
+                onPressed: () => Get.toNamed(RouteHelper.getSearchRoute()),
                 icon: Icon(
-                  catController.isSearching ? Icons.close_sharp : Icons.search,
+                  Icons.search,
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
+              // IconButton(
+              //   onPressed: () => catController.toggleSearch(),
+              //   icon: Icon(
+              //     catController.isSearching ? Icons.close_sharp : Icons.search,
+              //     color: Theme.of(context).textTheme.bodyLarge!.color,
+              //   ),
+              // ),
 
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
@@ -183,6 +190,7 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
           body: SingleChildScrollView(
+            controller: scrollController,
             child: Column(children: [
 
               // const SizedBox(height: Dimensions.paddingSizeDefault,),

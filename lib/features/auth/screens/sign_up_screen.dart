@@ -45,8 +45,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
                 Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('sign_up'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                  // alignment: Alignment.topLeft,
+                  child: Text('sign_up'.tr, style: robotoBold.copyWith(fontSize: 20)),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeDefault),
 

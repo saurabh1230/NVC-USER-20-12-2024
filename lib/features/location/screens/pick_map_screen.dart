@@ -4,6 +4,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:stackfood_multivendor/common/widgets/confirmation_dialog_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
+import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
+import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
+import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
 import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
@@ -62,9 +66,15 @@ class _PickMapScreenState extends State<PickMapScreen> {
       builder: (context) => ConfirmationDialogWidget(
         title: 'Are you sure you want to go back?',
         icon: Images.warning,
-        description: 'Please choose a location to continue login.',
+        description: 'Please choose a location to continue.',
         onYesPressed: () {
+          Get.find<ProfileController>().setForceFullyUserEmpty();
+          Get.find<AuthController>().clearSharedData();
+          Get.find<AuthController>().socialLogout();
+          Get.find<CartController>().clearCartList();
+          Get.find<FavouriteController>().removeFavourites();
           Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+          // Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
           // Navigator.of(context).pop(true);
         },
       ),

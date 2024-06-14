@@ -39,7 +39,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
       actions: showCart || onVegFilterTap != null ? [
         showCart ? IconButton(
           onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
-          icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
+          icon: const CartWidget(color: Colors.white, size: 25),
         ) : const SizedBox(),
 
         onVegFilterTap != null ? VegFilterWidget(

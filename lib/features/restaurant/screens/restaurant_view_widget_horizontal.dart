@@ -560,14 +560,14 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
           restaurants != null
               ? restaurants!.isNotEmpty
               ?
-          ListView.builder(
+          ListView.separated(
             itemCount: restaurants!.length,
             padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault,left: Dimensions.paddingSizeDefault),
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return buildContainer(context, restaurants![index]!);
-            },
+            }, separatorBuilder: (BuildContext context, int index) => const SizedBox(width: Dimensions.paddingSizeDefault,),
           ) :
           Center(
             child: Padding(

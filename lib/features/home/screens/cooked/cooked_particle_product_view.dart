@@ -146,12 +146,19 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
             elevation: 0,
             actions: [
               IconButton(
-                onPressed: () => catController.toggleSearch(),
+                onPressed: () => Get.toNamed(RouteHelper.getSearchRoute()),
                 icon: Icon(
-                  catController.isSearching ? Icons.close_sharp : Icons.search,
+                 Icons.search,
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
+              // IconButton(
+              //   onPressed: () => catController.toggleSearch(),
+              //   icon: Icon(
+              //     catController.isSearching ? Icons.close_sharp : Icons.search,
+              //     color: Theme.of(context).textTheme.bodyLarge!.color,
+              //   ),
+              // ),
 
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),

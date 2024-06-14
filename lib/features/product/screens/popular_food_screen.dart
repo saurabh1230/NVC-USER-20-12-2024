@@ -47,7 +47,7 @@ class _PopularFoodScreenState extends State<PopularFoodScreen> {
             onVegFilterTap: widget.fromIsRestaurantFood ? null : (String type) {
               if(widget.isPopular) {
                 productController.getPopularProductList(true, type, true);
-              }else {
+              } else {
                 reviewController.getReviewedProductList(true, type, true);
               }
             },
@@ -59,7 +59,6 @@ class _PopularFoodScreenState extends State<PopularFoodScreen> {
               child: GetBuilder<ProductController>(builder: (productController) {
                 return GetBuilder<RestaurantController>(
                   builder: (restaurantController) {
-
                     return ProductViewWidget(
                       isRestaurant: false, restaurants: null,
                       products: widget.isPopular ? productController.popularProductList : widget.fromIsRestaurantFood ? restaurantController.recommendedProductModel?.products : reviewController.reviewedProductList,

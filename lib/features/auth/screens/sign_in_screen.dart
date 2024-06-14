@@ -101,10 +101,10 @@ class SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
                     Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                      // alignment: Alignment.topLeft,
+                      child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: 26)),
                     ),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
+                    const SizedBox(height: Dimensions.paddingSizeLarge),
 
                     SignInWidget(exitFromApp: widget.exitFromApp, backFromThis: widget.backFromThis),
 
