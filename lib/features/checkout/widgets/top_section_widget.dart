@@ -143,15 +143,15 @@ class TopSectionWidget extends StatelessWidget {
 
                   (Get.find<SplashController>().configModel!.homeDelivery! && checkoutController.restaurant!.delivery!)
                       ? DeliveryOptionButton(
-                    value: 'delivery', title: 'home_delivery'.tr, charge: charge,
+                    value: 'delivery', title: 'Home / Office Delivery' /*'home_delivery'.tr*/, charge: charge,
                     isFree: checkoutController.restaurant!.freeDelivery, total: total,
                   ) : const SizedBox(),
                   const SizedBox(width: Dimensions.paddingSizeDefault),
 
-                  (Get.find<SplashController>().configModel!.takeAway! && checkoutController.restaurant!.takeAway!)
-                      ? DeliveryOptionButton(
-                    value: 'take_away', title: 'take_away'.tr, charge: deliveryCharge, isFree: true, total: total,
-                  ) : const SizedBox(),
+                  // (Get.find<SplashController>().configModel!.takeAway! && checkoutController.restaurant!.takeAway!)
+                  //     ? DeliveryOptionButton(
+                  //   value: 'take_away', title: 'take_away'.tr, charge: deliveryCharge, isFree: true, total: total,
+                  // ) : const SizedBox(),
 
                 ])),
                 SizedBox(height: isDesktop ? Dimensions.paddingSizeDefault : 0),

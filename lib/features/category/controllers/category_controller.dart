@@ -105,9 +105,9 @@ class CategoryController extends GetxController implements GetxService {
     // _cookedCategoryProductList =null;
     _isRestaurant = false;
     _subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
-    if(_subCategoryList != null) {
-      getCategoryProductList(categoryID, 1, 'all', false);
-    }
+    // if(_subCategoryList != null) {
+    //   getCategoryProductList(categoryID, 1, 'all', false);
+    // }
   }
 
   void setSubCategoryIndex(int index, String? categoryID) {
@@ -133,6 +133,35 @@ class CategoryController extends GetxController implements GetxService {
       // _cookedCategoryProductList = null;
     }
     ProductModel? productModel = await categoryServiceInterface.getCategoryProductList(categoryID, offset, type);
+    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
+    if(productModel != null) {
+      if (offset == 1) {
+        _categoryProductList = [];
+        // _cookedCategoryProductList = [];
+      }
+      _categoryProductList!.addAll(productModel.products!);
+      // _cookedCategoryProductList!.addAll(categoryProductModel!.cookedproducts!);
+      _pageSize = productModel.totalSize;
+      _isLoading = false;
+    }
+    update();
+  }
+
+  void getUncookedProducts(int offset, String type, bool notify) async {
+    _offset = offset;
+    if(offset == 1) {
+      if(_type == type) {
+        _isSearching = false;
+      }
+      _type = type;
+      if(notify) {
+        update();
+      }
+      _categoryProductList = null;
+      // _cookedCategoryProductList = null;
+    }
+    ProductModel? productModel = await categoryServiceInterface.getUnCookedAllProductList(offset, type);
     // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
     // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
     if(productModel != null) {
@@ -312,6 +341,30 @@ class CategoryController extends GetxController implements GetxService {
     update();
   }
 
+  void getFilterRestaurantList( int offset, String type, bool notify) async {
+    _offset = offset;
+    if(offset == 1) {
+      if(_type == type) {
+        _isSearching = false;
+      }
+      _type = type;
+      if(notify) {
+        update();
+      }
+      _categoryRestaurantList = null;
+    }
+    RestaurantModel? restaurantModel = await categoryServiceInterface.getFilterRestaurantList(offset, type);
+    if(restaurantModel != null) {
+      if (offset == 1) {
+        _categoryRestaurantList = [];
+      }
+      _categoryRestaurantList!.addAll(restaurantModel.restaurants!);
+      _restaurantPageSize = restaurantModel.totalSize;
+      _isLoading = false;
+    }
+    update();
+  }
+
   void searchData(String? query, String? categoryID, String type) async {
     if((_isRestaurant && query!.isNotEmpty /*&& query != _restResultText*/) || (!_isRestaurant && query!.isNotEmpty/* && query != _foodResultText*/)) {
       _searchText = query;
@@ -425,6 +478,7 @@ class CategoryController extends GetxController implements GetxService {
       if (offset == 1) {
         _uncookedList = productModel;
       }else {
+
         _uncookedList!.totalSize = productModel.totalSize;
         _uncookedList!.offset = productModel.offset;
         _uncookedList!.products!.addAll(productModel.products!);

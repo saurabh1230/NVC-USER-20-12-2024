@@ -304,6 +304,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
                   )),
                 ),
+                SliverToBoxAdapter(
+                  child: Center(child: SizedBox(
+                    width: Dimensions.webMaxWidth,
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Image.asset("assets/image/fssai.png",height: 80,)
+
+                    ]),
+                  )),
+                ),
 
                 SliverPersistentHeader(
                   pinned: true,

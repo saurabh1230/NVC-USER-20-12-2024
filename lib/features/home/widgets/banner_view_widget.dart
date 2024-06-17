@@ -89,24 +89,24 @@ class BannerViewWidget extends StatelessWidget {
             ),
 
             const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: homeController.bannerImageList!.map((bnr) {
-                int index = homeController.bannerImageList!.indexOf(bnr);
-                int totalBanner = homeController.bannerImageList!.length;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: index == homeController.currentIndex ? Container(
-                    decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                    child: Text('${(index) + 1}/$totalBanner', style: robotoRegular.copyWith(color: Colors.white, fontSize: 12)),
-                  ) : Container(
-                    height: 4.18, width: 5.57,
-                    decoration: BoxDecoration(color: Theme.of(context).primaryColor.withOpacity(0.5), borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
-                  ),
-                );
-              }).toList(),
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: homeController.bannerImageList!.map((bnr) {
+            //     int index = homeController.bannerImageList!.indexOf(bnr);
+            //     int totalBanner = homeController.bannerImageList!.length;
+            //     return Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 3),
+            //       child: index == homeController.currentIndex ? Container(
+            //         decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
+            //         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+            //         child: Text('${(index) + 1}/$totalBanner', style: robotoRegular.copyWith(color: Colors.white, fontSize: 12)),
+            //       ) : Container(
+            //         height: 4.18, width: 5.57,
+            //         decoration: BoxDecoration(color: Theme.of(context).primaryColor.withOpacity(0.5), borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
+            //       ),
+            //     );
+            //   }).toList(),
+            // ),
           ],
         ) : Shimmer(
           duration: const Duration(seconds: 2),

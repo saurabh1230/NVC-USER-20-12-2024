@@ -35,6 +35,11 @@ class CategoryService implements CategoryServiceInterface {
   }
 
   @override
+  Future<RestaurantModel?> getFilterRestaurantList(int offset, String type) async {
+    return await categoryRepositoryInterface.getFilterRestaurantList(offset, type);
+  }
+
+  @override
   Future<Response> getSearchData(String? query, String? categoryID, bool isRestaurant, String type) async {
     return await categoryRepositoryInterface.getSearchData(query, categoryID, isRestaurant, type);
   }

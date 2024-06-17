@@ -3,10 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
+import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/home/widgets/all_restaurants_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/web/web_banner_view_widget.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_view_widget_horizontal.dart';
 import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
@@ -43,12 +45,16 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
   void initState() {
     super.initState();
 
-    // Get.find<CategoryController>().getCookedProductList(1, true,'uncooked');
-    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
-    Get.find<CategoryController>().getFilUncookedCategoryList("2");
+    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    // Get.find<CategoryController>().getUnCookedProductList(1,false,"uncooked");
+    Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
+    // Get.find<CategoryController>().getFilUncookedCategoryList("2");
+
+
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     // print('Print Category ID${widget.categoryID}');
-    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent
@@ -58,30 +64,42 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
         if (Get.find<CategoryController>().offset < pageSize) {
           debugPrint('end of the page');
           Get.find<CategoryController>().showBottomLoader();
-          Get.find<CategoryController>().getCategoryProductList(
-            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          );
+
+          if(Get.find<CategoryController>().selectedCookedCategoryId == null) {
+            Get.find<CategoryController>().getUncookedProducts(Get.find<CategoryController>().offset+1,"uncooked",false);
+          } else {
+            Get.find<CategoryController>().getCategoryProductList(
+              Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+                  : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+              Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+            );
+          }
         }
       }
     });
-    restaurantScrollController.addListener(() {
-      if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryRestaurantList != null
-          && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
-        if (Get.find<CategoryController>().offset < pageSize) {
-          debugPrint('end of the page');
-          Get.find<CategoryController>().showBottomLoader();
-          Get.find<CategoryController>().getCategoryRestaurantList(
-            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          );
-        }
-      }
-    });
+    // restaurantScrollController.addListener(() {
+    //   if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
+    //       && Get.find<CategoryController>().categoryRestaurantList != null
+    //       && !Get.find<CategoryController>().isLoading) {
+    //     int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
+    //     if (Get.find<CategoryController>().offset < pageSize) {
+    //       debugPrint('end of the page');
+    //       Get.find<CategoryController>().showBottomLoader();
+    //       Get.find<CategoryController>().getCategoryRestaurantList(
+    //         Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+    //             : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+    //         Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+    //       );
+    //     }
+    //   }
+    // });
+  }
+
+
+  @override
+  void dispose() {
+    Get.find<CategoryController>().selectedCookedCategoryId = null;
+    super.dispose();
   }
 
   @override
@@ -253,10 +271,16 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                     width: Dimensions.webMaxWidth,
                     child: Column(
                       children: [
-
+                        RestaurantsViewHorizontalWidget(restaurants: catController.categoryRestaurantList),
+                        const SizedBox(height: Dimensions.paddingSizeDefault,),
                         ProductViewWidget(
-                          isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
+                          isRestaurant: false,
+                          products:
+                          catController.categoryProductList,
+                          restaurants: null,
+                          noDataText: 'no food found',
                         ),
+
 
                         catController.isLoading ? Center(
                           child: Padding(

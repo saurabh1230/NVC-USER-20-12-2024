@@ -81,6 +81,16 @@ class CategoryRepository implements CategoryRepositoryInterface {
     return restaurantModel;
   }
 
+  @override
+  Future<RestaurantModel?> getFilterRestaurantList(int offset, String type) async {
+    RestaurantModel? restaurantModel;
+    Response response = await apiClient.getData('${AppConstants.restaurantUri}/all?limit=10&offset=$offset&type=$type');
+    if (response.statusCode == 200) {
+      restaurantModel = RestaurantModel.fromJson(response.body);
+    }
+    return restaurantModel;
+  }
+
   // @override
   // Future<dynamic> getSearchData(String? query, String? categoryID, bool isRestaurant, String type) async {
   //   RestaurantModel? searchRestaurantModel;

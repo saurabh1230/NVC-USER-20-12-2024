@@ -8,6 +8,7 @@ abstract class CategoryRepositoryInterface implements RepositoryInterface {
   Future<List<CategoryModel>?> getSubCategoryList(String? parentID);
   Future<ProductModel?> getCategoryProductList(String? categoryID, int offset, String type);
   Future<RestaurantModel?> getCategoryRestaurantList(String? categoryID, int offset, String type);
+  Future<RestaurantModel?> getFilterRestaurantList(int offset, String type);
   Future<Response> getSearchData(String? query, String? categoryID, bool isRestaurant, String type);
   Future<ProductModel?> getAllProductList(int offset, type,);
   Future<ProductModel?> getCAllProductList(int offset,type);

@@ -378,8 +378,6 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
     // Get.find<CategoryController>().getCategoryRestaurantList("1",1,"",false);
     print("check ======================> ");
 
-
-
     print("check ======================> ");
 
 

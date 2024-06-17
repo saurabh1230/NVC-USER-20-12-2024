@@ -136,6 +136,8 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
     return popularRestaurantList;
   }
 
+
+
   Future<List<Restaurant>?> _getRecentlyViewedRestaurantList(String type) async {
     List<Restaurant>? recentlyViewedRestaurantList;
     Response response = await apiClient.getData('${AppConstants.recentlyViewedRestaurantUri}?type=$type');

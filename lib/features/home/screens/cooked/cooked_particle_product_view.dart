@@ -5,6 +5,7 @@ import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/cooked/cooked_whats_on_your_mind_widget.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_view_widget_horizontal.dart';
 import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
@@ -42,6 +43,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<CategoryController>().getFilUncookedCategoryList("1");
+      Get.find<CategoryController>().getFilterRestaurantList(1, "1", false,);
     });
 
 
@@ -241,6 +243,8 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                     width: Dimensions.webMaxWidth,
                     child: Column(
                       children: [
+                        RestaurantsViewHorizontalWidget(restaurants: catController.categoryRestaurantList),
+                        const SizedBox(height: Dimensions.paddingSizeDefault,),
 
                         ProductViewWidget(
                           isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
