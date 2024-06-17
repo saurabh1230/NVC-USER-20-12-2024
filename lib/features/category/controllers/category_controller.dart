@@ -97,6 +97,16 @@ class CategoryController extends GetxController implements GetxService {
   //   }
   // }
 
+  void clearSubCategoryList() {
+    selectedCookedCategoryId = null;
+    _subCategoryList = null;
+    _subCategoryIndex = 0;
+    _categoryProductList = null;
+    _isRestaurant = false;
+    _categoryRestaurantList = null;
+    // update(); // call update to notify listeners
+  }
+
   void getSubCategoryList(String? categoryID) async {
     _subCategoryIndex = 0;
     _subCategoryList = null;

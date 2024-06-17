@@ -44,8 +44,9 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
   @override
   void initState() {
     super.initState();
+    Get.find<CategoryController>().clearSubCategoryList();
 
-    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     // Get.find<CategoryController>().getUnCookedProductList(1,false,"uncooked");
     Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
     // Get.find<CategoryController>().getFilUncookedCategoryList("2");
@@ -96,11 +97,11 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
   }
 
 
-  @override
-  void dispose() {
-    Get.find<CategoryController>().selectedCookedCategoryId = null;
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   Get.find<CategoryController>().clearSubCategoryList();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

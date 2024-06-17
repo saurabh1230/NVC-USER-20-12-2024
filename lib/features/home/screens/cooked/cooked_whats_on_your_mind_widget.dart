@@ -39,6 +39,7 @@ class CategoryWhatOnYourMindViewWidget extends StatelessWidget {
               onTap: () {
                 Get.find<CategoryController>().getSubCategoryList(category.id!.toString());
                 categoryController.selectCookedCategory(category.id!);
+                categoryController.getCategoryProductList(category.id.toString(), 1, 'all', false);
               },
               child: Container(
               width:  90,

@@ -41,16 +41,19 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
   @override
   void initState() {
     super.initState();
+    Get.find<CategoryController>().clearSubCategoryList();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<CategoryController>().getFilUncookedCategoryList("1");
+
+      // Get.find<CategoryController>().getFilUncookedCategoryList("1");
       Get.find<CategoryController>().getFilterRestaurantList(1, "1", false,);
+      Get.find<CategoryController>().getUncookedProducts(1,"cooked",false);
     });
 
 
 
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
-    print('Print Category ID${widget.categoryID}');
-    Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent
           && Get.find<CategoryController>().categoryProductList != null
@@ -59,31 +62,47 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
         if (Get.find<CategoryController>().offset < pageSize) {
           debugPrint('end of the page');
           Get.find<CategoryController>().showBottomLoader();
-          Get.find<CategoryController>().getCategoryProductList(
-            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          );
+          if(Get.find<CategoryController>().selectedCookedCategoryId == null) {
+            Get.find<CategoryController>().getUncookedProducts(Get.find<CategoryController>().offset+1,"cooked",false);
+          } else {
+            Get.find<CategoryController>().getCategoryProductList(
+              Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+                  : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+              Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+            );
+          }
+          // Get.find<CategoryController>().getCategoryProductList(
+          //   Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+          //       : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+          //   Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+          // );
         }
       }
     });
-    restaurantScrollController.addListener(() {
-      if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryRestaurantList != null
-          && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
-        if (Get.find<CategoryController>().offset < pageSize) {
-          debugPrint('end of the page');
-          Get.find<CategoryController>().showBottomLoader();
-          Get.find<CategoryController>().getCategoryRestaurantList(
-            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          );
-        }
-      }
-    });
+    // restaurantScrollController.addListener(() {
+    //   if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
+    //       && Get.find<CategoryController>().categoryRestaurantList != null
+    //       && !Get.find<CategoryController>().isLoading) {
+    //     int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
+    //     if (Get.find<CategoryController>().offset < pageSize) {
+    //       debugPrint('end of the page');
+    //       Get.find<CategoryController>().showBottomLoader();
+    //       Get.find<CategoryController>().getCategoryRestaurantList(
+    //         Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+    //             : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+    //         Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+    //       );
+    //     }
+    //   }
+    // });
   }
+
+  // @override
+  // void dispose() {
+  //   Get.find<CategoryController>().selectedCookedCategoryId = null;
+  //   Get.find<CategoryController>().subCategoryList == null;
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -191,6 +210,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
           body: SingleChildScrollView(
+            controller: scrollController,
             child: Column(children: [
               Container(
                 width: Get.size.width,

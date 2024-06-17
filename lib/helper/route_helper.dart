@@ -438,11 +438,11 @@ class RouteHelper {
           : Get.parameters['page'] == 'refund-policy' ? HtmlType.refund : HtmlType.aboutUs,
     )),
     GetPage(name: categories, page: () => getRoute(const CategoryScreen())),
-    GetPage(name: categoryProduct, page: () {
-      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
-      String data = utf8.decode(decode);
-      return getRoute(CategoryProductScreen(categoryID: Get.parameters['id'], categoryName: data));
-    }),
+    // GetPage(name: categoryProduct, page: () {
+    //   List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+    //   String data = utf8.decode(decode);
+    //   return getRoute(CategoryProductScreen(categoryID: Get.parameters['id'], categoryName: data));
+    // }),
     GetPage(name: popularFoods, page: () {
       return getRoute(PopularFoodScreen(
         isPopular: Get.parameters['page'] == 'popular', fromIsRestaurantFood: Get.parameters['fromIsRestaurantFood'] == 'true',
