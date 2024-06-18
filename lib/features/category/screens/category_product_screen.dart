@@ -372,14 +372,18 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       Get.find<CategoryController>().getCategoryList(true);
-      Get.find<CategoryController>().getFilCategoryList("1");
-
+      Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
+      // Get.find<CategoryController>().getFilCategoryList("1");
       Get.find<CategoryController>().getCategoryRestaurantList(
         widget.categoryID, 1,'', true,
       );
     });
+    // Get.find<CategoryController>().getCategoryProductList(
+    //   Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+    //       : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+    //   Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+    // );
 
     // Get.find<CategoryController>().getCategoryRestaurantList(widget.categoryID,1, Get.find<CategoryController>().type, false,
     // );
@@ -558,7 +562,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                                     Dimensions.radiusSmall),
                                 border:
                                 index == catController.subCategoryIndex ?
-                                     Border(
+                                Border(
                                     bottom: BorderSide(
                                         color: Theme.of(context)
                                             .primaryColor,
@@ -589,9 +593,9 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                                           catController.subCategoryList![index].image!.isNotEmpty
                                           ? '${Get.find<SplashController>().configModel?.baseUrls?.categoryImageUrl}/${catController.subCategoryList![index].image!}'
                                           : 'assets/image/dish-svgrepo-com.png', fit: BoxFit.cover,
-                                                placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
-                                                errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
-                                              ),
+                                      placeholder: (context, url) => Image.asset( Images.placeholder, fit:  BoxFit.cover),
+                                      errorWidget: (context, url, error) => Image.asset('assets/image/dish-svgrepo-com.png'),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
@@ -651,8 +655,8 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                           );
                         }, separatorBuilder: (BuildContext context, int index)  => SizedBox(
                           width: ResponsiveHelper.isMobile(context)
-                          ? 0
-                          : Dimensions.paddingSizeDefault),
+                              ? 0
+                              : Dimensions.paddingSizeDefault),
                       ),
                     )) :  WebWhatOnYourMindViewShimmer(categoryController: catController,),
                   ],
@@ -873,4 +877,3 @@ class CategoryViewShimmer extends StatelessWidget {
     );
   }
 }
-

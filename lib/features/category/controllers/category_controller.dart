@@ -115,9 +115,9 @@ class CategoryController extends GetxController implements GetxService {
     // _cookedCategoryProductList =null;
     _isRestaurant = false;
     _subCategoryList = await categoryServiceInterface.getSubCategoryList(categoryID);
-    // if(_subCategoryList != null) {
-    //   getCategoryProductList(categoryID, 1, 'all', false);
-    // }
+    if(_subCategoryList != null) {
+      getCategoryProductList(categoryID, 1, 'all', false);
+    }
   }
 
   void setSubCategoryIndex(int index, String? categoryID) {
