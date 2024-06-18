@@ -1,6 +1,8 @@
+import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/offline_success_dialog.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/subscription_schedule_model.dart';
+import 'package:stackfood_multivendor/features/order/screens/invoice_screen.dart';
 import 'package:stackfood_multivendor/features/order/widgets/bottom_view_widget.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_info_section.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_pricing_section.dart';
@@ -18,6 +20,7 @@ import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stackfood_multivendor/util/styles.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final OrderModel? orderModel;
@@ -178,6 +181,30 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                         couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: deliveryCharge,
                         total: total, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                        child: CustomButtonWidget(buttonText: "Download Invoice",
+                          onPressed: () {
+                            Get.dialog(InvoiceDialogWidget(
+                              restaurantLogo: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}/${order.restaurant!.logo}',
+                              restaurantName: order.restaurant!.name!,
+                              restaurantAddress:order.restaurant!.address!,
+                              restaurantPhone: order.restaurant!.phone!,
+                              orderController: orderController,
+                              itemsPrice: itemsPrice,
+                              addons: addOns,
+                              subtotal: subTotal,
+                              discount: discount!,
+                              tax: tax!,
+                              deliveryCharge: deliveryCharge!,
+                              total: total,
+                              orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,
+
+                            ));
+                          },
+                        ),
+                      ),
+
                       const SizedBox(height: Dimensions.paddingSizeExtraLarge,)
 
                     ]),

@@ -49,7 +49,7 @@ class PopularRestaurantsViewWidget extends StatelessWidget {
                 ) : Padding(
                   padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeLarge),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text(isRecentlyViewed ? 'your_restaurants'.tr : 'popular_restaurants'.tr,
+                    Text(isRecentlyViewed ? 'your_restaurants'.tr : 'Top Rated Vendors',
                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
                     ),
                     ArrowIconButtonWidget(onTap: () {

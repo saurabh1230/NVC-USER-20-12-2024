@@ -18,7 +18,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.background,
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraSmall),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text('All Food', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+              Text('All Food Items', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
               Row(
                 children: [
                   Align(alignment: Alignment.centerLeft,

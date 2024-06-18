@@ -49,13 +49,15 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
     // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     // Get.find<CategoryController>().getUnCookedProductList(1,false,"uncooked");
     Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
+    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
     // Get.find<CategoryController>().getFilUncookedCategoryList("2");
 
 
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     // print('Print Category ID${widget.categoryID}');
     // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
-    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
+
+    // Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent

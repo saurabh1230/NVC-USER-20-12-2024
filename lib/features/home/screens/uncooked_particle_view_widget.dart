@@ -29,7 +29,13 @@ class UNCookedParticleViewWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : 0),
               child: Row(children: [
-                Text('Trending UnCooked Items', style: robotoMedium.copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Trending UnCooked Items', style: robotoMedium.copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+                    Text("Farm Fresh Meat At Your Door", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,color: Colors.black.withOpacity(0.75))),
+
+                  ],
+                ),
 
                 const Spacer(),
 

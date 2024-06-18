@@ -83,7 +83,6 @@ class OrderViewWidget extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-
                         return InkWell(
                           onTap: () {
                             Get.toNamed(
@@ -155,6 +154,8 @@ class OrderViewWidget extends StatelessWidget {
                                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
                                   ) : const SizedBox(),
 
+
+
                                   const SizedBox(width: Dimensions.paddingSizeSmall),
                                   isRunning || isSubscription ? Column(children: [
 
@@ -169,6 +170,7 @@ class OrderViewWidget extends StatelessWidget {
                                         fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor,
                                       )),
                                     ) : const SizedBox(),
+
 
                                     InkWell(
                                       onTap: () => Get.toNamed(RouteHelper.getOrderTrackingRoute(orderList![index].id, null)),

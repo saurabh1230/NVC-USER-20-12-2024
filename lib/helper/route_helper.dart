@@ -438,11 +438,11 @@ class RouteHelper {
           : Get.parameters['page'] == 'refund-policy' ? HtmlType.refund : HtmlType.aboutUs,
     )),
     GetPage(name: categories, page: () => getRoute(const CategoryScreen())),
-    // GetPage(name: categoryProduct, page: () {
-    //   List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
-    //   String data = utf8.decode(decode);
-    //   return getRoute(CategoryProductScreen(categoryID: Get.parameters['id'], categoryName: data));
-    // }),
+    GetPage(name: categoryProduct, page: () {
+      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return getRoute(CategoryProductScreen(categoryID: Get.parameters['id'], categoryName: data));
+    }),
     GetPage(name: popularFoods, page: () {
       return getRoute(PopularFoodScreen(
         isPopular: Get.parameters['page'] == 'popular', fromIsRestaurantFood: Get.parameters['fromIsRestaurantFood'] == 'true',
@@ -466,11 +466,11 @@ class RouteHelper {
     GetPage(name: rateReview, page: () => getRoute(Get.arguments ?? const NotFoundWidget())),
     GetPage(name: restaurantReview, page: () => getRoute(ReviewScreen(restaurantID: Get.parameters['id']))),
     GetPage(name: allRestaurants, page: () => getRoute(
-        AllRestaurantScreen(
-          isPopular: Get.parameters['page'] == 'popular',
-          isRecentlyViewed: Get.parameters['page'] == 'recently_viewed',
-          isOrderAgain: Get.parameters['page'] == 'order_again',
-        ),
+      AllRestaurantScreen(
+        isPopular: Get.parameters['page'] == 'popular',
+        isRecentlyViewed: Get.parameters['page'] == 'recently_viewed',
+        isOrderAgain: Get.parameters['page'] == 'order_again',
+      ),
     )),
     GetPage(name: wallet, page: () {
       return getRoute(WalletScreen(fundStatus: Get.parameters['flag'] ?? Get.parameters['payment_status']));

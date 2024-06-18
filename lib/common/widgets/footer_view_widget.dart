@@ -35,7 +35,7 @@ class _FooterViewWidgetState extends State<FooterViewWidget> {
         constraints: BoxConstraints(minHeight: (widget.visibility && ResponsiveHelper.isDesktop(context))
             ? MediaQuery.of(context).size.height * widget.minHeight : MediaQuery.of(context).size.height *0.7) ,
         child: Align(alignment: Alignment.topCenter, child: widget.child),
-      ),
+       ),
 
       (widget.visibility && ResponsiveHelper.isDesktop(context)) ? Container(
         color: const Color(0xFF414141),

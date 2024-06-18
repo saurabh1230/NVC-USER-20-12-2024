@@ -208,4 +208,6 @@ class Images {
   static const String orderMenuIcon = 'assets/image/order_menu_icon.png';
   static const String foodTypeCookedBanner = 'assets/image/foodtypecookedbanner.png';
   static const String foodTypeUncookedBanner = 'assets/image/foodtypeuncookedbanner.png';
+  static const String masalaPickleBanner= 'assets/image/masala&pickleparticlebanner.png';
+  static const String petFoodParticle = 'assets/image/petfoodparticlebanner.png';
 }

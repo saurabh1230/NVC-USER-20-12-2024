@@ -63,6 +63,8 @@ dependencies:
   path: ^1.8.2
   http_parser: ^4.0.2
   syncfusion_flutter_sliders: ^24.2.9
+  pdf: ^3.10.8
+  open_filex: ^4.4.0
 
 dev_dependencies:
   flutter_test:

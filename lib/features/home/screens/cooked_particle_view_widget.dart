@@ -29,7 +29,12 @@ class CookedParticleViewWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : 0),
               child: Row(children: [
-                Text('Trending Cooked Items', style: robotoMedium.copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Trending Cooked Items', style: robotoMedium.copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+                    Text("Hot And Fresh Food At Your Doorstep", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,color: Colors.black.withOpacity(0.75))),
+                  ],
+                ),
 
                 const Spacer(),
 

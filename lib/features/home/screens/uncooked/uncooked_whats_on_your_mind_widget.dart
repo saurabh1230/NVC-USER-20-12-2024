@@ -42,6 +42,9 @@ class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
                 Get.find<CategoryController>().getSubCategoryList(category.id!.toString());
                 categoryController.selectCookedCategory(category.id!);
                 categoryController.getCategoryProductList(category.id.toString(), 1, 'all', false);
+                categoryController.getCategoryRestaurantList(
+                  category.id.toString(), 1, '2', true,
+                );
               },
               child: Container(
                 width:  90,
@@ -54,9 +57,7 @@ class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
                   categoryController.selectedCookedCategoryId ==
                       category.id
                       ? Border(
-                      bottom: BorderSide(
-                          color: Theme.of(context)
-                              .primaryColor,
+                      bottom: BorderSide(color: Theme.of(context).primaryColor,
                           width: 5.0))
                       : null,
                 ),

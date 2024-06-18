@@ -42,6 +42,7 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/Pet_and_masala_partilcle.dart';
 import 'cooked_particle_view_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -127,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 await Get.find<NotificationController>().getNotificationList(true);
                 await Get.find<RestaurantController>().getRecentlyViewedRestaurantList(true, 'all', false);
                 await Get.find<RestaurantController>().getOrderAgainRestaurantList(true);
-
               }
             },
             child: ResponsiveHelper.isDesktop(context) ? WebHomeScreen(
@@ -278,16 +278,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       const BannerViewWidget(),
                       const CookedAndUncookedBannerWidget(),
 
+
                       const WhatOnYourMindViewWidget(),
+                      const PetFoodAndMasalaParticle(),
 
                       const TodayTrendsViewWidget(),
 
                       // const LocationBannerViewWidget(),
 
                       _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
-
-                      const CookedParticleViewWidget(isPopular: false,),
                       const UNCookedParticleViewWidget(isPopular: false,),
+                      const CookedParticleViewWidget(isPopular: false,),
+
                       _configModel!.mostReviewedFoods == 1 ?  const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
 
                       /*const CuisineViewWidget(),*/
@@ -304,15 +306,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
                   )),
                 ),
-                SliverToBoxAdapter(
-                  child: Center(child: SizedBox(
-                    width: Dimensions.webMaxWidth,
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Image.asset("assets/image/fssai.png",height: 80,)
-
-                    ]),
-                  )),
-                ),
+                // SliverToBoxAdapter(
+                //   child: Center(child: SizedBox(
+                //     width: Dimensions.webMaxWidth,
+                //     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                //       Image.asset("assets/image/fssai.png",height: 80,)
+                //
+                //     ]),
+                //   )),
+                // ),
 
                 SliverPersistentHeader(
                   pinned: true,
