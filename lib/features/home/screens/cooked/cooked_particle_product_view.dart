@@ -239,7 +239,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                 pinned: true,
                 delegate: SliverDelegate(
                     height: 60,
-                    child: HeadingWidget(title: 'Top Restaurants & Clout Kitchen',
+                    child: HeadingWidget(title: 'Top Restaurants & Cloud Kitchen',
                       tap: () {
                         Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
                       },)

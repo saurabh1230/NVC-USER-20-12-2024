@@ -831,7 +831,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
   final List<Restaurant?>? restaurants;
   final bool isCooked;
   final List<Product>? products;
-  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products, });
+  final String? categoryName;
+  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,  this.categoryName, });
 
   @override
   Widget build(BuildContext context) {
@@ -869,7 +870,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return buildContainer(context, restaurants![index]!);
+              return buildContainer(context, restaurants![index]!,categoryName!);
             }, separatorBuilder: (BuildContext context, int index) => const SizedBox(height: Dimensions.paddingSizeDefault,),
           ) :
           Center(
@@ -891,7 +892,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
     );
   }
 
-  Container buildContainer(BuildContext context, Restaurant restaurant) {
+  Container buildContainer(BuildContext context, Restaurant restaurant, String categoryName) {
     bool isAvailable = restaurant.open == 1 && restaurant.active!;
     return Container(
       // height: 172, width: 253,
@@ -902,7 +903,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
       ),
       child: CustomInkWellWidget(
         onTap: () => Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant.id),
-          arguments: RestaurantProductScreen(restaurant: restaurant, product: null,),
+          arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: categoryName,),
         ),
         radius: Dimensions.radiusDefault,
         child: Column(

@@ -559,7 +559,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                   pinned: true,
                   delegate: SliverDelegate(
                       height: 60,
-                      child: HeadingWidget(title: 'Top Restaurants & Clout Kitchen',
+                      child: HeadingWidget(title: 'Top Restaurants & Cloud Kitchen',
                         tap: () {
                           Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
                         },)
@@ -569,11 +569,16 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
 
                 SliverToBoxAdapter(
                     child: Center(child: FooterViewWidget(
-                      child: Padding(
-                        padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-                        child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                            products: products,
-                            restaurants: catController.categoryRestaurantList),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+                            child:  RestaurantsViewHorizontalWidget(isCooked: true,
+                                categoryName: widget.categoryName,
+                                products: products,
+                                restaurants: catController.categoryRestaurantList),
+                          ),
+                        ],
                       ),
                     ))),
 

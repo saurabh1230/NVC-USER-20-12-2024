@@ -47,6 +47,9 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
     return productModel;
   }
 
+
+
+
   @override
   Future<ProductModel?> getRestaurantSearchProductList(String searchText, String? storeID, int offset, String type) async {
     ProductModel? restaurantSearchProductModel;
@@ -163,6 +166,9 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
     // TODO: implement update
     throw UnimplementedError();
   }
+
+
+
 
   
 }

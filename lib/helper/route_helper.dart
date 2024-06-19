@@ -386,7 +386,7 @@ class RouteHelper {
     GetPage(name: restaurantProducts, page: () {
       return getRoute(Get.arguments ?? RestaurantProductScreen(
         restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
-        slug: Get.parameters['slug'] ?? '', product: Product(),
+        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',
       ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
     }),
     GetPage(name: orderDetails, page: () {

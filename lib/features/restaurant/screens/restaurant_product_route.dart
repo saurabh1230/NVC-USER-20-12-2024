@@ -30,7 +30,8 @@ class RestaurantProductScreen extends StatefulWidget {
   final Restaurant? restaurant;
   final String slug;
   final Product? product;
-  const RestaurantProductScreen({super.key, required this.restaurant, this.slug = '',required this.product});
+  final String categoryName;
+  const RestaurantProductScreen({super.key, required this.restaurant, this.slug = '',required this.product, required this.categoryName});
 
   @override
   State<RestaurantProductScreen> createState() => _RestaurantProductScreenState();
@@ -196,6 +197,46 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                   ]),
                 ))),
 
+                SliverToBoxAdapter(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                        child: Text('Looking For ${widget.categoryName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                      ),
+                      PaginatedListViewWidget(
+                        scrollController: scrollController,
+                        onPaginate: (int? offset) {
+                          if(restController.isSearching){
+                            restController.getRestaurantSearchProductList(
+                              restController.searchText, Get.find<RestaurantController>().restaurant!.id.toString(), offset!, restController.type,
+                            );
+                          } else {
+                            restController.getRestaurantProductList(Get.find<RestaurantController>().restaurant!.id, offset!, restController.type, false);
+                          }
+                        },
+                        totalSize: restController.isSearching
+                            ? restController.restaurantSearchProductModel?.totalSize
+                            : restController.restaurantProducts != null ? restController.foodPageSize : null,
+                        offset: restController.isSearching
+                            ? restController.restaurantSearchProductModel?.offset
+                            : restController.restaurantProducts != null ? restController.foodPageOffset : null,
+                        productView: ProductViewWidget(
+                          isRestaurant: false, restaurants: null,
+                          products: restController.isSearching
+                              ? restController.restaurantSearchProductModel?.products
+                              : restController.categoryList!.isNotEmpty ? restController.restaurantProducts : null,
+                          inRestaurantPage: true,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Dimensions.paddingSizeSmall,
+                            vertical: Dimensions.paddingSizeLarge,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 (restController.categoryList!.isNotEmpty) ? SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverDelegate(height: 95, child: Center(child: Container(
@@ -324,6 +365,8 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                     ]),
                   ))),
                 ) : const SliverToBoxAdapter(child: SizedBox()),
+
+
 
                 SliverToBoxAdapter(child: FooterViewWidget(
                   child: Center(child: Container(
