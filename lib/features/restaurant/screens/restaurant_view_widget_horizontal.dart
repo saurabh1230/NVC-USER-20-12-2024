@@ -531,7 +531,8 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 
 class RestaurantsViewHorizontalWidget extends StatelessWidget {
   final List<Restaurant?>? restaurants;
-  const RestaurantsViewHorizontalWidget({super.key, this.restaurants, });
+  final bool isCooked;
+  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, });
 
   @override
   Widget build(BuildContext context) {
@@ -548,7 +549,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
           Padding(padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeDefault),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Text("Top Vendors", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
+              Text(isCooked  ? "Top Restaurants & Clout Kitchen"
+                  "Top Vendors", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600)),
               ArrowIconButtonWidget(onTap: () =>
                   Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors')),),
             ],
