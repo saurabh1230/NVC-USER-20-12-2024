@@ -168,6 +168,18 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
   }
 
 
+  @override
+  Future<ProductModel?> getRestaurantParticularProductList(int? restaurantID, int offset, int? categoryID, String type) async {
+    ProductModel? productModel;
+    Response response = await apiClient.getData(
+        '${AppConstants.restaurantProductUri}?restaurant_id=$restaurantID&category_id=$categoryID&offset=$offset&limit=12&type=$type');
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    }
+    return productModel;
+  }
+
+
 
 
   

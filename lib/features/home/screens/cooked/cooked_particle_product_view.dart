@@ -241,7 +241,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                     height: 60,
                     child: HeadingWidget(title: 'Top Restaurants & Cloud Kitchen',
                       tap: () {
-                        Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
+                        // Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
                       },)
                 ),
               ),
@@ -251,8 +251,9 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                   child: Center(child: FooterViewWidget(
                     child: Padding(
                       padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-                      child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                          restaurants: catController.categoryRestaurantList),
+                      child:  RestaurantsViewHorizontalWidget(
+                          isCooked: true,
+                          restaurants: restaurants, categoryName: '', categoryId: '',),
                     ),
                   ))),
 

@@ -110,6 +110,16 @@ class RestaurantController extends GetxController implements GetxService {
   int _nonVeg = 0;
   int get nonVeg => _nonVeg;
 
+  // void clearSubCategoryList() {
+  //   selectedCookedCategoryId = null;
+  //   _subCategoryList = null;
+  //   _subCategoryIndex = 0;
+  //   _categoryProductList = null;
+  //   _isRestaurant = false;
+  //   _categoryRestaurantList = null;
+  //   // update(); // call update to notify listeners
+  // }
+
   double getRestaurantDistance(LatLng restaurantLatLng){
     return restaurantServiceInterface.getRestaurantDistanceFromUser(restaurantLatLng);
   }
@@ -324,6 +334,47 @@ class RestaurantController extends GetxController implements GetxService {
     }
   }
 
+
+
+  List<Product>? _categoryRestaurantProduct;
+  List<Product>? get categoryRestaurantProductList => _categoryRestaurantProduct;
+
+  Future<void> getRestaurantParticularProductList(int? restaurantID, int offset,int categoryID, String type, bool notify) async {
+    _foodOffset = offset;
+    if(offset == 1 || _categoryRestaurantProduct == null) {
+      _type = type;
+      _foodOffsetList = [];
+      _categoryRestaurantProduct = null;
+      _foodOffset = 1;
+      if(notify) {
+        update();
+      }
+    }
+    if (!_foodOffsetList.contains(offset)) {
+      _foodOffsetList.add(offset);
+      ProductModel? productModel = await restaurantServiceInterface.getRestaurantParticularProductList(restaurantID, offset,
+          /*(_restaurant != null && _restaurant!.categoryIds!.isNotEmpty && _categoryIndex != 0)
+              ? _categoryList![_categoryIndex].id : 0*/
+          categoryID, type);
+
+      if (productModel != null) {
+        if (offset == 1) {
+          _categoryRestaurantProduct = [];
+        }
+        _categoryRestaurantProduct!.addAll(productModel.products!);
+        _foodPageSize = productModel.totalSize;
+        _foodPageOffset = productModel.offset;
+        _foodPaginate = false;
+        update();
+      }
+    } else {
+      if(_foodPaginate) {
+        _foodPaginate = false;
+        update();
+      }
+    }
+  }
+
   void showFoodBottomLoader() {
     _foodPaginate = true;
     update();
@@ -395,6 +446,9 @@ class RestaurantController extends GetxController implements GetxService {
   double? getDiscount(Restaurant restaurant) => restaurant.discount != null ? restaurant.discount!.discount : 0;
 
   String? getDiscountType(Restaurant restaurant) => restaurant.discount != null ? restaurant.discount!.discountType : 'percent';
+
+
+
 
 
 }

@@ -13,5 +13,6 @@ abstract class RestaurantRepositoryInterface extends RepositoryInterface {
   Future<RecommendedProductModel?> getRestaurantRecommendedItemList(int? restaurantId);
   Future<List<Product>?> getCartRestaurantSuggestedItemList(int? restaurantID);
   Future<ProductModel?> getRestaurantProductList(int? restaurantID, int offset, int? categoryID, String type);
+  Future<ProductModel?> getRestaurantParticularProductList(int? restaurantID, int offset, int? categoryID, String type);
   Future<ProductModel?> getRestaurantSearchProductList(String searchText, String? storeID, int offset, String type);
 }

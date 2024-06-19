@@ -832,7 +832,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
   final bool isCooked;
   final List<Product>? products;
   final String? categoryName;
-  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,  this.categoryName, });
+  final String? categoryId;
+  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,required this.categoryName,required this.categoryId, });
 
   @override
   Widget build(BuildContext context) {
@@ -903,7 +904,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
       ),
       child: CustomInkWellWidget(
         onTap: () => Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant.id),
-          arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: categoryName,),
+          arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: categoryName, categoryID: categoryId!,),
         ),
         radius: Dimensions.radiusDefault,
         child: Column(
@@ -1132,67 +1133,66 @@ class PopularRestaurantShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 172,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(left: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : 0, right: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : 0),
+      child: ListView.separated(
+        shrinkWrap: true,
+          padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault,left: Dimensions.paddingSizeDefault),
+          scrollDirection: Axis.vertical,
+          physics: const BouncingScrollPhysics(),
           itemCount: 7,
           itemBuilder: (context, index) {
             return Shimmer(
               duration: const Duration(seconds: 2),
               enabled: true,
               child: Container(
-                margin: EdgeInsets.only(left: index == 0 ? 0 : Dimensions.paddingSizeDefault),
-                height: 172, width: 253,
+                // height: 172, width: 253,
+                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor.withOpacity(0.50),
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                 ),
-                child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 85, width: 253,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          height: 160, width: Get.size.width,
+                          clipBehavior: Clip.hardEdge,
+                          decoration:  BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                          ),
                         ),
-                        child: ClipRRect(
-                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
-                            child: Container(
-                              height: 85, width: 253,
-                              color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                      ],
+                    ),
+                    const SizedBox(width: Dimensions.paddingSizeSmall,),
+                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: Dimensions.paddingSizeDefault,),
+                        Container(height: 6,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),),
+                        const SizedBox(height: Dimensions.paddingSizeDefault,),
+                        Container(height: 6,width: 180,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),),
+                        const SizedBox(height: Dimensions.paddingSizeDefault,),
+                        Container(height: 6,width: 120,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),),
 
-                            )
-                        ),
-                      ),
-
-                      Positioned(
-                        top: 90, left: 75, right: 0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Container(
-                            //   height: 10, width: 100,
-                            //   color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
-                            //
-                            // ),
-                            // const SizedBox(height: Dimensions.paddingSizeSmall),
-                            //
-                            // Container(
-                            //   height: 10, width: 150,
-                            //   color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
-                            // ),
-
-                            const SizedBox(height: Dimensions.paddingSizeSmall),
-                          ],
-                        ),
-                      ),
-                    ]
+                      ],
+                    )
+                  ],
                 ),
+
+
               ),
             );
-          }
+          }, separatorBuilder: (BuildContext context, int index) => const SizedBox(height: Dimensions.paddingSizeDefault,),
       ),
     );
   }

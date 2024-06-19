@@ -84,6 +84,7 @@ import 'package:get/get.dart';
 import 'package:meta_seo/meta_seo.dart';
 
 import '../features/category/screens/cooked_product_list.dart';
+import '../features/restaurant/screens/restaurant_view_all_category_products.dart';
 
 class RouteHelper {
   static const String initial = '/';
@@ -153,6 +154,7 @@ class RouteHelper {
   static const String uncookedProductView = '/uncooked-product-view';
   static const String cookedCategoryProduct = '/cooked-category-product';
   static const String uncookedCategoryProduct = '/uncooked-category-product';
+  static const String restaurantAllCategoryProducts = '/restaurant-category-products';
 
   static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body, DeepLinkBody? linkBody) {
@@ -210,6 +212,18 @@ class RouteHelper {
       meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
     }
     return '$restaurantProducts?id=$id';
+  }
+
+  static String getAllRestaurantCategoryProductsRoute(int? id) {
+    if(kIsWeb) {
+      // Define MetaSEO object
+      MetaSEO meta = MetaSEO();
+      // add meta seo data for web app as you want
+      meta.ogTitle(ogTitle: 'Store Screen');
+      meta.description(description: 'This is Store screen. Here have all information of store');
+      meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
+    }
+    return '$restaurantAllCategoryProducts?id=$id';
   }
   static String getOrderDetailsRoute(int? orderID, {bool? fromOffline, String? contactNumber, bool fromGuestTrack = false}) {
     return '$orderDetails?id=$orderID&from_offline=$fromOffline&contact=$contactNumber&from_guest_track=$fromGuestTrack';
@@ -386,7 +400,13 @@ class RouteHelper {
     GetPage(name: restaurantProducts, page: () {
       return getRoute(Get.arguments ?? RestaurantProductScreen(
         restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
-        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',
+        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',categoryID: 'category_id',
+      ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
+    }),
+    GetPage(name: restaurantAllCategoryProducts, page: () {
+      return getRoute(Get.arguments ?? RestaurantViewAllCategoryProducts(
+        restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
+        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',categoryID: 'category_id',
       ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
     }),
     GetPage(name: orderDetails, page: () {

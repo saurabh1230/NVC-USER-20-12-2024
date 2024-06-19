@@ -84,6 +84,11 @@ class RestaurantService implements RestaurantServiceInterface {
     return await restaurantRepositoryInterface.getRestaurantProductList(restaurantID, offset, categoryID, type);
   }
 
+  @override
+  Future<ProductModel?> getRestaurantParticularProductList(int? restaurantID, int offset, int? categoryID, String type) async {
+    return await restaurantRepositoryInterface.getRestaurantParticularProductList(restaurantID, offset, categoryID, type);
+  }
+
 
 
 

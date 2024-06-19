@@ -252,7 +252,7 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                child: Padding(
                  padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
                  child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                        restaurants: catController.categoryRestaurantList),
+                        restaurants: catController.categoryRestaurantList, categoryName: '', categoryId: '',),
                ),
              ))),
 
