@@ -191,7 +191,7 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(Dimensions.radiusLarge)),
                   child: CustomImageWidget(
-                    height: 100,
+                    height: 80,
                     fit: BoxFit.cover, placeholder: Images.restaurantCover,
                     image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantCoverPhotoUrl}/${restaurant.coverPhoto}',
                   ),

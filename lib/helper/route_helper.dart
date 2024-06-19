@@ -35,6 +35,7 @@ import 'package:stackfood_multivendor/features/profile/screens/update_profile_sc
 import 'package:stackfood_multivendor/features/refer%20and%20earn/screens/refer_and_earn_screen.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/all_restaurant_screen.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/campaign_screen.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_product_route.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_product_search_screen.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
 import 'package:stackfood_multivendor/features/review/screens/review_screen.dart';
@@ -101,6 +102,7 @@ class RouteHelper {
   static const String resetPassword = '/reset-password';
   static const String search = '/search';
   static const String restaurant = '/restaurant';
+  static const String restaurantProducts = '/restaurant-products';
   static const String orderDetails = '/order-details';
   static const String profile = '/profile';
   static const String updateProfile = '/update-profile';
@@ -196,6 +198,18 @@ class RouteHelper {
       meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
     }
     return '$restaurant?id=$id';
+  }
+
+  static String getRestaurantProductsRoute(int? id) {
+    if(kIsWeb) {
+      // Define MetaSEO object
+      MetaSEO meta = MetaSEO();
+      // add meta seo data for web app as you want
+      meta.ogTitle(ogTitle: 'Store Screen');
+      meta.description(description: 'This is Store screen. Here have all information of store');
+      meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
+    }
+    return '$restaurantProducts?id=$id';
   }
   static String getOrderDetailsRoute(int? orderID, {bool? fromOffline, String? contactNumber, bool fromGuestTrack = false}) {
     return '$orderDetails?id=$orderID&from_offline=$fromOffline&contact=$contactNumber&from_guest_track=$fromGuestTrack';
@@ -367,6 +381,12 @@ class RouteHelper {
       return getRoute(Get.arguments ?? RestaurantScreen(
         restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
         slug: Get.parameters['slug'] ?? '',
+      ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
+    }),
+    GetPage(name: restaurantProducts, page: () {
+      return getRoute(Get.arguments ?? RestaurantProductScreen(
+        restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
+        slug: Get.parameters['slug'] ?? '', product: Product(),
       ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
     }),
     GetPage(name: orderDetails, page: () {

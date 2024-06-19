@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
+import 'package:stackfood_multivendor/common/widgets/heading_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/cooked/cooked_whats_on_your_mind_widget.dart';
@@ -18,6 +19,9 @@ import 'package:stackfood_multivendor/common/widgets/veg_filter_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../restaurant/widgets/restaurant_view_verticle.dart';
+import '../home_screen.dart';
 
 
 
@@ -209,88 +213,136 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
             ],
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
-          body: SingleChildScrollView(
+          body: CustomScrollView(
             controller: scrollController,
-            child: Column(children: [
-              Container(
-                width: Get.size.width,
-                padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
-                right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
-                    top:   Dimensions.paddingSizeSmall,
-                    bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
-                color: Theme.of(context).primaryColor.withOpacity(0.03),
-                child: Center(
-                    child:  CategoryWhatOnYourMindViewWidget(),
-                ),
-              ),
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Center(child: SizedBox(
+                  width: Dimensions.webMaxWidth,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-                height: 60, width: Dimensions.webMaxWidth, /*color: Theme.of(context).cardColor,*/
-                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: catController.subCategoryList!.length,
-                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                        margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                          color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-                        ),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Text(
-                            catController.subCategoryList![index].name!,
-                            style: index == catController.subCategoryIndex
-                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
-                                : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                          ),
-                        ]),
-                      ),
-                    );
-                  },
-                ),
-              )) : const SizedBox(),
-              // AllRestaurantsWidget(scrollController: scrollController),
-
-              FooterViewWidget(
-                child: Center(
-                  child: SizedBox(
-                    width: Dimensions.webMaxWidth,
-                    child: Column(
-                      children: [
-                        RestaurantsViewHorizontalWidget(restaurants: catController.categoryRestaurantList),
-                        const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-                        ProductViewWidget(
-                          isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
-                        ),
-
-                        catController.isLoading ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-                          ),
-                        ) : const SizedBox(),
-                      ],
+                    Container(
+                      width: Get.size.width,
+                      padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
+                           right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
+                          top:   Dimensions.paddingSizeSmall,
+                          bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
+                      color: Theme.of(context).primaryColor.withOpacity(0.03),
+                      child: Center(child: CategoryWhatOnYourMindViewWidget(),),
                     ),
-                  ),
+
+                  ]),
+                )),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: SliverDelegate(
+                    height: 60,
+                    child: HeadingWidget(title: 'Top Restaurants & Clout Kitchen',
+                      tap: () {
+                        Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
+                      },)
                 ),
               ),
-              // SizedBox(width: Dimensions.webMaxWidth,
-              //   child: FooterViewWidget(
-              //     child: AllRestaurantsWidget(scrollController: scrollController),
-              //   ),
-              // ),
 
 
+              SliverToBoxAdapter(
+                  child: Center(child: FooterViewWidget(
+                    child: Padding(
+                      padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+                      child:  RestaurantsViewHorizontalWidget(isCooked: true,
+                          restaurants: catController.categoryRestaurantList),
+                    ),
+                  ))),
 
-            ]),
-          ),
+
+            ] ),
+          // body: SingleChildScrollView(
+          //   controller: scrollController,
+          //   child: Column(children: [
+          //     Container(
+          //       width: Get.size.width,
+          //       padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
+          //       right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
+          //           top:   Dimensions.paddingSizeSmall,
+          //           bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
+          //       color: Theme.of(context).primaryColor.withOpacity(0.03),
+          //       child: Center(
+          //           child:  CategoryWhatOnYourMindViewWidget(),
+          //       ),
+          //     ),
+          //
+          //     (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
+          //       height: 60, width: Dimensions.webMaxWidth, /*color: Theme.of(context).cardColor,*/
+          //       padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+          //       child: ListView.builder(
+          //         scrollDirection: Axis.horizontal,
+          //         itemCount: catController.subCategoryList!.length,
+          //         padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+          //         physics: const BouncingScrollPhysics(),
+          //         itemBuilder: (context, index) {
+          //           return InkWell(
+          //             onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
+          //             child: Container(
+          //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+          //               margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+          //               decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+          //                 color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+          //               ),
+          //               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //                 Text(
+          //                   catController.subCategoryList![index].name!,
+          //                   style: index == catController.subCategoryIndex
+          //                       ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+          //                       : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
+          //                 ),
+          //               ]),
+          //             ),
+          //           );
+          //         },
+          //       ),
+          //     )) : const SizedBox(),
+          //     // AllRestaurantsWidget(scrollController: scrollController),
+          //
+          //     FooterViewWidget(
+          //       child: Center(
+          //         child: SizedBox(
+          //           width: Dimensions.webMaxWidth,
+          //           child: Column(
+          //             children: [
+          //               // RestaurantsViewVerticleWidget(),
+          //               RestaurantsViewHorizontalWidget(
+          //                   isCooked: true,
+          //                   restaurants: catController.categoryRestaurantList),
+          //               const SizedBox(height: Dimensions.paddingSizeDefault,),
+          //
+          //               // ProductViewWidget(
+          //               //   isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
+          //               // ),
+          //
+          //               catController.isLoading ? Center(
+          //                 child: Padding(
+          //                   padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+          //                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+          //                 ),
+          //               ) : const SizedBox(),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     // SizedBox(width: Dimensions.webMaxWidth,
+          //     //   child: FooterViewWidget(
+          //     //     child: AllRestaurantsWidget(scrollController: scrollController),
+          //     //   ),
+          //     // ),
+          //
+          //
+          //
+          //   ]),
+          // ),
         ),
       );
     });
