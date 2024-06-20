@@ -20,6 +20,7 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../util/app_loading_screen.dart';
 import '../../../restaurant/widgets/restaurant_view_verticle.dart';
 import '../home_screen.dart';
 
@@ -213,7 +214,9 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
             ],
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
-          body: CustomScrollView(
+          body: catController.categoryRestaurantList == null
+              ? const AppLoading() :
+          CustomScrollView(
             controller: scrollController,
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [

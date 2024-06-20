@@ -14,6 +14,7 @@ import 'package:stackfood_multivendor/helper/date_converter.dart';
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:stackfood_multivendor/util/app_loading_screen.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -27,6 +28,8 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../common/widgets/product_shimmer_widget.dart';
 
 class RestaurantProductScreen extends StatefulWidget {
   final Restaurant? restaurant;
@@ -88,7 +91,8 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
             }
             restController.setCategoryList();
 
-            return (restController.restaurant != null && restController.restaurant!.name != null && categoryController.categoryList != null) ? CustomScrollView(
+            return (restController.restaurant != null && restController.restaurant!.name != null && categoryController.categoryList != null) ?
+            CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               controller: scrollController,
               slivers: [
@@ -204,8 +208,12 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                 ))),
 
                 SliverToBoxAdapter(
-                  child: restController.categoryRestaurantProductList == null || restController.categoryRestaurantProductList!.isEmpty
-                      ? SizedBox()
+                  child:restController.categoryProductLoading
+                      ? const ProductShimmer(isEnabled: false, hasDivider: false,isRestaurant: false,) // Show SizedBox when list is null
+                      :  restController.categoryRestaurantProductList == null
+                      ? const SizedBox() // Show SizedBox when list is null
+                      : restController.categoryRestaurantProductList!.isEmpty
+                      ? const SizedBox() // Show SizedBox when list is empty
                       :
                   Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -452,7 +460,9 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                   )),
                 )),
               ],
-            ) : const RestaurantScreenShimmerWidget();
+            ) :
+            const AppLoading() ;
+            // const RestaurantScreenShimmerWidget();
           });
         }),
 

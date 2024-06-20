@@ -15,25 +15,25 @@ class ProductShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     bool desktop = ResponsiveHelper.isDesktop(context);
 
-    return Container(
-      padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.all(Dimensions.paddingSizeSmall) : null,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-        color: ResponsiveHelper.isDesktop(context) ? Theme.of(context).cardColor : null,
-        boxShadow: ResponsiveHelper.isDesktop(context) ? [BoxShadow(
-          color: Colors.grey[Get.isDarkMode ? 700 : 300]!, spreadRadius: 1, blurRadius: 5,
-        )] : null,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: desktop ? 0 : Dimensions.paddingSizeExtraSmall),
+    return Padding(
+      padding: EdgeInsets.only(bottom: desktop ? 0 :Dimensions.paddingSizeSmall),
+      child: Container(
+        padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+          color: Theme.of(context).cardColor,
+          boxShadow: ResponsiveHelper.isDesktop(context) ? [BoxShadow(
+            color: Colors.grey[Get.isDarkMode ? 700 : 300]!, spreadRadius: 1, blurRadius: 5,
+          )] : null,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
               child: Row(children: [
 
                 Container(
-                  height: desktop ? 120 : 65, width: desktop ? 120 : 80,
+                  height:  230, width: 130,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                     color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
@@ -42,28 +42,50 @@ class ProductShimmer extends StatelessWidget {
                 const SizedBox(width: Dimensions.paddingSizeSmall),
 
                 Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
 
-                    Container(height: desktop ? 20 : 10, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                    // Container(height: desktop ? 20 : 10, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
                     const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
                     Container(
                       height: desktop ? 15 : 10, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
                       margin: const EdgeInsets.only(right: Dimensions.paddingSizeLarge),
                     ),
-                    SizedBox(height: isRestaurant ? Dimensions.paddingSizeSmall : 0),
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
+                    Container(
+                      height: desktop ? 15 : 8, width: 50, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                      margin: const EdgeInsets.only(right: Dimensions.paddingSizeLarge),
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                    // SizedBox(height: isRestaurant ? Dimensions.paddingSizeSmall : 0),
 
                     !isRestaurant ? RatingBarWidget(rating: 0, size: desktop ? 15 : 12, ratingCount: 0) : const SizedBox(),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
                     isRestaurant ? RatingBarWidget(
                       rating: 0, size: desktop ? 15 : 12,
                       ratingCount: 0,
                     ) : Row(children: [
-                      Container(height: desktop ? 20 : 15, width: 30, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                      Container(height: desktop ? 20 : 10, width: 30, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
                       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                       Container(height: desktop ? 15 : 10, width: 20, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
                     ]),
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
+                    Container(height: desktop ? 20 : 6, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
+                    Container(margin: EdgeInsets.only(right: Dimensions.paddingSizeExtraLarge),
+                        height: desktop ? 20 : 6, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
+                    Container(margin: EdgeInsets.only(right: 40),
+                        height: desktop ? 20 : 6, width: double.maxFinite, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+
+
+
+
 
                   ]),
+
+
                 ),
 
                 Column(mainAxisAlignment: isRestaurant ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween, children: [
@@ -83,12 +105,12 @@ class ProductShimmer extends StatelessWidget {
 
               ]),
             ),
-          ),
-          desktop ? const SizedBox() : Padding(
-            padding: EdgeInsets.only(left: desktop ? 130 : 90),
-            child: Divider(color: hasDivider ? Theme.of(context).disabledColor : Colors.transparent),
-          ),
-        ],
+            // desktop ? const SizedBox() : Padding(
+            //   padding: EdgeInsets.only(left: desktop ? 130 : 90),
+            //   child: Divider(color: hasDivider ? Theme.of(context).disabledColor : Colors.transparent),
+            // ),
+          ],
+        ),
       ),
     );
   }

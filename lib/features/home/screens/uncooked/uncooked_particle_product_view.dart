@@ -13,6 +13,7 @@ import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_vie
 import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:stackfood_multivendor/util/app_loading_screen.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -214,7 +215,9 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
             ],
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
-          body: CustomScrollView(
+          body: catController.categoryRestaurantList == null
+              ? const AppLoading() :
+          CustomScrollView(
           controller: scrollController,
           physics: const AlwaysScrollableScrollPhysics(),
            slivers: [

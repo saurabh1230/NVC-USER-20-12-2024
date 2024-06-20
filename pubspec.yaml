@@ -65,6 +65,7 @@ dependencies:
   syncfusion_flutter_sliders: ^24.2.9
   pdf: ^3.10.8
   open_filex: ^4.4.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:

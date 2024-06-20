@@ -338,12 +338,14 @@ class RestaurantController extends GetxController implements GetxService {
     _categoryRestaurantProduct = null;
     // update(); // call update to notify listeners
   }
-
+  bool _categoryProductLoading = false;
+  bool get categoryProductLoading => _categoryProductLoading;
 
   List<Product>? _categoryRestaurantProduct;
   List<Product>? get categoryRestaurantProductList => _categoryRestaurantProduct;
 
   Future<void> getRestaurantParticularProductList(int? restaurantID, int offset,int categoryID, String type, bool notify) async {
+    _categoryProductLoading = true;
     _foodOffset = offset;
     if(offset == 1 || _categoryRestaurantProduct == null) {
       _type = type;
@@ -360,7 +362,7 @@ class RestaurantController extends GetxController implements GetxService {
           /*(_restaurant != null && _restaurant!.categoryIds!.isNotEmpty && _categoryIndex != 0)
               ? _categoryList![_categoryIndex].id : 0*/
           categoryID, type);
-
+      _categoryProductLoading = false;
       if (productModel != null) {
         if (offset == 1) {
           _categoryRestaurantProduct = [];
@@ -372,6 +374,7 @@ class RestaurantController extends GetxController implements GetxService {
         update();
       }
     } else {
+      _categoryProductLoading = false;
       if(_foodPaginate) {
         _foodPaginate = false;
         update();
