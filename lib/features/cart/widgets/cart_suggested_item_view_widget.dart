@@ -49,7 +49,7 @@ class CartSuggestedItemViewWidget extends StatelessWidget {
               ),
 
               SizedBox(
-                height: isDesktop ? 165 : 155,
+                // height: isDesktop ? 165 : 155,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: suggestedItems.length,

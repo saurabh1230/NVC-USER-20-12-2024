@@ -220,6 +220,7 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                       Column(
                         children: [
                           ProductViewWidget(
+                            isRestaurantCategoryProducts: true,
                             isRestaurant: false, restaurants: null,
                             products: restController.categoryRestaurantProductList,
                             // products: restController.isSearching
@@ -231,6 +232,7 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                               vertical: Dimensions.paddingSizeLarge,
                             ),
                           ),
+                          if (restController.categoryRestaurantProductList!.length > 6)
                            CustomButtonWidget(
                              margin: const EdgeInsets.only(left: Dimensions.paddingSizeDefault,
                              right:  Dimensions.paddingSizeDefault,

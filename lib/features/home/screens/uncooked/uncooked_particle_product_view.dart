@@ -8,6 +8,7 @@ import 'package:stackfood_multivendor/features/category/controllers/category_con
 import 'package:stackfood_multivendor/features/home/widgets/all_restaurants_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/web/web_banner_view_widget.dart';
+import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_view_widget_horizontal.dart';
 import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
@@ -47,8 +48,8 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
   @override
   void initState() {
     super.initState();
+    // Get.find<RestaurantController>().clearRestaurantParticularProductList();
     Get.find<CategoryController>().clearSubCategoryList();
-
     // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
     // Get.find<CategoryController>().getUnCookedProductList(1,false,"uncooked");
     Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
@@ -252,7 +253,7 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                child: Padding(
                  padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
                  child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                        restaurants: catController.categoryRestaurantList, categoryName: '', categoryId: '',),
+                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
                ),
              ))),
 

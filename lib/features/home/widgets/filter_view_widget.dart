@@ -10,12 +10,12 @@ class FilterViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CategoryController>(builder: (restaurant) {
-      return restaurant.productModel != null ? PopupMenuButton(
+    return GetBuilder<RestaurantController>(builder: (restaurant) {
+      return restaurant.restaurantModel != null ? PopupMenuButton(
         itemBuilder: (context) {
           return [
             PopupMenuItem(
-              value: 'cooked',
+              value: '1',
               child: Text(
                 'cooked'.tr,
                 style: robotoMedium.copyWith(
@@ -26,7 +26,7 @@ class FilterViewWidget extends StatelessWidget {
             ),
 
             PopupMenuItem(
-              value: 'uncooked',
+              value: '2',
               child: Text(
                 'uncooked'.tr,
                 style: robotoMedium.copyWith(
@@ -74,7 +74,7 @@ class FilterViewWidget extends StatelessWidget {
           ),
           child: Icon(Icons.tune, color: Theme.of(context).primaryColor, size: 20),
         ),
-        onSelected: (dynamic value) => restaurant.setMainCategoryType(value),
+        onSelected: (dynamic value) => restaurant.setRestaurantType(value),
       ) : const SizedBox();
     });
   }

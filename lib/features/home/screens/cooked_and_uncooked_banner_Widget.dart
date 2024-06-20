@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
+import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
@@ -46,6 +47,7 @@ class CookedAndUncookedBannerWidget extends StatelessWidget {
               Get.toNamed(RouteHelper.getUnCookedCategoryProductRoute(
                 categoryController.unCookedCat![0].id, "uncooked",
               ));
+              Get.find<RestaurantController>().clearRestaurantParticularProductList();
               // Get.find<CategoryController>().getSubCategoryList(categoryController.unCookedCat![0].id.toString());
             },
             child: Column(

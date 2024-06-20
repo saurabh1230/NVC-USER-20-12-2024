@@ -102,7 +102,8 @@ class SignInScreenState extends State<SignInScreen> {
 
                     Align(
                       // alignment: Alignment.topLeft,
-                      child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: 26)),
+                      child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: 18,
+                      color: Theme.of(context).primaryColor)),
                     ),
                     const SizedBox(height: Dimensions.paddingSizeLarge),
 

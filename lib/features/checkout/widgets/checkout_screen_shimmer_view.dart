@@ -310,6 +310,7 @@ class CheckoutShimmerView extends StatelessWidget {
                     ]),
                   ),
                 ),
+                const SizedBox(width: Dimensions.paddingSizeSmall),
 
                 Container(
                   decoration: BoxDecoration(

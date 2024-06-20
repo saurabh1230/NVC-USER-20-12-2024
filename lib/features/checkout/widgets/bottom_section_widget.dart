@@ -1,6 +1,7 @@
 import 'package:stackfood_multivendor/features/checkout/controllers/checkout_controller.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/condition_check_box.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/coupon_section.dart';
+import 'package:stackfood_multivendor/features/checkout/widgets/delivery_instruction_view.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/order_place_button.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/partial_pay_view.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/payment_section.dart';
@@ -82,7 +83,7 @@ class BottomSectionWidget extends StatelessWidget {
 
         ResponsiveHelper.isDesktop(context) ? Padding(
           padding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge, bottom:Dimensions.paddingSizeSmall),
-          child: Text('order_summary'.tr, style: robotoBold),
+          child: Text('ary'.tr, style: robotoBold),
         ) : const SizedBox(),
 
         /// Coupon
@@ -102,7 +103,7 @@ class BottomSectionWidget extends StatelessWidget {
         !ResponsiveHelper.isDesktop(context) ? Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault, horizontal: Dimensions.paddingSizeDefault),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
+            !isDesktop ? const DeliveryInstructionView() : const SizedBox(),
             Text('additional_note'.tr, style: robotoMedium),
             const SizedBox(height: Dimensions.paddingSizeSmall),
 
@@ -181,7 +182,7 @@ class BottomSectionWidget extends StatelessWidget {
 
         !ResponsiveHelper.isDesktop(context) ? Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('order_summary'.tr, style: robotoMedium),
+            Text('Order Summary', style: robotoMedium),
             const SizedBox(height: 24),
           ]),
 

@@ -3,6 +3,7 @@ import 'package:stackfood_multivendor/common/widgets/not_available_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/product_bottom_sheet_widget.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_product_route.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
 import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
@@ -75,24 +76,27 @@ class ProductWidget extends StatelessWidget {
         ),
         child: CustomInkWellWidget(
           onTap: () {
-            if(isRestaurant) {
-              if(restaurant != null && restaurant!.restaurantStatus == 1){
-                Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
-              }else if(restaurant!.restaurantStatus == 0){
-                showCustomSnackBar('restaurant_is_not_available'.tr);
-              }
-            }else {
-              if(product!.restaurantStatus == 1){
-                ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
-                  ProductBottomSheetWidget(product: product, inRestaurantPage: inRestaurant, isCampaign: isCampaign),
-                  backgroundColor: Colors.transparent, isScrollControlled: true,
-                ) : Get.dialog(
-                  Dialog(child: ProductBottomSheetWidget(product: product, inRestaurantPage: inRestaurant)),
-                );
-              }else{
-                showCustomSnackBar('item_is_not_available'.tr);
-              }
-            }
+            Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant!.id),
+              arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: '', categoryID: product!.categoryId.toString(),),
+            );
+            // if(isRestaurant) {
+            //   if(restaurant != null && restaurant!.restaurantStatus == 1){
+            //     Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
+            //   }else if(restaurant!.restaurantStatus == 0){
+            //     showCustomSnackBar('restaurant_is_not_available'.tr);
+            //   }
+            // }else {
+            //   if(product!.restaurantStatus == 1){
+            //     ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
+            //       ProductBottomSheetWidget(product: product, inRestaurantPage: inRestaurant, isCampaign: isCampaign),
+            //       backgroundColor: Colors.transparent, isScrollControlled: true,
+            //     ) : Get.dialog(
+            //       Dialog(child: ProductBottomSheetWidget(product: product, inRestaurantPage: inRestaurant)),
+            //     );
+            //   }else{
+            //     showCustomSnackBar('item_is_not_available'.tr);
+            //   }
+            // }
           },
           radius: Dimensions.radiusDefault,
           child: Padding(

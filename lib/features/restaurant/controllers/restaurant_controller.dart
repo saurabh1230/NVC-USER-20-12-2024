@@ -57,7 +57,7 @@ class RestaurantController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String _restaurantType = 'all';
+  String _restaurantType = '';
   String get restaurantType => _restaurantType;
 
   bool _foodPaginate = false;
@@ -124,7 +124,7 @@ class RestaurantController extends GetxController implements GetxService {
     return restaurantServiceInterface.getRestaurantDistanceFromUser(restaurantLatLng);
   }
 
-  String filteringUrl(String slug){
+  String filteringUrl(String slug) {
     return restaurantServiceInterface.filterRestaurantLinkUrl(slug, _restaurant?.id);
   }
 
@@ -334,6 +334,10 @@ class RestaurantController extends GetxController implements GetxService {
     }
   }
 
+  void clearRestaurantParticularProductList() {
+    _categoryRestaurantProduct = null;
+    // update(); // call update to notify listeners
+  }
 
 
   List<Product>? _categoryRestaurantProduct;

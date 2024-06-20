@@ -1,4 +1,5 @@
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_view_widget_horizontal.dart';
 import 'package:stackfood_multivendor/util/app_constants.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart';
@@ -79,16 +80,26 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
               child: Column(
                 children: [
                   WebScreenTitleWidget(title: 'restaurants'.tr),
-
-                  Center(child: SizedBox(
+                  Center(child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
                     width: Dimensions.webMaxWidth,
-                    child: ProductViewWidget(
-                      isRestaurant: true, products: null, noDataText: 'no_restaurant_available'.tr,
+                    child: RestaurantsViewHorizontalWidget(
                       restaurants: widget.isPopular ? restController.popularRestaurantList : widget.isRecentlyViewed
                           ? restController.recentlyViewedRestaurantList : widget.isOrderAgain
-                          ? restController.orderAgainRestaurantList : restController.latestRestaurantList,
+                          ? restController.orderAgainRestaurantList : restController.latestRestaurantList, categoryName: '', categoryId: '',
                     ),
                   )),
+
+
+                  // Center(child: SizedBox(
+                  //   width: Dimensions.webMaxWidth,
+                  //   child: ProductViewWidget(
+                  //     isRestaurant: true, products: null, noDataText: 'no_restaurant_available'.tr,
+                  //     restaurants: widget.isPopular ? restController.popularRestaurantList : widget.isRecentlyViewed
+                  //         ? restController.recentlyViewedRestaurantList : widget.isOrderAgain
+                  //         ? restController.orderAgainRestaurantList : restController.latestRestaurantList,
+                  //   ),
+                  // )),
                 ],
               ),
             ))),

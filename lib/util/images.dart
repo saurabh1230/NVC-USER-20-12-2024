@@ -1,5 +1,6 @@
 class Images {
   static const String logo = 'assets/image/logo.png';
+  static const String splash = 'assets/image/splash_new.png';
   // static const String logoName = 'assets/image/logo_name.png';
   static const String placeholder = 'assets/image/placeholder.png';
   static const String arabic = 'assets/image/arabic.png';
@@ -87,7 +88,6 @@ class Images {
   static const String appleLogo = 'assets/image/apple_logo.png';
   static const String weather = 'assets/image/weather.png';
   static const String resetLock = 'assets/image/reset_lock.png';
-
   static const String forgetIcon = 'assets/image/forget_icon.png';
   static const String loyaltyIcon = 'assets/image/loyalty_icon.png';
   static const String shoppingBagIcon = 'assets/image/shopping_bag_icon.png';
@@ -210,4 +210,5 @@ class Images {
   static const String foodTypeUncookedBanner = 'assets/image/foodtypeuncookedbanner.png';
   static const String masalaPickleBanner= 'assets/image/masala&pickleparticlebanner.png';
   static const String petFoodParticle = 'assets/image/petfoodparticlebanner.png';
+  static const String uncookedPromotionalBanner = 'assets/image/uncooked_promotional_banner.png';
 }

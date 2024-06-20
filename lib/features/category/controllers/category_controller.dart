@@ -107,6 +107,9 @@ class CategoryController extends GetxController implements GetxService {
     // update(); // call update to notify listeners
   }
 
+
+
+
   void getSubCategoryList(String? categoryID) async {
     _subCategoryIndex = 0;
     _subCategoryList = null;
@@ -548,9 +551,21 @@ class CategoryController extends GetxController implements GetxService {
     // }
   }
 
+  String _categoryName = '';
+  String _categoryId = '';
 
+  String get categoryName => _categoryName;
+  String get categoryId => _categoryId;
 
+  set categoryName(String name) {
+    _categoryName = name;
+    update();
+  }
 
+  set categoryId(String id) {
+    _categoryId = id;
+    update();
+  }
 
 
 

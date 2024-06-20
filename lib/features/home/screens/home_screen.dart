@@ -287,6 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // const LocationBannerViewWidget(),
 
                       _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
+                      Image.asset(Images.uncookedPromotionalBanner),
                       const UNCookedParticleViewWidget(isPopular: false,),
                       const CookedParticleViewWidget(isPopular: false,),
 

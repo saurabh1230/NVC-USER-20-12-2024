@@ -2,6 +2,7 @@ import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart
 import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_widget.dart';
 import 'package:stackfood_multivendor/features/category/screens/category_product_screen.dart';
 import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
+import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
@@ -18,8 +19,11 @@ import '../cooked/cooked_whats_on_your_mind_widget.dart';
 class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
   final bool isTitle;
   final ScrollController _scrollController = ScrollController();
+  // final Function(String id, String name) onCategorySelected;
 
-  UnCookedCategoryWhatOnYourMindViewWidget({Key? key, this.isTitle = false}) : super(key: key);
+
+  UnCookedCategoryWhatOnYourMindViewWidget({Key? key, this.isTitle = false,   /* required this.onCategorySelected,*/
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,11 @@ class UnCookedCategoryWhatOnYourMindViewWidget extends StatelessWidget {
                 categoryController.getCategoryRestaurantList(
                   category.id.toString(), 1, '2', true,
                 );
+                categoryController.categoryName = category.name.toString();
+                categoryController.categoryId = category.id.toString();
+
+
+
               },
               child: Container(
                 width:  90,

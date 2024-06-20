@@ -246,16 +246,25 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                 ),
               ),
 
-
               SliverToBoxAdapter(
                   child: Center(child: FooterViewWidget(
                     child: Padding(
                       padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-                      child:  RestaurantsViewHorizontalWidget(
-                          isCooked: true,
-                          restaurants: restaurants, categoryName: '', categoryId: '',),
+                      child:  RestaurantsViewHorizontalWidget(isCooked: true,
+                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
                     ),
                   ))),
+
+
+              // SliverToBoxAdapter(
+              //     child: Center(child: FooterViewWidget(
+              //       child: Padding(
+              //         padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+              //         child:  RestaurantsViewHorizontalWidget(
+              //             isCooked: true,
+              //             restaurants: restaurants, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
+              //       ),
+              //     ))),
 
 
             ] ),

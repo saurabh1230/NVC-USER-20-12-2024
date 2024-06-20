@@ -43,6 +43,8 @@ class CategoryWhatOnYourMindViewWidget extends StatelessWidget {
                 categoryController.getCategoryRestaurantList(
                   category.id.toString(), 1, '1', true,
                 );
+                categoryController.categoryName = category.name.toString();
+                categoryController.categoryId = category.id.toString();
               },
               child: Container(
               width:  90,

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:stackfood_multivendor/features/language/domain/models/language_model.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:get/get.dart';
@@ -168,9 +169,17 @@ class AppConstants {
   /// Delivery Tips
   static List<String> tips = ['0' ,'15', '10', '20', '40', 'custom'];
   static List<String> deliveryInstructionList = [
-    'Deliver to front door',
-    'Deliver to the reception desk',
-    'Avoid calling me',
+    'Avoid Ringing Bell',
+    'Leave At The Door',
+    'Avoid Call',
+    'Leave To Security Guard',
+  ];
+
+  static List<IconData> deliveryInstructionIcons = [
+    Icons.notifications_off,
+    Icons.door_front_door,
+    Icons.call_end,
+    Icons.security,
   ];
 
 

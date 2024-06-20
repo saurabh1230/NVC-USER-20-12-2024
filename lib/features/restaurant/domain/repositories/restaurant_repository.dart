@@ -98,7 +98,7 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
   @override
   Future<RestaurantModel?> getList({int? offset, String? filterBy, int? topRated, int? discount, int? veg, int? nonVeg, bool fromMap = false}) async {
     RestaurantModel? restaurantModel;
-    Response response = await apiClient.getData('${AppConstants.restaurantUri}/all?offset=$offset&limit=${fromMap ? 20 : 12}&filter_data=$filterBy&top_rated=$topRated&discount=$discount&veg=$veg&non_veg=$nonVeg');
+    Response response = await apiClient.getData('${AppConstants.restaurantUri}/all?offset=$offset&limit=${fromMap ? 20 : 12}&type=$filterBy&top_rated=$topRated&discount=$discount&veg=$veg&non_veg=$nonVeg');
     if (response.statusCode == 200) {
       restaurantModel = RestaurantModel.fromJson(response.body);
     }
