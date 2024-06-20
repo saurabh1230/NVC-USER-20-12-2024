@@ -209,8 +209,9 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
 
                 SliverToBoxAdapter(
                   child:restController.categoryProductLoading
-                      ? const ProductShimmer(isEnabled: false, hasDivider: false,isRestaurant: false,) // Show SizedBox when list is null
-                      :  restController.categoryRestaurantProductList == null
+                      ? const SizedBox():
+                  // ? const ProductShimmer(isEnabled: false, hasDivider: false,isRestaurant: false,) // Show SizedBox when list is null
+                        restController.categoryRestaurantProductList == null
                       ? const SizedBox() // Show SizedBox when list is null
                       : restController.categoryRestaurantProductList!.isEmpty
                       ? const SizedBox() // Show SizedBox when list is empty
