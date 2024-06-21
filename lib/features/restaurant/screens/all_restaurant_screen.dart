@@ -45,9 +45,10 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
       builder: (restController) {
         return Scaffold(
           appBar: CustomAppBarWidget(
-            title: widget.isPopular ? 'popular_restaurants'.tr : widget.isRecentlyViewed
-                ? 'recently_viewed_restaurants'.tr : widget.isOrderAgain ? 'order_again'.tr
-                : '${'new_on'.tr} ${AppConstants.appName}',
+            title: "All Restaurants",
+            // title: widget.isPopular ? 'popular_restaurants'.tr : widget.isRecentlyViewed
+            //     ? 'recently_viewed_restaurants'.tr : widget.isOrderAgain ? 'order_again'.tr
+            //     : '${'new_on'.tr} ${AppConstants.appName}',
             type: restController.type,
             onVegFilterTap: widget.isOrderAgain ? null : (String type) {
               if(widget.isPopular) {

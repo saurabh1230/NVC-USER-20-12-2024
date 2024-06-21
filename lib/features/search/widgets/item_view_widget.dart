@@ -20,7 +20,10 @@ class ItemRestaurantViewWidget extends StatelessWidget {
       body: GetBuilder<search.SearchController>(builder: (searchController) {
         return SingleChildScrollView(
           child: FooterViewWidget(
-            child: Center(child: SizedBox(width: Dimensions.webMaxWidth, child: RestaurantsViewHorizontalWidget(
+            child: Center(child:
+            Container(padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+                width: Dimensions.webMaxWidth,
+                child: RestaurantsViewHorizontalWidget(
               /*isRestaurant: isRestaurant,*/ products: searchController.searchProductList, restaurants: searchController.searchRestList, categoryName: '', categoryId: '',
             ))),
           ),

@@ -211,4 +211,5 @@ class Images {
   static const String masalaPickleBanner= 'assets/image/masala&pickleparticlebanner.png';
   static const String petFoodParticle = 'assets/image/petfoodparticlebanner.png';
   static const String uncookedPromotionalBanner = 'assets/image/uncooked_promotional_banner.png';
+  static const String cookedPromotionalBanner = 'assets/image/cooked_promotional_banner.png';
 }

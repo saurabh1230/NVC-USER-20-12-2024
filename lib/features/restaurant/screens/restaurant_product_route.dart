@@ -155,55 +155,7 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                       ]),
                     ) : const SizedBox() : const SizedBox(),
 
-                    restController.recommendedProductModel != null && restController.recommendedProductModel!.products!.isNotEmpty ? Container(
-                      color: Theme.of(context).primaryColor.withOpacity(0.10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeLarge,
-                              bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeLarge,
-                            ),
-                            child: Row(children: [
-                              Expanded(
-                                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Text('popular_in_this_restaurant'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w700)),
-                                  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                                  Text('here_is_what_you_might_like_to_test'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor)),
-                                ]),
-                              ),
-
-                              ArrowIconButtonWidget(
-                                onTap: () => Get.toNamed(RouteHelper.getPopularFoodRoute(false, fromIsRestaurantFood: true, restaurantId: widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!)),
-                              ),
-                            ]),
-                          ),
-
-                          SizedBox(
-                            height: 260, width: context.width,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: restController.recommendedProductModel!.products!.length,
-                              physics: const BouncingScrollPhysics(),
-                              padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall, bottom: Dimensions.paddingSizeExtraSmall, right: Dimensions.paddingSizeDefault),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
-                                  child: ItemCardWidget(
-                                    product: restController.recommendedProductModel!.products![index],
-                                    isBestItem: false,
-                                    isPopularNearbyItem: false,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ) : const SizedBox(),
                   ]),
                 ))),
 
@@ -255,7 +207,58 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                                      categoryID: widget.categoryID,),
                                  );
                                },
-                          )
+                          ),
+
+                          // restController.recommendedProductModel != null && restController.recommendedProductModel!.products!.isNotEmpty ? Container(
+                          //   color: Theme.of(context).primaryColor.withOpacity(0.10),
+                          //   child: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Padding(
+                          //         padding: const EdgeInsets.only(
+                          //           top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeLarge,
+                          //           bottom: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeLarge,
+                          //         ),
+                          //         child: Row(children: [
+                          //           Expanded(
+                          //             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          //               Text('popular_in_this_restaurant'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w700)),
+                          //               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                          //
+                          //               Text('here_is_what_you_might_like_to_test'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor)),
+                          //             ]),
+                          //           ),
+                          //
+                          //           ArrowIconButtonWidget(
+                          //             onTap: () => Get.toNamed(RouteHelper.getPopularFoodRoute(false, fromIsRestaurantFood: true, restaurantId: widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!)),
+                          //           ),
+                          //         ]),
+                          //       ),
+                          //
+                          //       SizedBox(
+                          //         height: 260, width: context.width,
+                          //         child: ListView.builder(
+                          //           shrinkWrap: true,
+                          //           scrollDirection: Axis.horizontal,
+                          //           itemCount: restController.recommendedProductModel!.products!.length,
+                          //           physics: const BouncingScrollPhysics(),
+                          //           padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall, bottom: Dimensions.paddingSizeExtraSmall, right: Dimensions.paddingSizeDefault),
+                          //           itemBuilder: (context, index) {
+                          //             return Padding(
+                          //               padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+                          //               child: ItemCardWidget(
+                          //                 product: restController.recommendedProductModel!.products![index],
+                          //                 isBestItem: false,
+                          //                 isPopularNearbyItem: false,
+                          //               ),
+                          //             );
+                          //           },
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ) : const SizedBox(),
+
                         ],
                       ),
                       // PaginatedListViewWidget(
@@ -291,6 +294,10 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                     ],
                   ),
                 ),
+
+
+
+
 
                 (restController.categoryList!.isNotEmpty) ? SliverPersistentHeader(
                   pinned: true,

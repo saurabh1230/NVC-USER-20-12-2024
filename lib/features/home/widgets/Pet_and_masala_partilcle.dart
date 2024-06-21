@@ -21,35 +21,7 @@ class PetFoodAndMasalaParticle extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Fluttertoast.showToast(
-                  msg: "NVC Masala & Pickles Coming soon!",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              },
-              child: Column(
-                children: [
-                  Container(height: 100,
-                      width: Get.size.width,
-                      clipBehavior: Clip.hardEdge,
-                      decoration :  BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
-                      child: Image.asset(Images.masalaPickleBanner,fit: BoxFit.cover,)),
-                   const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                   Text("NVC Pet Food & Bakery", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, fontWeight: FontWeight.w500)),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: Dimensions.paddingSizeDefault,),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Fluttertoast.showToast(
-                  msg: "NVC Pet Food Coming soon!",
+                  msg: "NVC Pet Food & Bakery Coming soon!",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
@@ -66,6 +38,34 @@ class PetFoodAndMasalaParticle extends StatelessWidget {
                       decoration :  BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
                       child: Image.asset(Images.petFoodParticle,fit: BoxFit.cover,)),
+                   const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                   Text("NVC Pet Food & Bakery!", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, fontWeight: FontWeight.w500)),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: Dimensions.paddingSizeDefault,),
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Fluttertoast.showToast(
+                  msg: "NVC Masala & Pickle Coming Soon!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+              },
+              child: Column(
+                children: [
+                  Container(height: 100,
+                      width: Get.size.width,
+                      clipBehavior: Clip.hardEdge,
+                      decoration :  BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
+                      child: Image.asset(Images.masalaPickleBanner,fit: BoxFit.cover,)),
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
                   Text("NVC Masala & Pickles", textAlign: TextAlign.center,
                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, fontWeight: FontWeight.w500)),

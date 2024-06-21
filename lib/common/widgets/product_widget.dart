@@ -76,9 +76,13 @@ class ProductWidget extends StatelessWidget {
         ),
         child: CustomInkWellWidget(
           onTap: () {
-            Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant!.id),
-              arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: '', categoryID: product!.categoryId.toString(),),
+            Get.bottomSheet(
+              ProductBottomSheetWidget(product: product, isCampaign: false),
+              backgroundColor: Colors.transparent, isScrollControlled: true,
             );
+            // Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant!.id),
+            //   arguments: RestaurantProductScreen(restaurant: restaurant, product: null, categoryName: '', categoryID: product!.categoryId.toString(),),
+            // );
             // if(isRestaurant) {
             //   if(restaurant != null && restaurant!.restaurantStatus == 1){
             //     Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));

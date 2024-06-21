@@ -562,7 +562,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                   pinned: true,
                   delegate: SliverDelegate(
                       height: 60,
-                      child: HeadingWidget(title: 'Top Restaurants & Cloud Kitchen',
+                      child: HeadingWidget(title: 'Top Restaurants & Shops',
                         tap: () {
                           Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
                         },)
