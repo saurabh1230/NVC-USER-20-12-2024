@@ -18,7 +18,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           child:  Container(
             color: Theme.of(context).colorScheme.background,
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraSmall),
-            child: Column(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text('All Restaurants', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
@@ -46,6 +46,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
                   //   ),
                   // ),
                 ]),
+                filter(context,restaurantController)
               ],
             ),
           ),
@@ -61,15 +62,15 @@ class AllRestaurantFilterWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         children:  [
-          Align(alignment: Alignment.centerLeft,
-            child: Text(
-              '${restaurantController.restaurantModel != null ? restaurantController.restaurantModel!.totalSize : 0} ${'Available'}',
-              maxLines: 1, overflow: TextOverflow.ellipsis,
-              style: robotoRegular.copyWith(color: Colors.black.withOpacity(0.70), fontSize: Dimensions.fontSizeSmall),
-            ),
-          ),
-          // FilterViewWidget(),
-          const SizedBox(width: Dimensions.paddingSizeSmall),
+          // Align(alignment: Alignment.centerLeft,
+          //   child: Text(
+          //     '${restaurantController.restaurantModel != null ? restaurantController.restaurantModel!.totalSize : 0} ${'Available'}',
+          //     maxLines: 1, overflow: TextOverflow.ellipsis,
+          //     style: robotoRegular.copyWith(color: Colors.black.withOpacity(0.70), fontSize: Dimensions.fontSizeSmall),
+          //   ),
+          // ),
+          // // FilterViewWidget(),
+          // const SizedBox(width: Dimensions.paddingSizeSmall),
       /*    RestaurantsFilterButtonWidget(
             buttonText: 'Cooked',
             onTap: () {},
@@ -83,17 +84,37 @@ class AllRestaurantFilterWidget extends StatelessWidget {
             // isSelected: restaurantController.discount == 1,
           ),*/
 
-           RestaurantsFilterButtonWidget(
-            buttonText: 'top_rated'.tr,
-            onTap: (){
-              Get.find<CategoryController>().getCategoryProductList(
-                Get.find<CategoryController>().subCategoryIndex == 0 ? "12"
-                    : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-                Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-              );
-            },
-            // isSelected: restaurantController.topRated == 1,
+          //  RestaurantsFilterButtonWidget(
+          //   buttonText: 'top_rated'.tr,
+          //   onTap: (){
+          //     Get.find<CategoryController>().getCategoryProductList(
+          //       Get.find<CategoryController>().subCategoryIndex == 0 ? "12"
+          //           : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+          //       Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+          //     );
+          //   },
+          //   // isSelected: restaurantController.topRated == 1,
+          // ),
+          RestaurantsFilterButtonWidget(
+            buttonText: "Top Rated",
+            onTap: () => restaurantController.setTopRated(),
+            isSelected: restaurantController.topRated == 1,
           ),
+          RestaurantsFilterButtonWidget(
+            buttonText: "Cooked",
+            onTap: () => restaurantController.setRestaurantType('1'),
+            isSelected: restaurantController.cooked == 1,
+          ),
+          RestaurantsFilterButtonWidget(
+            buttonText: "Uncooked",
+            onTap: () => restaurantController.setRestaurantType('2'),
+            isSelected: restaurantController.uncooked == 1,
+          ),
+          // RestaurantsFilterButtonWidget(
+          //   buttonText: "Top Rated",
+          //   onTap: () => restaurantController.setTopRated(),
+          //   isSelected: restaurantController.topRated == 1,
+          // ),
 
           // const SizedBox(width: Dimensions.paddingSizeSmall),
           //

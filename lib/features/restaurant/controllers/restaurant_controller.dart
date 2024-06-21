@@ -101,6 +101,12 @@ class RestaurantController extends GetxController implements GetxService {
   int _topRated = 0;
   int get topRated => _topRated;
 
+  int _cooked = 0;
+  int get cooked => _cooked;
+
+  int _uncooked = 0;
+  int get uncooked => _uncooked;
+
   int _discount = 0;
   int get discount => _discount;
 

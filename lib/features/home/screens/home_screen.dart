@@ -321,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverDelegate(
-                    height: 60,
+                    height: 90,
                     child: const AllRestaurantFilterWidget(),
                   ),
                 ),
