@@ -45,7 +45,8 @@ class CartProductWidget extends StatelessWidget {
             child: ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
           ));
         },
-        child: GetBuilder<CartController>(
+        child:
+        GetBuilder<CartController>(
           builder: (cartController) {
             return Slidable(
               key: UniqueKey(),
@@ -146,7 +147,12 @@ class CartProductWidget extends StatelessWidget {
                         builder: (cartController) {
                           return Row(children: [
                             QuantityButton(
-                              onTap: cartController.isLoading ? () {} : () {
+                              onTap: /*cartController.isLoading ? () {} : */() {
+                                // if (productController.addOnQtyList[index]! > 1) {
+                                //   productController.setAddOnQuantity(false, index);
+                                // } else {
+                                //   productController.addAddOn(false, index);
+                                // }
                                 if (cart.quantity! > 1) {
                                   cartController.setQuantity(false, cart);
                                 }else {
@@ -164,7 +170,7 @@ class CartProductWidget extends StatelessWidget {
                             ),
                             // Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
                             QuantityButton(
-                              onTap: cartController.isLoading ? (){} : () => cartController.setQuantity(true, cart),
+                              onTap: /*cartController.isLoading ? (){} :*/ () => cartController.setQuantity(true, cart),
                               isIncrement: true,
                               color: cartController.isLoading ? Theme.of(context).disabledColor : null,
                             ),

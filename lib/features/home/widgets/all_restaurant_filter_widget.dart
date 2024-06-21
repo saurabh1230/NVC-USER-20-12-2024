@@ -18,29 +18,36 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           child:  Container(
             color: Theme.of(context).colorScheme.background,
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraSmall),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text('All Restaurants', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-              Row(
-                children: [
-                  Align(alignment: Alignment.centerLeft,
-                    child: Text(
-                      '${restaurantController.restaurantModel != null ? restaurantController.restaurantModel!.totalSize : 0} ${'Available'}',
-                      maxLines: 1, overflow: TextOverflow.ellipsis,
-                      style: robotoMedium.copyWith(color: Colors.black.withOpacity(0.40), fontSize: Dimensions.fontSizeSmall),
-                    ),
+            child: Column(
+              children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Text('All Restaurants', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                  Row(
+                    children: [
+                      Align(alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${restaurantController.restaurantModel != null ? restaurantController.restaurantModel!.totalSize : 0} ${'Available'}',
+                          maxLines: 1, overflow: TextOverflow.ellipsis,
+                          style: robotoMedium.copyWith(color: Colors.black.withOpacity(0.40), fontSize: Dimensions.fontSizeSmall),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      const FilterViewWidget(),
+
+                    ],
                   ),
-                  const SizedBox(width: 10),
-                  const FilterViewWidget(),
-                ],
-              ),
-              // Flexible(
-              //   child: Text(
-              //     '${restaurantController.productModel != null ? restaurantController.productModel!.totalSize : 0} ${'Food Items Available'}',
-              //     maxLines: 1, overflow: TextOverflow.ellipsis,
-              //     style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-              //   ),
-              // ),
-            ]),
+
+
+                  // Flexible(
+                  //   child: Text(
+                  //     '${restaurantController.productModel != null ? restaurantController.productModel!.totalSize : 0} ${'Food Items Available'}',
+                  //     maxLines: 1, overflow: TextOverflow.ellipsis,
+                  //     style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
+                  //   ),
+                  // ),
+                ]),
+              ],
+            ),
           ),
         );
       }
@@ -63,7 +70,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           ),
           // FilterViewWidget(),
           const SizedBox(width: Dimensions.paddingSizeSmall),
-          /*RestaurantsFilterButtonWidget(
+      /*    RestaurantsFilterButtonWidget(
             buttonText: 'Cooked',
             onTap: () {},
             // isSelected: restaurantController.topRated == 1,
@@ -76,7 +83,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
             // isSelected: restaurantController.discount == 1,
           ),*/
 
-          /* RestaurantsFilterButtonWidget(
+           RestaurantsFilterButtonWidget(
             buttonText: 'top_rated'.tr,
             onTap: (){
               Get.find<CategoryController>().getCategoryProductList(
@@ -86,7 +93,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
               );
             },
             // isSelected: restaurantController.topRated == 1,
-          ),*/
+          ),
 
           // const SizedBox(width: Dimensions.paddingSizeSmall),
           //

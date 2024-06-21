@@ -128,7 +128,7 @@ class ProductWidget extends StatelessWidget {
                       discount: discount, discountType: discountType,
                       freeDelivery: isRestaurant ? restaurant!.freeDelivery : false,
                     ),
-                    Positioned(bottom: Dimensions.paddingSizeSmall,right:  Dimensions.paddingSizeLarge,left:  Dimensions.paddingSizeLarge,
+                    Positioned(bottom: Dimensions.paddingSizeSmall,right:  Dimensions.paddingSizeSmall,left:  Dimensions.paddingSizeSmall,
                       child: !isRestaurant ? GetBuilder<CartController>(
                           builder: (cartController) {
                             int cartQty = cartController.cartQuantity(product!.id!);
@@ -138,54 +138,61 @@ class ProductWidget extends StatelessWidget {
                               1, [], [], false, product, [], product?.quantityLimit,
                             );
                             return cartQty != 0 ? Container(
+                              padding: EdgeInsets.symmetric(vertical: 2),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
                               ),
-                              child: Row(children: [
-                                InkWell(
-                                  onTap: () {
-                                    if (cartController.cartList[cartIndex].quantity! > 1) {
-                                      cartController.setQuantity(false, cartModel, cartIndex: cartIndex);
-                                    }else {
-                                      cartController.removeFromCart(cartIndex);
-                                    }
-                                  },
-                                  child: 
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).cardColor,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(color: Theme.of(context).primaryColor),
-                                    ),
-                                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                    child: Icon(
-                                      Icons.remove, size: 16, color: Theme.of(context).primaryColor,
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      if (cartController.cartList[cartIndex].quantity! > 1) {
+                                        cartController.setQuantity(false, cartModel, cartIndex: cartIndex);
+                                      }else {
+                                        cartController.removeFromCart(cartIndex);
+                                      }
+                                    },
+                                    child:
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: Theme.of(context).primaryColor),
+                                      ),
+                                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                                      child: Icon(
+                                        Icons.remove, size: 16, color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                   ),
                                 ),
 
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                                  child: Text(
-                                    cartQty.toString(),
-                                    style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                      cartQty.toString(),
+                                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                                    ),
                                   ),
                                 ),
 
-                                InkWell(
-                                  onTap: () {
-                                    cartController.setQuantity(true, cartModel, cartIndex: cartIndex);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).cardColor,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(color: Theme.of(context).primaryColor),
-                                    ),
-                                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                    child: Icon(
-                                      Icons.add, size: 16, color: Theme.of(context).primaryColor,
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      cartController.setQuantity(true, cartModel, cartIndex: cartIndex);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: Theme.of(context).primaryColor),
+                                      ),
+                                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                                      child: Icon(
+                                        Icons.add, size: 16, color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                   ),
                                 ),
