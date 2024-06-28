@@ -77,7 +77,8 @@ class ProductViewWidget extends StatelessWidget {
       ) : NoDataScreen(
         isRestaurant: isRestaurant,
         title: noDataText ?? (isRestaurant ? 'no_restaurant_available'.tr : 'no_food_available'.tr),
-      ) : GridView.builder(
+      ) :
+      GridView.builder(
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: Dimensions.paddingSizeLarge,

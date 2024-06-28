@@ -29,7 +29,9 @@ class NewOnStackFoodViewWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text('${'new_on'.tr} ${AppConstants.appName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                    Text('Featured on ${AppConstants.appName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+
+                    // Text('${'new_on'.tr} ${AppConstants.appName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
 
                     ArrowIconButtonWidget(
                       onTap: () => Get.toNamed(RouteHelper.getAllRestaurantRoute(isLatest ? 'latest' : '')),
@@ -43,7 +45,7 @@ class NewOnStackFoodViewWidget extends StatelessWidget {
                   height: 130,
                   child: ListView.builder(
                     padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
-                    itemCount: restController.latestRestaurantList!.length,
+                    itemCount: restController.latestRestaurantList!.length > 6 ? 6 : restController.latestRestaurantList!.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),

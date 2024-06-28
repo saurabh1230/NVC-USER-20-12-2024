@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/features/home/screens/cooked_and_uncooked_banner_Widget.dart';
 import 'package:stackfood_multivendor/features/home/screens/uncooked_particle_view_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/new_on_stackfood_view_widget.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/web_home_screen.dart';
@@ -302,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       // _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
 
-                      // _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
+                      _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
                       const PromotionalBannerViewWidget(),
 
                     ]),
@@ -321,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverDelegate(
-                    height: 90,
+                    height: 60,
                     child: const AllRestaurantFilterWidget(),
                   ),
                 ),

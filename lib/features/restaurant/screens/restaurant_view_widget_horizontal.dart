@@ -277,6 +277,7 @@ import 'package:stackfood_multivendor/features/splash/controllers/theme_controll
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:stackfood_multivendor/util/app_loading_screen.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -323,7 +324,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
               child: Text('no_restaurant_available'.tr, style: robotoMedium),
             ),
           ) :
-          const PopularRestaurantShimmer(),
+          const AppLoading()
+          // const PopularRestaurantShimmer(),
         ),
       ],
     );

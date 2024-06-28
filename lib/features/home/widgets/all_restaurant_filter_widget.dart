@@ -33,10 +33,8 @@ class AllRestaurantFilterWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       const FilterViewWidget(),
-
                     ],
                   ),
-
 
                   // Flexible(
                   //   child: Text(
@@ -46,7 +44,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
                   //   ),
                   // ),
                 ]),
-                filter(context,restaurantController)
+                // filter(context,restaurantController)
               ],
             ),
           ),
@@ -71,7 +69,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           // ),
           // // FilterViewWidget(),
           // const SizedBox(width: Dimensions.paddingSizeSmall),
-      /*    RestaurantsFilterButtonWidget(
+          RestaurantsFilterButtonWidget(
             buttonText: 'Cooked',
             onTap: () {},
             // isSelected: restaurantController.topRated == 1,
@@ -82,7 +80,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
             buttonText: 'Uncooked',
             onTap: () {},
             // isSelected: restaurantController.discount == 1,
-          ),*/
+          ),
 
           //  RestaurantsFilterButtonWidget(
           //   buttonText: 'top_rated'.tr,
@@ -95,21 +93,21 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           //   },
           //   // isSelected: restaurantController.topRated == 1,
           // ),
-          RestaurantsFilterButtonWidget(
-            buttonText: "Top Rated",
-            onTap: () => restaurantController.setTopRated(),
-            isSelected: restaurantController.topRated == 1,
-          ),
-          RestaurantsFilterButtonWidget(
-            buttonText: "Cooked",
-            onTap: () => restaurantController.setRestaurantType('1'),
-            isSelected: restaurantController.cooked == 1,
-          ),
-          RestaurantsFilterButtonWidget(
-            buttonText: "Uncooked",
-            onTap: () => restaurantController.setRestaurantType('2'),
-            isSelected: restaurantController.uncooked == 1,
-          ),
+          // RestaurantsFilterButtonWidget(
+          //   buttonText: "Top Rated",
+          //   onTap: () => restaurantController.setTopRated(),
+          //   isSelected: restaurantController.topRated == 1,
+          // ),
+          // RestaurantsFilterButtonWidget(
+          //   buttonText: "Cooked",
+          //   onTap: () => restaurantController.setRestaurantType('1'),
+          //   isSelected: restaurantController.cooked == 1,
+          // ),
+          // RestaurantsFilterButtonWidget(
+          //   buttonText: "Uncooked",
+          //   onTap: () => restaurantController.setRestaurantType('2'),
+          //   isSelected: restaurantController.uncooked == 1,
+          // ),
           // RestaurantsFilterButtonWidget(
           //   buttonText: "Top Rated",
           //   onTap: () => restaurantController.setTopRated(),
@@ -138,9 +136,7 @@ class AllRestaurantFilterWidget extends StatelessWidget {
           //   isSelected: restaurantController.nonVeg == 1,
           // ),
           // const SizedBox(width: Dimensions.paddingSizeSmall),
-
           // ResponsiveHelper.isDesktop(context) ? const FilterViewWidget() : const SizedBox(),
-
         ],
       ),
     );

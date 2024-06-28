@@ -49,12 +49,15 @@ class PopularRestaurantsViewWidget extends StatelessWidget {
                 ) : Padding(
                   padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeLarge),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text(isRecentlyViewed ? 'your_restaurants'.tr : 'Top Rated Vendors',
+                    Text(isRecentlyViewed ? 'your_restaurants'.tr : 'Popular Vendors & Restaurants',
                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
                     ),
                     ArrowIconButtonWidget(onTap: () {
-                      Get.toNamed(RouteHelper.getAllRestaurantRoute(isRecentlyViewed ? 'recently_viewed' : 'popular'));
+                      Get.toNamed(RouteHelper.getAllRestaurantRoute('popular'));
                     }),
+                    // ArrowIconButtonWidget(onTap: () {
+                    //   Get.toNamed(RouteHelper.getAllRestaurantRoute(isRecentlyViewed ? 'recently_viewed' : 'popular'));
+                    // }),
                   ]),
                 ),
 

@@ -29,6 +29,7 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
 
     if(widget.isPopular) {
       Get.find<RestaurantController>().getPopularRestaurantList(false, 'all', false);
+      print("check");
     }else if(widget.isRecentlyViewed){
       Get.find<RestaurantController>().getRecentlyViewedRestaurantList(false, 'all', false);
     } else if(widget.isOrderAgain) {
@@ -45,10 +46,15 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
       builder: (restController) {
         return Scaffold(
           appBar: CustomAppBarWidget(
-            title: "All Restaurants",
+            // title: "All Restaurants",
+            title: widget.isPopular ? "Popular Vendors & Restaurants" : widget.isRecentlyViewed
+                ? 'recently_viewed_restaurants'.tr : widget.isOrderAgain ? 'order_again'.tr
+                : 'Featured on ${AppConstants.appName}',
             // title: widget.isPopular ? 'popular_restaurants'.tr : widget.isRecentlyViewed
             //     ? 'recently_viewed_restaurants'.tr : widget.isOrderAgain ? 'order_again'.tr
-            //     : '${'new_on'.tr} ${AppConstants.appName}',
+            //     : 'Featured on ${AppConstants.appName}',
+
+                // : '${'new_on'.tr} ${AppConstants.appName}',
             type: restController.type,
             onVegFilterTap: widget.isOrderAgain ? null : (String type) {
               if(widget.isPopular) {

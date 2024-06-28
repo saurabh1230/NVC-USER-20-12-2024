@@ -31,7 +31,7 @@ class RestaurantsCardWidget extends StatelessWidget {
       LatLng(double.parse(restaurant.latitude!), double.parse(restaurant.longitude!)),
     );
     return Container(
-      width: isNewOnStackFood! ? ResponsiveHelper.isMobile(context) ? 350 : 380  : ResponsiveHelper.isMobile(context) ? 330: 355,
+      width: isNewOnStackFood! ? ResponsiveHelper.isMobile(context) ? 380 : 380  : ResponsiveHelper.isMobile(context) ? 330: 355,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2)),
