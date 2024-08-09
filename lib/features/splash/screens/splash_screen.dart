@@ -85,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _route() {
     Get.find<SplashController>().getConfigData().then((isSuccess) {
       if (isSuccess) {
-        Timer(const Duration(seconds: 1), () async {
+        Timer(const Duration(milliseconds: 400), () async {
           double? minimumVersion = 0;
           if (GetPlatform.isAndroid) {
             minimumVersion =
