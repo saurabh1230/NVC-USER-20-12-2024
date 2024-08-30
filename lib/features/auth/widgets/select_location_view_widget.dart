@@ -65,19 +65,14 @@ class _SelectLocationViewWidgetState extends State<SelectLocationViewWidget> {
             child: SingleChildScrollView (
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
                 !ResponsiveHelper.isDesktop(context) ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Expanded(child: ZoneSelectionWidget(restaurantRegController: restaurantRegController, zoneList: zoneList)),
                   SizedBox(width: widget.fromView ? Dimensions.paddingSizeSmall : 0),
-
                   widget.fromView ? Expanded(child: cuisineView()) : const SizedBox(),
                 ]) : const SizedBox(),
                 !ResponsiveHelper.isDesktop(context) ? const SizedBox(height: Dimensions.paddingSizeExtraLarge) : const SizedBox(),
-
-
                 !ResponsiveHelper.isDesktop(context) ? mapView(restaurantRegController) : const SizedBox(),
                 !ResponsiveHelper.isDesktop(context) ? SizedBox(height: !widget.fromView ? Dimensions.paddingSizeSmall : 0) : const SizedBox(),
-
                 (widget.zoneCuisinesView && ResponsiveHelper.isDesktop(context)) ? Row(children: [
                     Expanded(child: ZoneSelectionWidget(restaurantRegController: restaurantRegController, zoneList: zoneList)),
                     SizedBox(width: widget.fromView ? Dimensions.paddingSizeSmall : 0),

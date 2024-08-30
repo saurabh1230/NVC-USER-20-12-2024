@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                       const WhatOnYourMindViewWidget(),
-                      const PetFoodAndMasalaParticle(),
+                      // const PetFoodAndMasalaParticle(),
 
                       const TodayTrendsViewWidget(),
 
