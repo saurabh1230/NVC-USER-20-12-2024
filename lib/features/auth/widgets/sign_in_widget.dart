@@ -52,7 +52,6 @@ class SignInWidgetState extends State<SignInWidget> {
     return GetBuilder<AuthController>(builder: (authController) {
       return Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: [
         CustomTextFieldWidget(
-
           titleText: isDesktop ? 'phone'.tr : 'enter_phone_number'.tr,
           hintText: 'enter_phone_number'.tr,
           controller: _phoneController,
@@ -63,7 +62,6 @@ class SignInWidgetState extends State<SignInWidget> {
           // isNumber: true,
           // isAmount: true,
           isPhone: false,
-
           showTitle: isDesktop,
           onCountryChanged: (CountryCode countryCode) {
             _countryDialCode = countryCode.dialCode;
