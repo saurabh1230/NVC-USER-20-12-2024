@@ -24,7 +24,7 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     initCall();
   }
 

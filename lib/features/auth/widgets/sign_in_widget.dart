@@ -61,6 +61,8 @@ class SignInWidgetState extends State<SignInWidget> {
           prefixIcon: Icons.phone,
           // isNumber: true,
           // isAmount: true,
+          maxLength: 10,
+
           isPhone: false,
           showTitle: isDesktop,
           onCountryChanged: (CountryCode countryCode) {

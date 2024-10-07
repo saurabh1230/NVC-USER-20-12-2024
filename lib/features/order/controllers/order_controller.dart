@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/common/models/response_model.dart';
@@ -358,19 +359,61 @@ class OrderController extends GetxController implements GetxService {
     update();
   }
 
+
+
   Future<List<OrderDetailsModel>?> getOrderDetails(String orderID) async {
+    print('==================> Check Order Details');
     _isLoading = true;
     _showCancelled = false;
 
     Response response = await orderServiceInterface.getOrderDetails(orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId());
+
+    // ANSI color codes
+    final String brightGreen = '\x1B[32m'; // Bright green for success
+    final String resetColor = '\x1B[0m';   // Reset to default
+
+    // Print the entire response details
     if (response.statusCode == 200) {
       _orderDetails = orderServiceInterface.processOrderDetails(response);
       _schedules = orderServiceInterface.processSchedules(response);
+
+      // Pretty-print the entire response body
+      try {
+        // Decode and then re-encode to pretty print if it's valid JSON
+        var responseBody = jsonDecode(response.body);
+        var prettyResponse = const JsonEncoder.withIndent('  ').convert(responseBody);
+        print('$brightGreen Response: $prettyResponse$resetColor');
+      } catch (e) {
+        print('$brightGreen Unable to parse response body as JSON: $e$resetColor');
+        print('$brightGreen Raw response: ${response.body}$resetColor');
+      }
+    } else {
+      print('$brightGreen Error: ${response.statusCode} - ${response.statusText}$resetColor');
+      // Print the raw response body for errors
+      print('$brightGreen Raw response body: ${response.body}$resetColor');
     }
+
     _isLoading = false;
     update();
     return _orderDetails;
   }
+
+
+
+  // Future<List<OrderDetailsModel>?> getOrderDetails(String orderID) async {
+  //   print('==================> Check Order Details');
+  //   _isLoading = true;
+  //   _showCancelled = false;
+  //
+  //   Response response = await orderServiceInterface.getOrderDetails(orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId());
+  //   if (response.statusCode == 200) {
+  //     _orderDetails = orderServiceInterface.processOrderDetails(response);
+  //     _schedules = orderServiceInterface.processSchedules(response);
+  //   }
+  //   _isLoading = false;
+  //   update();
+  //   return _orderDetails;
+  // }
 
   Future<bool> switchToCOD(String? orderID, String? contactNumber, {double? points}) async {
     _isLoading = true;
