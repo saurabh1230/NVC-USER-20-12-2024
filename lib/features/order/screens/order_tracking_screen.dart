@@ -13,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../util/dimensions.dart';
 
+
 class OrderTrackingScreen extends StatefulWidget {
   final String? orderID;
   final String? contactNumber;
@@ -62,7 +63,6 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
             width: Dimensions.webMaxWidth,
             child: Stack(
               children: [
-                // Check if brozohistory is null
                 track.brozohistory != null && track.brozohistory!.fromTrackingUrl != null
                     ? InAppWebView(
                   initialUrlRequest: URLRequest(
