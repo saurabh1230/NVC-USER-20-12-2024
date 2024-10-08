@@ -9,6 +9,7 @@ import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.
 import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:stackfood_multivendor/features/loyalty/controllers/loyalty_controller.dart';
+import 'package:stackfood_multivendor/features/order/domain/models/borzo_delivery_model.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/delivery_log_model.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_cancellation_body.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_details_model.dart';
@@ -262,8 +263,73 @@ class OrderController extends GetxController implements GetxService {
   void cancelTimer() {
     _timer?.cancel();
   }
+  OrderModel? _trackborzoOrder;
+  OrderModel? get trackborzoOrder => _trackborzoOrder;
+  // Future<ResponseModel> trackBorzoOrder(String? orderID) async {
+  //   print('Tracking order API');
+  //   _trackborzoOrder = null; // Reset the tracked model
+  //   _showCancelled = false;
+  //
+  //   ResponseModel responseModel;
+  //
+  //   // Check if orderID is null or empty
+  //   if (orderID == null || orderID.isEmpty) {
+  //     print('\x1B[31mError:\x1B[0m Order ID cannot be null or empty.');
+  //     return ResponseModel(false, 'Order ID cannot be null or empty.');
+  //   }
+  //
+  //   if (_trackborzoOrder == null) {
+  //     _isLoading = true; // Start loading
+  //     try {
+  //       // Call the service to track the order
+  //       OrderModel? responseOrderModel = await orderServiceInterface.trackOrder(
+  //         orderID,
+  //         AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId(),
+  //         contactNumber: '99999',
+  //       );
+  //
+  //       // Check if responseOrderModel is not null
+  //       if (responseOrderModel != null) {
+  //         // Print the entire response in purple
+  //         print('\x1B[35mAPI Response:\x1B[0m ${responseOrderModel.toJson()}');
+  //
+  //         // Safely access deliveryAddress and log its details
+  //         if (responseOrderModel.deliveryAddress != null) {
+  //           print('\x1B[35mDelivery Address:\x1B[0m ${responseOrderModel.deliveryAddress!.toJson()}');
+  //         } else {
+  //           print('\x1B[33mWarning:\x1B[0m Delivery address is null.');
+  //         }
+  //
+  //         // Save the response into _trackModel
+  //         _trackborzoOrder = responseOrderModel;
+  //
+  //         responseModel = ResponseModel(true, 'Order tracking successful');
+  //       } else {
+  //         print('\x1B[33mWarning:\x1B[0m Response Order Model is null.');
+  //         responseModel = ResponseModel(false, 'Failed to track order.');
+  //       }
+  //     } catch (e) {
+  //       print('\x1B[31mError:\x1B[0m $e');
+  //       responseModel = ResponseModel(false, 'An error occurred: $e');
+  //     } finally {
+  //       _isLoading = false; // Stop loading
+  //       update(); // Update the UI or state
+  //     }
+  //   } else {
+  //     responseModel = ResponseModel(true, 'Order already being tracked.');
+  //   }
+  //
+  //   return responseModel; // Return the response model
+  // }
+
+
+
+
+
+
 
   Future<ResponseModel> trackOrder(String? orderID, OrderModel? orderModel, bool fromTracking, {String? contactNumber, bool? fromGuestInput = false}) async {
+    print('track order api');
     _trackModel = null;
     if(!fromTracking) {
       _orderDetails = null;
@@ -359,6 +425,10 @@ class OrderController extends GetxController implements GetxService {
     update();
   }
 
+  List<BrozoModel>? _borzoDetails;
+  List<BrozoModel>? get borzoDetails => _borzoDetails;
+
+
 
 
   Future<List<OrderDetailsModel>?> getOrderDetails(String orderID) async {
@@ -367,53 +437,15 @@ class OrderController extends GetxController implements GetxService {
     _showCancelled = false;
 
     Response response = await orderServiceInterface.getOrderDetails(orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId());
-
-    // ANSI color codes
-    final String brightGreen = '\x1B[32m'; // Bright green for success
-    final String resetColor = '\x1B[0m';   // Reset to default
-
-    // Print the entire response details
     if (response.statusCode == 200) {
       _orderDetails = orderServiceInterface.processOrderDetails(response);
       _schedules = orderServiceInterface.processSchedules(response);
-
-      // Pretty-print the entire response body
-      try {
-        // Decode and then re-encode to pretty print if it's valid JSON
-        var responseBody = jsonDecode(response.body);
-        var prettyResponse = const JsonEncoder.withIndent('  ').convert(responseBody);
-        print('$brightGreen Response: $prettyResponse$resetColor');
-      } catch (e) {
-        print('$brightGreen Unable to parse response body as JSON: $e$resetColor');
-        print('$brightGreen Raw response: ${response.body}$resetColor');
-      }
-    } else {
-      print('$brightGreen Error: ${response.statusCode} - ${response.statusText}$resetColor');
-      // Print the raw response body for errors
-      print('$brightGreen Raw response body: ${response.body}$resetColor');
+      print('=========>  Response Body ${response.body}');
     }
-
     _isLoading = false;
     update();
     return _orderDetails;
   }
-
-
-
-  // Future<List<OrderDetailsModel>?> getOrderDetails(String orderID) async {
-  //   print('==================> Check Order Details');
-  //   _isLoading = true;
-  //   _showCancelled = false;
-  //
-  //   Response response = await orderServiceInterface.getOrderDetails(orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId());
-  //   if (response.statusCode == 200) {
-  //     _orderDetails = orderServiceInterface.processOrderDetails(response);
-  //     _schedules = orderServiceInterface.processSchedules(response);
-  //   }
-  //   _isLoading = false;
-  //   update();
-  //   return _orderDetails;
-  // }
 
   Future<bool> switchToCOD(String? orderID, String? contactNumber, {double? points}) async {
     _isLoading = true;

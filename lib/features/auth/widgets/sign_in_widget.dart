@@ -72,7 +72,7 @@ class SignInWidgetState extends State<SignInWidget> {
           countryDialCode: _countryDialCode != null ? CountryCode.fromCountryCode(Get.find<SplashController>().configModel!.country!).code
               : Get.find<LocalizationController>().locale.countryCode,
         ),
-        const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+        const SizedBox(height: Dimensions.paddingSizeSmall),
 
         CustomTextFieldWidget(
           titleText: isDesktop ? 'password'.tr : 'enter_your_password'.tr,

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:ui';
-
 import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
 import 'package:stackfood_multivendor/features/notification/domain/models/notification_body_model.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
@@ -38,6 +37,7 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
   Set<Marker> _markers = HashSet<Marker>();
 
   void _loadData() async {
+
     await Get.find<LocationController>().getCurrentLocation(true, notify: false, defaultLatLng: LatLng(
       double.parse(AddressHelper.getAddressFromSharedPref()!.latitude!),
       double.parse(AddressHelper.getAddressFromSharedPref()!.longitude!),
@@ -49,6 +49,9 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    print('track order ap running');
+    // Get.find<OrderController>().trackBorzoOrder(widget.orderID);
+    print('track order ap running');
 
     _loadData();
     // Get.find<OrderController>().callTrackOrderApi(orderModel: Get.find<OrderController>().trackModel, orderId: widget.orderID.toString());
@@ -73,13 +76,16 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBarWidget(title: 'order_tracking'.tr),
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       body: GetBuilder<OrderController>(builder: (orderController) {
+        // print('check track borzo order url${orderController.orderDetails!.brozohistory!.fromTrackingUrl.toString()}');
         OrderModel? track;
         if(orderController.trackModel != null) {
           track = orderController.trackModel;
+          print('check brozohistory => ${track!.brozohistory!.fromTrackingUrl.toString()}');
 
           /*if(_controller != null && GetPlatform.isWeb) {
               if(_track.deliveryAddress != null) {
@@ -127,21 +133,27 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
 
           Positioned(
             bottom: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
-            child: TrackDetailsView(track: track, callback: () async {
-              bool takeAway = track?.orderType == 'take_away';
-              orderController.cancelTimer();
-              await Get.toNamed(RouteHelper.getChatRoute(
-                notificationBody: takeAway ? NotificationBodyModel(restaurantId: track!.restaurant!.id, orderId: int.parse(widget.orderID!))
-                 : NotificationBodyModel(deliverymanId: track!.deliveryMan!.id, orderId: int.parse(widget.orderID!)),
-                user: User(
-                  id: takeAway ? track.restaurant!.id : track.deliveryMan!.id,
-                  fName: takeAway ? track.restaurant!.name : track.deliveryMan!.fName,
-                  lName: takeAway ? '' : track.deliveryMan!.lName,
-                  image: takeAway ? track.restaurant!.logo : track.deliveryMan!.image,
-                ),
-              ));
-              orderController.callTrackOrderApi(orderModel: track, orderId: track.id.toString(), contactNumber: widget.contactNumber);
-            }),
+            child: Column(
+              children: [
+                TrackDetailsView(track: track, callback: () async {
+                  bool takeAway = track?.orderType == 'take_away';
+                  orderController.cancelTimer();
+                  await Get.toNamed(RouteHelper.getChatRoute(
+                    notificationBody: takeAway ? NotificationBodyModel(restaurantId: track!.restaurant!.id, orderId: int.parse(widget.orderID!))
+                     : NotificationBodyModel(deliverymanId: track!.deliveryMan!.id, orderId: int.parse(widget.orderID!)),
+                    user: User(
+                      id: takeAway ? track.restaurant!.id : track.deliveryMan!.id,
+                      fName: takeAway ? track.restaurant!.name : track.deliveryMan!.fName,
+                      lName: takeAway ? '' : track.deliveryMan!.lName,
+                      image: takeAway ? track.restaurant!.logo : track.deliveryMan!.image,
+                    ),
+                  ));
+                  orderController.callTrackOrderApi(orderModel: track, orderId: track.id.toString(), contactNumber: widget.contactNumber);
+                }),
+               Text(track.brozohistory!.fromTrackingUrl.toString()),
+
+              ],
+            ),
           ),
 
         ]))) : const Center(child: CircularProgressIndicator());

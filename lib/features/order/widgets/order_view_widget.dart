@@ -15,11 +15,21 @@ import 'package:stackfood_multivendor/common/widgets/no_data_screen_widget.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OrderViewWidget extends StatelessWidget {
+class OrderViewWidget extends StatefulWidget {
   final bool isRunning;
   final bool isSubscription;
   const OrderViewWidget({super.key, required this.isRunning, this.isSubscription = false});
 
+  @override
+  State<OrderViewWidget> createState() => _OrderViewWidgetState();
+}
+
+class _OrderViewWidgetState extends State<OrderViewWidget> {
+  @override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
@@ -32,20 +42,20 @@ class OrderViewWidget extends StatelessWidget {
         int pageSize = 1;
         int offset = 1;
         if(orderController.runningOrderList != null && orderController.historyOrderList != null) {
-          orderList = isSubscription ? orderController.runningSubscriptionOrderList : isRunning ? orderController.runningOrderList : orderController.historyOrderList;
-          paginate = isSubscription ? orderController.runningSubscriptionPaginate : isRunning ? orderController.runningPaginate : orderController.historyPaginate;
-          pageSize = isSubscription ? (orderController.runningSubscriptionPageSize!/100).ceil() : isRunning ? (orderController.runningPageSize!/100).ceil() : (orderController.historyPageSize!/100).ceil();
-          offset = isSubscription ? orderController.runningSubscriptionOffset : isRunning ? orderController.runningOffset : orderController.historyOffset;
+          orderList = widget.isSubscription ? orderController.runningSubscriptionOrderList : widget.isRunning ? orderController.runningOrderList : orderController.historyOrderList;
+          paginate = widget.isSubscription ? orderController.runningSubscriptionPaginate : widget.isRunning ? orderController.runningPaginate : orderController.historyPaginate;
+          pageSize = widget.isSubscription ? (orderController.runningSubscriptionPageSize!/100).ceil() : widget.isRunning ? (orderController.runningPageSize!/100).ceil() : (orderController.historyPageSize!/100).ceil();
+          offset = widget.isSubscription ? orderController.runningSubscriptionOffset : widget.isRunning ? orderController.runningOffset : orderController.historyOffset;
         }
         scrollController.addListener(() {
           if (scrollController.position.pixels == scrollController.position.maxScrollExtent && orderList != null && !paginate) {
             if (offset < pageSize) {
-              Get.find<OrderController>().setOffset(offset + 1, isRunning, isSubscription);
+              Get.find<OrderController>().setOffset(offset + 1, widget.isRunning, widget.isSubscription);
               debugPrint('end of the page');
-              Get.find<OrderController>().showBottomLoader(isRunning, isSubscription);
-              if(isRunning) {
+              Get.find<OrderController>().showBottomLoader(widget.isRunning, widget.isSubscription);
+              if(widget.isRunning) {
                 Get.find<OrderController>().getRunningOrders(offset+1);
-              } else if(isSubscription){
+              } else if(widget.isSubscription){
                 Get.find<OrderController>().getRunningSubscriptionOrders(offset+1);
               }
               else {
@@ -57,7 +67,7 @@ class OrderViewWidget extends StatelessWidget {
 
         return orderList != null ? orderList.isNotEmpty ? RefreshIndicator(
           onRefresh: () async {
-            if(isRunning) {
+            if(widget.isRunning) {
               await orderController.getRunningOrders(1);
             }else {
               await orderController.getHistoryOrders(1);
@@ -101,6 +111,7 @@ class OrderViewWidget extends StatelessWidget {
                             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
 
                               Row(children: [
+                                // Text(orderController.borzoDetails!.length[index].name.toString())
                                 // ClipRRect(
                                 //   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                                 //   child: CustomImageWidget(
@@ -157,7 +168,8 @@ class OrderViewWidget extends StatelessWidget {
 
 
                                   const SizedBox(width: Dimensions.paddingSizeSmall),
-                                  isRunning || isSubscription ? Column(children: [
+                                  widget.isRunning || widget.isSubscription ? Column(children: [
+
 
                                     !ResponsiveHelper.isDesktop(context) ? Container(
                                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
@@ -173,7 +185,10 @@ class OrderViewWidget extends StatelessWidget {
 
 
                                     InkWell(
-                                      onTap: () => Get.toNamed(RouteHelper.getOrderTrackingRoute(orderList![index].id, null)),
+                                      onTap: () {
+                                        print(orderList![index].brozohistory!.fromTrackingUrl.toString());
+                                      },
+                                      // onTap: () => Get.toNamed(RouteHelper.getOrderTrackingRoute(orderList![index].id, null)),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                                         decoration: BoxDecoration(

@@ -87,6 +87,7 @@ class OrderModel {
   List<Payments>? payments;
   List<String>? orderProof;
   OfflinePayment? offlinePayment;
+  Brozohistory? brozohistory;
 
   OrderModel(
       {this.id,
@@ -125,6 +126,7 @@ class OrderModel {
         this.deliveryMan,
         this.deliveryAddress,
         this.restaurant,
+        this.brozohistory,
         this.refund,
         this.taxStatus,
         this.cancellationReason,
@@ -223,6 +225,9 @@ class OrderModel {
     offlinePayment = json['offline_payment'] != null
         ? OfflinePayment.fromJson(json['offline_payment'])
         : null;
+    brozohistory = json['brozohistory'] != null
+        ? new Brozohistory.fromJson(json['brozohistory'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -287,6 +292,9 @@ class OrderModel {
     data['order_proof'] = orderProof;
     if (offlinePayment != null) {
       data['offline_payment'] = offlinePayment!.toJson();
+    }
+    if (this.brozohistory != null) {
+      data['brozohistory'] = this.brozohistory!.toJson();
     }
     return data;
   }
@@ -575,6 +583,111 @@ class SubscriptionModel {
     if (restaurant != null) {
       data['restaurant'] = restaurant!.toJson();
     }
+    return data;
+  }
+}
+
+class Brozohistory {
+  int? id;
+  String? type;
+  int? orderId;
+  int? brozoOrderId;
+  String? orderName;
+  String? createdDatetime;
+  String? status;
+  String? statusDescription;
+  String? totalWeightKg;
+  String? pickupAddress;
+  String? dropAddress;
+  String? paymentAmount;
+  String? deliveryFeeAmount;
+  String? weightFeeAmount;
+  String? codFeeAmount;
+  String? waitingFeeAmount;
+  String? courier;
+  String? paymentMethod;
+  String? brozoDeliveryRecord;
+  String? createdAt;
+  String? updatedAt;
+  String? fromTrackingUrl;
+  String? toTrackingUrl;
+
+  Brozohistory(
+      {this.id,
+        this.type,
+        this.orderId,
+        this.brozoOrderId,
+        this.orderName,
+        this.createdDatetime,
+        this.status,
+        this.statusDescription,
+        this.totalWeightKg,
+        this.pickupAddress,
+        this.dropAddress,
+        this.paymentAmount,
+        this.deliveryFeeAmount,
+        this.weightFeeAmount,
+        this.codFeeAmount,
+        this.waitingFeeAmount,
+        this.courier,
+        this.paymentMethod,
+        this.brozoDeliveryRecord,
+        this.createdAt,
+        this.updatedAt,
+        this.fromTrackingUrl,
+        this.toTrackingUrl});
+
+  Brozohistory.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    orderId = json['order_id'];
+    brozoOrderId = json['brozo_order_id'];
+    orderName = json['order_name'];
+    createdDatetime = json['created_datetime'];
+    status = json['status'];
+    statusDescription = json['status_description'];
+    totalWeightKg = json['total_weight_kg'];
+    pickupAddress = json['pickup_address'];
+    dropAddress = json['drop_address'];
+    paymentAmount = json['payment_amount'];
+    deliveryFeeAmount = json['delivery_fee_amount'];
+    weightFeeAmount = json['weight_fee_amount'];
+    codFeeAmount = json['cod_fee_amount'];
+    waitingFeeAmount = json['waiting_fee_amount'];
+    courier = json['courier'];
+    paymentMethod = json['payment_method'];
+    brozoDeliveryRecord = json['brozo_delivery_record'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    fromTrackingUrl = json['from_tracking_url'];
+    toTrackingUrl = json['to_tracking_url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['order_id'] = this.orderId;
+    data['brozo_order_id'] = this.brozoOrderId;
+    data['order_name'] = this.orderName;
+    data['created_datetime'] = this.createdDatetime;
+    data['status'] = this.status;
+    data['status_description'] = this.statusDescription;
+    data['total_weight_kg'] = this.totalWeightKg;
+    data['pickup_address'] = this.pickupAddress;
+    data['drop_address'] = this.dropAddress;
+    data['payment_amount'] = this.paymentAmount;
+    data['delivery_fee_amount'] = this.deliveryFeeAmount;
+    data['weight_fee_amount'] = this.weightFeeAmount;
+    data['cod_fee_amount'] = this.codFeeAmount;
+    data['waiting_fee_amount'] = this.waitingFeeAmount;
+    data['courier'] = this.courier;
+    data['payment_method'] = this.paymentMethod;
+    data['brozo_delivery_record'] = this.brozoDeliveryRecord;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['from_tracking_url'] = this.fromTrackingUrl;
+    data['to_tracking_url'] = this.toTrackingUrl;
     return data;
   }
 }

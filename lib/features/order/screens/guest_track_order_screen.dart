@@ -33,7 +33,7 @@ class _GuestTrackOrderScreenState extends State<GuestTrackOrderScreen> {
   void initState() {
     super.initState();
 
-    Get.find<OrderController>().trackOrder(widget.orderId, null, false, contactNumber: widget.number, fromGuestInput: true);
+    // Get.find<OrderController>().trackOrder(widget.orderId, null, false, contactNumber: widget.number, fromGuestInput: true);
   }
 
   @override
