@@ -185,10 +185,10 @@ class _OrderViewWidgetState extends State<OrderViewWidget> {
 
 
                                     InkWell(
-                                      onTap: () {
-                                        print(orderList![index].brozohistory!.fromTrackingUrl.toString());
-                                      },
-                                      // onTap: () => Get.toNamed(RouteHelper.getOrderTrackingRoute(orderList![index].id, null)),
+                                      // onTap: () {
+                                      //   print(orderList![index].brozohistory!.fromTrackingUrl.toString());
+                                      // },
+                                      onTap: () => Get.toNamed(RouteHelper.getOrderTrackingRoute(orderList![index].id, null)),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                                         decoration: BoxDecoration(
