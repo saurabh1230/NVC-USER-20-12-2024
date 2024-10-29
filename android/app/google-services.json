@@ -1,46 +1,21 @@
 {
   "project_info": {
-    "project_number": "802628591129",
-    "project_id": "vegkart-c1183",
-    "storage_bucket": "vegkart-c1183.appspot.com"
+    "project_number": "1062257757813",
+    "project_id": "non-veg-city",
+    "storage_bucket": "non-veg-city.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:802628591129:android:3e9e35623d178535979488",
+        "mobilesdk_app_id": "1:1062257757813:android:4e2e7067e11c88be84323c",
         "android_client_info": {
-          "package_name": "com.vegkaart.driverapp"
+          "package_name": "com.invoidea.nonvegcity"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDW1JwUTw_enzK2BjxuUB57Yscp93S3r98"
-        },
-        {
-          "current_key": "AIzaSyC-VIn5NAy4CSElBtn8ejHVj7VQWYL1n6Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:802628591129:android:96e8859dd4e4ca64979488",
-        "android_client_info": {
-          "package_name": "com.vegkart.customerapp"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDW1JwUTw_enzK2BjxuUB57Yscp93S3r98"
-        },
-        {
-          "current_key": "AIzaSyC-VIn5NAy4CSElBtn8ejHVj7VQWYL1n6Q"
+          "current_key": "AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys"
         }
       ],
       "services": {

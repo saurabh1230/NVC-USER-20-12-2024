@@ -95,31 +95,74 @@ class LocationController extends GetxController implements GetxService {
   }
 
   Future<ZoneResponseModel> getZone(String? lat, String? long, bool markerLoad, {bool updateInAddress = false, bool showSnackBar = false}) async {
-    if(markerLoad) {
+    if (markerLoad) {
       _loading = true;
-    }else {
+    } else {
       _isLoading = true;
     }
-    if(!updateInAddress){
+
+    if (!updateInAddress) {
       update();
     }
+
     ZoneResponseModel responseModel = await locationServiceInterface.getZone(lat, long);
     _inZone = responseModel.isSuccess;
-    _zoneID = responseModel.zoneIds[0];
-    if(updateInAddress && responseModel.isSuccess) {
+
+    // Check if zoneIds is not empty before accessing the first element
+    if (responseModel.zoneIds.isNotEmpty) {
+      _zoneID = responseModel.zoneIds[0];
+    } else {
+      _zoneID = 0; // or some default value
+      // Optionally handle the case when there are no zone IDs
+      if (showSnackBar) {
+        // You can show a Snackbar or some message to the user
+        // showCustomSnackBar("No zone found for the provided location.");
+      }
+    }
+
+    if (updateInAddress && responseModel.isSuccess) {
       AddressModel address = AddressHelper.getAddressFromSharedPref()!;
       address.zoneData = responseModel.zoneData;
       AddressHelper.saveAddressInSharedPref(address);
     }
 
-    if(markerLoad) {
+    if (markerLoad) {
       _loading = false;
-    }else {
+    } else {
       _isLoading = false;
     }
+
     update();
     return responseModel;
   }
+
+
+  // Future<ZoneResponseModel> getZone(String? lat, String? long, bool markerLoad, {bool updateInAddress = false, bool showSnackBar = false}) async {
+  //   if(markerLoad) {
+  //     _loading = true;
+  //   }else {
+  //     _isLoading = true;
+  //   }
+  //   if(!updateInAddress){
+  //     update();
+  //   }
+  //   ZoneResponseModel responseModel = await locationServiceInterface.getZone(lat, long);
+  //   _inZone = responseModel.isSuccess;
+  //   _zoneID = responseModel.zoneIds[0];
+  //   if(updateInAddress && responseModel.isSuccess) {
+  //     AddressModel address = AddressHelper.getAddressFromSharedPref()!;
+  //     address.zoneData = responseModel.zoneData;
+  //     AddressHelper.saveAddressInSharedPref(address);
+  //   }
+  //
+  //   if(markerLoad) {
+  //     _loading = false;
+  //   }else {
+  //     _isLoading = false;
+  //   }
+  //   update();
+  //   return responseModel;
+  // }
 
   void updatePosition(CameraPosition? position, bool fromAddress) async {
     if(_updateAddressData) {
@@ -175,11 +218,20 @@ class LocationController extends GetxController implements GetxService {
       _prepareZoneData(address, fromSignUp, route, canRoute, isDesktop);
     }
   }
+
   void _prepareZoneData(AddressModel address, bool fromSignUp, String? route, bool canRoute, bool isDesktop) {
     getZone(address.latitude, address.longitude, false).then((response) async {
       if (response.isSuccess) {
         Get.find<CartController>().clearCartList();
-        address.zoneId = response.zoneIds[0];
+
+        // Check if zoneIds is not empty before accessing it
+        if (response.zoneIds.isNotEmpty) {
+          address.zoneId = response.zoneIds[0];
+        } else {
+          // Handle the case when zoneIds is empty, if necessary
+          address.zoneId = null; // or some default value
+        }
+
         address.zoneIds = [];
         address.zoneIds!.addAll(response.zoneIds);
         address.zoneData = [];
@@ -191,6 +243,23 @@ class LocationController extends GetxController implements GetxService {
       }
     });
   }
+
+  // void _prepareZoneData(AddressModel address, bool fromSignUp, String? route, bool canRoute, bool isDesktop) {
+  //   getZone(address.latitude, address.longitude, false).then((response) async {
+  //     if (response.isSuccess) {
+  //       Get.find<CartController>().clearCartList();
+  //       address.zoneId = response.zoneIds[0];
+  //       address.zoneIds = [];
+  //       address.zoneIds!.addAll(response.zoneIds);
+  //       address.zoneData = [];
+  //       address.zoneData!.addAll(response.zoneData);
+  //       autoNavigate(address, fromSignUp, route, canRoute, isDesktop);
+  //     } else {
+  //       Get.back();
+  //       // showCustomSnackBar(response.message);
+  //     }
+  //   });
+  // }
 
   void autoNavigate(AddressModel? address, bool fromSignUp, String? route, bool canRoute, bool isDesktop) async {
     locationServiceInterface.handleTopicSubscription(AddressHelper.getAddressFromSharedPref(), address);

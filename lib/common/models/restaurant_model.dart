@@ -85,62 +85,61 @@ class Restaurant {
   int? customerOrderDate;
   bool? freeDeliveryDistanceStatus;
   double? freeDeliveryDistanceValue;
-  int? food_type;
+  int? foodType;
 
-
-  Restaurant(
-      {this.id,
-        this.name,
-        this.phone,
-        this.email,
-        this.logo,
-        this.latitude,
-        this.longitude,
-        this.address,
-        this.zoneId,
-        this.minimumOrder,
-        this.currency,
-        this.freeDelivery,
-        this.coverPhoto,
-        this.delivery,
-        this.takeAway,
-        this.scheduleOrder,
-        this.avgRating,
-        this.tax,
-        this.ratingCount,
-        this.selfDeliverySystem,
-        this.posSystem,
-        this.open,
-        this.active,
-        this.deliveryTime,
-        this.categoryIds,
-        this.veg,
-        this.nonVeg,
-        this.discount,
-        this.schedules,
-        this.minimumShippingCharge,
-        this.perKmShippingCharge,
-        this.maximumShippingCharge,
-        this.vendorId,
-        this.restaurantModel,
-        this.restaurantStatus,
-        this.restaurantSubscription,
-        this.cuisineNames,
-        this.cuisineIds,
-        this.orderSubscriptionActive,
-        this.cutlery,
-        this.slug,
-        this.foodsCount,
-        this.foods,
-        this.announcementActive,
-        this.announcementMessage,
-        this.instantOrder,
-        this.customerDateOrderStatus,
-        this.customerOrderDate,
-        this.freeDeliveryDistanceStatus,
-        this.freeDeliveryDistanceValue,
-        this.food_type,
-      });
+  Restaurant({
+    this.id,
+    this.name,
+    this.phone,
+    this.email,
+    this.logo,
+    this.latitude,
+    this.longitude,
+    this.address,
+    this.zoneId,
+    this.minimumOrder,
+    this.currency,
+    this.freeDelivery,
+    this.coverPhoto,
+    this.delivery,
+    this.takeAway,
+    this.scheduleOrder,
+    this.avgRating,
+    this.tax,
+    this.ratingCount,
+    this.selfDeliverySystem,
+    this.posSystem,
+    this.open,
+    this.active,
+    this.deliveryTime,
+    this.categoryIds,
+    this.veg,
+    this.nonVeg,
+    this.discount,
+    this.schedules,
+    this.minimumShippingCharge,
+    this.perKmShippingCharge,
+    this.maximumShippingCharge,
+    this.vendorId,
+    this.restaurantModel,
+    this.restaurantStatus,
+    this.restaurantSubscription,
+    this.cuisineNames,
+    this.cuisineIds,
+    this.orderSubscriptionActive,
+    this.cutlery,
+    this.slug,
+    this.foodsCount,
+    this.foods,
+    this.announcementActive,
+    this.announcementMessage,
+    this.instantOrder,
+    this.customerDateOrderStatus,
+    this.customerOrderDate,
+    this.freeDeliveryDistanceStatus,
+    this.freeDeliveryDistanceValue,
+    this.foodType,
+  });
 
   Restaurant.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -154,23 +153,24 @@ class Restaurant {
     zoneId = json['zone_id'];
     minimumOrder = json['minimum_order'] != null ? json['minimum_order'].toDouble() : 0;
     currency = json['currency'];
-    freeDelivery = json['free_delivery'];
+    freeDelivery = json['free_delivery'] == 1; // Adjusted
     coverPhoto = json['cover_photo'] ?? '';
-    delivery = json['delivery'];
-    takeAway = json['take_away'];
-    scheduleOrder = json['schedule_order'];
+    delivery = json['delivery'] == 1; // Adjusted
+    takeAway = json['take_away'] == 1; // Adjusted
+    scheduleOrder = json['schedule_order'] == 1; // Adjusted
     avgRating = json['avg_rating']?.toDouble();
     tax = json['tax']?.toDouble();
     ratingCount = json['rating_count'];
     selfDeliverySystem = json['self_delivery_system'];
-    posSystem = json['pos_system'];
+    posSystem = json['pos_system'] == 1; // Adjusted
     open = json['open'];
-    active = json['active'];
+    active = json['active'] == 1; // Adjusted
     deliveryTime = json['delivery_time'];
     veg = json['veg'];
     nonVeg = json['non_veg'];
     categoryIds = json['category_ids'] != null ? json['category_ids'].cast<int>() : [];
     discount = json['discount'] != null ? Discount.fromJson(json['discount']) : null;
+
     if (json['schedules'] != null) {
       schedules = <Schedules>[];
       json['schedules'].forEach((v) {
@@ -184,36 +184,34 @@ class Restaurant {
     restaurantModel = json['restaurant_model'];
     restaurantStatus = json['restaurant_status'];
     restaurantSubscription = json['restaurant_sub'] != null ? RestaurantSubscription.fromJson(json['restaurant_sub']) : null;
-    if(json['cuisine'] != null){
+
+    if (json['cuisine'] != null) {
       cuisineNames = [];
-      json['cuisine'].forEach((v){
+      json['cuisine'].forEach((v) {
         cuisineNames!.add(Cuisines.fromJson(v));
       });
     }
-    orderSubscriptionActive = json['order_subscription_active'];
-    // if(json['cuisine_ids'] != null){
-    //   cuisineIds = [];
-    //   json['cuisine_ids'].forEach((v){
-    //     cuisineIds.add(v);
-    //   });
-    // }
-    cutlery = json['cutlery'];
+
+    orderSubscriptionActive = json['order_subscription_active'] == 1; // Adjusted
+    cutlery = json['cutlery'] == 1; // Adjusted
     slug = json['slug'];
     foodsCount = json['foods_count'];
+
     if (json['foods'] != null) {
       foods = <Foods>[];
       json['foods'].forEach((v) {
         foods!.add(Foods.fromJson(v));
       });
     }
-    announcementActive = json['announcement'] == 1;
+
+    announcementActive = json['announcement'] == 1; // Adjusted
     announcementMessage = json['announcement_message'];
-    instantOrder = json['instant_order'];
-    customerDateOrderStatus = json['customer_date_order_sratus'];
+    instantOrder = json['instant_order'] == 1; // Adjusted
+    customerDateOrderStatus = json['customer_date_order_sratus'] == 1; // Adjusted
     customerOrderDate = json['customer_order_date'];
-    freeDeliveryDistanceStatus = json['free_delivery_distance_status'];
+    freeDeliveryDistanceStatus = json['free_delivery_distance_status'] == 1; // Adjusted
     freeDeliveryDistanceValue = (json['free_delivery_distance_value'] != null && json['free_delivery_distance_value'] != '') ? double.parse(json['free_delivery_distance_value'].toString()) : null;
-    food_type = json['food_type'];
+    foodType = json['food_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -245,12 +243,15 @@ class Restaurant {
     data['non_veg'] = nonVeg;
     data['delivery_time'] = deliveryTime;
     data['category_ids'] = categoryIds;
+
     if (discount != null) {
       data['discount'] = discount!.toJson();
     }
+
     if (schedules != null) {
       data['schedules'] = schedules!.map((v) => v.toJson()).toList();
     }
+
     data['minimum_shipping_charge'] = minimumShippingCharge;
     data['per_km_shipping_charge'] = perKmShippingCharge;
     data['vendor_id'] = vendorId;
@@ -259,20 +260,265 @@ class Restaurant {
     data['cutlery'] = cutlery;
     data['slug'] = slug;
     data['foods_count'] = foodsCount;
+
     if (foods != null) {
       data['foods'] = foods!.map((v) => v.toJson()).toList();
     }
-    data['announcement'] = announcementActive;
+
+    // Adjusted lines
+    data['announcement'] = announcementActive == true ? 1 : 0;
     data['announcement_message'] = announcementMessage;
-    data['instant_order'] = instantOrder;
-    data['customer_date_order_sratus'] = customerDateOrderStatus;
-    data['customer_order_date'] = customerOrderDate;
-    data['free_delivery_distance_status'] = freeDeliveryDistanceStatus;
+    data['instant_order'] = instantOrder == true ? 1 : 0;
+    data['customer_date_order_sratus'] = customerDateOrderStatus == true ? 1 : 0;
+    data['free_delivery_distance_status'] = freeDeliveryDistanceStatus == true ? 1 : 0;
+
     data['free_delivery_distance_value'] = freeDeliveryDistanceValue;
-    data['food_type'] = food_type;
+    data['food_type'] = foodType;
+
     return data;
   }
+
 }
+/// old restaurant model///
+// class Restaurant {
+//   int? id;
+//   String? name;
+//   String? phone;
+//   String? email;
+//   String? logo;
+//   String? latitude;
+//   String? longitude;
+//   String? address;
+//   int? zoneId;
+//   double? minimumOrder;
+//   String? currency;
+//   bool? freeDelivery;
+//   String? coverPhoto;
+//   bool? delivery;
+//   bool? takeAway;
+//   bool? scheduleOrder;
+//   double? avgRating;
+//   double? tax;
+//   int? ratingCount;
+//   int? selfDeliverySystem;
+//   bool? posSystem;
+//   int? open;
+//   bool? active;
+//   String? deliveryTime;
+//   List<int>? categoryIds;
+//   int? veg;
+//   int? nonVeg;
+//   Discount? discount;
+//   List<Schedules>? schedules;
+//   double? minimumShippingCharge;
+//   double? perKmShippingCharge;
+//   double? maximumShippingCharge;
+//   int? vendorId;
+//   String? restaurantModel;
+//   int? restaurantStatus;
+//   RestaurantSubscription? restaurantSubscription;
+//   List<Cuisines>? cuisineNames;
+//   List<int>? cuisineIds;
+//   bool? orderSubscriptionActive;
+//   bool? cutlery;
+//   String? slug;
+//   int? foodsCount;
+//   List<Foods>? foods;
+//   bool? announcementActive;
+//   String? announcementMessage;
+//   bool? instantOrder;
+//   bool? customerDateOrderStatus;
+//   int? customerOrderDate;
+//   bool? freeDeliveryDistanceStatus;
+//   double? freeDeliveryDistanceValue;
+//   int? food_type;
+//
+//
+//   Restaurant(
+//       {this.id,
+//         this.name,
+//         this.phone,
+//         this.email,
+//         this.logo,
+//         this.latitude,
+//         this.longitude,
+//         this.address,
+//         this.zoneId,
+//         this.minimumOrder,
+//         this.currency,
+//         this.freeDelivery,
+//         this.coverPhoto,
+//         this.delivery,
+//         this.takeAway,
+//         this.scheduleOrder,
+//         this.avgRating,
+//         this.tax,
+//         this.ratingCount,
+//         this.selfDeliverySystem,
+//         this.posSystem,
+//         this.open,
+//         this.active,
+//         this.deliveryTime,
+//         this.categoryIds,
+//         this.veg,
+//         this.nonVeg,
+//         this.discount,
+//         this.schedules,
+//         this.minimumShippingCharge,
+//         this.perKmShippingCharge,
+//         this.maximumShippingCharge,
+//         this.vendorId,
+//         this.restaurantModel,
+//         this.restaurantStatus,
+//         this.restaurantSubscription,
+//         this.cuisineNames,
+//         this.cuisineIds,
+//         this.orderSubscriptionActive,
+//         this.cutlery,
+//         this.slug,
+//         this.foodsCount,
+//         this.foods,
+//         this.announcementActive,
+//         this.announcementMessage,
+//         this.instantOrder,
+//         this.customerDateOrderStatus,
+//         this.customerOrderDate,
+//         this.freeDeliveryDistanceStatus,
+//         this.freeDeliveryDistanceValue,
+//         this.food_type,
+//       });
+//
+//   Restaurant.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     name = json['name'];
+//     phone = json['phone'];
+//     email = json['email'];
+//     logo = json['logo'] ?? '';
+//     latitude = json['latitude'];
+//     longitude = json['longitude'];
+//     address = json['address'];
+//     zoneId = json['zone_id'];
+//     minimumOrder = json['minimum_order'] != null ? json['minimum_order'].toDouble() : 0;
+//     currency = json['currency'];
+//     freeDelivery = json['free_delivery'];
+//     coverPhoto = json['cover_photo'] ?? '';
+//     delivery = json['delivery'];
+//     takeAway = json['take_away'];
+//     scheduleOrder = json['schedule_order'];
+//     avgRating = json['avg_rating']?.toDouble();
+//     tax = json['tax']?.toDouble();
+//     ratingCount = json['rating_count'];
+//     selfDeliverySystem = json['self_delivery_system'];
+//     posSystem = json['pos_system'];
+//     open = json['open'];
+//     active = json['active'];
+//     deliveryTime = json['delivery_time'];
+//     veg = json['veg'];
+//     nonVeg = json['non_veg'];
+//     categoryIds = json['category_ids'] != null ? json['category_ids'].cast<int>() : [];
+//     discount = json['discount'] != null ? Discount.fromJson(json['discount']) : null;
+//     if (json['schedules'] != null) {
+//       schedules = <Schedules>[];
+//       json['schedules'].forEach((v) {
+//         schedules!.add(Schedules.fromJson(v));
+//       });
+//     }
+//     minimumShippingCharge = json['minimum_shipping_charge'] != null ? json['minimum_shipping_charge'].toDouble() : 0.0;
+//     perKmShippingCharge = json['per_km_shipping_charge'] != null ? json['per_km_shipping_charge'].toDouble() : 0.0;
+//     maximumShippingCharge = json['maximum_shipping_charge']?.toDouble();
+//     vendorId = json['vendor_id'];
+//     restaurantModel = json['restaurant_model'];
+//     restaurantStatus = json['restaurant_status'];
+//     restaurantSubscription = json['restaurant_sub'] != null ? RestaurantSubscription.fromJson(json['restaurant_sub']) : null;
+//     if(json['cuisine'] != null){
+//       cuisineNames = [];
+//       json['cuisine'].forEach((v){
+//         cuisineNames!.add(Cuisines.fromJson(v));
+//       });
+//     }
+//     orderSubscriptionActive = json['order_subscription_active'];
+//     // if(json['cuisine_ids'] != null){
+//     //   cuisineIds = [];
+//     //   json['cuisine_ids'].forEach((v){
+//     //     cuisineIds.add(v);
+//     //   });
+//     // }
+//     cutlery = json['cutlery'];
+//     slug = json['slug'];
+//     foodsCount = json['foods_count'];
+//     if (json['foods'] != null) {
+//       foods = <Foods>[];
+//       json['foods'].forEach((v) {
+//         foods!.add(Foods.fromJson(v));
+//       });
+//     }
+//     announcementActive = json['announcement'] == 1;
+//     announcementMessage = json['announcement_message'];
+//     instantOrder = json['instant_order'];
+//     customerDateOrderStatus = json['customer_date_order_sratus'];
+//     customerOrderDate = json['customer_order_date'];
+//     freeDeliveryDistanceStatus = json['free_delivery_distance_status'];
+//     freeDeliveryDistanceValue = (json['free_delivery_distance_value'] != null && json['free_delivery_distance_value'] != '') ? double.parse(json['free_delivery_distance_value'].toString()) : null;
+//     food_type = json['food_type'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['id'] = id;
+//     data['name'] = name;
+//     data['phone'] = phone;
+//     data['email'] = email;
+//     data['logo'] = logo;
+//     data['latitude'] = latitude;
+//     data['longitude'] = longitude;
+//     data['address'] = address;
+//     data['minimum_order'] = minimumOrder;
+//     data['currency'] = currency;
+//     data['zone_id'] = zoneId;
+//     data['free_delivery'] = freeDelivery;
+//     data['cover_photo'] = coverPhoto;
+//     data['delivery'] = delivery;
+//     data['take_away'] = takeAway;
+//     data['schedule_order'] = scheduleOrder;
+//     data['avg_rating'] = avgRating;
+//     data['tax'] = tax;
+//     data['rating_count'] = ratingCount;
+//     data['self_delivery_system'] = selfDeliverySystem;
+//     data['pos_system'] = posSystem;
+//     data['open'] = open;
+//     data['active'] = active;
+//     data['veg'] = veg;
+//     data['non_veg'] = nonVeg;
+//     data['delivery_time'] = deliveryTime;
+//     data['category_ids'] = categoryIds;
+//     if (discount != null) {
+//       data['discount'] = discount!.toJson();
+//     }
+//     if (schedules != null) {
+//       data['schedules'] = schedules!.map((v) => v.toJson()).toList();
+//     }
+//     data['minimum_shipping_charge'] = minimumShippingCharge;
+//     data['per_km_shipping_charge'] = perKmShippingCharge;
+//     data['vendor_id'] = vendorId;
+//     data['cuisine'] = cuisineNames!.toList();
+//     data['order_subscription_active'] = orderSubscriptionActive;
+//     data['cutlery'] = cutlery;
+//     data['slug'] = slug;
+//     data['foods_count'] = foodsCount;
+//     if (foods != null) {
+//       data['foods'] = foods!.map((v) => v.toJson()).toList();
+//     }
+//     data['announcement'] = announcementActive;
+//     data['announcement_message'] = announcementMessage;
+//     data['instant_order'] = instantOrder;
+//     data['customer_date_order_sratus'] = customerDateOrderStatus;
+//     data['customer_order_date'] = customerOrderDate;
+//     data['free_delivery_distance_status'] = freeDeliveryDistanceStatus;
+//     data['free_delivery_distance_value'] = freeDeliveryDistanceValue;
+//     data['food_type'] = food_type;
+//     return data;
+//   }
+// }
 
 class Discount {
   int? id;

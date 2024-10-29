@@ -78,10 +78,10 @@ class SearchService implements SearchServiceInterface {
       searchRestaurantList.removeWhere((restaurant) => restaurant.avgRating! < rating);
     }
     if(!veg && nonVeg) {
-      searchRestaurantList.removeWhere((product) => product.food_type == 0);
+      searchRestaurantList.removeWhere((product) => product.foodType == 0);
     }
     if(!nonVeg && veg) {
-      searchRestaurantList.removeWhere((product) => product.food_type == 0);
+      searchRestaurantList.removeWhere((product) => product.foodType == 0);
     }
     if(isAvailableRestaurants || isDiscountedRestaurants) {
       if(isAvailableRestaurants) {

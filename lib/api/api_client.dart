@@ -41,17 +41,22 @@ class ApiClient extends GetxService {
 
   Map<String, String> updateHeader(String? token, List<int>? zoneIDs, String? languageCode, String? latitude, String? longitude, {bool setHeader = true}) {
     Map<String, String> header = {};
+    print('check header');
     header.addAll({
       'Content-Type': 'application/json; charset=UTF-8',
       AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '',
       AppConstants.localizationKey: languageCode ?? AppConstants.languages[0].languageCode!,
-      AppConstants.latitude: latitude != null ? jsonEncode(latitude) : '',
-      AppConstants.longitude: longitude != null ? jsonEncode(longitude) : '',
+      // AppConstants.latitude: '28.540589150386083',
+      // AppConstants.longitude: '77.26459417995973',
+      AppConstants.latitude: latitude ?? '',
+      AppConstants.longitude: longitude ?? '',
       'Authorization': 'Bearer $token'
     });
     if(setHeader) {
       _mainHeaders = header;
+
     }
+    print('check latitude');
     return header;
   }
 
