@@ -55,7 +55,7 @@ class ProductWidget extends StatelessWidget {
       // bool _isClosedToday = Get.find<RestaurantController>().isRestaurantClosed(true, restaurant.active, restaurant.offDay);
       // _isAvailable = DateConverter.isAvailable(restaurant.openingTime, restaurant.closeingTime) && restaurant.active && !_isClosedToday;
       isAvailable = restaurant!.open == 1 && restaurant!.active! ;
-    }else {
+    } else {
       image = product!.image;
       discount = (product!.restaurantDiscount == 0 || isCampaign) ? product!.discount : product!.restaurantDiscount;
       discountType = (product!.restaurantDiscount == 0 || isCampaign) ? product!.discountType : 'percent';
@@ -63,8 +63,6 @@ class ProductWidget extends StatelessWidget {
       price = product!.price!;
       discountPrice = PriceConverter.convertWithDiscount(price, discount, discountType)!;
     }
-
-
     return Padding(
       padding: EdgeInsets.only(bottom: desktop ? 0 :Dimensions.paddingSizeSmall),
       child: Container(
