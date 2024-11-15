@@ -275,10 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Center(child: SizedBox(
                     width: Dimensions.webMaxWidth,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
                       const BannerViewWidget(),
                       const CookedAndUncookedBannerWidget(),
-
 
                       const WhatOnYourMindViewWidget(),
                       // const PetFoodAndMasalaParticle(),

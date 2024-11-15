@@ -35,8 +35,10 @@ class ProductWidget extends StatelessWidget {
   final bool inRestaurant;
   final bool isCampaign;
   final bool fromCartSuggestion;
+  final bool? isActive;
+  final bool? isSearch;
   const ProductWidget({super.key, required this.product, required this.isRestaurant, required this.restaurant, required this.index,
-    required this.length, this.inRestaurant = false, this.isCampaign = false, this.fromCartSuggestion = false});
+    required this.length, this.inRestaurant = false, this.isCampaign = false, this.fromCartSuggestion = false, this.isActive, this.isSearch = false});
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class ProductWidget extends StatelessWidget {
       price = product!.price!;
       discountPrice = PriceConverter.convertWithDiscount(price, discount, discountType)!;
     }
+    bool? active = /*isSearch! ?*/ product!.isActive! /*: isActive*/;
     return Padding(
       padding: EdgeInsets.only(bottom: desktop ? 0 :Dimensions.paddingSizeSmall),
       child: Container(
@@ -196,7 +199,14 @@ class ProductWidget extends StatelessWidget {
                                 ),
                               ]),
                             ) : InkWell(
-                              onTap: () => Get.find<ProductController>().productDirectlyAddToCart(product, context),
+                              onTap: () {
+                                if(active) {
+                                  return Get.find<ProductController>().productDirectlyAddToCart(product, context);
+                                } else {
+                                showCustomSnackBar('closed_now'.tr);
+                                }
+                                },
+
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 4),
                                 decoration: BoxDecoration(
@@ -212,7 +222,7 @@ class ProductWidget extends StatelessWidget {
                           }
                       ) : const SizedBox(),
                     ),
-                    isAvailable ? const SizedBox() : NotAvailableWidget(isRestaurant: isRestaurant),
+                    active ? const SizedBox() : NotAvailableWidget(isRestaurant: isRestaurant),
                   ]) : const SizedBox.shrink(),
                   const SizedBox(width: Dimensions.paddingSizeSmall),
 

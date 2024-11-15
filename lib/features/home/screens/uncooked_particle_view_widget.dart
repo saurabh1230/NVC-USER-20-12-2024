@@ -17,7 +17,8 @@ class UNCookedParticleViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<CategoryController>().getUnCookedProductList(1, false, "uncooked");
+    Get.find<CategoryController>().getPopularUncookedTypeProducts(1,false, 'uncooked');
+    // Get.find<CategoryController>().getUnCookedProductList(1, false, "uncooked");
     return GetBuilder<CategoryController>(builder: (cookedController) {
       return  Padding(
         padding:  EdgeInsets.symmetric(vertical: ResponsiveHelper.isMobile(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
@@ -42,7 +43,7 @@ class UNCookedParticleViewWidget extends StatelessWidget {
                 ArrowIconButtonWidget(
                   onTap: () {
                     Get.toNamed(RouteHelper.getUnCookedCategoryProductRoute(
-                      cookedController.unCookedCat![0].id, "uncooked",
+                      cookedController.uncookedProducts!.products![0].id, "uncooked",
                     ));
                     Get.find<CategoryController>().getSubCategoryList(cookedController.unCookedCat![0].id.toString());
                   },
@@ -53,11 +54,11 @@ class UNCookedParticleViewWidget extends StatelessWidget {
             const SizedBox(height: Dimensions.paddingSizeDefault),
 
 
-            cookedController.uncooked !=null ? Expanded(
+            cookedController.uncookedProducts !=null ? Expanded(
               child: SizedBox(
                 height: ResponsiveHelper.isMobile(context) ? 240 : 255,
                 child: ListView.builder(
-                  itemCount:  cookedController.uncooked!.products!.length > 8 ? 8 :  cookedController.uncooked!.products!.length,
+                  itemCount:  cookedController.uncookedProducts!.products!.length > 8 ? 8 :  cookedController.uncookedProducts!.products!.length,
                   // itemCount:   cookedController.uncooked!.products!.length,
                   padding: EdgeInsets.only(right: ResponsiveHelper.isMobile(context) ? Dimensions.paddingSizeDefault : 0),
                   scrollDirection: Axis.horizontal,
@@ -66,7 +67,7 @@ class UNCookedParticleViewWidget extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(left: (ResponsiveHelper.isDesktop(context) && index == 0 && Get.find<LocalizationController>().isLtr) ? 0 : Dimensions.paddingSizeDefault),
                       child: ItemCardWidget(
-                        isBestItem: true, product:  cookedController.uncooked!.products![index],
+                        isBestItem: true, product:  cookedController.uncookedProducts!.products![index],
                       ),
                     );
                   },

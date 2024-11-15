@@ -50,6 +50,13 @@ class CategoryService implements CategoryServiceInterface {
   }
 
   @override
+  Future<ProductModel?> getPopularTypeProducts(int offset,type) async {
+    return await categoryRepositoryInterface.getPopularTypeProducts(offset,type);
+  }
+
+
+
+  @override
   Future<ProductModel?> getCAllProductList(int offset,type) async {
     return await categoryRepositoryInterface.getCAllProductList(offset,type);
   }

@@ -63,6 +63,8 @@ class Product {
   int? veg;
   int? food_type;
   int? quantityLimit;
+  bool? isActive;
+
 
   Product(
       {this.id,
@@ -90,6 +92,7 @@ class Product {
         this.veg,
         this.food_type,
         this.quantityLimit,
+        this.isActive,
       });
 
   Product.fromJson(Map<String, dynamic> json) {
@@ -144,6 +147,7 @@ class Product {
     veg = json['veg'] != null ? int.parse(json['veg'].toString()) : 0;
     food_type = json['food_type'] != null ? int.parse(json['food_type'].toString()) : 2;
     quantityLimit = json['maximum_cart_quantity'];
+    isActive = json['active_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -182,6 +186,7 @@ class Product {
     data['veg'] = veg;
     data['food_type'] = food_type;
     data['maximum_cart_quantity'] = quantityLimit;
+    data['active_status'] = isActive;
     return data;
   }
 }

@@ -288,6 +288,8 @@ import 'package:get/get.dart';
 
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import '../../../common/widgets/not_available_widget.dart';
+
 
 
 class RestaurantsViewHorizontalWidget extends StatelessWidget {
@@ -296,7 +298,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
   final List<Product>? products;
   final String? categoryName;
   final String? categoryId;
-  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,required this.categoryName,required this.categoryId, });
+  final bool? isActive;
+  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,required this.categoryName,required this.categoryId, this.isActive, });
 
   @override
   Widget build(BuildContext context) {
@@ -381,6 +384,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
                   }
                   ),
                 ),
+                isAvailable ? const SizedBox() : const NotAvailableWidget(isRestaurant: true),
+
               ],
             ),
             const SizedBox(width: Dimensions.paddingSizeSmall,),

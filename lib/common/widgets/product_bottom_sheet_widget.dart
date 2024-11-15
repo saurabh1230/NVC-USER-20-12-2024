@@ -51,6 +51,8 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print( 'widget.product!.isActive ${widget.product!.isActive}');
+    bool? active = widget.product!.isActive;
     return Container(
       width: 550,
       margin: EdgeInsets.only(top: GetPlatform.isWeb ? 0 : 30),
@@ -67,11 +69,9 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
         double variationPriceWithDiscount = _getVariationPriceWithDiscount(widget.product!, productController, discount, discountType);
         double priceWithDiscountForView = PriceConverter.convertWithDiscount(price, discount, discountType)!;
         double priceWithDiscount = PriceConverter.convertWithDiscount(price, discount, discountType)!;
-
         double addonsCost = _getAddonCost(widget.product!, productController);
         List<AddOn> addOnIdList = _getAddonIdList(widget.product!, productController);
         List<AddOns> addOnsList = _getAddonList(widget.product!, productController);
-
         debugPrint('===total : $addonsCost + (($variationPriceWithDiscount + $price) , $discount , $discountType ) * ${productController.quantity}');
         double priceWithAddonsVariationWithDiscount = addonsCost + (PriceConverter.convertWithDiscount(variationPrice + price , discount, discountType)! * productController.quantity!);
         double priceWithAddonsVariation = ((price + variationPrice) * productController.quantity!) + addonsCost;
@@ -82,11 +82,9 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
           child: Stack(
             children: [
-
               Column( mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: Dimensions.paddingSizeLarge),
-
                   Flexible(
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeDefault),
@@ -99,7 +97,6 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
 
                             ///Product
                             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-
                               (widget.product!.image != null && widget.product!.image!.isNotEmpty) ? InkWell(
                                 onTap: widget.isCampaign ? null : () {
                                   if(!widget.isCampaign) {
@@ -548,7 +545,15 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
 
                                 // Text(productController.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
                                 QuantityButton(
-                                  onTap: () => productController.setQuantity(true, widget.product!.quantityLimit),
+                                  onTap: () {
+                                   if (active!) {
+                                     print('closed_now');
+                                    showCustomSnackBar('closed_now'.tr);
+                                   } else {
+                                     print('productController');
+                                     productController.setQuantity(true, widget.product!.quantityLimit);
+                                   }
+                                  },
                                   isIncrement: true,
                                 ),
                               ]),
@@ -561,13 +566,23 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                       radius : Dimensions.paddingSizeDefault,
                                       width: ResponsiveHelper.isDesktop(context) ? MediaQuery.of(context).size.width / 2.0 : null,
                                       isLoading: cartController.isLoading,
-                                      buttonText: (!widget.product!.scheduleOrder! && !isAvailable) ? 'not_available_now'.tr
-                                          : widget.isCampaign ? 'order_now'.tr : (widget.cart != null || productController.cartIndex != -1) ? 'update_in_cart'.tr : 'add_to_cart'.tr,
-                                      onPressed: (!widget.product!.scheduleOrder! && !isAvailable) ? null : () async {
-
-                                        _onButtonPressed(productController, cartController, priceWithVariation, priceWithDiscount, price, discount, discountType, addOnIdList, addOnsList, priceWithAddonsVariation);
-
+                                      buttonText:active == false ? 'not_available_now'.tr : 'add_to_cart'.tr,
+                                      // buttonText: (!widget.product!.scheduleOrder! && !isAvailable) ? 'not_available_now'.tr
+                                      //     : widget.isCampaign ? 'order_now'.tr : (widget.cart != null || productController.cartIndex != -1) ? 'update_in_cart'.tr : 'add_to_cart'.tr,
+                                      onPressed: () {
+                                        if (active == false) {
+                                          showCustomSnackBar('closed_now'.tr); // Ensure this function is implemented correctly.
+                                          print('closed_now');
+                                        } else {
+                                          print('added');
+                                          _onButtonPressed(productController, cartController, priceWithVariation, priceWithDiscount, price, discount, discountType, addOnIdList, addOnsList, priceWithAddonsVariation);
+                                        }
                                       },
+                                      // onPressed: (!widget.product!.scheduleOrder! && !isAvailable) ? null : () async {
+                                      //
+                                      //   _onButtonPressed(productController, cartController, priceWithVariation, priceWithDiscount, price, discount, discountType, addOnIdList, addOnsList, priceWithAddonsVariation);
+                                      //
+                                      // },
                                     );
                                   }
                                 ),

@@ -164,7 +164,7 @@ class Restaurant {
     selfDeliverySystem = json['self_delivery_system'];
     posSystem = json['pos_system'] == 1; // Adjusted
     open = json['open'];
-    active = json['active'] == 1; // Adjusted
+    active = json['active'] /*== 1*/; // Adjusted
     deliveryTime = json['delivery_time'];
     veg = json['veg'];
     nonVeg = json['non_veg'];

@@ -72,7 +72,15 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
     Get.find<RestaurantController>().getRestaurantRecommendedItemList(widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!, false);
     Get.find<RestaurantController>().getRestaurantProductList(widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!, 1, 'all', false);
     print("check ======= =======================> ${widget.categoryID}");
-    Get.find<RestaurantController>().getRestaurantParticularProductList(widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!, 1, int.parse(widget.categoryID), 'all', false);
+    final categoryID = int.tryParse(widget.categoryID ?? '') ?? 0; // Use a default value like 0 or any other fallback value
+    Get.find<RestaurantController>().getRestaurantParticularProductList(
+      widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!,
+      1,
+      categoryID,
+      'all',
+      false,
+    );
+    // Get.find<RestaurantController>().getRestaurantParticularProductList(widget.restaurant!.id ?? Get.find<RestaurantController>().restaurant!.id!, 1, int.parse(widget.categoryID), 'all', false);
 
   }
 
@@ -181,6 +189,7 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                       Column(
                         children: [
                           ProductViewWidget(
+                            isActive: restaurant.active,
                             isRestaurantCategoryProducts: true,
                             isRestaurant: false, restaurants: null,
                             products: restController.categoryRestaurantProductList,
@@ -454,6 +463,7 @@ class _RestaurantProductScreenState extends State<RestaurantProductScreen> {
                           ? restController.restaurantSearchProductModel?.offset
                           : restController.restaurantProducts != null ? restController.foodPageOffset : null,
                       productView: ProductViewWidget(
+                        isActive: restaurant.active,
                         isRestaurant: false, restaurants: null,
                         products: restController.isSearching
                             ? restController.restaurantSearchProductModel?.products

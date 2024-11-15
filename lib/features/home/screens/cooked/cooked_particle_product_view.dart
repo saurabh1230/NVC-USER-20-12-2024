@@ -47,9 +47,7 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
   void initState() {
     super.initState();
     Get.find<CategoryController>().clearSubCategoryList();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       // Get.find<CategoryController>().getFilUncookedCategoryList("1");
       Get.find<CategoryController>().getFilterRestaurantList(1, "1", false,);
       Get.find<CategoryController>().getUncookedProducts(1,"cooked",false);

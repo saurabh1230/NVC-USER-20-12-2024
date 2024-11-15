@@ -78,6 +78,7 @@ Future<void> main() async {
   NotificationBodyModel? body;
   try {
     if (GetPlatform.isMobile) {
+      print('check firebase');
       final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
       if (remoteMessage != null) {
         body = NotificationHelper.convertNotification(remoteMessage.data);

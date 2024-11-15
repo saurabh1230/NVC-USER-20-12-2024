@@ -1,4 +1,5 @@
 import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart';
+import 'package:stackfood_multivendor/common/widgets/not_available_widget.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
@@ -42,6 +43,8 @@ class ItemCardWidget extends StatelessWidget {
       null, price, discountPrice, (price - discountPrice),
       1, [], [], isCampaignItem, product, [], product.quantityLimit
     );
+
+    bool active = product.isActive!;
 
 
     return Container(
@@ -166,49 +169,53 @@ class ItemCardWidget extends StatelessWidget {
                         ]),
                       ) : InkWell(
                         onTap: () {
-                          if(isCampaignItem) {
-                            ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
-                              ProductBottomSheetWidget(product: product, isCampaign: true),
-                              backgroundColor: Colors.transparent, isScrollControlled: true,
-                            ) : Get.dialog(
-                              Dialog(child: ProductBottomSheetWidget(product: product, isCampaign: true)),
-                            );
-                          } else {
-                            if(product.variations == null || (product.variations != null && product.variations!.isEmpty)) {
+                         if(!active) {
+                           showCustomSnackBar('closed_now'.tr);
+                         } else {
+                           if(isCampaignItem) {
+                             ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
+                               ProductBottomSheetWidget(product: product, isCampaign: true),
+                               backgroundColor: Colors.transparent, isScrollControlled: true,
+                             ) : Get.dialog(
+                               Dialog(child: ProductBottomSheetWidget(product: product, isCampaign: true)),
+                             );
+                           } else {
+                             if(product.variations == null || (product.variations != null && product.variations!.isEmpty)) {
 
-                              productController.setExistInCart(product);
+                               productController.setExistInCart(product);
 
-                              OnlineCart onlineCart = OnlineCart(null, product.id, null, product.price!.toString(), [], 1, [], [], [], 'Food');
+                               OnlineCart onlineCart = OnlineCart(null, product.id, null, product.price!.toString(), [], 1, [], [], [], 'Food');
 
-                              if (Get.find<CartController>().existAnotherRestaurantProduct(cartModel.product!.restaurantId)) {
-                                Get.dialog(ConfirmationDialogWidget(
-                                  icon: Images.warning,
-                                  title: 'are_you_sure_to_reset'.tr,
-                                  description: 'if_you_continue'.tr,
-                                  onYesPressed: () {
-                                    Get.find<CartController>().clearCartOnline().then((success) async {
-                                      if (success) {
-                                        await Get.find<CartController>().addToCartOnline(onlineCart);
-                                        Get.back();
-                                        _showCartSnackBar();
-                                      }
-                                    });
-                                  },
-                                ), barrierDismissible: false);
-                              } else {
-                                Get.find<CartController>().addToCartOnline(onlineCart);
-                                _showCartSnackBar();
-                              }
+                               if (Get.find<CartController>().existAnotherRestaurantProduct(cartModel.product!.restaurantId)) {
+                                 Get.dialog(ConfirmationDialogWidget(
+                                   icon: Images.warning,
+                                   title: 'are_you_sure_to_reset'.tr,
+                                   description: 'if_you_continue'.tr,
+                                   onYesPressed: () {
+                                     Get.find<CartController>().clearCartOnline().then((success) async {
+                                       if (success) {
+                                         await Get.find<CartController>().addToCartOnline(onlineCart);
+                                         Get.back();
+                                         _showCartSnackBar();
+                                       }
+                                     });
+                                   },
+                                 ), barrierDismissible: false);
+                               } else {
+                                 Get.find<CartController>().addToCartOnline(onlineCart);
+                                 _showCartSnackBar();
+                               }
 
-                            } else {
-                              ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
-                                ProductBottomSheetWidget(product: product, isCampaign: false),
-                                backgroundColor: Colors.transparent, isScrollControlled: true,
-                              ) : Get.dialog(
-                                Dialog(child: ProductBottomSheetWidget(product: product, isCampaign: false)),
-                              );
-                            }
-                          }
+                             } else {
+                               ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
+                                 ProductBottomSheetWidget(product: product, isCampaign: false),
+                                 backgroundColor: Colors.transparent, isScrollControlled: true,
+                               ) : Get.dialog(
+                                 Dialog(child: ProductBottomSheetWidget(product: product, isCampaign: false)),
+                               );
+                             }
+                           }
+                         }
 
                         },
                         child: Container(
@@ -223,6 +230,8 @@ class ItemCardWidget extends StatelessWidget {
                     });
                   }),
                 ),
+
+                active ? const SizedBox() : const NotAvailableWidget(isRestaurant: false),
 
               ],
             ),

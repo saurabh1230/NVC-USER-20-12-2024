@@ -567,6 +567,48 @@ class CategoryController extends GetxController implements GetxService {
     update();
   }
 
+  ProductModel? _uncookedProducts;
+  ProductModel? get uncookedProducts => _uncookedProducts;
+
+  Future<void> getPopularUncookedTypeProducts(int offset, bool reload,type) async {
+    if(reload) {
+      _uncookedProducts = null;
+      update();
+    }
+    ProductModel? productModel = await categoryServiceInterface.getPopularTypeProducts(offset,type);
+    if (productModel != null) {
+      if (offset == 1) {
+        _uncookedProducts = productModel;
+      }else {
+        _uncookedProducts!.totalSize = productModel.totalSize;
+        _uncookedProducts!.offset = productModel.offset;
+        _uncookedProducts!.products!.addAll(productModel.products!);
+      }
+      update();
+    }
+  }
+
+  ProductModel? _cookedProducts;
+  ProductModel? get cookedProducts => _cookedProducts;
+
+  Future<void> getPopularCookedTypeProducts(int offset, bool reload,type) async {
+    if(reload) {
+      _cookedProducts = null;
+      update();
+    }
+    ProductModel? productModel = await categoryServiceInterface.getPopularTypeProducts(offset,type);
+    if (productModel != null) {
+      if (offset == 1) {
+        _cookedProducts = productModel;
+      } else {
+        _cookedProducts!.totalSize = productModel.totalSize;
+        _cookedProducts!.offset = productModel.offset;
+        _cookedProducts!.products!.addAll(productModel.products!);
+      }
+      update();
+    }
+  }
+
 
 
 

@@ -23,9 +23,11 @@ class ProductViewWidget extends StatelessWidget {
   final bool showTheme1Restaurant;
   final bool? isWebRestaurant;
   final bool? isRestaurantCategoryProducts;
+  final bool? isActive;
+
   const ProductViewWidget({super.key, required this.restaurants, required this.products, required this.isRestaurant, this.isScrollable = false,
     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeSmall), this.noDataText,
-    this.isCampaign = false, this.inRestaurantPage = false, this.showTheme1Restaurant = false, this.isWebRestaurant = false, this.isRestaurantCategoryProducts = false});
+    this.isCampaign = false, this.inRestaurantPage = false, this.showTheme1Restaurant = false, this.isWebRestaurant = false, this.isRestaurantCategoryProducts = false, this.isActive, });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,6 @@ class ProductViewWidget extends StatelessWidget {
         length = products!.length;
       }
     }
-
     return Column(
         children: [
       !isNull ? length > 0 ? GridView.builder(
@@ -63,7 +64,9 @@ class ProductViewWidget extends StatelessWidget {
         padding: padding,
         itemBuilder: (context, index) {
           return showTheme1Restaurant ? RestaurantWidget(restaurant: restaurants![index], index: index, inStore: inRestaurantPage)
-          : isWebRestaurant! ? WebRestaurantWidget(restaurant: restaurants![index]) : ProductWidget(
+          : isWebRestaurant! ? WebRestaurantWidget(restaurant: restaurants![index]) :
+          ProductWidget(
+            isActive:isActive ,
             // isRestaurant: isRestaurant,
             product: isRestaurant ? null : products![index],
             // restaurant: restaurants![index],

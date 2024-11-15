@@ -50,6 +50,21 @@ class CategoryRepository implements CategoryRepositoryInterface {
   }
 
   @override
+  Future<ProductModel?> getPopularTypeProducts(int offset,type) async {
+    print('type${type}');
+    ProductModel? productModel;
+    Response response = await apiClient.getData('${AppConstants.popularProductUri}?limit=10&offset=$offset&type=$type');
+    // print('Type Request URL: ${AppConstants.popularProductUri}?limit=10&offset=$offset&type=$type}');
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    }
+    return productModel;
+  }
+
+
+
+
+  @override
   Future<List<CategoryModel>?> getSubCategoryList(String? parentID) async {
     List<CategoryModel>? subCategoryList;
     Response response = await apiClient.getData('${AppConstants.subCategoryUri}$parentID');

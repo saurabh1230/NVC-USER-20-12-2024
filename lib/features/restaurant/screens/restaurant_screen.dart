@@ -210,58 +210,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                         Text('all_food_items'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
                         const Expanded(child: SizedBox()),
 
-                        isDesktop ?  Container(
-                          padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                          height: 35,
-                          width: 320,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.40)),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  textInputAction: TextInputAction.search,
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                    hintText: 'search_for_products'.tr,
-                                    hintStyle: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), borderSide: BorderSide.none),
-                                    filled: true, fillColor:Theme.of(context).cardColor,
-                                    isDense: true,
-                                    prefixIcon: InkWell(
-                                      onTap: (){
-                                        if(!restController.isSearching) {
-                                          Get.find<RestaurantController>().getRestaurantSearchProductList(
-                                            _searchController.text.trim(), Get.find<RestaurantController>().restaurant!.id.toString(), 1, restController.type,
-                                          );
-                                        } else {
-                                          _searchController.text = '';
-                                          restController.initSearchData();
-                                          restController.changeSearchStatus();
-                                        }
-                                      },
-                                      child: Icon(restController.isSearching ? Icons.clear : CupertinoIcons.search, color: Theme.of(context).primaryColor.withOpacity(0.50)),
-                                    ),
-                                  ),
-                                  onSubmitted: (String? value) {
-                                    if(value!.isNotEmpty) {
-                                      restController.getRestaurantSearchProductList(
-                                        _searchController.text.trim(), Get.find<RestaurantController>().restaurant!.id.toString(), 1, restController.type,
-                                      );
-                                    }
-                                  } ,
-                                  onChanged: (String? value) { } ,
-                                ),
-                              ),
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                            ],
-                          ),
-                        ) : InkWell(
+                         InkWell(
                           onTap: () async {
                             await Get.toNamed(RouteHelper.getSearchRestaurantProductRoute(restaurant!.id));
                             if(restController.isSearching) {
@@ -347,6 +296,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                         ? restController.restaurantSearchProductModel?.offset
                         : restController.restaurantProducts != null ? restController.foodPageOffset : null,
                     productView: ProductViewWidget(
+                      isActive: restaurant.active,
                       isRestaurant: false, restaurants: null,
                       products: restController.isSearching
                           ? restController.restaurantSearchProductModel?.products

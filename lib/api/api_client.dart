@@ -46,10 +46,12 @@ class ApiClient extends GetxService {
       'Content-Type': 'application/json; charset=UTF-8',
       AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '',
       AppConstants.localizationKey: languageCode ?? AppConstants.languages[0].languageCode!,
+      AppConstants.latitude: latitude ?? '28.6362154',
+      AppConstants.longitude: longitude ?? '77.0463607',
       // AppConstants.latitude: '28.540589150386083',
       // AppConstants.longitude: '77.26459417995973',
-      AppConstants.latitude: latitude ?? '',
-      AppConstants.longitude: longitude ?? '',
+      // AppConstants.latitude: latitude ?? '',
+      // AppConstants.longitude: longitude ?? '',
       'Authorization': 'Bearer $token'
     });
     if(setHeader) {

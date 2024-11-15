@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1062257757813",
     "project_id": "non-veg-city",
-    "storage_bucket": "non-veg-city.appspot.com"
+    "storage_bucket": "non-veg-city.firebasestorage.app"
   },
   "client": [
     {
