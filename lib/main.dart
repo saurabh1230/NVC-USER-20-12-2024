@@ -50,28 +50,34 @@ Future<void> main() async {
   // };
 
   DeepLinkBody? linkBody;
-
-  if(GetPlatform.isWeb) {
-    await Firebase.initializeApp(options: const FirebaseOptions(
-      apiKey: 'AIzaSyCeaw_gVN0iQwFHyuF8pQ6PbVDmSVQw8AY',
-      appId: '1:1049699819506:web:a4b5e3bedc729aab89956b',
-      messagingSenderId: '1049699819506',
-      projectId: 'stackfood-bd3ee',
-    ));
-    MetaSEO().config();
-  }else {
-    await Firebase.initializeApp();
-
-
-
-    // try {
-    //   String initialLink = await getInitialLink();
-    //   print('======initial link ===>  $initialLink');
-    //   if(initialLink != null) {
-    //     _linkBody = LinkConverter.convertDeepLink(initialLink);
-    //   }
-    // } on PlatformException {}
-  }
+  await Firebase.initializeApp(options: const FirebaseOptions(
+    apiKey: 'AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys',
+    appId: '1:1062257757813:android:4e2e7067e11c88be84323c',
+    messagingSenderId: '1062257757813',
+    projectId: 'non-veg-city',
+  ));
+  // MetaSEO().config();
+  // if(GetPlatform.isWeb) {
+  //   await Firebase.initializeApp(options: const FirebaseOptions(
+  //     apiKey: 'AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys',
+  //     appId: '1:1062257757813:android:4e2e7067e11c88be84323c',
+  //     messagingSenderId: '1062257757813',
+  //     projectId: 'non-veg-city',
+  //   ));
+  //   MetaSEO().config();
+  // }else {
+  //   await Firebase.initializeApp();
+  //
+  //
+  //
+  //   // try {
+  //   //   String initialLink = await getInitialLink();
+  //   //   print('======initial link ===>  $initialLink');
+  //   //   if(initialLink != null) {
+  //   //     _linkBody = LinkConverter.convertDeepLink(initialLink);
+  //   //   }
+  //   // } on PlatformException {}
+  // }
 
   Map<String, Map<String, String>> languages = await di.init();
 

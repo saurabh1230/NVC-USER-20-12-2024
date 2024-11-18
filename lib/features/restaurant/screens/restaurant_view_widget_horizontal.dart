@@ -310,8 +310,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
           child:
           restaurants != null
               ? restaurants!.isNotEmpty
-              ?
-          ListView.separated(
+              ? ListView.separated(
             itemCount: restaurants!.length,
             shrinkWrap: true,
             padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault,left: Dimensions.paddingSizeDefault),

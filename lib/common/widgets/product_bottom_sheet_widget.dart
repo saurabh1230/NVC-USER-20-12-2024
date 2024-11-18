@@ -52,7 +52,9 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
   @override
   Widget build(BuildContext context) {
     print( 'widget.product!.isActive ${widget.product!.isActive}');
-    bool? active = widget.product!.isActive;
+    bool foodAvailable = DateConverter.isAvailable(widget.product!.availableTimeStarts, widget.product!.availableTimeEnds);
+    bool? active =   widget.product!.isActive;
+    bool foodStatus = !active! || !foodAvailable;
     return Container(
       width: 550,
       margin: EdgeInsets.only(top: GetPlatform.isWeb ? 0 : 30),
@@ -76,7 +78,7 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
         double priceWithAddonsVariationWithDiscount = addonsCost + (PriceConverter.convertWithDiscount(variationPrice + price , discount, discountType)! * productController.quantity!);
         double priceWithAddonsVariation = ((price + variationPrice) * productController.quantity!) + addonsCost;
         double priceWithVariation = price + variationPrice;
-        bool isAvailable = DateConverter.isAvailable(widget.product!.availableTimeStarts, widget.product!.availableTimeEnds);
+        // bool isAvailable = DateConverter.isAvailable(widget.product!.availableTimeStarts, widget.product!.availableTimeEnds);
 
         return ConstrainedBox(
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
@@ -409,9 +411,7 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                         }
                                       },
                                       child: Row(children: [
-
                                         Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-
                                           Checkbox(
                                             value: productController.addOnActiveList[index],
                                             activeColor: Theme.of(context).primaryColor,
@@ -426,7 +426,6 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                             visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                                             side: BorderSide(width: 2, color: Theme.of(context).hintColor),
                                           ),
-
                                           Text(
                                             widget.product!.addOns![index].name!,
                                             maxLines: 1, overflow: TextOverflow.ellipsis,
@@ -546,7 +545,7 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                 // Text(productController.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
                                 QuantityButton(
                                   onTap: () {
-                                   if (active!) {
+                                   if (foodStatus) {
                                      print('closed_now');
                                     showCustomSnackBar('closed_now'.tr);
                                    } else {
@@ -566,12 +565,12 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                       radius : Dimensions.paddingSizeDefault,
                                       width: ResponsiveHelper.isDesktop(context) ? MediaQuery.of(context).size.width / 2.0 : null,
                                       isLoading: cartController.isLoading,
-                                      buttonText:active == false ? 'not_available_now'.tr : 'add_to_cart'.tr,
+                                      buttonText: foodStatus ? 'not_available_now'.tr : 'add_to_cart'.tr,
                                       // buttonText: (!widget.product!.scheduleOrder! && !isAvailable) ? 'not_available_now'.tr
                                       //     : widget.isCampaign ? 'order_now'.tr : (widget.cart != null || productController.cartIndex != -1) ? 'update_in_cart'.tr : 'add_to_cart'.tr,
                                       onPressed: () {
-                                        if (active == false) {
-                                          showCustomSnackBar('closed_now'.tr); // Ensure this function is implemented correctly.
+                                        if (foodStatus) {
+                                          // showCustomSnackBar('closed_now'.tr); // Ensure this function is implemented correctly.
                                           print('closed_now');
                                         } else {
                                           print('added');

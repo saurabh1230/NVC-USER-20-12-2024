@@ -9,6 +9,7 @@ import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/product_controller.dart';
+import 'package:stackfood_multivendor/helper/date_converter.dart';
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
@@ -45,6 +46,8 @@ class ItemCardWidget extends StatelessWidget {
     );
 
     bool active = product.isActive!;
+    bool foodAvailable = DateConverter.isAvailable(product.availableTimeStarts, product.availableTimeEnds);
+    bool foodStatus = !active || !foodAvailable;
 
 
     return Container(
@@ -169,7 +172,7 @@ class ItemCardWidget extends StatelessWidget {
                         ]),
                       ) : InkWell(
                         onTap: () {
-                         if(!active) {
+                         if(foodStatus) {
                            showCustomSnackBar('closed_now'.tr);
                          } else {
                            if(isCampaignItem) {
@@ -231,7 +234,7 @@ class ItemCardWidget extends StatelessWidget {
                   }),
                 ),
 
-                active ? const SizedBox() : const NotAvailableWidget(isRestaurant: false),
+                !foodStatus ? const SizedBox() : const NotAvailableWidget(isRestaurant: false),
 
               ],
             ),

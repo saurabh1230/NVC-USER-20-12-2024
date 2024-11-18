@@ -36,14 +36,15 @@ class CartProductWidget extends StatelessWidget {
       padding: EdgeInsets.only(bottom: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault),
       child: InkWell(
         onTap: () {
-          ResponsiveHelper.isMobile(context) ? showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (con) => ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
-          ) : showDialog(context: context, builder: (con) => Dialog(
-            child: ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
-          ));
+          // ResponsiveHelper.isMobile(context) ? showModalBottomSheet(
+          //   context: context,
+          //   isScrollControlled: true,
+          //   backgroundColor: Colors.transparent,
+          //   builder: (con) => ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart,
+          //   ),
+          // ) : showDialog(context: context, builder: (con) => Dialog(
+          //   child: ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
+          // ));
         },
         child:
         GetBuilder<CartController>(

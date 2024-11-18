@@ -535,12 +535,12 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
           body: catController.categoryRestaurantList == null ?
-              AppLoading() :
+              const AppLoading() :
           CustomScrollView(
               controller: scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: Center(child: SizedBox(
                     width: Dimensions.webMaxWidth,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -64,6 +64,7 @@ class RestaurantsViewWidget extends StatelessWidget {
 
   Widget restaurantView(BuildContext context, Restaurant restaurant) {
     bool isAvailable = restaurant.open == 1 && restaurant.active!;
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,

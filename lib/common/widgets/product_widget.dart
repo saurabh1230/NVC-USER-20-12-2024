@@ -65,7 +65,14 @@ class ProductWidget extends StatelessWidget {
       price = product!.price!;
       discountPrice = PriceConverter.convertWithDiscount(price, discount, discountType)!;
     }
-    bool? active = /*isSearch! ?*/ product!.isActive! /*: isActive*/;
+    bool foodAvailable = DateConverter.isAvailable(product!.availableTimeStarts, product!.availableTimeEnds);
+    // bool isClosed = fromHomeProduct == true
+    //     ? (product?.isActive ?? false) == false  // Check if product is inactive if fromHomeProduct is true
+    //     : (isActive == false);
+
+    bool? active =  product!.isActive;
+    bool foodStatus = !active! || !foodAvailable;
+    // bool foodStatus = active! || !foodAvailable;
     return Padding(
       padding: EdgeInsets.only(bottom: desktop ? 0 :Dimensions.paddingSizeSmall),
       child: Container(
@@ -139,7 +146,7 @@ class ProductWidget extends StatelessWidget {
                               1, [], [], false, product, [], product?.quantityLimit,
                             );
                             return cartQty != 0 ? Container(
-                              padding: EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(vertical: 2),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
@@ -199,14 +206,13 @@ class ProductWidget extends StatelessWidget {
                                 ),
                               ]),
                             ) : InkWell(
-                              onTap: () {
-                                if(active) {
+                                onTap: () {
+                                if(foodAvailable) {
                                   return Get.find<ProductController>().productDirectlyAddToCart(product, context);
                                 } else {
                                 showCustomSnackBar('closed_now'.tr);
-                                }
+                                 }
                                 },
-
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 4),
                                 decoration: BoxDecoration(
@@ -222,7 +228,7 @@ class ProductWidget extends StatelessWidget {
                           }
                       ) : const SizedBox(),
                     ),
-                    active ? const SizedBox() : NotAvailableWidget(isRestaurant: isRestaurant),
+                    !foodStatus ? const SizedBox() : NotAvailableWidget(isRestaurant: isRestaurant),
                   ]) : const SizedBox.shrink(),
                   const SizedBox(width: Dimensions.paddingSizeSmall),
 
@@ -321,7 +327,7 @@ class ProductWidget extends StatelessWidget {
                             freeDelivery: isRestaurant ? restaurant!.freeDelivery : false),
 
                       ]),
-                      SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                      const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
                       Text(
                         isRestaurant ? '' : product!.description ?? '',
                         style: robotoRegular.copyWith(
