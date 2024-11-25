@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:open_filex/open_filex.dart';
@@ -14,14 +16,10 @@ import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_pricing_section.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:open_filex/open_filex.dart';
-import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/order_model.dart';
+
 
 class InvoicePdfGenerator {
   final String restaurantLogoUrl;
@@ -59,7 +57,7 @@ class InvoicePdfGenerator {
   });
 
   Future<Uint8List> _getLogoBytes() async {
-    http.Response response = await http.get(Uri.parse(restaurantLogoUrl));
+    final response = await http.get(Uri.parse(restaurantLogoUrl));
     if (response.statusCode == 200) {
       return response.bodyBytes;
     } else {
@@ -69,66 +67,85 @@ class InvoicePdfGenerator {
 
   Future<void> generatePdf() async {
     final pdf = pw.Document();
+    final logoBytes = await _getLogoBytes();
 
-    // Get logo bytes
-    Uint8List logoBytes = await _getLogoBytes();
-
+    final fontData = await rootBundle.load('assets/font/Roboto-Regular.ttf');
+    final ttf = pw.Font.ttf(fontData);
     pdf.addPage(
       pw.Page(
+        pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Center(
-                child: pw.Image(
-                  pw.MemoryImage(logoBytes),
-                  height: 50,
-                  width: 50,
-                ),
-              ),
-              pw.Divider(thickness: 1, color: PdfColors.black),
-              pw.SizedBox(height: 8),
-              pw.Text(restaurantName, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              pw.Image(pw.MemoryImage(logoBytes), height: 50, width: 50),
+              pw.Divider(),
+              pw.Text(restaurantName,
+                  style: pw.TextStyle(
+                      fontSize: 14, fontWeight: pw.FontWeight.bold)),
               pw.Text('Address: $restaurantAddress'),
               pw.Text('Phone: $restaurantPhone'),
+              pw.Text('Phone: $restaurantPhone'),
               pw.SizedBox(height: 16),
-              pw.Divider(thickness: 1, color: PdfColors.black),
+              pw.Divider(),
               pw.Row(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text("S.No"),
-                  pw.SizedBox(width: 8),
-                  pw.Expanded(flex: 3, child: pw.Text("Items")),
-                  pw.Expanded(child: pw.Text("Qty")),
-                  pw.Expanded(child: pw.Text("Price")),
+                  pw.Text("S.No",
+                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.Text("Items",
+                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.Text("Qty",
+                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.Text("Price",
+                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 ],
               ),
-              pw.SizedBox(height: 8),
-              pw.ListView.builder(
-                itemCount: orderController.orderDetails!.length,
-                itemBuilder: (context, index) {
-                  final item = orderController.orderDetails![index];
-                  return pw.Row(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text("${index + 1}"),
-                      pw.SizedBox(width: 8),
-                      pw.Expanded(
-                        flex: 3,
-                        child: pw.Text(item.foodDetails!.name!, maxLines: 4, /*overflow: pw.TextOverflow.ellipsis*/),
+              pw.Divider(),
+              ...orderController.orderDetails!.asMap().entries.map((entry) {
+                final index = entry.key + 1;
+                final item = entry.value;
+                return pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text("$index"),
+                    pw.Text(item.foodDetails!.name!),
+                    pw.Text(item.quantity.toString()),
+                    pw.Text(item.price.toString()),
+                    pw.Text(
+                      '₹ ${item.price.toString()}',
+                      style: pw.TextStyle(
+                        font: ttf,
+
                       ),
-                      pw.Expanded(
-                        child: pw.Text(item.quantity.toString(), maxLines: 4, /*overflow: pw.TextOverflow.ellipsis*/),
-                      ),
-                      pw.Expanded(
-                        child: pw.Text(item.price.toString(), maxLines: 4,/* overflow: pw.TextOverflow.ellipsis*/),
-                      ),
-                    ],
-                  );
-                },
+                    ),
+                  ],
+                );
+              }),
+              pw.Divider(),
+              pw.Text(
+                'Total Amount: ₹ ${total.toStringAsFixed(2)}',
+                style: pw.TextStyle(
+                  font: ttf,
+                  fontWeight: pw.FontWeight.bold,
+                ),
               ),
-              pw.Divider(thickness: 1, color: PdfColors.black),
-              pw.Text('Total Amount: \$${total.toStringAsFixed(2)}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              pw.Divider(),
+              pw.Text(
+                'We are happy to serve you',
+                style: pw.TextStyle(
+                  font: ttf,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                'Non Veg City',
+                style: pw.TextStyle(
+                  font: ttf,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              // pw.Text('Total Amount: ₹ ${total.toStringAsFixed(2)}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
             ],
           );
         },
@@ -136,17 +153,18 @@ class InvoicePdfGenerator {
     );
 
     final output = await getTemporaryDirectory();
-    final file = File("${output.path}/invoice_${orderID}.pdf");
+    final file = File("${output.path}/invoice_$orderID.pdf");
     await file.writeAsBytes(await pdf.save());
-
     OpenFilex.open(file.path);
   }
 }
+
 class InvoiceDialogWidget extends StatelessWidget {
   final String restaurantLogo;
   final String restaurantName;
   final String restaurantAddress;
   final String restaurantPhone;
+  final String restaurantGst;
   final OrderController orderController;
   final double itemsPrice;
   final double addons;
@@ -175,7 +193,7 @@ class InvoiceDialogWidget extends StatelessWidget {
     required this.total,
     required this.orderID,
     required this.couponDiscount,
-    required this.order,
+    required this.order, required this.restaurantGst,
   });
 
   @override
@@ -194,8 +212,10 @@ class InvoiceDialogWidget extends StatelessWidget {
               const Divider(thickness: 1, color: Colors.black),
               const SizedBox(height: Dimensions.paddingSizeSmall),
               Text(restaurantName, style: robotoBold),
-              Text('Address : $restaurantAddress', style: robotoRegular),
+              Text('Address : $restaurantAddress', style: robotoRegular,textAlign: TextAlign.center,),
               Text('Phone : $restaurantPhone', style: robotoRegular),
+              restaurantGst.isEmpty ? const SizedBox() :
+              Text('Gst : $restaurantGst', style: robotoRegular),
               const SizedBox(height: Dimensions.paddingSizeSmall),
               const Divider(thickness: 1, color: Colors.black),
               const Row(
@@ -221,17 +241,20 @@ class InvoiceDialogWidget extends StatelessWidget {
                         const SizedBox(width: Dimensions.paddingSizeSmall),
                         Expanded(
                           flex: 3,
-                          child: Text(item.foodDetails!.name!, maxLines: 4, overflow: TextOverflow.ellipsis),
+                          child: Text(item.foodDetails!.name!,
+                              maxLines: 4, overflow: TextOverflow.ellipsis),
                         ),
                         Expanded(
                           child: Column(
                             children: [
-                              Text(item.quantity.toString(), maxLines: 4, overflow: TextOverflow.ellipsis),
+                              Text(item.quantity.toString(),
+                                  maxLines: 4, overflow: TextOverflow.ellipsis),
                             ],
                           ),
                         ),
                         Expanded(
-                          child: Text(item.price.toString(), maxLines: 4, overflow: TextOverflow.ellipsis),
+                          child: Text(item.price.toString(),
+                              maxLines: 4, overflow: TextOverflow.ellipsis),
                         ),
                       ],
                     );
@@ -254,7 +277,9 @@ class InvoiceDialogWidget extends StatelessWidget {
                 orderId: orderID,
                 contactNumber: 'widget.contactNumber',
               ),
-              SizedBox(height: Dimensions.paddingSizeDefault,),
+              SizedBox(
+                height: Dimensions.paddingSizeDefault,
+              ),
               CustomButtonWidget(
                 buttonText: 'Download Invoice',
                 onPressed: () {
@@ -272,7 +297,8 @@ class InvoiceDialogWidget extends StatelessWidget {
                     deliveryCharge: deliveryCharge,
                     total: total,
                     orderID: orderID,
-                    order: order, restaurantLogoUrl: restaurantLogo,
+                    order: order,
+                    restaurantLogoUrl: restaurantLogo,
                   );
                   pdfGenerator.generatePdf();
                 },

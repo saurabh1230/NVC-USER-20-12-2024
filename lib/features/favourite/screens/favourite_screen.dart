@@ -27,8 +27,8 @@ class FavouriteScreenState extends State<FavouriteScreen> with SingleTickerProvi
     _initCall();
   }
 
-  void _initCall(){
-    if(Get.find<AuthController>().isLoggedIn()) {
+  void _initCall() {
+    if (Get.find<AuthController>().isLoggedIn()) {
       Get.find<FavouriteController>().getFavouriteList(fromFavScreen: true);
     }
   }
@@ -43,7 +43,10 @@ class FavouriteScreenState extends State<FavouriteScreen> with SingleTickerProvi
         Container(
           width: Dimensions.webMaxWidth,
           color: Theme.of(context).cardColor,
-          child: TabBar(
+          child:
+
+
+          TabBar(
             controller: _tabController,
             indicatorColor: Theme.of(context).primaryColor,
             indicatorWeight: 3,

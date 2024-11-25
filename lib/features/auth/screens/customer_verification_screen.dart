@@ -16,19 +16,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationScreen extends StatefulWidget {
+class CustomerVerificationScreen extends StatefulWidget {
   final String? number;
   final bool fromSignUp;
   final String? token;
   final String password;
-  const VerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
+  const CustomerVerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
     required this.token});
 
   @override
-  VerificationScreenState createState() => VerificationScreenState();
+  CustomerVerificationScreenState createState() => CustomerVerificationScreenState();
 }
 
-class VerificationScreenState extends State<VerificationScreen> {
+class CustomerVerificationScreenState extends State<CustomerVerificationScreen> {
   String? _number;
   Timer? _timer;
   int _seconds = 0;
@@ -66,7 +66,7 @@ class VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(title: 'phone_verification'.tr),
-      body: SafeArea(child: Scrollbar(controller: _scrollController, child: SingleChildScrollView(
+      body: SafeArea(child: Center(child: Scrollbar(controller: _scrollController, child: SingleChildScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
@@ -79,19 +79,15 @@ class VerificationScreenState extends State<VerificationScreen> {
           ) : null,
           child: GetBuilder<VerificationController>(builder: (verificationController) {
             return Column(children: [
-              SizedBox(height: 100,),
-              Image.asset(Images.logo,height: 120,),
-              SizedBox(height: Dimensions.paddingSizeLarge,),
 
               Get.find<SplashController>().configModel!.demo! ? Text(
                 'for_demo_purpose'.tr, style: robotoRegular,
               ) : SizedBox(
                 width: 210,
                 child: Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
-                  RichText(textAlign: TextAlign.center,
-                      text: TextSpan(children: [
-                    TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).dividerColor)),
-                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                  RichText(text: TextSpan(children: [
+                    TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
+                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
                   ])),
                 ],
                 ),
@@ -132,7 +128,7 @@ class VerificationScreenState extends State<VerificationScreen> {
                   buttonText: 'verify'.tr,
                   isLoading: verificationController.isLoading,
                   onPressed: () {
-                    // Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
+                    Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
                     if(widget.fromSignUp) {
                       print('fromSignUp');
                       verificationController.verifyPhone(_number, widget.token).then((value) {
@@ -215,7 +211,7 @@ class VerificationScreenState extends State<VerificationScreen> {
             ]);
           }),
         )),
-      ))),
+      )))),
     );
   }
 }

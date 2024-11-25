@@ -24,13 +24,15 @@ class ProductViewWidget extends StatelessWidget {
   final bool? isWebRestaurant;
   final bool? isRestaurantCategoryProducts;
   final bool? isActive;
+  final bool? isRestaurantWishlist;
 
   const ProductViewWidget({super.key, required this.restaurants, required this.products, required this.isRestaurant, this.isScrollable = false,
     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeSmall), this.noDataText,
-    this.isCampaign = false, this.inRestaurantPage = false, this.showTheme1Restaurant = false, this.isWebRestaurant = false, this.isRestaurantCategoryProducts = false, this.isActive, });
+    this.isCampaign = false, this.inRestaurantPage = false, this.showTheme1Restaurant = false, this.isWebRestaurant = false, this.isRestaurantCategoryProducts = false, this.isActive, this.isRestaurantWishlist = false, });
 
   @override
   Widget build(BuildContext context) {
+
     bool isNull = true;
     int length = 0;
     if(isRestaurant) {
@@ -67,6 +69,7 @@ class ProductViewWidget extends StatelessWidget {
           : isWebRestaurant! ? WebRestaurantWidget(restaurant: restaurants![index]) :
           ProductWidget(
             isActive:isActive ,
+            isRestaurantWishlist:isRestaurantWishlist ,
             // isRestaurant: isRestaurant,
             product: isRestaurant ? null : products![index],
             // restaurant: restaurants![index],

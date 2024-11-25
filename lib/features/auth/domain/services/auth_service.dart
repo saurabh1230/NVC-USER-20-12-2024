@@ -35,7 +35,7 @@ class AuthService implements AuthServiceInterface{
       }else {
         authRepoInterface.saveUserToken(response.body['token'], alreadyInApp: alreadyInApp);
         await authRepoInterface.updateToken();
-        await authRepoInterface.clearGuestId();
+        // await authRepoInterface.clearGuestId();
       }
       return ResponseModel(true, '${response.body['is_phone_verified']}${response.body['token']}');
     } else {

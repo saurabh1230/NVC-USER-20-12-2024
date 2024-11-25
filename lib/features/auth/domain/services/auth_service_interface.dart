@@ -5,7 +5,7 @@ import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_
 abstract class AuthServiceInterface{
 
   Future<ResponseModel> registration(SignUpBodyModel signUpModel, bool isCustomerVerificationOn);
-  Future<ResponseModel> login({String? phone, String? password, bool customerVerification = false, bool alreadyInApp = false});
+  Future<ResponseModel> login({String? phone, String? password, bool customerVerification = false,/* bool alreadyInApp = false*/});
   String getUserCountryCode();
   String getUserNumber();
   String getUserPassword();

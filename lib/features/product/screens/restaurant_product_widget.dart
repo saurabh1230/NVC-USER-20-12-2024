@@ -26,7 +26,7 @@ import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_scr
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductWidget extends StatelessWidget {
+class RestaurantProductWidget extends StatelessWidget {
   final Product? product;
   final Restaurant? restaurant;
   final bool isRestaurant;
@@ -38,7 +38,7 @@ class ProductWidget extends StatelessWidget {
   final bool? isActive;
   final bool? isSearch;
   final bool? isRestaurantWishlist;
-  const ProductWidget({super.key, required this.product, required this.isRestaurant, required this.restaurant, required this.index,
+  const RestaurantProductWidget({super.key, required this.product, required this.isRestaurant, required this.restaurant, required this.index,
     required this.length, this.inRestaurant = false, this.isCampaign = false, this.fromCartSuggestion = false, this.isActive, this.isSearch = false, this.isRestaurantWishlist});
 
   @override
@@ -68,9 +68,9 @@ class ProductWidget extends StatelessWidget {
     }
 
 
-    bool foodAvailable = DateConverter.isAvailable(product!.availableTimeStarts, product!.availableTimeEnds);
-    bool? active =  product!.isActive;
-    bool foodStatus = !active! || !foodAvailable;
+    // bool foodAvailable = DateConverter.isAvailable(product!.availableTimeStarts, product!.availableTimeEnds);
+    // bool? active =  product!.isActive;
+    bool foodStatus = !isActive!/* || !foodAvailable*/;
 
     return Padding(
       padding: EdgeInsets.only(bottom: desktop ? 0 :Dimensions.paddingSizeSmall),
@@ -83,14 +83,16 @@ class ProductWidget extends StatelessWidget {
         ),
         child: CustomInkWellWidget(
           onTap: () {
+            Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
 
-            if(isRestaurantWishlist == true) {
-              Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
-            }
-            Get.bottomSheet(
-              ProductBottomSheetWidget(product: product, isCampaign: false),
-              backgroundColor: Colors.transparent, isScrollControlled: true,
-            );
+
+            // if(isRestaurantWishlist == true) {
+            //   Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
+            // }
+            // Get.bottomSheet(
+            //   ProductBottomSheetWidget(product: product, isCampaign: false),
+            //   backgroundColor: Colors.transparent, isScrollControlled: true,
+            // );
           },
           radius: Dimensions.radiusDefault,
           child: Padding(
@@ -135,75 +137,75 @@ class ProductWidget extends StatelessWidget {
                               ),
                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (cartController.cartList[cartIndex].quantity! > 1) {
-                                        cartController.setQuantity(false, cartModel, cartIndex: cartIndex);
-                                      }else {
-                                        cartController.removeFromCart(cartIndex);
-                                      }
-                                    },
-                                    child:
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Theme.of(context).primaryColor),
-                                      ),
-                                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                      child: Icon(
-                                        Icons.remove, size: 16, color: Theme.of(context).primaryColor,
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          if (cartController.cartList[cartIndex].quantity! > 1) {
+                                            cartController.setQuantity(false, cartModel, cartIndex: cartIndex);
+                                          }else {
+                                            cartController.removeFromCart(cartIndex);
+                                          }
+                                        },
+                                        child:
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).cardColor,
+                                            shape: BoxShape.circle,
+                                            border: Border.all(color: Theme.of(context).primaryColor),
+                                          ),
+                                          padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                                          child: Icon(
+                                            Icons.remove, size: 16, color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
 
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      cartQty.toString(),
-                                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          cartQty.toString(),
+                                          style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
 
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      cartController.setQuantity(true, cartModel, cartIndex: cartIndex);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Theme.of(context).primaryColor),
-                                      ),
-                                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                      child: Icon(
-                                        Icons.add, size: 16, color: Theme.of(context).primaryColor,
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          cartController.setQuantity(true, cartModel, cartIndex: cartIndex);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).cardColor,
+                                            shape: BoxShape.circle,
+                                            border: Border.all(color: Theme.of(context).primaryColor),
+                                          ),
+                                          padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                                          child: Icon(
+                                            Icons.add, size: 16, color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ]),
+                                  ]),
                             ) : InkWell(
-                                onTap: () {
-                                if(foodAvailable) {
+                              onTap: () {
+                                if(isActive!) {
                                   return Get.find<ProductController>().productDirectlyAddToCart(product, context);
                                 } else {
-                                showCustomSnackBar('closed_now'.tr);
-                                 }
-                                },
+                                  showCustomSnackBar('closed_now'.tr);
+                                }
+                              },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                                  // shape: BoxShape.circle,
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 1, blurRadius: 10, offset: const Offset(2, 5))],
-                                ),
-                                child: Center(child: Text("ADD",style: robotoBold.copyWith(color: Theme.of(context).cardColor),))
+                                  padding: const EdgeInsets.symmetric(vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                    // shape: BoxShape.circle,
+                                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 1, blurRadius: 10, offset: const Offset(2, 5))],
+                                  ),
+                                  child: Center(child: Text("ADD",style: robotoBold.copyWith(color: Theme.of(context).cardColor),))
                                 // Icon(Icons.add, size: desktop ? 30 : 25, color: Theme.of(context).primaryColor),
                               ),
                             );
@@ -217,24 +219,24 @@ class ProductWidget extends StatelessWidget {
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
 
-                        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                          Flexible(
-                            child: Text(
-                              isRestaurant ? restaurant!.name! : product!.name!,
-                              style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault,
-                              color: Colors.black.withOpacity(0.80)),
-                              maxLines: 2, overflow: TextOverflow.ellipsis,
-                              
-                            ),
+                      Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                        Flexible(
+                          child: Text(
+                            isRestaurant ? restaurant!.name! : product!.name!,
+                            style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault,
+                                color: Colors.black.withOpacity(0.80)),
+                            maxLines: 2, overflow: TextOverflow.ellipsis,
+
                           ),
-                          const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                        ),
+                        const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                          // (!isRestaurant && Get.find<SplashController>().configModel!.toggleVegNonVeg!)
-                          //     ? Image.asset(product != null && product!.veg == 0 ? Images.nonVegImage : Images.vegImage,
-                          //     height: 10, width: 10, fit: BoxFit.contain) : const SizedBox(),
-                        ]),
+                        // (!isRestaurant && Get.find<SplashController>().configModel!.toggleVegNonVeg!)
+                        //     ? Image.asset(product != null && product!.veg == 0 ? Images.nonVegImage : Images.vegImage,
+                        //     height: 10, width: 10, fit: BoxFit.contain) : const SizedBox(),
+                      ]),
 
-                        SizedBox(height: isRestaurant ? 0 : Dimensions.paddingSizeExtraSmall),
+                      SizedBox(height: isRestaurant ? 0 : Dimensions.paddingSizeExtraSmall),
 
                       Text(
                         isRestaurant ? '' : product!.restaurantName ?? '',
@@ -275,18 +277,18 @@ class ProductWidget extends StatelessWidget {
                       SizedBox(height: (!isRestaurant && desktop) ? Dimensions.paddingSizeExtraSmall : 0),
 
                       isRestaurant ? Row(children: [
-                          Text(
-                            'start_from'.tr,
-                            style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
-                          ),
-                          const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                        Text(
+                          'start_from'.tr,
+                          style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
+                        ),
+                        const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                          Text(
-                            PriceConverter.convertPrice(restaurant!.minimumOrder!),
-                            style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, fontWeight: FontWeight.w700, color: Theme.of(context).textTheme.bodyLarge!.color),
-                          ),
+                        Text(
+                          PriceConverter.convertPrice(restaurant!.minimumOrder!),
+                          style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, fontWeight: FontWeight.w700, color: Theme.of(context).textTheme.bodyLarge!.color),
+                        ),
 
-                        ],
+                      ],
                       ) : Wrap(children: [
 
                         discount! > 0 ? Text(

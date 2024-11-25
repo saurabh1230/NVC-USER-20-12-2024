@@ -198,7 +198,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                               tax: tax!,
                               deliveryCharge: deliveryCharge!,
                               total: total,
-                              orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,
+                              orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,  restaurantGst: order.restaurant!.gst_code!,
 
                             ));
                           },

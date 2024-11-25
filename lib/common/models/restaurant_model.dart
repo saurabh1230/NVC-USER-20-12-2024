@@ -86,6 +86,7 @@ class Restaurant {
   bool? freeDeliveryDistanceStatus;
   double? freeDeliveryDistanceValue;
   int? foodType;
+  String? gst_code;
 
   Restaurant({
     this.id,
@@ -139,6 +140,7 @@ class Restaurant {
     this.freeDeliveryDistanceStatus,
     this.freeDeliveryDistanceValue,
     this.foodType,
+    this.gst_code,
   });
 
   Restaurant.fromJson(Map<String, dynamic> json) {
@@ -212,6 +214,7 @@ class Restaurant {
     freeDeliveryDistanceStatus = json['free_delivery_distance_status'] == 1; // Adjusted
     freeDeliveryDistanceValue = (json['free_delivery_distance_value'] != null && json['free_delivery_distance_value'] != '') ? double.parse(json['free_delivery_distance_value'].toString()) : null;
     foodType = json['food_type'];
+    gst_code = json['gst_code'];
   }
 
   Map<String, dynamic> toJson() {
@@ -274,6 +277,7 @@ class Restaurant {
 
     data['free_delivery_distance_value'] = freeDeliveryDistanceValue;
     data['food_type'] = foodType;
+    data['gst_code'] = gst_code;
 
     return data;
   }

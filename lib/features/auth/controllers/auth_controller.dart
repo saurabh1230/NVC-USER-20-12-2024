@@ -32,13 +32,14 @@ class AuthController extends GetxController implements GetxService {
   Future<ResponseModel> login(String? phone, String password, {bool alreadyInApp = false}) async {
     _isLoading = true;
     update();
-    ResponseModel responseModel = await authServiceInterface.login(phone: phone, password: password,customerVerification: Get.find<SplashController>().configModel!.customerVerification!, alreadyInApp: alreadyInApp);
+    ResponseModel responseModel = await authServiceInterface.login(phone: phone, password: password,customerVerification: Get.find<SplashController>().configModel!.customerVerification!,/* alreadyInApp: alreadyInApp*/);
     if(responseModel.isSuccess) {
+      Get.offAllNamed(RouteHelper.getAccessLocationRoute('home'));
       // Get.toNamed(RouteHelper.getInitialRoute());
       // Get.find<ProfileController>().getRoute();
 
-      Get.find<ProfileController>().getUserInfo();
-      Get.find<CartController>().getCartDataOnline();
+      // Get.find<ProfileController>().getUserInfo();
+      // Get.find<CartController>().getCartDataOnline();
     }
     _isLoading = false;
     update();
