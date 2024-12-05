@@ -18,6 +18,8 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../pdf_preview.dart';
+import '../../order/screens/invoice_screen.dart';
 import '../../order/screens/order_details_screen.dart';
 
 class OrderSuccessfulScreen extends StatefulWidget {
@@ -81,6 +83,9 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
 
               Image.asset(success ? Images.checked : Images.warning, width: 100, height: 100),
               const SizedBox(height: Dimensions.paddingSizeLarge),
+
+
+
 
               Text(
                 success ? 'you_placed_the_order_successfully'.tr : 'your_order_is_failed_to_place'.tr,
