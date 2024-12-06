@@ -55,7 +55,7 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     if(_isLogin){
       if (Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && Get.find<LoyaltyController>().getEarningPint().isNotEmpty && !ResponsiveHelper.isDesktop(Get.context)){
-          Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(context, const CongratulationDialogue()));
+        Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(context, const CongratulationDialogue()));
       }
       _suggestAddressBottomSheet();
       Get.find<OrderController>().getRunningOrders(1, notify: false);
@@ -136,91 +136,91 @@ class DashboardScreenState extends State<DashboardScreen> {
         key: _scaffoldKey,
 
         floatingActionButton: GetBuilder<OrderController>(builder: (orderController) {
-            return ResponsiveHelper.isDesktop(context) || keyboardVisible ? const SizedBox() :
-            (orderController.showBottomSheet && orderController.runningOrderList != null && orderController.runningOrderList!.isNotEmpty && _isLogin)
-            ? const SizedBox.shrink() : FloatingActionButton(
-              elevation: 5,
-              backgroundColor: _pageIndex == 2 ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
-              onPressed: () {
-                // _setPage(2);
-                Get.toNamed(RouteHelper.getCartRoute());
-              },
-              child: CartWidget(color: _pageIndex == 2 ? Theme.of(context).cardColor : Theme.of(context).disabledColor, size: 30),
-            );
-          }
+          return ResponsiveHelper.isDesktop(context) || keyboardVisible ? const SizedBox() :
+          (orderController.showBottomSheet && orderController.runningOrderList != null && orderController.runningOrderList!.isNotEmpty && _isLogin)
+              ? const SizedBox.shrink() : FloatingActionButton(
+            elevation: 5,
+            backgroundColor: _pageIndex == 2 ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
+            onPressed: () {
+              // _setPage(2);
+              Get.toNamed(RouteHelper.getCartRoute());
+            },
+            child: CartWidget(color: _pageIndex == 2 ? Theme.of(context).cardColor : Theme.of(context).disabledColor, size: 30),
+          );
+        }
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
         bottomNavigationBar: ResponsiveHelper.isDesktop(context) ? const SizedBox() : GetBuilder<OrderController>(builder: (orderController) {
 
-            return (orderController.showBottomSheet && (orderController.runningOrderList != null && orderController.runningOrderList!.isNotEmpty && _isLogin))
-            ? const SizedBox() : BottomAppBar(
-              elevation: 5,
-              notchMargin: 5,
-              clipBehavior: Clip.antiAlias,
-              shape: const CircularNotchedRectangle(),
-              color: Theme.of(context).cardColor,
-              child: Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                child: Row(children: [
-                  BottomNavItem(iconData: Icons.home, isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
-                  BottomNavItem(iconData: Icons.favorite, isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
-                  const Expanded(child: SizedBox()),
-                  BottomNavItem(iconData: Icons.shopping_bag, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
-                  BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _setPage(4)),
-                ]),
-              ),
-            );
-          }
+          return (orderController.showBottomSheet && (orderController.runningOrderList != null && orderController.runningOrderList!.isNotEmpty && _isLogin))
+              ? const SizedBox() : BottomAppBar(
+            elevation: 5,
+            notchMargin: 5,
+            clipBehavior: Clip.antiAlias,
+            shape: const CircularNotchedRectangle(),
+            color: Theme.of(context).cardColor,
+            child: Padding(
+              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+              child: Row(children: [
+                BottomNavItem(iconData: Icons.home, isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
+                BottomNavItem(iconData: Icons.favorite, isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
+                const Expanded(child: SizedBox()),
+                BottomNavItem(iconData: Icons.shopping_bag, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
+                BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _setPage(4)),
+              ]),
+            ),
+          );
+        }
         ),
         body: GetBuilder<OrderController>(
-          builder: (orderController) {
-            List<OrderModel> runningOrder = orderController.runningOrderList != null ? orderController.runningOrderList! : [];
+            builder: (orderController) {
+              List<OrderModel> runningOrder = orderController.runningOrderList != null ? orderController.runningOrderList! : [];
 
-            List<OrderModel> reversOrder =  List.from(runningOrder.reversed);
-            return ExpandableBottomSheet(
-              background: PageView.builder(
-                controller: _pageController,
-                itemCount: _screens.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return _screens[index];
+              List<OrderModel> reversOrder =  List.from(runningOrder.reversed);
+              return ExpandableBottomSheet(
+                background: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _screens.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return _screens[index];
+                  },
+                ),
+                persistentContentHeight: 100,
+
+                onIsContractedCallback: () {
+                  if(!orderController.showOneOrder) {
+                    orderController.showOrders();
+                  }
                 },
-              ),
-              persistentContentHeight: 100,
+                onIsExtendedCallback: () {
+                  if(orderController.showOneOrder) {
+                    orderController.showOrders();
+                  }
+                },
 
-              onIsContractedCallback: () {
-                if(!orderController.showOneOrder) {
-                  orderController.showOrders();
-                }
-              },
-              onIsExtendedCallback: () {
-                if(orderController.showOneOrder) {
-                  orderController.showOrders();
-                }
-              },
+                enableToggle: true,
 
-              enableToggle: true,
+                expandableContent: (ResponsiveHelper.isDesktop(context) || !_isLogin || orderController.runningOrderList == null
+                    || orderController.runningOrderList!.isEmpty || !orderController.showBottomSheet) ? const SizedBox()
+                    : Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    if(orderController.showBottomSheet){
+                      orderController.showRunningOrders();
+                    }
+                  },
+                  child: RunningOrderViewWidget(reversOrder: reversOrder, onMoreClick: () {
+                    if(orderController.showBottomSheet){
+                      orderController.showRunningOrders();
+                    }
+                    _setPage(3);
+                  }),
+                ),
 
-              expandableContent: (ResponsiveHelper.isDesktop(context) || !_isLogin || orderController.runningOrderList == null
-                  || orderController.runningOrderList!.isEmpty || !orderController.showBottomSheet) ? const SizedBox()
-                  : Dismissible(
-                    key: UniqueKey(),
-                    onDismissed: (direction) {
-                      if(orderController.showBottomSheet){
-                        orderController.showRunningOrders();
-                      }
-                    },
-                    child: RunningOrderViewWidget(reversOrder: reversOrder, onMoreClick: () {
-                      if(orderController.showBottomSheet){
-                        orderController.showRunningOrders();
-                      }
-                      _setPage(3);
-                    }),
-              ),
-
-            );
-          }
+              );
+            }
         ),
       ),
     );
