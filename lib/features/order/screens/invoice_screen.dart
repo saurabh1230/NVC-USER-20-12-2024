@@ -171,15 +171,7 @@ class InvoicePdfGenerator {
                   ),
                 ],
               ),
-
-              // pw.Image(pw.MemoryImage(logoBytes), height: 50, width: 50),
               pw.Divider(),
-              // pw.Text(restaurantName,
-              //     style: pw.TextStyle(
-              //         fontSize: 14, fontWeight: pw.FontWeight.bold)),
-              // pw.Text('Address: $restaurantAddress'),
-              // pw.Text('Phone: $restaurantPhone'),
-              // pw.Text('Phone: $restaurantPhone'),
               pw.SizedBox(height: 16),
               // Header Row
               pw.Container(
@@ -188,20 +180,10 @@ class InvoicePdfGenerator {
                 child: pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.center,
                   children: [
+                    pw.Expanded(flex: 3,
+                      child: pw.Text("Items", style: pw.TextStyle(fontWeight: pw.FontWeight.bold),),),
                     pw.Expanded(
-                      flex: 3,
-                      child: pw.Text(
-                        "Items",
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                      ),
-                    ),
-                    pw.Expanded(
-                      flex: 1,
-                      child: pw.Text(
-                        "Qty",
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                        textAlign: pw.TextAlign.center,
-                      ),
+                      flex: 1, child: pw.Text("Qty", style: pw.TextStyle(fontWeight: pw.FontWeight.bold), textAlign: pw.TextAlign.center,),
                     ),
                     pw.Expanded(
                       flex: 2,
