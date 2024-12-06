@@ -25,6 +25,10 @@ import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../address/domain/models/address_model.dart';
+import '../../location/controllers/location_controller.dart';
+import '../../location/domain/models/zone_response_model.dart';
+
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
   final bool fromSplash;
@@ -44,7 +48,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   bool active = false;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
 
     _isLogin = Get.find<AuthController>().isLoggedIn();
@@ -55,6 +59,11 @@ class DashboardScreenState extends State<DashboardScreen> {
       }
       _suggestAddressBottomSheet();
       Get.find<OrderController>().getRunningOrders(1, notify: false);
+      // AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
+      // ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
+      // if(response.isSuccess) {
+      //   Get.find<LocationController>().prepareZoneDataInitial(address);
+      // }
 
     }
 

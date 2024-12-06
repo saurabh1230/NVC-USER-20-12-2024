@@ -99,6 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _isLogin = Get.find<AuthController>().isLoggedIn();
     HomeScreen.loadData(false);
+
+
   }
 
 
