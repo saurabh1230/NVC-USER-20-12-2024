@@ -43,6 +43,8 @@ import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../address/domain/models/address_model.dart';
+import '../../location/domain/models/zone_response_model.dart';
 import '../widgets/Pet_and_masala_partilcle.dart';
 import 'cooked_particle_view_widget.dart';
 
@@ -93,9 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLogin = false;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-
     _isLogin = Get.find<AuthController>().isLoggedIn();
     HomeScreen.loadData(false);
   }

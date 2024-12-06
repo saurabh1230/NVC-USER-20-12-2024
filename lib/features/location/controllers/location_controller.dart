@@ -244,6 +244,30 @@ class LocationController extends GetxController implements GetxService {
     });
   }
 
+
+  void prepareZoneDataInitial(AddressModel address,) {
+    getZone(address.latitude, address.longitude, false).then((response) async {
+      if (response.isSuccess) {
+        Get.find<CartController>().clearCartList();
+
+        // Check if zoneIds is not empty before accessing it
+        if (response.zoneIds.isNotEmpty) {
+          address.zoneId = response.zoneIds[0];
+        } else {
+          // Handle the case when zoneIds is empty, if necessary
+          address.zoneId = null; // or some default value
+        }
+
+        address.zoneIds = [];
+        address.zoneIds!.addAll(response.zoneIds);
+        address.zoneData = [];
+        address.zoneData!.addAll(response.zoneData);
+      } else {
+
+        // showCustomSnackBar(response.message);
+      }
+    });
+  }
   // void _prepareZoneData(AddressModel address, bool fromSignUp, String? route, bool canRoute, bool isDesktop) {
   //   getZone(address.latitude, address.longitude, false).then((response) async {
   //     if (response.isSuccess) {
