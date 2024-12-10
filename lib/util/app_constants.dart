@@ -119,7 +119,7 @@ class AppConstants {
   static const String offlinePaymentSaveInfoUri = '/api/v1/customer/order/offline-payment';
   static const String offlinePaymentUpdateInfoUri = '/api/v1/customer/order/offline-payment-update';
   static const String allProductsUri = '/api/v1/products/all';
-  static const String borzoFeeAmount = 'https://lab2.invoidea.in/nvc/api/v1/customer/borzo-order-calculation';
+  static const String borzoFeeAmount = 'customer/borzo-order-calculation';
 
   /// Cart
   static const String getCartListUri = '/api/v1/customer/cart/list';

@@ -62,6 +62,7 @@ class OrderPlaceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Check takeaway${checkoutController.orderType}');
     return Container(
       width: Dimensions.webMaxWidth,
       alignment: Alignment.center,
@@ -85,9 +86,10 @@ class OrderPlaceButton extends StatelessWidget {
             Get.find<AuthController>().saveDmTipIndex('0');
           }
 
-          if(_showsWarningMessage(context, isGuestLogIn, datePicked, isAvailable)){
+          if(_showsWarningMessage(context, isGuestLogIn, datePicked, isAvailable)) {
             debugPrint('Warning shows');
           } else {
+
 
             AddressModel? finalAddress = _processFinalAddress(isGuestLogIn);
             List<place_order_model.OnlineCart> carts = _generateOnlineCartList();
@@ -95,6 +97,7 @@ class OrderPlaceButton extends StatelessWidget {
             PlaceOrderBodyModel placeOrderBody = _preparePlaceOrderModel(carts, scheduleStartDate, finalAddress, isGuestLogIn, days);
 
             if(checkoutController.paymentMethodIndex == 3){
+              print('check paymentMethodIndex');
               Get.toNamed(RouteHelper.getOfflinePaymentScreen(placeOrderBody: placeOrderBody, zoneId: checkoutController.restaurant!.zoneId!, total: total, maxCodOrderAmount: maxCodOrderAmount,
                 fromCart: fromCart, isCodActive: isCashOnDeliveryActive,
                 pricingView: PricingViewModel(
@@ -103,7 +106,12 @@ class OrderPlaceButton extends StatelessWidget {
                 ),
               ));
             }else{
-              checkoutController.placeOrder(placeOrderBody, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
+              print('check placeOrder');
+              print(deliveryCharge);
+              print(total);
+              print(placeOrderBody.orderAmount);
+              PlaceOrderBodyModel finalData = placeOrderBody;
+              checkoutController.placeOrder(finalData, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
             }
 
           }
@@ -304,7 +312,9 @@ class OrderPlaceButton extends StatelessWidget {
 
   PlaceOrderBodyModel _preparePlaceOrderModel(List<place_order_model.OnlineCart> carts, DateTime scheduleStartDate, AddressModel? finalAddress, bool isGuestLogIn, List<place_order_model.SubscriptionDays> days) {
     return PlaceOrderBodyModel(
-      cart: carts, couponDiscountAmount: Get.find<CouponController>().discount, distance: checkoutController.distance,
+      cart: carts,
+      couponDiscountAmount: Get.find<CouponController>().discount,
+      distance: checkoutController.distance,
       couponDiscountTitle: Get.find<CouponController>().discount! > 0 ? Get.find<CouponController>().coupon!.title : null,
       scheduleAt: !checkoutController.restaurant!.scheduleOrder! ? null : (checkoutController.selectedDateSlot == 0
           && checkoutController.selectedTimeSlot == 0) ? null : DateConverter.dateToDateAndTime(scheduleStartDate),
@@ -333,6 +343,7 @@ class OrderPlaceButton extends StatelessWidget {
       deliveryInstruction: checkoutController.selectedInstruction != -1 ? AppConstants.deliveryInstructionList[checkoutController.selectedInstruction] : '',
       partialPayment: checkoutController.isPartialPay ? 1 : 0, guestId: isGuestLogIn ? int.parse(Get.find<AuthController>().getGuestId()) : 0,
       isBuyNow: fromCart ? 0 : 1, guestEmail: isGuestLogIn ? finalAddress.email : null,
+      deliveryPrice: deliveryCharge!,
     );
   }
 

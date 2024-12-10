@@ -106,6 +106,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
           OrderModel? order = orderController.trackModel;
           bool subscription = false;
           List<String> schedules = [];
+
           if(orderController.orderDetails != null && order != null) {
             subscription = order.subscription != null;
 
@@ -150,6 +151,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
             }
           }
           double subTotal = itemsPrice + addOns;
+
           double total = itemsPrice + addOns - discount! + (taxIncluded! ? 0 : tax!) + deliveryCharge! - couponDiscount! + dmTips! + additionalCharge;
 
         return Scaffold(
@@ -162,6 +164,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                 Get.back();
               }
             }),
+
             endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
             body: SafeArea(
               child: (order != null && orderController.orderDetails != null) ? Column(children: [
@@ -178,8 +181,8 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
 
                       OrderPricingSection(
                         itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
-                        couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: deliveryCharge,
-                        total: total, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
+                        couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: order.deliveryCharge!,
+                        total: order.orderAmount!, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),

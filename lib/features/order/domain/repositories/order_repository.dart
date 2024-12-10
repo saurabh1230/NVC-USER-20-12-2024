@@ -22,14 +22,14 @@ class OrderRepository implements OrderRepositoryInterface {
   Future<OrderModel?> trackOrder(String? orderID, String? guestId, {String? contactNumber}) async {
     OrderModel? trackModel;
     Response response = await apiClient.getData(
-      '${AppConstants.trackUri}$orderID${guestId != null ? '&guest_id=$guestId' : ''}'
-          '${contactNumber != null ? '&contact_number=$contactNumber' : ''}',
-    );
+      '${AppConstants.trackUri}$orderID${guestId != null ? '&guest_id=$guestId' : '' }'
+          '${contactNumber != null ? '&contact_number=$contactNumber' : ''}',);
     if (response.statusCode == 200) {
       trackModel = OrderModel.fromJson(response.body);
     }
     return trackModel;
   }
+
 
   @override
   Future<List<CancellationData>?> getCancelReasons() async {

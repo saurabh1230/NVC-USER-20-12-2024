@@ -9,20 +9,18 @@ class BorzoRepo {
   BorzoRepo({required this.apiClient});
 
   Future<Response> getBorzoFee(String address,
-      String contactPersonName,
-      String contactPersonNumber,
+      // String contactPersonName,
+      // String contactPersonNumber,
       String latitude,
       String longitude,
       String restaurantId,) {
-    return apiClient.postData(AppConstants.borzoFeeAmount,{
+    return apiClient.postUrlData(AppConstants.borzoFeeAmount,{
       "address": address,
-      "contact_person_name": contactPersonName,
-      "contact_person_number": contactPersonNumber,
+      // "contact_person_name": contactPersonName,
+      // "contact_person_number": contactPersonNumber,
       "latitude": latitude,
       "longitude": longitude,
       "restaurant_id" : restaurantId
     });
   }
-
-
 }

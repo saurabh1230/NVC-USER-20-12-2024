@@ -7,6 +7,7 @@ class PlaceOrderBodyModel {
   double? _couponDiscountAmount;
   String? _couponDiscountTitle;
   double? _orderAmount;
+  double? _deliveryprice;
   String? _orderType;
   String? _paymentMethod;
   String? _orderNote;
@@ -46,6 +47,7 @@ class PlaceOrderBodyModel {
         required String? couponDiscountTitle,
         required String? couponCode,
         required double orderAmount,
+        required double deliveryPrice,
         required String orderType,
         required String paymentMethod,
         required int? restaurantId,
@@ -82,6 +84,7 @@ class PlaceOrderBodyModel {
     _couponDiscountAmount = couponDiscountAmount;
     _couponDiscountTitle = couponDiscountTitle;
     _orderAmount = orderAmount;
+    _deliveryprice = deliveryPrice;
     _orderType = orderType;
     _paymentMethod = paymentMethod;
     _orderNote = orderNote;
@@ -120,6 +123,7 @@ class PlaceOrderBodyModel {
   double? get couponDiscountAmount => _couponDiscountAmount;
   String? get couponDiscountTitle => _couponDiscountTitle;
   double? get orderAmount => _orderAmount;
+  double? get deliveryPrice => _deliveryprice;
   String? get orderType => _orderType;
   String? get paymentMethod => _paymentMethod;
   String? get orderNote => _orderNote;
@@ -162,6 +166,7 @@ class PlaceOrderBodyModel {
     _couponDiscountAmount = json['coupon_discount_amount'];
     _couponDiscountTitle = json['coupon_discount_title'];
     _orderAmount = json['order_amount'];
+    _deliveryprice = json['deliveryPrice'];
     _orderType = json['order_type'];
     _paymentMethod = json['payment_method'];
     _orderNote = json['order_note'];
@@ -215,6 +220,7 @@ class PlaceOrderBodyModel {
     data['coupon_discount_amount'] = _couponDiscountAmount;
     data['coupon_discount_title'] = _couponDiscountTitle;
     data['order_amount'] = _orderAmount;
+    data['deliveryPrice'] = _deliveryprice;
     data['order_type'] = _orderType;
     data['payment_method'] = _paymentMethod;
     data['order_note'] = _orderNote;

@@ -30,7 +30,6 @@ class OrderPricingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     bool subscription = order.subscription != null;
     bool taxIncluded = order.taxStatus ?? false;
-
     return Container(
       decoration: ResponsiveHelper.isDesktop(context) ? BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -117,7 +116,6 @@ class OrderPricingSection extends StatelessWidget {
               ],
             ) : const SizedBox(),
             SizedBox(height: (order.orderType != 'take_away' && Get.find<SplashController>().configModel!.dmTipsStatus == 1) ? 10 : 0),
-
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text('delivery_fee'.tr, style: robotoRegular),
               deliveryCharge > 0 ? Text(
@@ -149,6 +147,7 @@ class OrderPricingSection extends StatelessWidget {
                     Text('total_amount'.tr, style: robotoMedium.copyWith(
                       fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor,
                     )),
+
                     Text(
                       PriceConverter.convertPrice(total), textDirection: TextDirection.ltr,
                       style: robotoMedium.copyWith(fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor),

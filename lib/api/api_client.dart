@@ -62,6 +62,23 @@ class ApiClient extends GetxService {
     return header;
   }
 
+  Future<Response> postUrlData(String uri, dynamic body, {Map<String, String>? headers, bool handleError = true}) async {
+    try {
+      if(kDebugMode) {
+        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+        debugPrint('====> API Body: $body');
+      }
+      http.Response response = await http.post(
+        Uri.parse('https://lab2.invoidea.in/nvc/api/v1/'+uri),
+        body: jsonEncode(body),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(response, uri, handleError);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers, bool handleError = true}) async {
     try {
       if(kDebugMode) {
