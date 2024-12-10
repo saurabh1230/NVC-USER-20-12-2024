@@ -157,7 +157,7 @@ class OrderInfoSection extends StatelessWidget {
                     cod ? 'cash_on_delivery'.tr
                         : order.paymentMethod == 'wallet' ? 'wallet_payment'.tr
                         : order.paymentMethod == 'partial_payment' ? 'partial_payment'.tr
-                        : order.paymentMethod == 'offline_payment' ? 'offline_payment'.tr : 'digital_payment'.tr,
+                        : order.paymentMethod == 'offline_payment' ? 'Prepaid'.tr : 'Prepaid'.tr,
                     style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeExtraSmall),
                   ),
                 ),

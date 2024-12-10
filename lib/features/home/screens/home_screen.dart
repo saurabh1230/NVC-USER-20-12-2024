@@ -94,19 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
   final ConfigModel? _configModel = Get.find<SplashController>().configModel;
   bool _isLogin = false;
 
+
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
     _isLogin = Get.find<AuthController>().isLoggedIn();
     HomeScreen.loadData(false);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     double scrollPoint = 0.0;
-
     return GetBuilder<LocalizationController>(builder: (localizationController) {
       return Scaffold(
         appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,

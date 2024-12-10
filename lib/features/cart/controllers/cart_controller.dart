@@ -281,4 +281,6 @@ class CartController extends GetxController implements GetxService {
     update();
     return success;
   }
+
+
 }

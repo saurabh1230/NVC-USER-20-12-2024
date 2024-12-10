@@ -25,14 +25,10 @@ import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../address/domain/models/address_model.dart';
-import '../../location/controllers/location_controller.dart';
-import '../../location/domain/models/zone_response_model.dart';
-
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
   final bool fromSplash;
-  const DashboardScreen({super.key, required this.pageIndex, this.fromSplash = false});
+  const DashboardScreen({super.key,  this.pageIndex = 1, this.fromSplash = false});
 
   @override
   DashboardScreenState createState() => DashboardScreenState();
@@ -48,30 +44,23 @@ class DashboardScreenState extends State<DashboardScreen> {
   bool active = false;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
 
     _isLogin = Get.find<AuthController>().isLoggedIn();
 
     if(_isLogin){
-      if (Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && Get.find<LoyaltyController>().getEarningPint().isNotEmpty && !ResponsiveHelper.isDesktop(Get.context)){
+      if(Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && Get.find<LoyaltyController>().getEarningPint().isNotEmpty && !ResponsiveHelper.isDesktop(Get.context)){
         Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(context, const CongratulationDialogue()));
       }
       _suggestAddressBottomSheet();
       Get.find<OrderController>().getRunningOrders(1, notify: false);
-      // AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
-      // ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
-      // if(response.isSuccess) {
-      //   Get.find<LocationController>().prepareZoneDataInitial(address);
-      // }
-
     }
 
     _pageIndex = widget.pageIndex;
-
     _pageController = PageController(initialPage: widget.pageIndex);
-
     _screens = [
+
       const HomeScreen(),
       const FavouriteScreen(),
       const CartScreen(fromNav: true),

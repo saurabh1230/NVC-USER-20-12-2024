@@ -34,22 +34,23 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-
     initCall();
   }
 
+
   Future<void> initCall() async {
     await Get.find<CartController>().getCartDataOnline();
-    if(Get.find<CartController>().cartList.isNotEmpty){
+    if(Get.find<CartController>().cartList.isNotEmpty) {
       await Get.find<RestaurantController>().getRestaurantDetails(Restaurant(id: Get.find<CartController>().cartList[0].product!.restaurantId, name: null), fromCart: true);
       Get.find<CartController>().calculationCart();
-      if(Get.find<CartController>().addCutlery){
+      if (Get.find<CartController>().addCutlery) {
         Get.find<CartController>().updateCutlery(isUpdate: false);
       }
       Get.find<CartController>().setAvailableIndex(-1, isUpdate: false);
       Get.find<RestaurantController>().getCartRestaurantSuggestedItemList(Get.find<CartController>().cartList[0].product!.restaurantId);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

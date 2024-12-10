@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class AppConstants {
   static const String appName = 'Non Veg City';
   static const double appVersion = 1;
-
   static const String fontFamily = 'Roboto';
   static const bool payInWevView = false;
   static const String webHostedUrl = 'https://stackfood-web.6amtech.com';
@@ -120,6 +119,7 @@ class AppConstants {
   static const String offlinePaymentSaveInfoUri = '/api/v1/customer/order/offline-payment';
   static const String offlinePaymentUpdateInfoUri = '/api/v1/customer/order/offline-payment-update';
   static const String allProductsUri = '/api/v1/products/all';
+  static const String borzoFeeAmount = 'https://lab2.invoidea.in/nvc/api/v1/customer/borzo-order-calculation';
 
   /// Cart
   static const String getCartListUri = '/api/v1/customer/cart/list';

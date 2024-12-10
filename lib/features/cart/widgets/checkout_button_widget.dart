@@ -22,7 +22,12 @@ class CheckoutButtonWidget extends StatelessWidget {
     double percentage = 0;
     bool isDesktop = ResponsiveHelper.isDesktop(context);
 
-    return Container(
+    return
+
+
+
+
+      Container(
       width: Dimensions.webMaxWidth,
       padding:  const EdgeInsets.all(Dimensions.paddingSizeSmall),
       decoration: isDesktop ? null : BoxDecoration(

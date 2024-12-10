@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:stackfood_multivendor/api/repo/borzo_repo.dart';
+import 'package:stackfood_multivendor/controller/borzo_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
@@ -292,7 +294,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => campaignRepositoryInterface);
   CampaignServiceInterface campaignServiceInterface = CampaignService(campaignRepositoryInterface: Get.find());
   Get.lazyPut(() => campaignServiceInterface);
-
+  Get.lazyPut(() => BorzoRepo(apiClient: Get.find()));
 
   /// Controller
   Get.lazyPut(() => ThemeController(splashServiceInterface: Get.find()));
@@ -328,6 +330,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => OrderController(orderServiceInterface: Get.find()));
   Get.lazyPut(() => CampaignController(campaignServiceInterface: Get.find()));
   Get.lazyPut(() => CheckoutController(checkoutServiceInterface: Get.find()));
+  Get.lazyPut(() => BorzoController( borzoRepo: Get.find()));
 
 
   /// Retrieving localized data
