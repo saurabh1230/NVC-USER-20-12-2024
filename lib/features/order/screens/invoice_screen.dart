@@ -558,9 +558,7 @@ class InvoiceDialogWidget extends StatelessWidget {
                 orderId: orderID,
                 contactNumber: 'widget.contactNumber',
               ),
-              SizedBox(
-                height: Dimensions.paddingSizeDefault,
-              ),
+              const SizedBox(height: Dimensions.paddingSizeDefault,),
               CustomButtonWidget(
                 buttonText: 'Download Invoice',
                 onPressed: () {

@@ -153,18 +153,19 @@ class CheckoutScreenState extends State<CheckoutScreen> {
       body: guestCheckoutPermission || AuthHelper.isLoggedIn() ? GetBuilder<LocationController>(builder: (locationController) {
         return GetBuilder<CheckoutController>(
           builder: (checkoutController) {
+            final restaurantController = Get.find<RestaurantController>();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              print('Check Delivery');
-              print(  AddressHelper.getAddressFromSharedPref()!.address!);
-              print(  AddressHelper.getAddressFromSharedPref()!.latitude!);
-              print(  AddressHelper.getAddressFromSharedPref()!.longitude!);
-              print(  Get.find<RestaurantController>().restaurant!.id.toString());
-              Get.find<BorzoController>().getBorzoDeliveryFees(
+              if (restaurantController.restaurant != null) {
+                Get.find<BorzoController>().getBorzoDeliveryFees(
                   AddressHelper.getAddressFromSharedPref()!.address!,
                   AddressHelper.getAddressFromSharedPref()!.latitude!,
                   AddressHelper.getAddressFromSharedPref()!.longitude!,
-                  Get.find<RestaurantController>().restaurant!.id.toString()
-              );
+                  restaurantController.restaurant!.id.toString(),
+                );
+              } else {
+                print('Restaurant is null');
+                // Handle the case where the restaurant is null
+              }
             });
 
             bool todayClosed = false;

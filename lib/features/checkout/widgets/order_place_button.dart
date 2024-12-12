@@ -106,12 +106,7 @@ class OrderPlaceButton extends StatelessWidget {
                 ),
               ));
             }else{
-              print('check placeOrder');
-              print(deliveryCharge);
-              print(total);
-              print(placeOrderBody.orderAmount);
-              PlaceOrderBodyModel finalData = placeOrderBody;
-              checkoutController.placeOrder(finalData, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
+              checkoutController.placeOrder(placeOrderBody, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
             }
 
           }
@@ -175,13 +170,13 @@ class OrderPlaceButton extends StatelessWidget {
   }
 
   bool _showsWarningMessage(BuildContext context, bool isGuestLogIn, bool datePicked, bool isAvailable) {
-    if(isGuestLogIn && checkoutController.guestAddress == null && checkoutController.orderType != 'take_away'){
+    if(isGuestLogIn && checkoutController.guestAddress == null /*&& checkoutController.orderType != 'take_away'*/){
       showCustomSnackBar('please_setup_your_delivery_address_first'.tr);
       return true;
-    } else if(isGuestLogIn && checkoutController.orderType == 'take_away' && guestNameTextEditingController.text.isEmpty){
+    } else if(isGuestLogIn && /*checkoutController.orderType == 'take_away' && */guestNameTextEditingController.text.isEmpty){
       showCustomSnackBar('please_enter_contact_person_name'.tr);
       return true;
-    } else if(isGuestLogIn && checkoutController.orderType == 'take_away' && guestNumberTextEditingController.text.isEmpty){
+    } else if(isGuestLogIn && /*checkoutController.orderType == 'take_away' &&*/ guestNumberTextEditingController.text.isEmpty){
       showCustomSnackBar('please_enter_contact_person_number'.tr);
       return true;
     } else if(!isCashOnDeliveryActive && !isDigitalPaymentActive && !isWalletActive) {
@@ -234,7 +229,7 @@ class OrderPlaceButton extends StatelessWidget {
     }else if (!isAvailable && !checkoutController.subscriptionOrder) {
       showCustomSnackBar('one_or_more_products_are_not_available_for_this_selected_time'.tr);
       return true;
-    }else if (checkoutController.orderType != 'take_away' && checkoutController.distance == -1 && deliveryCharge == -1) {
+    }else if (/*checkoutController.orderType != 'take_away' &&*/ checkoutController.distance == -1 && deliveryCharge == -1) {
       showCustomSnackBar('delivery_fee_not_set_yet'.tr);
       return true;
     } else if(checkoutController.paymentMethodIndex == 1 && Get.find<ProfileController>().userInfoModel
@@ -249,7 +244,7 @@ class OrderPlaceButton extends StatelessWidget {
   AddressModel? _processFinalAddress(bool isGuestLogIn) {
     AddressModel? finalAddress = isGuestLogIn ? checkoutController.guestAddress : checkoutController.address[checkoutController.addressIndex];
 
-    if(isGuestLogIn && checkoutController.orderType == 'take_away') {
+    if(isGuestLogIn /*&& checkoutController.orderType == 'take_away'*/) {
       String number = checkoutController.countryDialCode! + guestNumberTextEditingController.text;
       finalAddress = AddressModel(contactPersonName: guestNameTextEditingController.text, contactPersonNumber: number,
         address: AddressHelper.getAddressFromSharedPref()!.address!, latitude: AddressHelper.getAddressFromSharedPref()!.latitude,
@@ -333,7 +328,7 @@ class OrderPlaceButton extends StatelessWidget {
       road: isGuestLogIn ? finalAddress.road??'' : checkoutController.streetNumberController.text.trim(),
       house: isGuestLogIn ? finalAddress.house??'' : checkoutController.houseController.text.trim(),
       floor: isGuestLogIn ? finalAddress.floor??'' : checkoutController.floorController.text.trim(),
-      dmTips: (checkoutController.orderType == 'take_away' || checkoutController.subscriptionOrder || checkoutController.selectedTips == 0) ? '' : checkoutController.tips.toString(),
+      dmTips: (/*checkoutController.orderType == 'take_away' ||*/ checkoutController.subscriptionOrder || checkoutController.selectedTips == 0) ? '' : checkoutController.tips.toString(),
       subscriptionOrder: checkoutController.subscriptionOrder ? '1' : '0',
       subscriptionType: checkoutController.subscriptionType, subscriptionQuantity: subscriptionQty.toString(),
       subscriptionDays: days,

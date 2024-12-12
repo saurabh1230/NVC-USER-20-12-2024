@@ -538,64 +538,116 @@ class CheckoutController extends GetxController implements GetxService {
     return _distance;
   }
 
-  Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart,
-      bool isCashOnDeliveryActive, {bool isOfflinePay = false}) async {
+
+  Future<String> placeOrder(
+      PlaceOrderBodyModel placeOrderBody,
+      int? zoneID,
+      double amount,
+      double? maximumCodOrderAmount,
+      bool fromCart,
+      bool isCashOnDeliveryActive,
+      {bool isOfflinePay = false}) async {
     _isLoading = true;
     update();
 
-    // Print the entire body
-    print('Request couponDiscountAmount: ${placeOrderBody.couponDiscountAmount}');
-    print('Request couponDiscountTitle: ${placeOrderBody.couponDiscountTitle}');
-    print('Request orderAmount: ${placeOrderBody.orderAmount}');
-    print('Request orderType: ${placeOrderBody.orderType}');
-    print('Request paymentMethod: ${placeOrderBody.paymentMethod}');
-    print('Request orderNote: ${placeOrderBody.orderNote}');
-    print('Request couponCode: ${placeOrderBody.couponCode}');
-    print('Request restaurantId: ${placeOrderBody.restaurantId}');
-    print('Request distance: ${placeOrderBody.distance}');
-    print('Request scheduleAt: ${placeOrderBody.scheduleAt}');
-    print('Request discountAmount: ${placeOrderBody.discountAmount}');
-    print('Request taxAmount: ${placeOrderBody.taxAmount}');
-    print('Request address: ${placeOrderBody.address}');
-    print('Request latitude: ${placeOrderBody.latitude}');
-    print('Request longitude: ${placeOrderBody.longitude}');
-    print('Request contactPersonName: ${placeOrderBody.contactPersonName}');
-    print('Request contactPersonNumber: ${placeOrderBody.contactPersonNumber}');
-    print('Request road: ${placeOrderBody.road}');
-    print('Request house: ${placeOrderBody.house}');
-
+    // Print the complete payload before the API call
+    print('------ API Payload Sent to placeOrder ------');
+    print(jsonEncode(placeOrderBody.toJson()));
 
     String orderID = '';
     Response response = await checkoutServiceInterface.placeOrder(placeOrderBody);
+
     _isLoading = false;
-     print('1${amount}');
+    print('1${amount}');
     if (response.statusCode == 200) {
-      print(' Response Body =====================>>>>>>>> ${response.body}');
       String? message = response.body['message'];
       orderID = response.body['order_id'].toString();
-      checkoutServiceInterface.sendNotificationRequest(orderID, Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
-      if(!isOfflinePay) {
-        _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+
+      checkoutServiceInterface.sendNotificationRequest(
+          orderID,
+          Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
+      if (!isOfflinePay) {
+        _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart,
+            isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
       } else {
         Get.find<CartController>().getCartDataOnline();
       }
       if (kDebugMode) {
-        print('2 ${amount}');
         print('-------- Order placed successfully $orderID ----------');
       }
     } else {
       print('isOfflinePay');
-      if(!isOfflinePay){
-        _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
-      }else{
+      if (!isOfflinePay) {
+        _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart,
+            isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+      } else {
         print('take away error');
-
         showCustomSnackBar(response.statusText);
       }
     }
+
     update();
     return orderID;
   }
+
+
+  // Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart,
+  //     bool isCashOnDeliveryActive, {bool isOfflinePay = false}) async {
+  //   _isLoading = true;
+  //   update();
+  //   print('Request cart: ${placeOrderBody.cart!.length}');
+  //   print('Request couponDiscountAmount: ${placeOrderBody.couponDiscountAmount}');
+  //   print('Request couponDiscountTitle: ${placeOrderBody.couponDiscountTitle}');
+  //   print('Request orderAmount: ${placeOrderBody.orderAmount}');
+  //   print('Request orderType: ${placeOrderBody.orderType}');
+  //   print('Request paymentMethod: ${placeOrderBody.paymentMethod}');
+  //   print('Request orderNote: ${placeOrderBody.orderNote}');
+  //   print('Request couponCode: ${placeOrderBody.couponCode}');
+  //   print('Request restaurantId: ${placeOrderBody.restaurantId}');
+  //   print('Request distance: ${placeOrderBody.distance}');
+  //   print('Request scheduleAt: ${placeOrderBody.scheduleAt}');
+  //   print('Request discountAmount: ${placeOrderBody.discountAmount}');
+  //   print('Request taxAmount: ${placeOrderBody.taxAmount}');
+  //   print('Request address: ${placeOrderBody.address}');
+  //   print('Request latitude: ${placeOrderBody.latitude}');
+  //   print('Request longitude: ${placeOrderBody.longitude}');
+  //   print('Request contactPersonName: ${placeOrderBody.contactPersonName}');
+  //   print('Request contactPersonNumber: ${placeOrderBody.contactPersonNumber}');
+  //   print('Request road: ${placeOrderBody.road}');
+  //   print('Request house: ${placeOrderBody.house}');
+  //
+  //
+  //   String orderID = '';
+  //   Response response = await checkoutServiceInterface.placeOrder(placeOrderBody);
+  //   _isLoading = false;
+  //    print('1${amount}');
+  //   if (response.statusCode == 200) {
+  //     String? message = response.body['message'];
+  //     orderID = response.body['order_id'].toString();
+  //
+  //     checkoutServiceInterface.sendNotificationRequest(orderID, Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
+  //     if(!isOfflinePay) {
+  //       _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+  //     } else {
+  //       Get.find<CartController>().getCartDataOnline();
+  //     }
+  //     if (kDebugMode) {
+  //       print('-------- Order placed successfully $orderID ----------');
+  //     }
+  //   } else {
+  //     print('isOfflinePay');
+  //     if(!isOfflinePay){
+  //       _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+  //     }else{
+  //       print('take away error');
+  //
+  //       showCustomSnackBar(response.statusText);
+  //     }
+  //   }
+  //
+  //   update();
+  //   return orderID;
+  // }
 
 
 
@@ -638,7 +690,7 @@ class CheckoutController extends GetxController implements GetxService {
   //     var url = Uri.parse('${AppConstants.baseUrl}/api/v1/customer/order/place'); // Update with your endpoint
   //     var headers = {
   //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWIzOTBmNWM4NjdmMTA5NWIyMTE0MDI1ZWJhYjY3OWZmNDg4MjBhMDk0Y2NhY2NkYTY2YWJjOTZiNThlODA3Yjc1NTFkOGIzYzgzY2RmZmEiLCJpYXQiOjE3MzM4MjcwODIuNjcyODMxLCJuYmYiOjE3MzM4MjcwODIuNjcyODQsImV4cCI6MTc2NTM2MzA4Mi41NzkwMjIsInN1YiI6IjY5Iiwic2NvcGVzIjpbXX0.8AtQOWvE1POJLZQt9i5FEDDkYyVuOBGjZV1wiAdTuI4_GVOExgTMKFbPs56sNdU5JKNkP_ok5BjA5SMBdoZXZZi-14zZZqEZDZp_aZQYEg2PEKutyL0ZjnNcOXZEUuDiml2GMmbsI64Qvodv1zfyqQY6b_uRltzw7mDtuxYSHxU308GwBpbmkfXei2Wjh3Zwpv7gOgmjGSEzMY7PyTpv69sZCpSd_lBWk3V6fuS1PM5e2ulEE9SEHLmyfnB5BiO-9vR6t9jGXErxuSP8TAk5tuPCp_5g3xktiJ5yiDkXEDiFOsPciurAaGkwwG7ZxUo7qYiGN8jS-mSiCkkC5GkHfvjjKImx4PXGhR_q0Cuyw9LXjQpC1PRxrFUfO2lLiFBEyYOgQ1r-C58TpVsPcO2bo6zUJT1dL-Vr-YguvEcTnswI8kEtYzTiadVlTabv7EkdkiqMNmL1fSE-jV2GmJwhpx8vLmSnHQvxjgIsR6l9Zxl-wWduipLzWXg_PDbnLtLBd4CG68nfC4l_2yeILqfhTjyz-uK7aUH0e7ytktU-ZJtSxAzDpIJa_EPKssJii2fNUspu-k9ch8aB13Pe7SeB2ieztoMqwuoe9TaFMVDj6T0Va7pV0--PrzaiMwu9rv9lR91vLkEhE6Jn5QA5pUJ5JJ8FRPfWP45bGB6kF8T3Meo',
+  //       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjIzYzRjNGI2ZmJjNDU0MjgyZGZjZWU2NjI5ZjY0OWZkYzc4YjAyOTlkNjU2MjQ4ZjAyMzlkOGI0ZDA4NGY5NjMzYTRiZDg4ZDNhM2M4YmMiLCJpYXQiOjE3MzM4OTIzNzEuMjI2MzMxLCJuYmYiOjE3MzM4OTIzNzEuMjI2MzM3LCJleHAiOjE3NjU0MjgzNzEuMTk4NzEyLCJzdWIiOiI3OCIsInNjb3BlcyI6W119.73i59woSy6gNHQ9dVEY3lCo5onUKi6WHUs__JpOV1hrkHmX4nMvgoQLhGqS7xAn6Iu3TVo-a-O-fMmPLOyNvGIwDAp2Qbhvke88t6ORsLV3cL-xOq0Ay3JJ1AnxSamV2CizrHz4ZUDAvecoh_9DR3rbcL3f_AVQGZc8vmsdwRlNwGvpD9kJnmXCJufXu7--Eh9-uiggISRuND_5V-BTgd9aiw6Q5K4ULJnt-pg1EKIAeDrINI2nY1nSZQSIlQRwULb9AFcy2Rfo94X9k76QrKWcQpYaOK0viJeTRfE1yLvXC93_Pa-hnOSyhfZM1WgZ5d2L_KEu57ewSSCNQX5WgM_ABe8wIriE9RrLttIrnpx6dJULx5bx86zpg2Uo1L5_QDH4_xdROmxKb-gynpOf-Xy_XHBeRMS2h1BWQods4t28zob_s3Et3F19V7mnX7rJvE7x-kgejtx6TyLCDoMtX8sr99EuvS1RUhTYK_1d7yLooB56yXVUS6nC5DV6ihuy2Ir9kS1vVCF44joUStM7p-vhf8uE8gCq-3iHEEQixZ_gRMzd7ZztD1Ww1zCgoS3dNPLqgJ12e52p_a-pkcRfjR8BmCFgh27zzioYYTm3efgqFmZHHgcmZH9drufKSJ-2FoF3E2JZVb8LtQub6Wdgs0Ve-oYHahJu3-Dt2OlSpheQ',
   //     };
   //
   //

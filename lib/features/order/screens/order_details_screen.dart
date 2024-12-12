@@ -190,7 +190,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                           onPressed: () {
                             Get.dialog(InvoiceDialogWidget(
                               restaurantLogo: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}/${order.restaurant!.logo}',
-
                               restaurantName: order.restaurant!.name!,
                               restaurantAddress:order.restaurant!.address!,
                               restaurantPhone: order.restaurant!.phone!,
@@ -201,9 +200,8 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                               discount: discount!,
                               tax: tax!,
                               deliveryCharge: deliveryCharge!,
-                              total: total,
+                              total: order.orderAmount!,
                               orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,  restaurantGst: order.restaurant!.gst_code!,
-
                             ));
                           },
                         ),

@@ -239,8 +239,7 @@ class BottomSectionWidget extends StatelessWidget {
                 ]),
               ]),
               const SizedBox(height: Dimensions.paddingSizeSmall),
-
-              (couponController.discount! > 0 /*|| couponController.freeDelivery*/) ? Column(children: [
+              (couponController.discount! > 0 || couponController.freeDelivery) ? Column(children: [
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text('coupon_discount'.tr, style: robotoRegular),
                   (couponController.coupon != null && couponController.coupon!.couponType == 'free_delivery') ? Text(

@@ -16,21 +16,28 @@ class CheckoutRepository implements CheckoutRepositoryInterface {
   Future<int?> getDmTipMostTapped() async {
     int mostDmTipAmount = 0;
     Response response = await apiClient.getData(AppConstants.mostTipsUri);
-    if(response.statusCode == 200){
-      mostDmTipAmount = response.body['most_tips_amount'];
+
+    if (response.statusCode == 200) {
+      // Safely handle null values
+      mostDmTipAmount = response.body['most_tips_amount'] ?? 0;
     }
     return mostDmTipAmount;
   }
+
 
   @override
   Future<List<OfflineMethodModel>> getOfflineMethodList() async {
     List<OfflineMethodModel> offlineMethodList = [];
     Response response = await apiClient.getData(AppConstants.offlineMethodListUri);
+
     if (response.statusCode == 200) {
-      response.body.forEach((method) => offlineMethodList.add(OfflineMethodModel.fromJson(method)));
+      response.body.values.forEach(
+            (method) => offlineMethodList.add(OfflineMethodModel.fromJson(method)),
+      );
     }
     return offlineMethodList;
   }
+
 
   @override
   Future<double> getExtraCharge(double? distance) async {
