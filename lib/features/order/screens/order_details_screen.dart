@@ -176,9 +176,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                   controller: scrollController,
                   child: FooterViewWidget(child: SizedBox(width: Dimensions.webMaxWidth,
                     child: Column(children: [
-
                       OrderInfoSection(order: order, orderController: orderController, schedules: schedules, showChatPermission: showChatPermission, contactNumber: widget.contactNumber,),
-
                       OrderPricingSection(
                         itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
                         couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: order.deliveryCharge!,
@@ -199,7 +197,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                               subtotal: subTotal,
                               discount: discount!,
                               tax: tax!,
-                              deliveryCharge: deliveryCharge!,
+                              deliveryCharge: order.deliveryCharge!,
                               total: order.orderAmount!,
                               orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,  restaurantGst: order.restaurant!.gst_code!,
                             ));

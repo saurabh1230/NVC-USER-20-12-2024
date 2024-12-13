@@ -30,6 +30,7 @@ class OrderPricingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     bool subscription = order.subscription != null;
     bool taxIncluded = order.taxStatus ?? false;
+    print('==========> delivery charge ${deliveryCharge}');
     return Container(
       decoration: ResponsiveHelper.isDesktop(context) ? BoxDecoration(
         color: Theme.of(context).cardColor,

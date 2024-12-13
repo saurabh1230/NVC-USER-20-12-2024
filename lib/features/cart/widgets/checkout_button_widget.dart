@@ -105,22 +105,23 @@ class CheckoutButtonWidget extends StatelessWidget {
           ),
         );
     });
-
-
-
-
   }
 
+
   void _processToCheckoutButtonPressed(RestaurantController restaurantController) {
-    if(!cartController.cartList.first.product!.scheduleOrder! && cartController.availableList.contains(false)) {
-      showCustomSnackBar('one_or_more_product_unavailable'.tr);
-    } else if(restaurantController.restaurant!.freeDelivery == null || restaurantController.restaurant!.cutlery == null) {
+    if (restaurantController.restaurant == null) {
       showCustomSnackBar('restaurant_is_unavailable'.tr);
+      return;
     }
-    else {
+    if (!cartController.cartList.first.product!.scheduleOrder! && cartController.availableList.contains(false)) {
+      showCustomSnackBar('one_or_more_product_unavailable'.tr);
+    } else if (restaurantController.restaurant!.freeDelivery == null || restaurantController.restaurant!.cutlery == null) {
+      showCustomSnackBar('restaurant_is_unavailable'.tr);
+    } else {
       Get.find<CouponController>().removeCouponData(false);
       Get.toNamed(RouteHelper.getCheckoutRoute('cart'));
     }
   }
+
 
 }

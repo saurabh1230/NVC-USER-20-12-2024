@@ -551,6 +551,7 @@ class CheckoutController extends GetxController implements GetxService {
     update();
 
     // Print the complete payload before the API call
+
     print('------ API Payload Sent to placeOrder ------');
     print(jsonEncode(placeOrderBody.toJson()));
 
@@ -562,13 +563,9 @@ class CheckoutController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       String? message = response.body['message'];
       orderID = response.body['order_id'].toString();
-
-      checkoutServiceInterface.sendNotificationRequest(
-          orderID,
-          Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
+      checkoutServiceInterface.sendNotificationRequest(orderID, Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
       if (!isOfflinePay) {
-        _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart,
-            isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+        _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
       } else {
         Get.find<CartController>().getCartDataOnline();
       }

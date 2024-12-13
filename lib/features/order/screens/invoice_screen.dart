@@ -59,21 +59,22 @@ class InvoicePdfGenerator {
     required this.userContactNo,
   });
 
-  Future<Uint8List> _getLogoBytes() async {
-    final response = await http.get(Uri.parse(restaurantLogoUrl));
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    } else {
-      throw Exception('Failed to load restaurant logo');
-    }
-  }
+  // Future<Uint8List> _getLogoBytes() async {
+  //   final response = await http.get(Uri.parse(restaurantLogoUrl));
+  //   if (response.statusCode == 200) {
+  //     return response.bodyBytes;
+  //   } else {
+  //     throw Exception('Failed to load restaurant logo');
+  //   }
+  // }
 
   Future<void> generatePdf() async {
     final pdf = pw.Document();
-    final logoBytes = await _getLogoBytes();
+    // final logoBytes = await _getLogoBytes();
 
     final fontData = await rootBundle.load('assets/font/Roboto-Regular.ttf');
     final ttf = pw.Font.ttf(fontData);
+
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -193,14 +194,14 @@ class InvoicePdfGenerator {
                         textAlign: pw.TextAlign.right,
                       ),
                     ),
-                    pw.Expanded(
-                      flex: 2,
-                      child: pw.Text(
-                        "Total Price",
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                        textAlign: pw.TextAlign.right,
-                      ),
-                    ),
+                    // pw.Expanded(
+                    //   flex: 2,
+                    //   child: pw.Text(
+                    //     "Total Price",
+                    //     style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                    //     textAlign: pw.TextAlign.right,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -231,19 +232,19 @@ class InvoicePdfGenerator {
                       pw.Expanded(
                         flex: 2,
                         child: pw.Text(
-                          '₹ ${item.price.toString()}',
+                          '₹ ${itemsPrice.toString()}',
                           textAlign: pw.TextAlign.right,
                           style: pw.TextStyle(font: ttf),
                         ),
                       ),
-                      pw.Expanded(
-                        flex: 2,
-                        child: pw.Text(
-                          '₹ $total',
-                          textAlign: pw.TextAlign.right,
-                          style: pw.TextStyle(font: ttf),
-                        ),
-                      ),
+                      // pw.Expanded(
+                      //   flex: 2,
+                      //   child: pw.Text(
+                      //     '₹ $total',
+                      //     textAlign: pw.TextAlign.right,
+                      //     style: pw.TextStyle(font: ttf),
+                      //   ),
+                      // ),
                     ],
                   ),
                 );
@@ -483,8 +484,8 @@ class InvoiceDialogWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: Dimensions.paddingSizeSmall),
-              CustomImageWidget(image: restaurantLogo, height: 50, width: 50),
+              // const SizedBox(height: Dimensions.paddingSizeSmall),
+              // CustomImageWidget(image: restaurantLogo, height: 50, width: 50),
               const Divider(thickness: 1, color: Colors.black),
               const SizedBox(height: Dimensions.paddingSizeSmall),
               Text(restaurantName, style: robotoBold),
@@ -556,7 +557,7 @@ class InvoiceDialogWidget extends StatelessWidget {
                 total: total,
                 orderController: orderController,
                 orderId: orderID,
-                contactNumber: 'widget.contactNumber',
+                contactNumber: Get.find<ProfileController>().userInfoModel!.phone,
               ),
               const SizedBox(height: Dimensions.paddingSizeDefault,),
               CustomButtonWidget(
