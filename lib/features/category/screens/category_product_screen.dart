@@ -577,6 +577,7 @@ class CategoryProductScreenState extends State<CategoryProductScreen> with Ticke
                           Padding(
                             padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
                             child:  RestaurantsViewHorizontalWidget(isCooked: true,
+                                scrollController: scrollController,
                                 categoryId: widget.categoryID,
                                 categoryName: widget.categoryName,
                                 products: products,

@@ -93,6 +93,7 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
                       restaurants: widget.isPopular ? restController.popularRestaurantList : widget.isRecentlyViewed
                           ? restController.recentlyViewedRestaurantList : widget.isOrderAgain
                           ? restController.orderAgainRestaurantList : restController.latestRestaurantList, categoryName: '', categoryId: '',
+                      scrollController: scrollController,
                     ),
                   )),
 

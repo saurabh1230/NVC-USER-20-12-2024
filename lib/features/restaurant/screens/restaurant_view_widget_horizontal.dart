@@ -299,7 +299,8 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
   final String? categoryName;
   final String? categoryId;
   final bool? isActive;
-  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,required this.categoryName,required this.categoryId, this.isActive, });
+  final ScrollController scrollController;
+  const RestaurantsViewHorizontalWidget({super.key, this.restaurants,  this.isCooked = false, this.products,required this.categoryName,required this.categoryId, this.isActive, required this.scrollController, });
 
   @override
   Widget build(BuildContext context) {
@@ -311,6 +312,7 @@ class RestaurantsViewHorizontalWidget extends StatelessWidget {
           restaurants != null
               ? restaurants!.isNotEmpty
               ? ListView.separated(
+            controller: scrollController,
             itemCount: restaurants!.length,
             shrinkWrap: true,
             padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault,left: Dimensions.paddingSizeDefault),
@@ -510,8 +512,6 @@ class PopularRestaurantShimmer extends StatelessWidget {
                     )
                   ],
                 ),
-
-
               ),
             );
           }, separatorBuilder: (BuildContext context, int index) => const SizedBox(height: Dimensions.paddingSizeDefault,),

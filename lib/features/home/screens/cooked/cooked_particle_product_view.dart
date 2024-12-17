@@ -24,8 +24,6 @@ import '../../../../util/app_loading_screen.dart';
 import '../../../restaurant/widgets/restaurant_view_verticle.dart';
 import '../home_screen.dart';
 
-
-
 class CookedParticleProductScreen extends StatefulWidget {
   final String? categoryID;
   final String categoryName;
@@ -74,38 +72,12 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
               Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
             );
           }
-          // Get.find<CategoryController>().getCategoryProductList(
-          //   Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-          //       : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-          //   Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          // );
         }
       }
     });
-    // restaurantScrollController.addListener(() {
-    //   if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
-    //       && Get.find<CategoryController>().categoryRestaurantList != null
-    //       && !Get.find<CategoryController>().isLoading) {
-    //     int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
-    //     if (Get.find<CategoryController>().offset < pageSize) {
-    //       debugPrint('end of the page');
-    //       Get.find<CategoryController>().showBottomLoader();
-    //       Get.find<CategoryController>().getCategoryRestaurantList(
-    //         Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-    //             : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-    //         Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-    //       );
-    //     }
-    //   }
-    // });
+
   }
 
-  // @override
-  // void dispose() {
-  //   Get.find<CategoryController>().selectedCookedCategoryId = null;
-  //   Get.find<CategoryController>().subCategoryList == null;
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -176,14 +148,6 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
-              // IconButton(
-              //   onPressed: () => catController.toggleSearch(),
-              //   icon: Icon(
-              //     catController.isSearching ? Icons.close_sharp : Icons.search,
-              //     color: Theme.of(context).textTheme.bodyLarge!.color,
-              //   ),
-              // ),
-
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
                 icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
@@ -215,7 +179,6 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
           body: catController.categoryRestaurantList == null
               ? const AppLoading() :
           CustomScrollView(
-            controller: scrollController,
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
@@ -252,108 +215,11 @@ class CookedParticleProductScreenState extends State<CookedParticleProductScreen
                     child: Padding(
                       padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
                       child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
+                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,
+                        scrollController: scrollController,),
                     ),
                   ))),
-
-
-              // SliverToBoxAdapter(
-              //     child: Center(child: FooterViewWidget(
-              //       child: Padding(
-              //         padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-              //         child:  RestaurantsViewHorizontalWidget(
-              //             isCooked: true,
-              //             restaurants: restaurants, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
-              //       ),
-              //     ))),
-
-
             ] ),
-          // body: SingleChildScrollView(
-          //   controller: scrollController,
-          //   child: Column(children: [
-          //     Container(
-          //       width: Get.size.width,
-          //       padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
-          //       right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
-          //           top:   Dimensions.paddingSizeSmall,
-          //           bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
-          //       color: Theme.of(context).primaryColor.withOpacity(0.03),
-          //       child: Center(
-          //           child:  CategoryWhatOnYourMindViewWidget(),
-          //       ),
-          //     ),
-          //
-          //     (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-          //       height: 60, width: Dimensions.webMaxWidth, /*color: Theme.of(context).cardColor,*/
-          //       padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-          //       child: ListView.builder(
-          //         scrollDirection: Axis.horizontal,
-          //         itemCount: catController.subCategoryList!.length,
-          //         padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-          //         physics: const BouncingScrollPhysics(),
-          //         itemBuilder: (context, index) {
-          //           return InkWell(
-          //             onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
-          //             child: Container(
-          //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-          //               margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-          //               decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-          //                 color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-          //               ),
-          //               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          //                 Text(
-          //                   catController.subCategoryList![index].name!,
-          //                   style: index == catController.subCategoryIndex
-          //                       ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
-          //                       : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-          //                 ),
-          //               ]),
-          //             ),
-          //           );
-          //         },
-          //       ),
-          //     )) : const SizedBox(),
-          //     // AllRestaurantsWidget(scrollController: scrollController),
-          //
-          //     FooterViewWidget(
-          //       child: Center(
-          //         child: SizedBox(
-          //           width: Dimensions.webMaxWidth,
-          //           child: Column(
-          //             children: [
-          //               // RestaurantsViewVerticleWidget(),
-          //               RestaurantsViewHorizontalWidget(
-          //                   isCooked: true,
-          //                   restaurants: catController.categoryRestaurantList),
-          //               const SizedBox(height: Dimensions.paddingSizeDefault,),
-          //
-          //               // ProductViewWidget(
-          //               //   isRestaurant: false, products: products, restaurants: null, noDataText: 'no_category_food_found'.tr,
-          //               // ),
-          //
-          //               catController.isLoading ? Center(
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-          //                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-          //                 ),
-          //               ) : const SizedBox(),
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     // SizedBox(width: Dimensions.webMaxWidth,
-          //     //   child: FooterViewWidget(
-          //     //     child: AllRestaurantsWidget(scrollController: scrollController),
-          //     //   ),
-          //     // ),
-          //
-          //
-          //
-          //   ]),
-          // ),
         ),
       );
     });

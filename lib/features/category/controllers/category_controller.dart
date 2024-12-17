@@ -143,18 +143,13 @@ class CategoryController extends GetxController implements GetxService {
         update();
       }
       _categoryProductList = null;
-      // _cookedCategoryProductList = null;
     }
     ProductModel? productModel = await categoryServiceInterface.getCategoryProductList(categoryID, offset, type);
-    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
-    // CookedProductModel? categoryProductModel = await categoryServiceInterface.getCookedCategoryProductList(categoryID, offset, type);
     if(productModel != null) {
       if (offset == 1) {
         _categoryProductList = [];
-        // _cookedCategoryProductList = [];
       }
       _categoryProductList!.addAll(productModel.products!);
-      // _cookedCategoryProductList!.addAll(categoryProductModel!.cookedproducts!);
       _pageSize = productModel.totalSize;
       _isLoading = false;
     }

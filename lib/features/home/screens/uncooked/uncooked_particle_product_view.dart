@@ -49,66 +49,31 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
   @override
   void initState() {
     super.initState();
-    // Get.find<RestaurantController>().clearRestaurantParticularProductList();
     Get.find<CategoryController>().clearSubCategoryList();
-    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
-    // Get.find<CategoryController>().getUnCookedProductList(1,false,"uncooked");
     Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
     Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
-    // Get.find<CategoryController>().getFilUncookedCategoryList("2");
-
-
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
-    // print('Print Category ID${widget.categoryID}');
-    // Get.find<CategoryController>().getSubCategoryList(widget.categoryID);
-
-    // Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryProductList != null
+    print('check');
+    restaurantScrollController.addListener(() {
+      print('check2');
+      if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
+          && Get.find<CategoryController>().categoryRestaurantList != null
           && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().pageSize! / 10).ceil();
+        print('check3');
+        int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
         if (Get.find<CategoryController>().offset < pageSize) {
           debugPrint('end of the page');
           Get.find<CategoryController>().showBottomLoader();
-
-          if(Get.find<CategoryController>().selectedCookedCategoryId == null) {
-            Get.find<CategoryController>().getUncookedProducts(Get.find<CategoryController>().offset+1,"uncooked",false);
-          } else {
-            Get.find<CategoryController>().getCategoryProductList(
-              Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                  : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-              Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-            );
-          }
+          Get.find<CategoryController>().getCategoryRestaurantList(
+            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
+                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
+            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+          );
         }
       }
-    });
-    // restaurantScrollController.addListener(() {
-    //   if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
-    //       && Get.find<CategoryController>().categoryRestaurantList != null
-    //       && !Get.find<CategoryController>().isLoading) {
-    //     int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
-    //     if (Get.find<CategoryController>().offset < pageSize) {
-    //       debugPrint('end of the page');
-    //       Get.find<CategoryController>().showBottomLoader();
-    //       Get.find<CategoryController>().getCategoryRestaurantList(
-    //         Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-    //             : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-    //         Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-    //       );
-    //     }
-    //   }
-    // });
+    }
+    );
   }
-
-
-  // @override
-  // void dispose() {
-  //   Get.find<CategoryController>().clearSubCategoryList();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -179,13 +144,6 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
-              // IconButton(
-              //   onPressed: () => catController.toggleSearch(),
-              //   icon: Icon(
-              //     catController.isSearching ? Icons.close_sharp : Icons.search,
-              //     color: Theme.of(context).textTheme.bodyLarge!.color,
-              //   ),
-              // ),
 
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
@@ -218,7 +176,6 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
           body: catController.categoryRestaurantList == null
               ? const AppLoading() :
           CustomScrollView(
-          controller: scrollController,
           physics: const AlwaysScrollableScrollPhysics(),
            slivers: [
              SliverToBoxAdapter(
@@ -256,109 +213,13 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                child: Padding(
                  padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
                  child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,),
+                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,
+                   scrollController: restaurantScrollController,),
                ),
              ))),
 
 
            ] ),
-          // body: SingleChildScrollView(
-          //   controller: scrollController,
-          //   child: Column(children: [
-          //
-          //     // const SizedBox(height: Dimensions.paddingSizeDefault,),
-          //     Container(
-          //       width: Get.size.width,
-          //       padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
-          //       right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
-          //           top:   Dimensions.paddingSizeSmall,
-          //           bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
-          //       color: Theme.of(context).primaryColor.withOpacity(0.03),
-          //       child: Center(child: UnCookedCategoryWhatOnYourMindViewWidget(),),
-          //     ),
-          //
-          //     (catController.subCategoryList != null && !catController.isSearching) ? Center(child: Container(
-          //       height: 60, width: Dimensions.webMaxWidth, /*color: Theme.of(context).cardColor,*/
-          //       padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-          //       child: ListView.builder(
-          //         scrollDirection: Axis.horizontal,
-          //         itemCount: catController.subCategoryList!.length,
-          //         padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-          //         physics: const BouncingScrollPhysics(),
-          //         itemBuilder: (context, index) {
-          //           return InkWell(
-          //             onTap: () => catController.setSubCategoryIndex(index, widget.categoryID),
-          //             child: Container(
-          //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-          //               margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-          //               decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-          //                 color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-          //               ),
-          //               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          //                 Text(
-          //                   catController.subCategoryList![index].name!,
-          //                   style: index == catController.subCategoryIndex
-          //                       ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
-          //                       : robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-          //                 ),
-          //               ]),
-          //             ),
-          //           );
-          //         },
-          //       ),
-          //     )) : const SizedBox()
-          //     /*Container(
-          //       margin: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall,horizontal: Dimensions.paddingSizeSmall),
-          //       decoration: BoxDecoration(
-          //           borderRadius:
-          //           BorderRadius.circular(Dimensions.radiusSmall),
-          //           color: Colors.grey[300]),
-          //       width: Dimensions.webMaxWidth,
-          //       height: ResponsiveHelper.isMobile(context) ? 40 : 50,
-          //     )*/,
-          //
-          //     // AllRestaurantsWidget(scrollController: scrollController),
-          //
-          //     FooterViewWidget(
-          //       child: Center(
-          //         child: SizedBox(
-          //           width: Dimensions.webMaxWidth,
-          //           child: Column(
-          //             children: [
-          //               RestaurantsViewVerticalWidget(isCooked: true,
-          //                   restaurants: catController.categoryRestaurantList),
-          //               const SizedBox(height: Dimensions.paddingSizeDefault,),
-          //               // ProductViewWidget(
-          //               //   isRestaurant: false,
-          //               //   products:
-          //               //   catController.categoryProductList,
-          //               //   restaurants: null,
-          //               //   noDataText: 'no food found',
-          //               // ),
-          //
-          //
-          //               catController.isLoading ? Center(
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-          //                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-          //                 ),
-          //               ) : const SizedBox(),
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     // SizedBox(width: Dimensions.webMaxWidth,
-          //     //   child: FooterViewWidget(
-          //     //     child: AllRestaurantsWidget(scrollController: scrollController),
-          //     //   ),
-          //     // ),
-          //
-          //
-          //
-          //   ]),
-          // ),
         ),
       );
     });

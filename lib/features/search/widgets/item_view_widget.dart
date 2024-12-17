@@ -11,8 +11,8 @@ import '../../restaurant/widgets/product_view_widget_for_restaurant.dart';
 
 class ItemRestaurantViewWidget extends StatelessWidget {
   final bool isRestaurant;
-  const ItemRestaurantViewWidget({super.key, required this.isRestaurant});
-
+   ItemRestaurantViewWidget({super.key, required this.isRestaurant});
+  final ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     Get.find<RestaurantController>().clearRestaurantParticularProductList();
@@ -25,6 +25,7 @@ class ItemRestaurantViewWidget extends StatelessWidget {
                 width: Dimensions.webMaxWidth,
                 child: RestaurantsViewHorizontalWidget(
               /*isRestaurant: isRestaurant,*/ products: searchController.searchProductList, restaurants: searchController.searchRestList, categoryName: '', categoryId: '',
+                  scrollController: scrollController,
             ))),
           ),
         );

@@ -141,12 +141,9 @@ class CheckoutScreenState extends State<CheckoutScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     bool guestCheckoutPermission = AuthHelper.isGuestLoggedIn() && Get.find<SplashController>().configModel!.guestCheckoutStatus!;
-
     return Scaffold(
       appBar: CustomAppBarWidget(title: 'checkout'.tr),
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
