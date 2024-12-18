@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/widgets/heading_widget.dart';
+import '../../../../common/widgets/paginated_list_view_widget.dart';
 import '../../../restaurant/widgets/restaurant_view_verticle.dart';
 import '../home_screen.dart';
 import 'uncooked_whats_on_your_mind_widget.dart';
@@ -42,8 +43,8 @@ class UnCookedParticleProductScreen extends StatefulWidget {
 }
 
 class UnCookedParticleProductScreenState extends State<UnCookedParticleProductScreen> with TickerProviderStateMixin {
-  final ScrollController scrollController = ScrollController();
   final ScrollController restaurantScrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   TabController? _tabController;
 
   @override
@@ -51,7 +52,7 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
     super.initState();
     Get.find<CategoryController>().clearSubCategoryList();
     Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
-    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
+    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false);
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     print('check');
     restaurantScrollController.addListener(() {
@@ -60,35 +61,27 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
           && Get.find<CategoryController>().categoryRestaurantList != null
           && !Get.find<CategoryController>().isLoading) {
         print('check3');
-        int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
+        int pageSize = (10).ceil();
         if (Get.find<CategoryController>().offset < pageSize) {
+          print('check4');
           debugPrint('end of the page');
           Get.find<CategoryController>().showBottomLoader();
           Get.find<CategoryController>().getCategoryRestaurantList(
             Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
                 : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
+            Get.find<CategoryController>().offset + 1, Get.find<CategoryController>().type, false,
           );
         }
       }
-    }
-    );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (catController) {
-      List<Product>? products;
       List<Restaurant>? restaurants;
-      if(catController.categoryProductList != null && catController.searchProductList != null) {
-        products = [];
-        if (catController.isSearching) {
-          products.addAll(catController.searchProductList!);
-        } else {
-          products.addAll(catController.categoryProductList!);
-        }
-      }
-      if(catController.categoryRestaurantList != null && catController.searchRestaurantList != null) {
+
+      if (catController.categoryRestaurantList != null && catController.searchRestaurantList != null) {
         restaurants = [];
         if (catController.isSearching) {
           restaurants.addAll(catController.searchRestaurantList!);
@@ -100,13 +93,14 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
       return PopScope(
         canPop: Navigator.canPop(context),
         onPopInvoked: (val) async {
-          if(catController.isSearching) {
+          if (catController.isSearching) {
             catController.toggleSearch();
-          }else {}
+          }
         },
         child: Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context) ?   const WebMenuBar() : AppBar(
-            title: catController.isSearching ? TextField(
+          appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : AppBar(
+            title: catController.isSearching
+                ? TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
               decoration: const InputDecoration(
@@ -119,7 +113,8 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                   : catController.subCategoryList![catController.subCategoryIndex].id.toString(),
                 catController.type,
               ),
-            ) : Text(widget.categoryName.toTitleCase(), style: robotoRegular.copyWith(
+            )
+                : Text(widget.categoryName.toTitleCase(), style: robotoRegular.copyWith(
               fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color,
             )),
             centerTitle: true,
@@ -127,9 +122,9 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
               icon: const Icon(Icons.arrow_back),
               color: Theme.of(context).textTheme.bodyLarge!.color,
               onPressed: () {
-                if(catController.isSearching) {
+                if (catController.isSearching) {
                   catController.toggleSearch();
-                }else {
+                } else {
                   Get.back();
                 }
               },
@@ -144,25 +139,23 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
                   color: Theme.of(context).textTheme.bodyLarge!.color,
                 ),
               ),
-
               IconButton(
                 onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
                 icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
               ),
-
               VegFilterWidget(type: catController.type, fromAppBar: true, onSelected: (String type) {
-                if(catController.isSearching) {
+                if (catController.isSearching) {
                   catController.searchData(
                     catController.subCategoryIndex == 0 ? widget.categoryID
                         : catController.subCategoryList![catController.subCategoryIndex].id.toString(), '1', type,
                   );
-                }else {
-                  if(catController.isRestaurant) {
+                } else {
+                  if (catController.isRestaurant) {
                     catController.getCategoryRestaurantList(
                       catController.subCategoryIndex == 0 ? widget.categoryID
                           : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,
                     );
-                  }else {
+                  } else {
                     catController.getCategoryProductList(
                       catController.subCategoryIndex == 0 ? widget.categoryID
                           : catController.subCategoryList![catController.subCategoryIndex].id.toString(), 1, type, true,
@@ -176,50 +169,71 @@ class UnCookedParticleProductScreenState extends State<UnCookedParticleProductSc
           body: catController.categoryRestaurantList == null
               ? const AppLoading() :
           CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-           slivers: [
-             SliverToBoxAdapter(
-               child: Center(child: SizedBox(
-                 width: Dimensions.webMaxWidth,
-                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                     Container(
-                           width: Get.size.width,
-                           padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
-                           right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
-                               top:   Dimensions.paddingSizeSmall,
-                               bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),
-                           color: Theme.of(context).primaryColor.withOpacity(0.03),
-                           child: Center(child: UnCookedCategoryWhatOnYourMindViewWidget(),),
-                         ),
-
-                 ]),
-               )),
-             ),
-             SliverPersistentHeader(
-               pinned: true,
-               delegate: SliverDelegate(
-                 height: 60,
-                 child: HeadingWidget(title: 'Vendors & Shops',
-                   tap: () {
-                     Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
-                   },)
-               ),
-             ),
-
-
-             SliverToBoxAdapter(
-                 child: Center(child: FooterViewWidget(
-               child: Padding(
-                 padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-                 child:  RestaurantsViewHorizontalWidget(isCooked: true,
-                        restaurants: catController.categoryRestaurantList, categoryName: Get.find<CategoryController>().categoryName, categoryId: Get.find<CategoryController>().categoryId,
-                   scrollController: restaurantScrollController,),
-               ),
-             ))),
-
-
-           ] ),
+            controller: restaurantScrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Center(child: SizedBox(
+                  width: Dimensions.webMaxWidth,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Container(
+                      width: Get.size.width,
+                      padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
+                      color: Theme.of(context).primaryColor.withOpacity(0.03),
+                      child: Center(child: UnCookedCategoryWhatOnYourMindViewWidget(),),
+                    ),
+                  ]),
+                )),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: SliverDelegate(
+                  height: 60,
+                  child: HeadingWidget(title: 'Vendors & Shops',
+                    tap: () {
+                      Get.toNamed(RouteHelper.getAllRestaurantRoute('Top Vendors'));
+                    },
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Center(child: FooterViewWidget(
+                  child: Padding(
+                    padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+                    child: RestaurantsViewHorizontalWidget(
+                      isCooked: true,
+                      restaurants: catController.categoryRestaurantList,
+                      categoryName: Get.find<CategoryController>().categoryName,
+                      categoryId: Get.find<CategoryController>().categoryId,
+                      scrollController: scrollController,
+                    ),
+                  ),
+                )),
+              ),
+              // SliverToBoxAdapter(
+              //   child: Center(child: FooterViewWidget(
+              //     child: Padding(
+              //       padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+              //       child: PaginatedListViewWidget(
+              //         scrollController: restaurantScrollController,
+              //         totalSize: catController.categoryRestaurantList,
+              //         // totalSize: restaurantController.restaurantModel?.totalSize,
+              //         offset: restaurantController.restaurantModel?.offset,
+              //         onPaginate: (int? offset) async => await restaurantController.getRestaurantList(offset!, false,),
+              //         productView: RestaurantsViewWidget(restaurants: restaurantController.restaurantModel?.restaurants),
+              //         // HomeAllProductViewWidget(
+              //         //   isRestaurant: false,
+              //         //   products: restaurantController.restaurantModel?.restaurants,
+              //         //   restaurants: null,
+              //         //   noDataText: 'No Food Found', categoryBanner: '',
+              //         // ),
+              //         // RestaurantsViewWidget(restaurants: restaurantController.restaurantModel?.restaurants),
+              //       ),
+              //     ),
+              //   )),
+              // ),
+            ],
+          ),
         ),
       );
     });

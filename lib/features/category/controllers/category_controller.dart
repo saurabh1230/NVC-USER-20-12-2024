@@ -133,6 +133,8 @@ class CategoryController extends GetxController implements GetxService {
   }
 
   void getCategoryProductList(String? categoryID, int offset, String type, bool notify) async {
+    _isLoading = true;
+    update();
     _offset = offset;
     if(offset == 1) {
       if(_type == type) {
@@ -326,6 +328,7 @@ class CategoryController extends GetxController implements GetxService {
   // }
 
   void getCategoryRestaurantList(String? categoryID, int offset, String type, bool notify) async {
+    print('getCategoryRestaurantList');
     _offset = offset;
     if(offset == 1) {
       if(_type == type) {
