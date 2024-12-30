@@ -74,6 +74,7 @@ import 'package:stackfood_multivendor/features/support/screens/support_screen.da
 import 'package:stackfood_multivendor/features/update/screens/update_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/forget_pass_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/new_pass_screen.dart';
+import 'package:stackfood_multivendor/features/verification/screens/otp_verification.dart';
 import 'package:stackfood_multivendor/features/verification/screens/verification_screen.dart';
 import 'package:stackfood_multivendor/features/wallet/screens/wallet_screen.dart';
 import 'package:stackfood_multivendor/helper/address_helper.dart';
@@ -95,6 +96,7 @@ class RouteHelper {
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
   static const String verification = '/verification';
+  static const String otpVerification = '/otp-verification';
   static const String accessLocation = '/access-location';
   static const String pickMap = '/pick-map';
   static const String interest = '/interest';
@@ -176,6 +178,9 @@ class RouteHelper {
   static String getSignUpRoute() => signUp;
   static String getVerificationRoute(String? number, String? token, String page, String pass) {
     return '$verification?page=$page&number=$number&token=$token&pass=$pass';
+  }
+  static String getForgotVerificationRoute(String? number, String? token, String page, String pass) {
+    return '$otpVerification?page=$page&number=$number&token=$token&pass=$pass';
   }
   static String getAccessLocationRoute(String page) => '$accessLocation?page=$page';
   static String getPickMapRoute(String? page, bool canRoute) => '$pickMap?page=$page&route=${canRoute.toString()}';
@@ -363,6 +368,15 @@ class RouteHelper {
         password: data,
       );
     }),
+    GetPage(name: otpVerification, page: () {
+      List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return ForgotVerificationScreen(
+        number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
+        password: data,
+      );
+    }),
+
     GetPage(name: accessLocation, page: () => AccessLocationScreen(
       fromSignUp: Get.parameters['page'] == signUp, fromHome: Get.parameters['page'] == 'home', route: null,
     )),

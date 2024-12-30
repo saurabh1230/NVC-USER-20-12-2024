@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "1062257757813",
-    "project_id": "non-veg-city",
-    "storage_bucket": "non-veg-city.firebasestorage.app"
+    "project_number": "662647731894",
+    "project_id": "non-veg-city-dcd88",
+    "storage_bucket": "non-veg-city-dcd88.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1062257757813:android:4e2e7067e11c88be84323c",
+        "mobilesdk_app_id": "1:662647731894:android:6d2e9f782288d9a5511817",
         "android_client_info": {
           "package_name": "com.invoidea.nonvegcity"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1062257757813-km8f34fbq0vd8ctoarmlsuk18mpivbg8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys"
+          "current_key": "AIzaSyDHqAkhwad306q0t_WfyncUcfMSpi8beWA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1062257757813-km8f34fbq0vd8ctoarmlsuk18mpivbg8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

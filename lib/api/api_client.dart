@@ -44,7 +44,7 @@ class ApiClient extends GetxService {
     print('check header');
     header.addAll({
       'Content-Type': 'application/json; charset=UTF-8',
-      AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '',
+      AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '[11]',
       AppConstants.localizationKey: languageCode ?? AppConstants.languages[0].languageCode!,
       AppConstants.latitude: latitude ?? '28.6362154',
       AppConstants.longitude: longitude ?? '77.0463607',

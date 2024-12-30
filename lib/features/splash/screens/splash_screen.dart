@@ -38,10 +38,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bool firstTime = true;
     _onConnectivityChanged = Connectivity().onConnectivityChanged.listen(
-          (ConnectivityResult result) {
+      (ConnectivityResult result) {
         if (!firstTime) {
-          bool isNotConnected =
-              result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
+          bool isNotConnected = result != ConnectivityResult.wifi &&
+              result != ConnectivityResult.mobile;
           isNotConnected
               ? const SizedBox()
               : ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -83,13 +83,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() {
+    print('one');
     Get.find<SplashController>().getConfigData().then((isSuccess) {
+      print('two');
+      print(isSuccess);
       if (isSuccess) {
+        print('three');
         Timer(const Duration(milliseconds: 400), () async {
           double? minimumVersion = 0;
           if (GetPlatform.isAndroid) {
-            minimumVersion =
-                Get.find<SplashController>().configModel!.appMinimumVersionAndroid;
+            minimumVersion = Get.find<SplashController>()
+                .configModel!
+                .appMinimumVersionAndroid;
           } else if (GetPlatform.isIOS) {
             minimumVersion =
                 Get.find<SplashController>().configModel!.appMinimumVersionIos;
@@ -99,19 +104,28 @@ class _SplashScreenState extends State<SplashScreen> {
             Get.offNamed(RouteHelper.getUpdateRoute(
                 AppConstants.appVersion < minimumVersion));
           } else {
+            print('four');
             if (widget.notificationBody != null && widget.linkBody == null) {
               _forNotificationRouteProcess();
+              print('five');
             } else {
               if (Get.find<AuthController>().isLoggedIn()) {
+                print('six');
                 _forLoggedInUserRouteProcess();
               } else {
+                print('seven');
                 if (Get.find<SplashController>().showIntro()!) {
+                  print('eight');
                   _newlyRegisteredRouteProcess();
                 } else {
+                  print('nine');
                   if (Get.find<AuthController>().isGuestLoggedIn()) {
+                    print('ten');
                     _forGuestUserRouteProcess();
                   } else {
-                    Get.offNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+                    print('eleven');
+                    Get.offNamed(
+                        RouteHelper.getSignInRoute(RouteHelper.splash));
                   }
                 }
               }
@@ -120,12 +134,15 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       }
     });
+    print('twelve');
   }
 
   void _forNotificationRouteProcess() {
     if (widget.notificationBody!.notificationType == NotificationType.order) {
-      Get.offNamed(RouteHelper.getOrderDetailsRoute(widget.notificationBody!.orderId));
-    } else if (widget.notificationBody!.notificationType == NotificationType.general) {
+      Get.offNamed(
+          RouteHelper.getOrderDetailsRoute(widget.notificationBody!.orderId));
+    } else if (widget.notificationBody!.notificationType ==
+        NotificationType.general) {
       Get.offNamed(RouteHelper.getNotificationRoute(fromNotification: true));
     } else {
       Get.offNamed(RouteHelper.getChatRoute(
@@ -153,7 +170,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (AddressHelper.getAddressFromSharedPref() != null) {
       Get.offNamed(RouteHelper.getInitialRoute(fromSplash: true));
     } else {
-      Get.find<SplashController>().navigateToLocationScreen('splash', offNamed: true);
+      Get.find<SplashController>()
+          .navigateToLocationScreen('splash', offNamed: true);
     }
   }
 
@@ -165,24 +183,24 @@ class _SplashScreenState extends State<SplashScreen> {
           return Center(
             child: splashController.hasConnection
                 ? Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Images.splash),
-                      fit: BoxFit.cover,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(Images.splash),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      AnimatedLogoDrop(),
+                    ],
+                  )
+                : NoInternetScreen(
+                    child: SplashScreen(
+                      notificationBody: widget.notificationBody,
+                      linkBody: widget.linkBody,
                     ),
                   ),
-                ),
-                AnimatedLogoDrop(),
-              ],
-            )
-                : NoInternetScreen(
-              child: SplashScreen(
-                notificationBody: widget.notificationBody,
-                linkBody: widget.linkBody,
-              ),
-            ),
           );
         },
       ),

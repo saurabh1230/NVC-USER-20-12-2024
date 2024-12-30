@@ -18,6 +18,9 @@ class SplashService implements SplashServiceInterface {
     ConfigModel? configModel;
     if(response.statusCode == 200) {
       configModel = ConfigModel.fromJson(response.body);
+      print('config prepare response.body');
+      print(response.body);
+
     }
     return configModel;
   }

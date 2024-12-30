@@ -17,19 +17,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationScreen extends StatefulWidget {
+class ForgotVerificationScreen extends StatefulWidget {
   final String? number;
   final bool fromSignUp;
   final String? token;
   final String password;
-  const VerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
+  const ForgotVerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
     required this.token});
 
   @override
-  VerificationScreenState createState() => VerificationScreenState();
+  ForgotVerificationScreenState createState() => ForgotVerificationScreenState();
 }
 
-class VerificationScreenState extends State<VerificationScreen> {
+class ForgotVerificationScreenState extends State<ForgotVerificationScreen> {
   String? _number;
   Timer? _timer;
   int _seconds = 0;
@@ -66,7 +66,7 @@ class VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarWidget(title: 'phone_verification'.tr),
+      appBar: CustomAppBarWidget(title: 'Forgot Password'),
       body: SafeArea(child: Scrollbar(controller: _scrollController, child: SingleChildScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
@@ -80,9 +80,9 @@ class VerificationScreenState extends State<VerificationScreen> {
           ) : null,
           child: GetBuilder<VerificationController>(builder: (verificationController) {
             return Column(children: [
-              SizedBox(height: 100,),
+              const SizedBox(height: 100,),
               Image.asset(Images.logo,height: 120,),
-              SizedBox(height: Dimensions.paddingSizeLarge,),
+              const SizedBox(height: Dimensions.paddingSizeLarge,),
 
               Get.find<SplashController>().configModel!.demo! ? Text(
                 'for_demo_purpose'.tr, style: robotoRegular,
@@ -91,9 +91,10 @@ class VerificationScreenState extends State<VerificationScreen> {
                 child: Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
                   RichText(textAlign: TextAlign.center,
                       text: TextSpan(children: [
-                    TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).dividerColor)),
-                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
-                  ])),
+                        TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).dividerColor)),
+                        TextSpan(text: 'Your Linked Email', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                        // TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                      ])),
                 ],
                 ),
               ),
