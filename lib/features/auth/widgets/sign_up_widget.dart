@@ -265,21 +265,26 @@ class SignUpWidgetState extends State<SignUpWidget> {
   }
 
   void _handleResponse(ResponseModel status, String countryCode) {
+    print('check this');
     String password = _passwordController.text.trim();
     String numberWithCountryCode = countryCode + _phoneController.text.trim();
 
     if (status.isSuccess) {
-      if(Get.find<SplashController>().configModel!.customerVerification!) {
-        List<int> encoded = utf8.encode(password);
-        String data = base64Encode(encoded);
-        Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
-      }else {
-        Get.find<ProfileController>().getUserInfo();
-        Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
-        if(ResponsiveHelper.isDesktop(context)) {
-          Get.back();
-        }
-      }
+      List<int> encoded = utf8.encode(password);
+      String data = base64Encode(encoded);
+      Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
+      // Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
+      // if(Get.find<SplashController>().configModel!.customerVerification!) {
+      //   List<int> encoded = utf8.encode(password);
+      //   String data = base64Encode(encoded);
+      //   Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
+      // }else {
+      //   // Get.find<ProfileController>().getUserInfo();
+      //   // Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
+      //   // if(ResponsiveHelper.isDesktop(context)) {
+      //   //   Get.back();
+      //   // }
+      // }
     }else {
       showCustomSnackBar(status.message);
     }
