@@ -99,8 +99,8 @@ class SearchResultWidgetState extends State<SearchResultWidget> with TickerProvi
         },
         child: TabBarView(
           controller: _tabController,
-          children:  [
-            ItemViewWidget(isRestaurant: false,),
+          children: const [
+            ItemViewWidget(isRestaurant: false),
             ItemRestaurantViewWidget(isRestaurant: true),
           ],
         ),

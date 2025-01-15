@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
@@ -67,7 +66,7 @@ class VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(title: 'phone_verification'.tr),
-      body: SafeArea(child: Scrollbar(controller: _scrollController, child: SingleChildScrollView(
+      body: SafeArea(child: Center(child: Scrollbar(controller: _scrollController, child: SingleChildScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
@@ -80,19 +79,15 @@ class VerificationScreenState extends State<VerificationScreen> {
           ) : null,
           child: GetBuilder<VerificationController>(builder: (verificationController) {
             return Column(children: [
-              SizedBox(height: 100,),
-              Image.asset(Images.logo,height: 120,),
-              SizedBox(height: Dimensions.paddingSizeLarge,),
 
               Get.find<SplashController>().configModel!.demo! ? Text(
                 'for_demo_purpose'.tr, style: robotoRegular,
               ) : SizedBox(
                 width: 210,
                 child: Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
-                  RichText(textAlign: TextAlign.center,
-                      text: TextSpan(children: [
-                    TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).dividerColor)),
-                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                  RichText(text: TextSpan(children: [
+                    TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
+                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
                   ])),
                 ],
                 ),
@@ -133,9 +128,8 @@ class VerificationScreenState extends State<VerificationScreen> {
                   buttonText: 'verify'.tr,
                   isLoading: verificationController.isLoading,
                   onPressed: () {
-                    // Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
+                    Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
                     if(widget.fromSignUp) {
-                      print('fromSignUp');
                       verificationController.verifyPhone(_number, widget.token).then((value) {
                         if(value.isSuccess) {
                           showAnimatedDialog(context, Center(
@@ -161,7 +155,6 @@ class VerificationScreenState extends State<VerificationScreen> {
                         }
                       });
                     }else {
-                      print('NewPassScreen');
                       verificationController.verifyToken(_number).then((value) {
                         if(value.isSuccess) {
                           if(ResponsiveHelper.isDesktop(context)){
@@ -177,11 +170,11 @@ class VerificationScreenState extends State<VerificationScreen> {
                   },
                 ),
               ) : const SizedBox.shrink(),
-              // const SizedBox(height: Dimensions.paddingSizeDefault),
+              const SizedBox(height: Dimensions.paddingSizeDefault),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 29),
-                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text(
                     'did_not_receive_the_code'.tr,
                     style: robotoRegular.copyWith(color: Theme.of(context).disabledColor),
@@ -208,7 +201,7 @@ class VerificationScreenState extends State<VerificationScreen> {
                         });
                       }
                     } : null,
-                    child: Text('${'Resend It'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
+                    child: Text('${'resend_it'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
                   ),
                 ]),
               ),
@@ -216,7 +209,7 @@ class VerificationScreenState extends State<VerificationScreen> {
             ]);
           }),
         )),
-      ))),
+      )))),
     );
   }
 }

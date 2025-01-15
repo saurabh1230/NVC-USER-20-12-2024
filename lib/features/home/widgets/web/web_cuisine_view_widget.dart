@@ -119,12 +119,12 @@ class WebCuisineShimmer extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(decoration: BoxDecoration( color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300], borderRadius: BorderRadius.circular(50)),
+                      child: Container(decoration: BoxDecoration( color: Colors.grey[300], borderRadius: BorderRadius.circular(50)),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Container(
                               height: 100, width: 100,
-                              color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                              color: Colors.grey[300],
                             )
                         ),
                       ),
@@ -137,7 +137,7 @@ class WebCuisineShimmer extends StatelessWidget {
                         height: 30, width: 120,
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
                         decoration: BoxDecoration(
-                          color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
+                          color: Colors.grey[300],
                           borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(Dimensions.paddingSizeSmall), bottomRight: Radius.circular(Dimensions.paddingSizeSmall)),
                         ),
                       ),

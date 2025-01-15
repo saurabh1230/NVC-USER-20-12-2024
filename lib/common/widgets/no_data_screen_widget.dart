@@ -40,7 +40,8 @@ class NoDataScreen extends StatelessWidget {
           style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175, color: Theme.of(context).disabledColor),
           textAlign: TextAlign.center,
         ) : Text(
-          'sorry_no_data_found_related_to_your_search'.tr,
+          '',
+          // 'sorry_no_data_found_related_to_your_search'.tr,
           style: robotoRegular.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175, color: Theme.of(context).disabledColor),
           textAlign: TextAlign.center,
         ),
@@ -59,7 +60,8 @@ class NoDataScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.add_circle_outline_sharp, size: 18.0, color: Theme.of(context).cardColor),
-                Text('add_address'.tr, style: robotoMedium.copyWith(color: Theme.of(context).cardColor)),
+                Text('add_address'.tr, style: robotoMedium.copyWith(color: Theme.of(context).cardColor,
+                )),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
 import 'package:stackfood_multivendor/features/category/domain/models/category_model.dart';
@@ -19,10 +20,24 @@ class CategoryService implements CategoryServiceInterface {
     }
   }
 
+
+
   @override
   Future<List<CategoryModel>?> getSubCategoryList(String? parentID) async {
     return await categoryRepositoryInterface.getSubCategoryList(parentID);
   }
+
+  @override
+  Future<List<CategoryModel>?> getFilCategoryList(String? type,List<CategoryModel>? fetchedCategoryList) async {
+    return await categoryRepositoryInterface.getFilCategoryList(type);
+  }
+  @override
+  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type,List<CategoryModel>? fetchedCategoryList) async {
+    return await categoryRepositoryInterface.getFilUncookedCategoryList(type);
+  }
+
+
+
 
   @override
   Future<ProductModel?> getCategoryProductList(String? categoryID, int offset, String type) async {
@@ -30,29 +45,20 @@ class CategoryService implements CategoryServiceInterface {
   }
 
   @override
-  Future<RestaurantModel?> getCategoryRestaurantList(String? categoryID, int offset, String type) async {
-    return await categoryRepositoryInterface.getCategoryRestaurantList(categoryID, offset, type);
-  }
-
-  @override
-  Future<RestaurantModel?> getFilterRestaurantList(int offset, String type) async {
-    return await categoryRepositoryInterface.getFilterRestaurantList(offset, type);
-  }
-
-  @override
-  Future<Response> getSearchData(String? query, String? categoryID, bool isRestaurant, String type) async {
-    return await categoryRepositoryInterface.getSearchData(query, categoryID, isRestaurant, type);
-  }
-
-  @override
-  Future<ProductModel?> getAllProductList(int offset,String type) async {
+  Future<ProductModel?> getAllProductList(int offset,type) async {
     return await categoryRepositoryInterface.getAllProductList(offset,type);
   }
+
+
 
   @override
   Future<ProductModel?> getPopularTypeProducts(int offset,type) async {
     return await categoryRepositoryInterface.getPopularTypeProducts(offset,type);
   }
+
+
+
+
 
 
 
@@ -66,14 +72,31 @@ class CategoryService implements CategoryServiceInterface {
     return await categoryRepositoryInterface.getUnCookedAllProductList(offset,type);
   }
 
+
   @override
-  Future<List<CategoryModel>?> getFilCategoryList(String? type,List<CategoryModel>? fetchedCategoryList) async {
-    return await categoryRepositoryInterface.getFilCategoryList(type);
+  Future<ProductModel?> getHomeCategoryProductList(String? categoryID,) async {
+    return await categoryRepositoryInterface.getHomeCategoryProductList(categoryID );
   }
+
   @override
-  Future<List<CategoryModel>?> getFilUncookedCategoryList(String? type,List<CategoryModel>? fetchedUnCategoryList) async {
-    return await categoryRepositoryInterface.getFilUncookedCategoryList(type);
+  Future<RestaurantModel?> getCategoryRestaurantList(String? categoryID, int offset, String type) async {
+    return await categoryRepositoryInterface.getCategoryRestaurantList(categoryID, offset, type);
   }
+
+  @override
+  Future<RestaurantModel?> getFilterRestaurantList(int offset, String type) async {
+    return await categoryRepositoryInterface.getFilterRestaurantList(offset, type);
+  }
+
+
+  @override
+  Future<Response> getSearchData(String? query, String? categoryID, bool isRestaurant, String type) async {
+    return await categoryRepositoryInterface.getSearchData(query, categoryID, isRestaurant, type);
+  }
+
+
+
+
 
 
 

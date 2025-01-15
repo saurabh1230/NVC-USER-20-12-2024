@@ -1,3 +1,5 @@
+import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/home_all_product_view_widget.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/product_controller.dart';
 import 'package:stackfood_multivendor/features/review/controllers/review_controller.dart';
@@ -5,9 +7,9 @@ import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 
 class PopularFoodScreen extends StatefulWidget {
   final bool isPopular;
@@ -47,26 +49,30 @@ class _PopularFoodScreenState extends State<PopularFoodScreen> {
             onVegFilterTap: widget.fromIsRestaurantFood ? null : (String type) {
               if(widget.isPopular) {
                 productController.getPopularProductList(true, type, true);
-              } else {
+              }else {
                 reviewController.getReviewedProductList(true, type, true);
               }
             },
           ),
           endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
           body: Scrollbar(controller: scrollController, child: SingleChildScrollView(controller: scrollController, child: FooterViewWidget(
-            child: Center(child: SizedBox(
-              width: Dimensions.webMaxWidth,
-              child: GetBuilder<ProductController>(builder: (productController) {
-                return GetBuilder<RestaurantController>(
-                  builder: (restaurantController) {
-                    return ProductViewWidget(
-                      isRestaurant: false, restaurants: null,
-                      products: widget.isPopular ? productController.popularProductList : widget.fromIsRestaurantFood ? restaurantController.recommendedProductModel?.products : reviewController.reviewedProductList,
-                    );
-                  }
-                );
-              }),
-            )),
+            child: Column(
+              children: [
+                const WebScreenTitleWidget(title: 'Popular Food Items'),
+                const SizedBox(height: Dimensions.paddingSizeDefault,),
+                GetBuilder<ProductController>(builder: (productController) {
+                                return GetBuilder<RestaurantController>(
+                                  builder: (restaurantController) {
+
+                                    return HomeAllProductViewWidget(
+                                      isRestaurant: false, restaurants: null,
+                                      products: widget.isPopular ? productController.popularProductList : widget.fromIsRestaurantFood ? restaurantController.recommendedProductModel?.products : reviewController.reviewedProductList, categoryBanner: '',
+                                    );
+                                  }
+                                );
+                }),
+              ],
+            ),
           ))),
         );
       });

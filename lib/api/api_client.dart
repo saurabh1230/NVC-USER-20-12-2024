@@ -41,42 +41,20 @@ class ApiClient extends GetxService {
 
   Map<String, String> updateHeader(String? token, List<int>? zoneIDs, String? languageCode, String? latitude, String? longitude, {bool setHeader = true}) {
     Map<String, String> header = {};
-    print('check header');
     header.addAll({
       'Content-Type': 'application/json; charset=UTF-8',
       AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '[11]',
       AppConstants.localizationKey: languageCode ?? AppConstants.languages[0].languageCode!,
       AppConstants.latitude: latitude ?? '28.6362154',
       AppConstants.longitude: longitude ?? '77.0463607',
-      // AppConstants.latitude: '28.540589150386083',
-      // AppConstants.longitude: '77.26459417995973',
-      // AppConstants.latitude: latitude ?? '',
-      // AppConstants.longitude: longitude ?? '',
+      // AppConstants.latitude: latitude != null ? jsonEncode(latitude) : '28.6362154',
+      // AppConstants.longitude: longitude != null ? jsonEncode(longitude) : '77.0463607',
       'Authorization': 'Bearer $token'
     });
     if(setHeader) {
       _mainHeaders = header;
-
     }
-    print('check latitude');
     return header;
-  }
-
-  Future<Response> postUrlData(String uri, dynamic body, {Map<String, String>? headers, bool handleError = true}) async {
-    try {
-      if(kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body');
-      }
-      http.Response response = await http.post(
-        Uri.parse('https://lab2.invoidea.in/nvc/api/v1/'+uri),
-        body: jsonEncode(body),
-        headers: headers ?? _mainHeaders,
-      ).timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri, handleError);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
   }
 
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers, bool handleError = true}) async {
@@ -105,6 +83,23 @@ class ApiClient extends GetxService {
       }
       http.Response response = await http.post(
         Uri.parse(appBaseUrl+uri),
+        body: jsonEncode(body),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(response, uri, handleError);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> postUrlData(String uri, dynamic body, {Map<String, String>? headers, bool handleError = true}) async {
+    try {
+      if(kDebugMode) {
+        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+        debugPrint('====> API Body: $body');
+      }
+      http.Response response = await http.post(
+        Uri.parse('https://lab2.invoidea.in/nvc/api/v1/'+uri),
         body: jsonEncode(body),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
@@ -209,11 +204,14 @@ class ApiClient extends GetxService {
     }
     if(kDebugMode) {
       debugPrint('====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
+      debugPrint('====> API Headers: [${response.headers}]');
+      debugPrint('====> API body: [${response.body}]');
     }
     if(handleError) {
       if(response0.statusCode == 200) {
         return response0;
       } else {
+        print('response0');
         ApiChecker.checkApi(response0);
         return const Response();
       }

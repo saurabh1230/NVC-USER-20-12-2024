@@ -46,7 +46,7 @@ class CuisineCardWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
-                boxShadow: [BoxShadow(color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]!, spreadRadius: 0.5, blurRadius: 0.5)],
+                boxShadow: [BoxShadow(color: Colors.grey[300]!, spreadRadius: 0.5, blurRadius: 0.5)],
                 borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(Dimensions.radiusDefault), bottomRight: Radius.circular(Dimensions.radiusDefault)),
               ),
               child: Text( name, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),

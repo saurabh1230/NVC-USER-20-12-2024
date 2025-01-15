@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:get/get.dart';
 
+import '../../../category/screens/category_product_screen.dart';
+
 class CategoryWidget1 extends StatelessWidget {
   const CategoryWidget1({super.key});
 
@@ -40,9 +42,19 @@ class CategoryWidget1 extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 1),
                         child: InkWell(
-                          onTap: () => Get.toNamed(RouteHelper.getCategoryProductRoute(
-                            categoryController.categoryList![index].id, categoryController.categoryList![index].name!,
-                          )),
+                          onTap: () =>
+                              Get.toNamed(
+                                RouteHelper.getCategoryProductRoute(categoryController.categoryList![index].id!,
+                                    categoryController.categoryList![index].name!,),
+                                arguments: CategoryProductScreen(
+                                  categoryID: categoryController.categoryList![index].id.toString(),
+                                  categoryName:  categoryController.categoryList![index].name!,
+                                ),
+                              ),
+                          //     Get.toNamed(RouteHelper.getCategoryProductRoute(
+                          //   categoryController.categoryList![index].id,
+                          //       categoryController.categoryList![index].name!,
+                          // )),
                           child: SizedBox(
                             width: 75,
                             child: Container(

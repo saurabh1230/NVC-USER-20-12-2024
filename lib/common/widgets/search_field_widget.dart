@@ -10,7 +10,8 @@ class SearchFieldWidget extends StatefulWidget {
   final Function iconPressed;
   final Function? onSubmit;
   final Function? onChanged;
-  const SearchFieldWidget({super.key, required this.controller, required this.hint, required this.suffixIcon, required this.iconPressed, this.onSubmit, this.onChanged});
+  final FocusNode ? focus;
+  const SearchFieldWidget({super.key, required this.controller, required this.hint, required this.suffixIcon, required this.iconPressed, this.onSubmit, this.onChanged, this.focus});
 
   @override
   State<SearchFieldWidget> createState() => _SearchFieldWidgetState();
@@ -20,6 +21,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: widget.focus,
       controller: widget.controller,
       textInputAction: TextInputAction.search,
       decoration: InputDecoration(

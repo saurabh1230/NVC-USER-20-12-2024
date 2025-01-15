@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:stackfood_multivendor/features/language/domain/models/language_model.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:get/get.dart';
@@ -8,9 +7,9 @@ class AppConstants {
   static const double appVersion = 1;
   static const String fontFamily = 'Roboto';
   static const bool payInWevView = false;
-  static const String webHostedUrl = 'https://stackfood-web.6amtech.com';
-  static const String baseUrl = 'https://lab2.invoidea.in/nvc/public';
-  // static const String baseUrl = 'https://stackfood-admin.6amtech.com';
+  static const String webHostedUrl = 'https://nvcuser.invoidea.in';
+  // static const String baseUrl = 'https://lab2.invoidea.in/nvc/public';
+    static const String baseUrl = 'https://invoidea.work/nvc/public';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String restaurantProductUri = '/api/v1/products/latest';
@@ -19,6 +18,7 @@ class AppConstants {
   static const String searchProductUri = '/api/v1/products/details/';
   static const String subCategoryUri = '/api/v1/categories/childes/';
   static const String categoryProductUri = '/api/v1/categories/products/';
+  static const String cookedCategoryProductUri = '/api/v1/categories/products/';
   static const String categoryRestaurantUri = '/api/v1/categories/restaurants/';
   static const String configUri = '/api/v1/config';
   static const String trackUri = '/api/v1/customer/order/track?order_id=';
@@ -119,7 +119,7 @@ class AppConstants {
   static const String offlinePaymentSaveInfoUri = '/api/v1/customer/order/offline-payment';
   static const String offlinePaymentUpdateInfoUri = '/api/v1/customer/order/offline-payment-update';
   static const String allProductsUri = '/api/v1/products/all';
-  static const String borzoFeeAmount = 'customer/borzo-order-calculation';
+
 
   /// Cart
   static const String getCartListUri = '/api/v1/customer/cart/list';
@@ -157,7 +157,7 @@ class AppConstants {
   static const String guestId = 'stackfood_guest_id';
   static const String guestNumber = 'stackfood_guest_number';
 
-
+  static const String borzoFeeAmount = 'customer/borzo-order-calculation';
 
   ///Refer & Earn work flow list..
   static final dataList = [
@@ -169,17 +169,9 @@ class AppConstants {
   /// Delivery Tips
   static List<String> tips = ['0' ,'15', '10', '20', '40', 'custom'];
   static List<String> deliveryInstructionList = [
-    'Avoid Ringing Bell',
-    'Leave At The Door',
-    'Avoid Call',
-    'Leave To Security Guard',
-  ];
-
-  static List<IconData> deliveryInstructionIcons = [
-    Icons.notifications_off,
-    Icons.door_front_door,
-    Icons.call_end,
-    Icons.security,
+    'Deliver to front door',
+    'Deliver to the reception desk',
+    'Avoid calling me',
   ];
 
 
@@ -202,8 +194,8 @@ class AppConstants {
   static List<String?> preferenceDays = ['today', 'tomorrow'];
 
   /// Deep Links
-  static const String yourScheme = 'StackFood';
-  static const String yourHost = 'stackfood.com';
+  static const String yourScheme = 'Non Veg City';
+  static const String yourHost = 'Non Veg City';
 
   /// Languages
   static List<LanguageModel> languages = [

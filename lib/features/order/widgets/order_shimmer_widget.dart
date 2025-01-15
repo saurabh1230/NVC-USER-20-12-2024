@@ -15,10 +15,10 @@ class OrderShimmerWidget extends StatelessWidget {
         width: Dimensions.webMaxWidth,
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing:  Dimensions.paddingSizeLarge,
-            mainAxisSpacing: 0.01,
-            childAspectRatio:  2,
-            crossAxisCount: 1
+            crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeOverLarge : Dimensions.paddingSizeLarge,
+            mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeOverLarge : 0.01,
+            childAspectRatio: ResponsiveHelper.isDesktop(context) ? 5 : 4,
+            crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : 2,
           ),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,

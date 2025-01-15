@@ -70,7 +70,7 @@ class SearchService implements SearchServiceInterface {
     return searchProductList;
   }
 
-    @override
+  @override
   List<Restaurant>? sortRestaurantSearchList(List<Restaurant>? allRestaurantList, int rating, bool veg, bool nonVeg, bool isAvailableRestaurants, bool isDiscountedRestaurants, int sortIndex) {
     List<Restaurant>? searchRestaurantList = [];
     searchRestaurantList.addAll(allRestaurantList!);

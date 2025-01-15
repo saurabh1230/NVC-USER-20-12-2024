@@ -23,14 +23,15 @@ class SignUpScreenState extends State<SignUpScreen> {
         child: Center(
           child: Container(
             width: context.width > 700 ? 700 : context.width,
-            padding: context.width > 700 ? const EdgeInsets.all(40) : const EdgeInsets.all(Dimensions.paddingSizeLarge),
+            padding: context.width > 700 ? const EdgeInsets.all(40) : const EdgeInsets.all(0),
             decoration: context.width > 700 ? BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
             ) : null,
             child: SingleChildScrollView(
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
+                Image.asset(Images.logo, width: 180),
+                // const SizedBox(height: Dimensions.paddingSizeExtraLarge),
                 ResponsiveHelper.isDesktop(context) ? Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
@@ -38,18 +39,12 @@ class SignUpScreenState extends State<SignUpScreen> {
                     icon: const Icon(Icons.clear),
                   ),
                 ) : const SizedBox(),
-
-                Image.asset(Images.logo, width: 140),
-                // const SizedBox(height: Dimensions.paddingSizeSmall),
-                // Image.asset(Images.logoName, width: 100),
                 const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-
-                Align(
-                  // alignment: Alignment.topLeft,
-                  child: Text('sign_up'.tr, style: robotoBold.copyWith(fontSize: 20)),
-                ),
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: Text('sign_up'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                // ),
                 const SizedBox(height: Dimensions.paddingSizeDefault),
-
                 const SignUpWidget(),
 
               ]),

@@ -26,14 +26,14 @@ class _InterestScreenState extends State<InterestScreen> {
   void initState() {
     super.initState();
 
-    Get.find<InterestController>().getCategoryList(true);
+    Get.find<InterestController>().getCategoryList(true,);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+      appBar: ResponsiveHelper.isDesktop(context) ?  WebMenuBar() : null,
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       body: SafeArea(
         child: GetBuilder<InterestController>(builder: (interestController) {

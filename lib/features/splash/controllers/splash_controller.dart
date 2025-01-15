@@ -40,11 +40,9 @@ class SplashController extends GetxController implements GetxService {
   DateTime get currentTime => DateTime.now();
 
   Future<bool> getConfigData() async {
-    print('print config data');
     _hasConnection = true;
     _savedCookiesData = getCookiesData();
     Response response = await splashServiceInterface.getConfigData();
-    print('print config data response ======>  ${response}');
     bool isSuccess = false;
     _configModel = splashServiceInterface.prepareConfigData(response);
     isSuccess = _configModel != null;

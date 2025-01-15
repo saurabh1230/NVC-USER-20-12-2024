@@ -2,7 +2,6 @@ import 'package:stackfood_multivendor/common/widgets/hover_widgets/on_hover_widg
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/auth/widgets/auth_dialog_widget.dart';
 import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
@@ -12,6 +11,8 @@ import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/confirmation_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../features/auth/widgets/sign_in_widget.dart';
 
 class MenuDrawerWidget extends StatefulWidget {
   const MenuDrawerWidget({super.key});
@@ -31,18 +32,10 @@ class MenuDrawerWidgetState extends State<MenuDrawerWidget> with SingleTickerPro
     Menu(icon: Images.location, title: 'my_address'.tr, onTap: () {
       Get.offNamed(RouteHelper.getAddressRoute());
     }),
-    Menu(icon: Images.language, title: 'language'.tr, onTap: () {
-      Get.offNamed(RouteHelper.getLanguageRoute('menu'));
-    }),
-    Menu(icon: Images.coupon, title: 'coupon'.tr, onTap: () {
-      Get.offNamed(RouteHelper.getCouponRoute(fromCheckout: false));
-    }),
     Menu(icon: Images.support, title: 'help_support'.tr, onTap: () {
       Get.offNamed(RouteHelper.getSupportRoute());
     }),
-    Menu(icon: Images.chat, title: 'live_chat'.tr, onTap: () {
-      Get.offNamed(RouteHelper.getConversationRoute());
-    }),
+
   ];
 
   static const _initialDelayTime = Duration(milliseconds: 200);
@@ -120,7 +113,7 @@ class MenuDrawerWidgetState extends State<MenuDrawerWidget> with SingleTickerPro
       }else {
         Get.find<FavouriteController>().removeFavourites();
         if(ResponsiveHelper.isDesktop(context)){
-          Get.dialog(const AuthDialogWidget(exitFromApp: false, backFromThis: false));
+          Get.dialog( Center(child: SignInWidget(exitFromApp: false,backFromThis: true,),));
         }else{
           Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
         }
@@ -177,7 +170,7 @@ class MenuDrawerWidgetState extends State<MenuDrawerWidget> with SingleTickerPro
             alignment: Alignment.centerLeft,
             child: Row( mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text('menu'.tr, style: robotoBold.copyWith(fontSize: 20 )),
-                IconButton( padding: const EdgeInsets.all(0), onPressed: () => Get.back(), icon: const Icon(Icons.close))
+                // IconButton( padding: const EdgeInsets.all(0), onPressed: () {Get.back();}, icon: const Icon(Icons.close))
               ],
             ),
           ),

@@ -1,5 +1,4 @@
 import 'package:stackfood_multivendor/common/widgets/product_widget.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
@@ -18,7 +17,7 @@ class CartSuggestedItemViewWidget extends StatelessWidget {
     bool isDesktop = ResponsiveHelper.isDesktop(context);
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor.withOpacity(Get.find<ThemeController>().darkTheme ? 0 : 1),
+        color: Theme.of(context).cardColor.withOpacity(1),
         borderRadius: BorderRadius.circular(isDesktop ? Dimensions.radiusDefault : 0),
         boxShadow: isDesktop ? const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)] : [],
       ),
@@ -49,7 +48,7 @@ class CartSuggestedItemViewWidget extends StatelessWidget {
               ),
 
               SizedBox(
-                height: 300,
+                height: isDesktop ? 300 : 300,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: suggestedItems.length,
@@ -63,6 +62,7 @@ class CartSuggestedItemViewWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeExtraSmall),
                         margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
                         child: ProductWidget(
+
                           isRestaurant: false,
                           product: suggestedItems![index],
                           fromCartSuggestion: true,

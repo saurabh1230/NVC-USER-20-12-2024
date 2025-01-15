@@ -28,7 +28,7 @@ class CongratulationDialogue extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
               ),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Image.asset(Get.find<ThemeController>().darkTheme ? Images.giftBox1 : Images.giftBox, width: 100, height: 100),
+                Image.asset(Images.giftBox, width: 100, height: 100),
 
                 Text('congratulations'.tr , style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
                 const SizedBox(height: Dimensions.paddingSizeSmall),

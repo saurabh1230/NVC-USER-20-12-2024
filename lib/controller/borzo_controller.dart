@@ -1,9 +1,11 @@
 
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/api/repo/borzo_repo.dart';
+
 
 import '../api/api_checker.dart';
-import '../common/models/borzo_delivery_fee_model.dart';
+import '../api/borzo_repo.dart';
+
+import '../common/models/borzo_fee_model.dart';
 import '../common/widgets/custom_snackbar_widget.dart';
 
 class BorzoController extends GetxController implements GetxService {
@@ -14,6 +16,13 @@ class BorzoController extends GetxController implements GetxService {
   bool get isLoading => _isLoading;
   BorzoDeliveryFee? _borzoDeliveryFee;
   BorzoDeliveryFee? get borzoDeliveryFee => _borzoDeliveryFee;
+
+    String? _deliveryApproxStartTime;
+  String? get deliveryApproxStartTime => _deliveryApproxStartTime;
+
+  String? _deliveryApproxEndTime;
+  String? get deliveryApproxEndTime => _deliveryApproxEndTime;
+  
 
 
   Future<void> getBorzoDeliveryFees(
@@ -37,14 +46,17 @@ class BorzoController extends GetxController implements GetxService {
       restaurantId,
     );
 
+    print('Borzo headers ${response.headers}');
+        print('Borzo body ${response.body}');
+
     if (response.statusCode == 200) {
-      // Parse the response and extract the payment_amount and delivery_fee_amount
       _borzoDeliveryFee = BorzoDeliveryFee.fromJson(response.body['data']['order']);
+    // _deliveryApproxStartTime = response.body['data']['order']['points'][0]['required_start_datetime'];
+    // _deliveryApproxEndTime = response.body['data']['order']['points'].last['required_finish_datetime'];
       print('Delivery Amount ${borzoDeliveryFee!.deliveryFeeAmount}');
     } else {
       ApiChecker.checkApi(response);
     }
-
     _isLoading = false;
     update();
   }

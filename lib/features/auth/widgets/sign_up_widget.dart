@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
+import 'package:stackfood_multivendor/features/auth/widgets/sign_in_widget.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
@@ -42,213 +44,176 @@ class SignUpWidgetState extends State<SignUpWidget> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _referCodeController = TextEditingController();
-  String? _countryDialCode = "91";
+  String? _countryDialCode;
 
   @override
   void initState() {
     super.initState();
-
     _countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel!.country!).dialCode;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.width > 700 ? 700 : context.width,
-      decoration: context.width > 700 ? BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-      ) : null,
-      child: GetBuilder<AuthController>(builder: (authController) {
-        return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const SizedBox(height: Dimensions.paddingSizeSmall),
-          Row(children: [
-            Expanded(
-              child: CustomTextFieldWidget(
-                titleText: 'first_name'.tr,
-                hintText: 'ex_jhon'.tr,
-                controller: _firstNameController,
-                focusNode: _firstNameFocus,
-                nextFocus: _lastNameFocus,
-                inputType: TextInputType.name,
-                capitalization: TextCapitalization.words,
-                prefixIcon: Icons.person,
-                showTitle: ResponsiveHelper.isDesktop(context),
+    return GetBuilder<AuthController>(builder: (authController) {
+      return Container(width: 550,
+        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeOverLarge),
+        margin:  const EdgeInsets.all(Dimensions.paddingSizeDefault),
+        decoration: context.width > 700 ? BoxDecoration(
+          color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+          boxShadow: null,
+        ) : null,
+        child: Container(
+          color: Colors.white,
+          child: Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center, children: [
+
+            Align(alignment: Alignment.topRight,
+              child: IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(Icons.clear),
               ),
             ),
-            const SizedBox(width: Dimensions.paddingSizeSmall),
 
-            Expanded(
-              child: CustomTextFieldWidget(
-                titleText: 'last_name'.tr,
-                hintText: 'ex_doe'.tr,
-                controller: _lastNameController,
-                focusNode: _lastNameFocus,
-                nextFocus: ResponsiveHelper.isDesktop(context) ? _emailFocus : _phoneFocus,
-                inputType: TextInputType.name,
-                capitalization: TextCapitalization.words,
-                prefixIcon: Icons.person,
-                showTitle: ResponsiveHelper.isDesktop(context),
-              ),
-            )
-          ]),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-
-          Row(children: [
-            ResponsiveHelper.isDesktop(context) ? Expanded(
-              child: CustomTextFieldWidget(
-                titleText: 'email'.tr,
-                hintText: 'enter_email'.tr,
-                controller: _emailController,
-                focusNode: _emailFocus,
-                nextFocus: ResponsiveHelper.isDesktop(context) ? _phoneFocus : _passwordFocus,
-                inputType: TextInputType.emailAddress,
-                prefixIcon: Icons.mail_outline_rounded,
-                showTitle: ResponsiveHelper.isDesktop(context),
-              ),
-            ) : const SizedBox(),
+            Align(alignment: Alignment.centerLeft,
+                child: Text("Sign Up", style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeOverLarge,color: Theme.of(context).primaryColor))),
             const SizedBox(height: Dimensions.paddingSizeDefault),
-
-            Expanded(
-              child: CustomTextFieldWidget(
-                titleText:  'enter_phone_number'.tr,
-                controller: _phoneController,
-                focusNode: _phoneFocus,
-                nextFocus: ResponsiveHelper.isDesktop(context) ? _passwordFocus : _emailFocus,
-                inputType: TextInputType.phone,
-                isPhone: false,
-                prefixIcon: Icons.phone,
-
-                showTitle: ResponsiveHelper.isDesktop(context),
-                onCountryChanged: (CountryCode countryCode) {
-                  _countryDialCode = countryCode.dialCode;
-                },
-                countryDialCode: _countryDialCode != null ? CountryCode.fromCountryCode(Get.find<SplashController>().configModel!.country!).code
-                    : Get.find<LocalizationController>().locale.countryCode,
-              ),
-            ),
-
-          ]),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-
-          !ResponsiveHelper.isDesktop(context) ? CustomTextFieldWidget(
-            titleText: 'email'.tr,
-            hintText: 'enter_email'.tr,
-            controller: _emailController,
-            focusNode: _emailFocus,
-            nextFocus: _passwordFocus,
-            inputType: TextInputType.emailAddress,
-            prefixIcon: Icons.mail_outline_rounded,
-            divider: false,
-          ) : const SizedBox(),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: Column(children: [
-                CustomTextFieldWidget(
-                  titleText: 'password'.tr,
-                  hintText: 'password'.tr,
-                  controller: _passwordController,
-                  focusNode: _passwordFocus,
-                  nextFocus: _confirmPasswordFocus,
-                  inputType: TextInputType.visiblePassword,
-                  prefixIcon: Icons.lock,
-                  isPassword: true,
-                  showTitle: ResponsiveHelper.isDesktop(context),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: 'first_name'.tr,
+                    hintText: 'ex_jhon'.tr,
+                    controller: _firstNameController,
+                    focusNode: _firstNameFocus,
+                    nextFocus: _lastNameFocus,
+                    inputType: TextInputType.name,
+                    capitalization: TextCapitalization.words,
+                    prefixIcon: Icons.person,
+                    // showTitle: ResponsiveHelper.isDesktop(context),
+                  ),
                 ),
-              ]),
+                const SizedBox(width: Dimensions.paddingSizeDefault,),
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: 'first_name'.tr,
+                    hintText: 'ex_jhon'.tr,
+                    controller: _lastNameController,
+                    focusNode: _lastNameFocus,
+                    nextFocus: _emailFocus,
+                    inputType: TextInputType.name,
+                    capitalization: TextCapitalization.words,
+                    prefixIcon: Icons.person,
+                    // showTitle: ResponsiveHelper.isDesktop(context),
+                  ),
+                ),
+
+              ],
             ),
+            const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: 'email'.tr,
+                    hintText: 'enter_email'.tr,
+                    controller: _emailController,
+                    focusNode: _emailFocus,
+                    nextFocus: ResponsiveHelper.isDesktop(context) ? _phoneFocus : _passwordFocus,
+                    inputType: TextInputType.emailAddress,
+                    prefixIcon: Icons.mail_outline_rounded,
+                    // showTitle: ResponsiveHelper.isDesktop(context),
+                  ),
+                ),
+                const SizedBox(width: Dimensions.paddingSizeDefault,),
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: ResponsiveHelper.isDesktop(context) ? 'phone'.tr : 'enter_phone_number'.tr,
+                    controller: _phoneController,
+                    focusNode: _phoneFocus,
+                    nextFocus: ResponsiveHelper.isDesktop(context) ? _passwordFocus : _emailFocus,
+                    inputType: TextInputType.phone,
+                    isPhone: false,
+                    prefixIcon: Icons.phone,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: 'password'.tr,
+                    hintText: 'password'.tr,
+                    controller: _passwordController,
+                    focusNode: _passwordFocus,
+                    nextFocus: _confirmPasswordFocus,
+                    inputType: TextInputType.visiblePassword,
+                    prefixIcon: Icons.lock,
+                    isPassword: true,
+                    // showTitle: ResponsiveHelper.isDesktop(context),
+                  ),
+                ),
+                const SizedBox(width: Dimensions.paddingSizeDefault,),
+                Expanded(
+                  child: CustomTextFieldWidget(
+                    titleText: 'confirm_password'.tr,
+                    hintText: 'confirm_password'.tr,
+                    controller: _confirmPasswordController,
+                    focusNode: _confirmPasswordFocus,
+                    nextFocus: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? _referCodeFocus : null,
+                    inputAction: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? TextInputAction.next : TextInputAction.done,
+                    inputType: TextInputType.visiblePassword,
+                    prefixIcon: Icons.lock,
+                    isPassword: true,
+                    onSubmit: (text) => (GetPlatform.isWeb) ? _register(authController, _countryDialCode!) : null,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: Dimensions.paddingSizeExtraLarge),
             const SizedBox(height: Dimensions.paddingSizeDefault),
-
-            ResponsiveHelper.isDesktop(context) ? Expanded(child: CustomTextFieldWidget(
-              titleText: 'confirm_password'.tr,
-              hintText: 'confirm_password'.tr,
-              controller: _confirmPasswordController,
-              focusNode: _confirmPasswordFocus,
-              nextFocus: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? _referCodeFocus : null,
-              inputAction: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? TextInputAction.next : TextInputAction.done,
-              inputType: TextInputType.visiblePassword,
-              prefixIcon: Icons.lock,
-              isPassword: true,
-              showTitle: ResponsiveHelper.isDesktop(context),
-              onSubmit: (text) => (GetPlatform.isWeb) ? _register(authController, _countryDialCode!) : null,
-            )) : const SizedBox()
-
-          ]),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-
-          !ResponsiveHelper.isDesktop(context) ? CustomTextFieldWidget(
-            titleText: 'confirm_password'.tr,
-            hintText: 'confirm_password'.tr,
-            controller: _confirmPasswordController,
-            focusNode: _confirmPasswordFocus,
-            nextFocus: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? _referCodeFocus : null,
-            inputAction: Get.find<SplashController>().configModel!.refEarningStatus == 1 ? TextInputAction.next : TextInputAction.done,
-            inputType: TextInputType.visiblePassword,
-            prefixIcon: Icons.lock,
-            isPassword: true,
-            onSubmit: (text) => (GetPlatform.isWeb) ? _register(authController, _countryDialCode!) : null,
-          ) : const SizedBox(),
-          SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0),
-
-          (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? CustomTextFieldWidget(
-            hintText: 'refer_code'.tr,
-            titleText: 'refer_code'.tr,
-            controller: _referCodeController,
-            focusNode: _referCodeFocus,
-            inputAction: TextInputAction.done,
-            inputType: TextInputType.text,
-            capitalization: TextCapitalization.words,
-            prefixImage : Images.referCode,
-            divider: false,
-            prefixSize: 14,
-            showTitle: ResponsiveHelper.isDesktop(context),
-          ) : const SizedBox(),
-          // const SizedBox(height: Dimensions.paddingSizeDefault),
-
-          TramsConditionsCheckBoxWidget(authController: authController, fromSignUp : true, fromDialog: ResponsiveHelper.isDesktop(context) ? true : false),
-          const SizedBox(height: Dimensions.paddingSizeDefault),
-          // SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
-
-          CustomButtonWidget(
-            height: ResponsiveHelper.isDesktop(context) ? 45 : null,
-            width:  ResponsiveHelper.isDesktop(context) ? 180 : null,
-            radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
-            isBold: !ResponsiveHelper.isDesktop(context),
-            fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeExtraSmall : null,
-            buttonText: 'sign_up'.tr,
-            isLoading: authController.isLoading,
-            onPressed: authController.acceptTerms ? () => _register(authController, _countryDialCode!) : null,
-          ),
-          SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
-
-          !ResponsiveHelper.isDesktop(context) ?  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('already_have_account'.tr, style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
-
-            InkWell(
-              onTap: authController.isLoading ? null : () {
-                if(ResponsiveHelper.isDesktop(context)){
-                  Get.back();
-                  Get.dialog(const SignInScreen(exitFromApp: false, backFromThis: false));
-                }else{
-                  if(Get.currentRoute == RouteHelper.signUp) {
-                  Get.back();
-                  } else {
-                    Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.signUp));
-                  }
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                child: Text('sign_in'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
-              ),
+            Center(child: TramsConditionsCheckBoxWidget(authController: authController, fromSignUp : true, fromDialog: ResponsiveHelper.isDesktop(context) ? true : false)),
+            SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
+            CustomButtonWidget(
+              height: ResponsiveHelper.isDesktop(context) ? 50 : null,
+              width:  ResponsiveHelper.isDesktop(context) ? Get.size.width : null,
+              radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
+              isBold: ResponsiveHelper.isDesktop(context) ? false : true,
+              fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeExtraSmall : null,
+              buttonText: 'sign_up'.tr,
+              isLoading: authController.isLoading,
+              onPressed: authController.acceptTerms ? () => _register(authController, _countryDialCode!) : null,
             ),
-          ]) : const SizedBox(),
+            SizedBox(height: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeDefault),
 
-        ]);
-      }),
-    );
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text('already_have_account'.tr, style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
+              InkWell(
+                onTap: authController.isLoading ? null : () {
+                  if(ResponsiveHelper.isDesktop(context)){
+                    Get.back();
+                    Get.dialog( const Center(child: SignInWidget(exitFromApp: false, backFromThis: false)));
+                    // Get.dialog(const SignInScreen(exitFromApp: false, backFromThis: false));
+                  }else{
+                    if(Get.currentRoute == RouteHelper.signUp) {
+                    Get.back();
+                    } else {
+                      Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.signUp));
+                    }
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  child: Text('sign_in'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                ),
+              ),
+            ]) /*: const SizedBox()*/,
+             const SizedBox(height: Dimensions.paddingSizeDefault,)
+          ]),
+        ),
+      );
+    });
   }
 
   void _register(AuthController authController, String countryCode) async {
@@ -265,26 +230,21 @@ class SignUpWidgetState extends State<SignUpWidget> {
   }
 
   void _handleResponse(ResponseModel status, String countryCode) {
-    print('check this');
     String password = _passwordController.text.trim();
     String numberWithCountryCode = countryCode + _phoneController.text.trim();
 
     if (status.isSuccess) {
-      List<int> encoded = utf8.encode(password);
-      String data = base64Encode(encoded);
-      Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
-      // Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
-      // if(Get.find<SplashController>().configModel!.customerVerification!) {
-      //   List<int> encoded = utf8.encode(password);
-      //   String data = base64Encode(encoded);
-      //   Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
-      // }else {
-      //   // Get.find<ProfileController>().getUserInfo();
-      //   // Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
-      //   // if(ResponsiveHelper.isDesktop(context)) {
-      //   //   Get.back();
-      //   // }
-      // }
+      if(Get.find<SplashController>().configModel!.customerVerification!) {
+        List<int> encoded = utf8.encode(password);
+        String data = base64Encode(encoded);
+        Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
+      }else {
+        Get.find<ProfileController>().getUserInfo();
+        Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
+        if(ResponsiveHelper.isDesktop(context)) {
+          Get.back();
+        }
+      }
     }else {
       showCustomSnackBar(status.message);
     }

@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:stackfood_multivendor/common/widgets/image_viewer_screen_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/not_found_widget.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/screens/cart_screen.dart';
-import 'package:stackfood_multivendor/features/category/screens/product_view.dart';
-import 'package:stackfood_multivendor/features/category/screens/uncooked_products_screen.dart';
+import 'package:stackfood_multivendor/features/category/screens/cooked_uncooked_category_screen.dart';
+import 'package:stackfood_multivendor/features/category/screens/uncooked_product_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/pricing_view_model.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/checkout_screen.dart';
@@ -13,9 +12,7 @@ import 'package:stackfood_multivendor/features/checkout/screens/offline_payment_
 import 'package:stackfood_multivendor/features/checkout/screens/order_successful_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/payment_screen.dart';
 import 'package:stackfood_multivendor/features/checkout/screens/payment_webview_screen.dart';
-import 'package:stackfood_multivendor/features/home/screens/cooked/cooked_particle_product_view.dart';
 import 'package:stackfood_multivendor/features/home/screens/map_view_screen.dart';
-import 'package:stackfood_multivendor/features/home/screens/uncooked/uncooked_particle_product_view.dart';
 import 'package:stackfood_multivendor/features/html/enums/html_type.dart';
 import 'package:stackfood_multivendor/features/html/screens/html_viewer_screen.dart';
 import 'package:stackfood_multivendor/features/language/screens/language_screen.dart';
@@ -33,9 +30,10 @@ import 'package:stackfood_multivendor/features/order/screens/refund_request_scre
 import 'package:stackfood_multivendor/features/profile/screens/profile_screen.dart';
 import 'package:stackfood_multivendor/features/profile/screens/update_profile_screen.dart';
 import 'package:stackfood_multivendor/features/refer%20and%20earn/screens/refer_and_earn_screen.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/RestaurantProductScreenWeb.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/all_restaurant_screen.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/campaign_screen.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_product_route.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/product_view.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_product_search_screen.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
 import 'package:stackfood_multivendor/features/review/screens/review_screen.dart';
@@ -69,43 +67,40 @@ import 'package:stackfood_multivendor/features/loyalty/screens/loyalty_screen.da
 import 'package:stackfood_multivendor/features/product/screens/item_campaign_screen.dart';
 import 'package:stackfood_multivendor/features/product/screens/popular_food_screen.dart';
 import 'package:stackfood_multivendor/features/splash/domain/models/deep_link_body.dart';
-import 'package:stackfood_multivendor/features/splash/screens/splash_screen.dart';
 import 'package:stackfood_multivendor/features/support/screens/support_screen.dart';
 import 'package:stackfood_multivendor/features/update/screens/update_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/forget_pass_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/new_pass_screen.dart';
-import 'package:stackfood_multivendor/features/verification/screens/otp_verification.dart';
 import 'package:stackfood_multivendor/features/verification/screens/verification_screen.dart';
 import 'package:stackfood_multivendor/features/wallet/screens/wallet_screen.dart';
 import 'package:stackfood_multivendor/helper/address_helper.dart';
 import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meta_seo/meta_seo.dart';
-
-import '../features/category/screens/cooked_product_list.dart';
-import '../features/restaurant/screens/restaurant_view_all_category_products.dart';
-
+import '../features/home/screens/pet_food_bakery_screen.dart';
+import '../features/restaurant/screens/restaurant_screen_web.dart';
+import 'dart:html' as html;
 class RouteHelper {
   static const String initial = '/';
-  // static const String main = 'main';
   static const String splash = '/splash';
   static const String language = '/language';
   static const String onBoarding = '/on-boarding';
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
   static const String verification = '/verification';
-  static const String otpVerification = '/otp-verification';
   static const String accessLocation = '/access-location';
   static const String pickMap = '/pick-map';
   static const String interest = '/interest';
-  static const String main = '/main';
+  static const String main = '/Home';
+
   static const String forgotPassword = '/forgot-password';
   static const String resetPassword = '/reset-password';
   static const String search = '/search';
-  static const String restaurant = '/restaurant';
-  static const String restaurantProducts = '/restaurant-products';
+  // static const String restaurant = '/restaurant/:slug';
+  // static const String restaurant = '/restaurant/:slug/:id'; // Define slug and ID as part of the path
+  static const String restaurant = '/restaurant/:slug/:id';
+
+  static const String restaurantWeb = '/restaurant-view';
   static const String orderDetails = '/order-details';
   static const String profile = '/profile';
   static const String updateProfile = '/update-profile';
@@ -120,7 +115,14 @@ class RouteHelper {
   static const String basicCampaign = '/basic-campaign';
   static const String html = '/html';
   static const String categories = '/categories';
-  static const String categoryProduct = '/category-product';
+  // static const String categoryProduct = '/category-product';
+  // static const String categoryProduct = '/category/:category-name/:category-id';
+
+  static const String categoryProduct = '/category/:categoryName/:categoryId';
+  static const String petFoodCategory = '/pet-food-category';
+
+  static const String cookedUncookedProduct = '/cooked-product';
+  static const String uncookedProduct = '/uncooked-product';
   static const String popularFoods = '/popular-foods';
   static const String itemCampaign = '/item-campaign';
   static const String support = '/help-and-support';
@@ -149,16 +151,16 @@ class RouteHelper {
   static const String subscriptionSuccess = '/subscription-success';
   static const String offlinePaymentScreen = '/offline-payment-screen';
   static const String guestTrackOrderScreen = '/guest-track-order-screen';
-  static const String cookedProductList = '/cooked-product-list';
+  static const String productView = '/product-view';
+  // static const String restaurantProducts = '/restaurant-products';
+  static const String restaurantProducts = '/restaurant-products';
+  static const String filterRestaurant = '/filter-restaurant';
 
-
-  static const String mainProductView = '/main-product-view';
-  static const String uncookedProductView = '/uncooked-product-view';
-  static const String cookedCategoryProduct = '/cooked-category-product';
-  static const String uncookedCategoryProduct = '/uncooked-category-product';
-  static const String restaurantAllCategoryProducts = '/restaurant-category-products';
-
-  static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
+  static String getInitialRoute() {
+    // Return the base route without any query parameters
+    return initial;
+  }
+  // static String getInitialRoute({bool fromSplash = false}) => '$initial?from-splash=$fromSplash';
   static String getSplashRoute(NotificationBodyModel? body, DeepLinkBody? linkBody) {
     String data = 'null';
     String linkData = 'null';
@@ -179,13 +181,14 @@ class RouteHelper {
   static String getVerificationRoute(String? number, String? token, String page, String pass) {
     return '$verification?page=$page&number=$number&token=$token&pass=$pass';
   }
-  static String getForgotVerificationRoute(String? number, String? token, String page, String pass) {
-    return '$otpVerification?page=$page&number=$number&token=$token&pass=$pass';
-  }
   static String getAccessLocationRoute(String page) => '$accessLocation?page=$page';
   static String getPickMapRoute(String? page, bool canRoute) => '$pickMap?page=$page&route=${canRoute.toString()}';
   static String getInterestRoute() => interest;
-  static String getMainRoute(String page) => '$main?page=$page';
+  // static String getMainRoute() {
+  //   return main; // No query parameters added
+  // }
+  static String getMainRoute(String page) => '$main';
+  // static String getMainRoute(String page) => '$main?page=$page';
   static String getForgotPassRoute(bool fromSocialLogin, SocialLogInBodyModel? socialLogInModel) {
     String? data;
     if(fromSocialLogin) {
@@ -195,40 +198,21 @@ class RouteHelper {
   }
   static String getResetPasswordRoute(String? phone, String token, String page) => '$resetPassword?phone=$phone&token=$token&page=$page';
   static String getSearchRoute() => search;
-  static String getRestaurantRoute(int? id) {
-    if(kIsWeb) {
-      // Define MetaSEO object
-      MetaSEO meta = MetaSEO();
-      // add meta seo data for web app as you want
-      meta.ogTitle(ogTitle: 'Store Screen');
-      meta.description(description: 'This is Store screen. Here have all information of store');
-      meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
-    }
-    return '$restaurant?id=$id';
+  // Function to generate the route
+  static String getRestaurantRoute(String slug, int id) {
+    return '/restaurant/$slug/$id'; // Construct URL with slug and id
   }
-
-  static String getRestaurantProductsRoute(int? id) {
-    if(kIsWeb) {
-      // Define MetaSEO object
-      MetaSEO meta = MetaSEO();
-      // add meta seo data for web app as you want
-      meta.ogTitle(ogTitle: 'Store Screen');
-      meta.description(description: 'This is Store screen. Here have all information of store');
-      meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
-    }
-    return '$restaurantProducts?id=$id';
-  }
-
-  static String getAllRestaurantCategoryProductsRoute(int? id) {
-    if(kIsWeb) {
-      // Define MetaSEO object
-      MetaSEO meta = MetaSEO();
-      // add meta seo data for web app as you want
-      meta.ogTitle(ogTitle: 'Store Screen');
-      meta.description(description: 'This is Store screen. Here have all information of store');
-      meta.keywords(keywords: 'Flutter, Dart, SEO, Meta, Web');
-    }
-    return '$restaurantAllCategoryProducts?id=$id';
+  // static String getRestaurantRoute(String slug, int id) {
+  //   return '/restaurant/$slug/restaurant-id=$id';
+  // }
+  // static String getRestaurantRoute(String slug) {
+  //   return restaurant.replaceFirst(':slug', slug); // Replace the slug placeholder with the actual restaurant name
+  // }
+  // static String getRestaurantRoute(int? id) {
+  //   return '$restaurant?id=$id';
+  // }
+  static String getRestaurantWebRoute(int? id) {
+    return '$restaurantWeb?id=$id';
   }
   static String getOrderDetailsRoute(int? orderID, {bool? fromOffline, String? contactNumber, bool fromGuestTrack = false}) {
     return '$orderDetails?id=$orderID&from_offline=$fromOffline&contact=$contactNumber&from_guest_track=$fromGuestTrack';
@@ -257,10 +241,30 @@ class RouteHelper {
   }
   static String getHtmlRoute(String page) => '$html?page=$page';
   static String getCategoryRoute() => categories;
-  static String getCategoryProductRoute(int? id, String name) {
+  // static String getCategoryProductRoute(int? id, String name,String categoryTitle,) {
+  //   List<int> encoded = utf8.encode(name);
+  //   String data = base64Encode(encoded);
+  //   return '$categoryProduct?id=$id&name=$data&categoryTitle=$categoryTitle';
+  // }
+  static String getCategoryProductRoute(int id, String name) {
+    // Encode the category name for safe URL usage
+    String encodedName = Uri.encodeComponent(name);
+    return '/category/$encodedName/$id';
+  }
+  static String getPetFoodProductRoute(int? id, String name) {
     List<int> encoded = utf8.encode(name);
     String data = base64Encode(encoded);
-    return '$categoryProduct?id=$id&name=$data';
+    return '$petFoodCategory?id=$id&name=$data';
+  }
+  static String getCookedUnCookedCategoryProductRoute(int? id, String name) {
+    List<int> encoded = utf8.encode(name);
+    String data = base64Encode(encoded);
+    return '$cookedUncookedProduct?id=$id&name=$data';
+  }
+  static String getUnCookedCategoryProductRoute(int? id, String name) {
+    List<int> encoded = utf8.encode(name);
+    String data = base64Encode(encoded);
+    return '$uncookedProduct?id=$id&name=$data';
   }
   static String getPopularFoodRoute(bool isPopular, {bool fromIsRestaurantFood = false, int? restaurantId}) => '$popularFoods?page=${isPopular ? 'popular' : 'reviewed'}&fromIsRestaurantFood=$fromIsRestaurantFood&restaurant_id=$restaurantId';
   static String getItemCampaignRoute() => itemCampaign;
@@ -275,6 +279,16 @@ class RouteHelper {
       data = base64Url.encode(utf8.encode(jsonEncode(address.toJson())));
     }
     return '$editAddress?data=$data&from-guest=$fromGuest';
+  }
+
+  static String getProductViewRoute(Product? product, {bool isCampaign = false}) {
+    String data = 'null';
+    if(product != null) {
+      data = base64Url.encode(utf8.encode(jsonEncode(product.toJson())));
+      
+    }
+    
+    return '$productView?data=$data&isCampaign=$isCampaign';
   }
   static String getRestaurantReviewRoute(int? restaurantID) => '$restaurantReview?id=$restaurantID';
   static String getAllRestaurantRoute(String page) => '$allRestaurants?page=$page';
@@ -317,42 +331,30 @@ class RouteHelper {
     return '$offlinePaymentScreen?order_body=$data&zone_id=$zoneId&total=$total&max_cod_amount=$maxCodOrderAmount&from_cart=$fromCart&cod_active=$isCodActive&pricing_body=$pricingData';
   }
   static String getGuestTrackOrderScreen(String orderId, String number) => '$guestTrackOrderScreen?order_id=$orderId&number=$number';
+  // static String getRestaurantProductsRoute(int? id) {
+  //
+  //   return '$restaurantProducts?id=$id';
+  // }
 
-  // static String getCookedProductScreen() => cookedProductList;
-  // static String getCookedProductScreen() => cookedProductList;
-  // static String getCookedProductScreen(String? cookedUncooked,) => '$cookedProductList?cookedUncooked=$cookedUncooked';
-  static String getCookedProductScreen(String? phone,) => '$cookedProductList?phone=$phone';
-  static String getMainProductView() => mainProductView;
-  static String getUncookedProductView() => uncookedProductView;
-  static String getCookedCategoryProductRoute(int? id, String name) {
-    List<int> encoded = utf8.encode(name);
-    String data = base64Encode(encoded);
-    return '$cookedCategoryProduct?id=$id&name=$data';
+  static String getRestaurantProductsRoute(String slug, int id) {
+    return '/restaurant/$slug/$id'; // Construct URL with slug and id
   }
 
-  static String getUnCookedCategoryProductRoute(int? id, String name) {
-    List<int> encoded = utf8.encode(name);
-    String data = base64Encode(encoded);
-    return '$uncookedCategoryProduct?id=$id&name=$data';
+  static String getFilterRestaurantRoute(int? id) {
+    return '$filterRestaurant?id=$id';
   }
-
-
   static List<GetPage> routes = [
+    GetPage(
+      name: initial,
+      page: () => getRoute(
+        const DashboardScreen(
+          pageIndex: 0,
+          fromSplash: false, // Default behavior since no query parameter is passed
+        ),
+      ),
+    ),
 
-    GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: (Get.parameters['from-splash'] == 'true')))),
-    GetPage(name: splash, page: () {
-      NotificationBodyModel? data;
-      DeepLinkBody? linkData;
-      if(Get.parameters['data'] != 'null') {
-        List<int> decode = base64Decode(Get.parameters['data'] != null ? Get.parameters['data']!.replaceAll(' ', '+') : '');
-        data = NotificationBodyModel.fromJson(jsonDecode(utf8.decode(decode)));
-      }
-      if(Get.parameters['link'] != 'null') {
-        List<int> decode = base64Decode(Get.parameters['link']!.replaceAll(' ', '+'));
-        linkData = DeepLinkBody.fromJson(jsonDecode(utf8.decode(decode)));
-      }
-      return SplashScreen(notificationBody: data, linkBody: linkData);
-    }),
+    // GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: (Get.parameters['from-splash'] == 'true')))),
     GetPage(name: language, page: () => ChooseLanguageScreen(fromMenu: Get.parameters['page'] == 'menu')),
     GetPage(name: onBoarding, page: () => OnBoardingScreen()),
     GetPage(name: signIn, page: () => SignInScreen(
@@ -368,15 +370,6 @@ class RouteHelper {
         password: data,
       );
     }),
-    GetPage(name: otpVerification, page: () {
-      List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
-      String data = utf8.decode(decode);
-      return ForgotVerificationScreen(
-        number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
-        password: data,
-      );
-    }),
-
     GetPage(name: accessLocation, page: () => AccessLocationScreen(
       fromSignUp: Get.parameters['page'] == signUp, fromHome: Get.parameters['page'] == 'home', route: null,
     )),
@@ -405,22 +398,53 @@ class RouteHelper {
       resetToken: Get.parameters['token'], number: Get.parameters['phone'], fromPasswordChange: Get.parameters['page'] == 'password-change',
     )),
     GetPage(name: search, page: () => getRoute(const SearchScreen())),
-    GetPage(name: restaurant, page: () {
-      return getRoute(Get.arguments ?? RestaurantScreen(
+    GetPage(
+      name: '/restaurant/:slug/:id',
+      page: () {
+        // Get the dynamic parameters: 'slug' and 'id'
+        final String slug = Get.parameters['slug'] ?? '';
+        final String idString = Get.parameters['id'] ?? '';
+        final int? id = idString.isNotEmpty ? int.tryParse(idString) : null;
+
+        // Update the meta title and description dynamically based on the parameters
+
+
+        return RestaurantProductScreenWeb(
+          restaurant: Restaurant(id: id),
+          slug: slug,
+          product: Product(),
+          categoryName: 'category_name',
+          categoryID: 'category_id',
+        );
+      },
+    ),
+    // GetPage(
+    //   name: '/restaurant/:slug/:id',
+    //   page: () {
+    //     // Get the dynamic parameters: 'slug' and 'id'
+    //     final String slug = Get.parameters['slug'] ?? '';
+    //     final String idString = Get.parameters['id'] ?? '';
+    //     final int? id = idString.isNotEmpty ? int.tryParse(idString) : null;
+    //
+    //     return RestaurantProductScreenWeb(
+    //       restaurant: Restaurant(id: id),
+    //       slug: slug,
+    //       product: Product(),
+    //       categoryName: 'category_name',
+    //       categoryID: 'category_id',
+    //     );
+    //   },
+    // ),
+
+    // GetPage(name: restaurant, page: () {
+    //   return getRoute(Get.arguments ?? RestaurantScreen(
+    //     restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
+    //   ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
+    // }),
+    GetPage(name: restaurantWeb, page: () {
+      return getRoute(Get.arguments ?? RestaurantScreenWeb(
         restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
-        slug: Get.parameters['slug'] ?? '',
-      ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
-    }),
-    GetPage(name: restaurantProducts, page: () {
-      return getRoute(Get.arguments ?? RestaurantProductScreen(
-        restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
-        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',categoryID: 'category_id',
-      ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
-    }),
-    GetPage(name: restaurantAllCategoryProducts, page: () {
-      return getRoute(Get.arguments ?? RestaurantViewAllCategoryProducts(
-        restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
-        slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',categoryID: 'category_id',
+        /* slug: Get.parameters['slug'] ?? '',*/
       ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
     }),
     GetPage(name: orderDetails, page: () {
@@ -492,10 +516,38 @@ class RouteHelper {
           : Get.parameters['page'] == 'refund-policy' ? HtmlType.refund : HtmlType.aboutUs,
     )),
     GetPage(name: categories, page: () => getRoute(const CategoryScreen())),
-    GetPage(name: categoryProduct, page: () {
+    GetPage(
+      name: categoryProduct,
+      page: () {
+        // Extract parameters from the path
+        String categoryName = Uri.decodeComponent(Get.parameters['categoryName']!);
+        String categoryId = Get.parameters['categoryId']!;
+        return getRoute(
+          CategoryProductScreen(
+            categoryID: categoryId,
+            categoryName: categoryName,
+            categoryTitle: categoryName, // Use categoryName here if title is the same
+          ),
+        );
+      },
+    ),
+
+    GetPage(name: petFoodCategory, page: () {
       List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
       String data = utf8.decode(decode);
-      return getRoute(CategoryProductScreen(categoryID: Get.parameters['id'], categoryName: data));
+      return getRoute(PetFoodAndBakeryFoodScreen(categoryID: Get.parameters['id'], categoryName: data));
+    }),
+    GetPage(name: cookedUncookedProduct, page: () {
+      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return getRoute(CookedUnCookedProductScreen(
+          categoryID: Get.parameters['id'], categoryName: data));
+    }),
+    GetPage(name: uncookedProduct, page: () {
+      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return getRoute(UnCookedProductScreen(
+          categoryID: Get.parameters['id'], categoryName: data));
     }),
     GetPage(name: popularFoods, page: () {
       return getRoute(PopularFoodScreen(
@@ -517,14 +569,23 @@ class RouteHelper {
         fromCheckout: false, address: data, forGuest: Get.parameters['from-guest'] == 'true',
       ));
     }),
+    GetPage(name: productView, page: () {
+      Product? data;
+      if(Get.parameters['data'] != 'null') {
+        data = Product.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['data']!.replaceAll(' ', '+')))));
+      }
+      return getRoute(ProductViewScreen(product: data));
+    }),
     GetPage(name: rateReview, page: () => getRoute(Get.arguments ?? const NotFoundWidget())),
     GetPage(name: restaurantReview, page: () => getRoute(ReviewScreen(restaurantID: Get.parameters['id']))),
     GetPage(name: allRestaurants, page: () => getRoute(
-      AllRestaurantScreen(
-        isPopular: Get.parameters['page'] == 'popular',
-        isRecentlyViewed: Get.parameters['page'] == 'recently_viewed',
-        isOrderAgain: Get.parameters['page'] == 'order_again',
-      ),
+        AllRestaurantScreen(
+          isPopular: Get.parameters['page'] == 'popular',
+          isRecentlyViewed: Get.parameters['page'] == 'recently_viewed',
+          isOrderAgain: Get.parameters['page'] == 'order_again',
+          isCooked: Get.parameters['page'] == 'isCooked',
+          isUncooked: Get.parameters['page'] == 'isUncooked',
+        ),
     )),
     GetPage(name: wallet, page: () {
       return getRoute(WalletScreen(fundStatus: Get.parameters['flag'] ?? Get.parameters['payment_status']));
@@ -549,6 +610,7 @@ class RouteHelper {
         conversationID: (Get.parameters['conversation_id'] != null && Get.parameters['conversation_id'] != 'null') ? int.parse(Get.parameters['conversation_id']!) : null,
       ));
     }),
+    // GetPage(name: conversation, page: () => const ProductViewScreen(product: product,isCampaign: ,)),
     GetPage(name: conversation, page: () => const ConversationScreen()),
     GetPage(name: mapView, page: () => getRoute(const MapViewScreen())),
     GetPage(name: restaurantRegistration, page: () => const RestaurantRegistrationScreen()),
@@ -576,25 +638,30 @@ class RouteHelper {
     GetPage(name: guestTrackOrderScreen, page: () => GuestTrackOrderScreen(
       orderId: Get.parameters['order_id']!, number: Get.parameters['number']!,
     )),
-    GetPage(name: cookedProductList, page: () =>   CookedProductScreen(number: Get.parameters['phone'],)),
-    GetPage(name: mainProductView, page: () => MainProductViewWidget()),
-    GetPage(name: uncookedProductView, page: () => UNCookedProductViewWidget()),
+    // GetPage(name: restaurantProducts, page: () {
+    //   return getRoute(Get.arguments ?? RestaurantProductScreenWeb(
+    //     restaurant: Restaurant(id: Get.parameters['id'] != 'null' && Get.parameters['id'] != null ? int.parse(Get.parameters['id']!) : null),
+    //     slug: Get.parameters['slug'] ?? '', product: Product(), categoryName: 'category_name',categoryID: 'category_id',
+    //   ), byPuss: Get.parameters['slug']?.isNotEmpty ?? false);
+    // }),
 
-    GetPage(name: cookedCategoryProduct, page: () {
-      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
-      String data = utf8.decode(decode);
-      return getRoute(CookedParticleProductScreen(
-          categoryID: Get.parameters['id'], categoryName: data));
-    }),
-    GetPage(name: uncookedCategoryProduct, page: () {
-      List<int> decode = base64Decode(Get.parameters['name']!.replaceAll(' ', '+'));
-      String data = utf8.decode(decode);
-      return getRoute(UnCookedParticleProductScreen(
-          categoryID: Get.parameters['id'], categoryName: data));
-    }),
+    GetPage(
+      name: '$restaurantProducts/:slug',
+      page: () {
+        return Get.arguments ?? RestaurantProductScreenWeb(
+          restaurant: Restaurant(
+              id: Get.parameters['id'] != null && Get.parameters['id'] != 'null'
+                  ? int.parse(Get.parameters['id']!)
+                  : null
+          ),
+          slug: Get.parameters['slug'] ?? '',
+          product: Product(),
+          categoryName: 'category_name',
+          categoryID: 'category_id',
+        );
+      },
+    ),
 
-
-    // GetPage(name: cookedProductList, page: () =>  CookedProductScreen(cookedUncookedCategory:  Get.parameters['cookedUncooked'],)),
   ];
 
   static getRoute(Widget? navigateTo, {bool byPuss = false}) {
@@ -609,4 +676,36 @@ class RouteHelper {
         : (AddressHelper.getAddressFromSharedPref() == null && !byPuss)
         ? AccessLocationScreen(fromSignUp: false, fromHome: false, route: Get.currentRoute) : navigateTo;
   }
+
+}
+
+
+void updateMetaTitleAndDescription(String slug, String description) {
+  // Example dynamic title and description
+  String title = '$slug';
+  String metaDescription = description;
+
+  // Call the method to update meta tags
+  updateMetaTags(title, metaDescription);
+}
+
+void updateMetaTags(String title, String description) {
+  // Update title tag
+  html.document.title = title;
+
+  // Update meta description
+  final metaDescriptionTag = html.document.querySelector("meta[name='description']");
+  if (metaDescriptionTag != null) {
+    metaDescriptionTag.setAttribute("content", description);
+  } else {
+    // If meta description tag does not exist, create it and append to the head
+    final metaTag = html.MetaElement()
+      ..name = 'description'
+      ..content = description;
+    html.document.head?.append(metaTag);
+  }
+}
+
+void updateMetaTitle(String title) {
+  html.document.title = title;
 }

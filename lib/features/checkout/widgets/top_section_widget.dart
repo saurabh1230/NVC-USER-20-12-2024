@@ -62,12 +62,15 @@ class TopSectionWidget extends StatelessWidget {
     bool isGuestLoggedIn = Get.find<AuthController>().isGuestLoggedIn();
     bool isLoggedIn = Get.find<AuthController>().isLoggedIn();
 
+
+
+
     return GetBuilder<CheckoutController>(
         builder: (checkoutController) {
           takeAway = (checkoutController.orderType == 'take_away');
           return Column(children: [
 
-            SizedBox(height: !isDesktop && isCashOnDeliveryActive && restaurantSubscriptionActive ? Dimensions.paddingSizeSmall : 0),
+            // SizedBox(height: !isDesktop && isCashOnDeliveryActive && restaurantSubscriptionActive ? Dimensions.paddingSizeSmall : 0),
 
             isCashOnDeliveryActive && restaurantSubscriptionActive && isLoggedIn ? Container(
               width: context.width,
@@ -115,7 +118,7 @@ class TopSectionWidget extends StatelessWidget {
                     },
                   )),
                 ]),
-                const SizedBox(height: Dimensions.paddingSizeLarge),
+                // const SizedBox(height: Dimensions.paddingSizeLarge),
 
                 checkoutController.subscriptionOrder ? SubscriptionView(
                   checkoutController: checkoutController,
@@ -123,9 +126,9 @@ class TopSectionWidget extends StatelessWidget {
                 SizedBox(height: checkoutController.subscriptionOrder ? Dimensions.paddingSizeLarge : 0),
               ]),
             ) : const SizedBox(),
-            const SizedBox(height: Dimensions.paddingSizeSmall),
+            // const SizedBox(height: Dimensions.paddingSizeSmall),
 
-            checkoutController.restaurant != null ? Container(
+           /* checkoutController.restaurant != null ? Container(
               width: context.width,
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
@@ -143,7 +146,7 @@ class TopSectionWidget extends StatelessWidget {
 
                   (Get.find<SplashController>().configModel!.homeDelivery! && checkoutController.restaurant!.delivery!)
                       ? DeliveryOptionButton(
-                    value: 'delivery', title: 'Home / Office Delivery' /*'home_delivery'.tr*/, charge: charge,
+                    value: 'delivery', title: 'Home / Office Delivery' *//*'home_delivery'.tr*//*, charge: charge,
                     isFree: checkoutController.restaurant!.freeDelivery, total: total,
                   ) : const SizedBox(),
                   const SizedBox(width: Dimensions.paddingSizeDefault),
@@ -156,16 +159,16 @@ class TopSectionWidget extends StatelessWidget {
                 ])),
                 SizedBox(height: isDesktop ? Dimensions.paddingSizeDefault : 0),
               ]),
-            ) : const SizedBox(),
+            ) : const SizedBox(),*/
 
-            SizedBox(height: checkoutController.orderType != 'take_away' ? ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall),
+            // SizedBox(height: checkoutController.orderType != 'take_away' ? ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall),
 
             (checkoutController.orderType != 'take_away' && !ResponsiveHelper.isDesktop(context)) ? Center(child: Text('${'delivery_charge'.tr}: ${(checkoutController.orderType == 'take_away'
                 || (checkoutController.orderType == 'delivery' ? checkoutController.restaurant!.freeDelivery! : true)) ? 'free'.tr
                 : charge != -1 ? PriceConverter.convertPrice(checkoutController.orderType == 'delivery' ? charge : deliveryCharge)
                 : 'calculating'.tr}', textDirection: TextDirection.ltr)) : const SizedBox(),
 
-            SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0),
+            // SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0),
 
             /// Time Slot
             TimeSlotSection(fromCart: fromCart, checkoutController: checkoutController, tomorrowClosed: tomorrowClosed, todayClosed: todayClosed, tooltipController2: tooltipController2),
@@ -177,7 +180,7 @@ class TopSectionWidget extends StatelessWidget {
               guestNumberTextEditingController: guestNumberTextEditingController, guestNumberNode: guestNumberNode,
               guestEmailController: guestEmailController, guestEmailNode: guestEmailNode,
             ),
-            const SizedBox(height: Dimensions.paddingSizeSmall),
+            // const SizedBox(height: Dimensions.paddingSizeSmall),
 
 
             /// Coupon
@@ -185,7 +188,7 @@ class TopSectionWidget extends StatelessWidget {
               charge: charge, checkoutController: checkoutController, price: price,
               discount: discount, addOns: addOns, deliveryCharge: deliveryCharge, total: total,
             ) : const SizedBox(),
-            SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0),
+            // SizedBox(height: !ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0),
 
             ///DmTips
             DeliveryManTipsSection(
@@ -237,17 +240,17 @@ class TopSectionWidget extends StatelessWidget {
     );
   }
 
-  // void _checkPermission(Function onTap) async {
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //   if(permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //   }
-  //   if(permission == LocationPermission.denied) {
-  //     showCustomSnackBar('you_have_to_allow'.tr);
-  //   }else if(permission == LocationPermission.deniedForever) {
-  //     Get.dialog(const PermissionDialog());
-  //   }else {
-  //     onTap();
-  //   }
-  // }
+// void _checkPermission(Function onTap) async {
+//   LocationPermission permission = await Geolocator.checkPermission();
+//   if(permission == LocationPermission.denied) {
+//     permission = await Geolocator.requestPermission();
+//   }
+//   if(permission == LocationPermission.denied) {
+//     showCustomSnackBar('you_have_to_allow'.tr);
+//   }else if(permission == LocationPermission.deniedForever) {
+//     Get.dialog(const PermissionDialog());
+//   }else {
+//     onTap();
+//   }
+// }
 }

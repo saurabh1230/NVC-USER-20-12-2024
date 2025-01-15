@@ -190,16 +190,16 @@ class PlaceOrderBodyModel {
     _subscriptionType = json['subscription_type'];
     if (json['subscription_days'] != null) {
       _subscriptionDays = [];
-        if(json['subscription_days'] is String){
-          jsonDecode(json['subscription_days']).forEach((v) {
-            _subscriptionDays!.add(SubscriptionDays.fromJson(v));
-          });
+      if(json['subscription_days'] is String){
+        jsonDecode(json['subscription_days']).forEach((v) {
+          _subscriptionDays!.add(SubscriptionDays.fromJson(v));
+        });
       } else {
-      json['subscription_days'].forEach((v) {
-        _subscriptionDays!.add(SubscriptionDays.fromJson(v));
-      });
-    }
+        json['subscription_days'].forEach((v) {
+          _subscriptionDays!.add(SubscriptionDays.fromJson(v));
+        });
       }
+    }
     _subscriptionQuantity = json['subscription_quantity'];
     _subscriptionStartAt = json['subscription_start_at'];
     _subscriptionEndAt = json['subscription_end_at'];
@@ -279,13 +279,13 @@ class Cart {
   Cart(
       int? foodId,
       int? itemCampaignId,
-        String price,
-        String variant,
-        List<OrderVariation> variation,
-        int? quantity,
-        List<int?> addOnIds,
-        List<AddOns>? addOns,
-        List<int?> addOnQtys) {
+      String price,
+      String variant,
+      List<OrderVariation> variation,
+      int? quantity,
+      List<int?> addOnIds,
+      List<AddOns>? addOns,
+      List<int?> addOnQtys) {
     _foodId = foodId;
     _itemCampaignId = itemCampaignId;
     _price = price;

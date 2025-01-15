@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:flutter/material.dart';
@@ -277,7 +275,7 @@ class CheckoutShimmerView extends StatelessWidget {
           width: context.width,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              height: 20, width: 150,
+              height: 20, width: 100,
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
@@ -287,30 +285,25 @@ class CheckoutShimmerView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                    ),
-                  
-                    child: Row(children: [
-                      Radio(activeColor: Colors.grey[300], value: 0, groupValue: 0, onChanged: (value) {}),
-                  
-                      Expanded(
-                        child: Container(
-                          height: 20, width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: Dimensions.paddingSizeDefault),
-                    ]),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                   ),
+
+                  child: Row(children: [
+                    Radio(activeColor: Colors.grey[300], value: 0, groupValue: 0, onChanged: (value) {}),
+
+                    Container(
+                      height: 20, width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                      ),
+                    ),
+                    const SizedBox(width: Dimensions.paddingSizeDefault),
+                  ]),
                 ),
-                const SizedBox(width: Dimensions.paddingSizeSmall),
 
                 Container(
                   decoration: BoxDecoration(

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:stackfood_multivendor/features/checkout/widgets/payment_failed_dialog.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/location/domain/models/zone_response_model.dart';
 import 'package:stackfood_multivendor/helper/address_helper.dart';
@@ -17,10 +16,6 @@ import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../pdf_preview.dart';
-import '../../order/screens/invoice_screen.dart';
-import '../../order/screens/order_details_screen.dart';
 
 class OrderSuccessfulScreen extends StatefulWidget {
   final String? orderID;
@@ -40,7 +35,6 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
   @override
   void initState() {
     super.initState();
-
     orderId = widget.orderID!;
     if(widget.orderID != null) {
       if(widget.orderID!.contains('?')){
@@ -49,6 +43,7 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
         orderId = id;
       }
     }
+
     Get.find<OrderController>().trackOrder(orderId.toString(), null, false, contactNumber: widget.contactPersonNumber);
 
   }
@@ -57,7 +52,7 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
-      appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+      appBar: ResponsiveHelper.isDesktop(context) ?  WebMenuBar() : null,
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       body: GetBuilder<OrderController>(builder: (orderController) {
         double total = 0;
@@ -75,17 +70,13 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
             });
           }
         }
-
         return orderController.trackModel != null ? Center(child: SingleChildScrollView(
           controller: scrollController,
           child: FooterViewWidget(
             child: SizedBox(width: Dimensions.webMaxWidth, child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
+              const SizedBox(height: Dimensions.paddingSizeDefault,),
               Image.asset(success ? Images.checked : Images.warning, width: 100, height: 100),
               const SizedBox(height: Dimensions.paddingSizeLarge),
-
-
-
 
               Text(
                 success ? 'you_placed_the_order_successfully'.tr : 'your_order_is_failed_to_place'.tr,
@@ -109,7 +100,7 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
 
               Get.find<AuthController>().isLoggedIn() && ResponsiveHelper.isDesktop(context) && (success && Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && total.floor() > 0 )  ? Column(children: [
 
-                Image.asset(Get.find<ThemeController>().darkTheme ? Images.giftBox1 : Images.giftBox, width: 150, height: 150),
+                Image.asset( Images.giftBox, width: 150, height: 150),
 
                 Text('congratulations'.tr , style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
                 const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -125,26 +116,24 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
 
               ]) : const SizedBox.shrink() ,
               const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                child: CustomButtonWidget(
-                  width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
-                  buttonText: 'Order Details'.tr,
-                  onPressed: () =>
-                      Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(widget.orderID!), contactNumber: "9999999999")),
-                      // Get.offAllNamed(RouteHelper.getInitialRoute()
-                      ),
-                ),
 
               Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 child: CustomButtonWidget(
                   width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
-                  buttonText: 'back_to_home'.tr,
-                  onPressed: () => Get.offAllNamed(RouteHelper.getInitialRoute()),
+                  buttonText: 'Order Details',
+                  onPressed: () => Get.offAllNamed(RouteHelper.getOrderDetailsRoute(int.parse(widget.orderID!))),
                 ),
               ),
-
+              const SizedBox(height: Dimensions.paddingSizeDefault,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeSmall),
+                child: CustomButtonWidget(
+                    width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
+                    onPressed: () => Get.offAllNamed(
+                        RouteHelper.getOrderDetailsRoute(int.parse(widget.orderID!))),
+                    buttonText: "Home"),
+              )
             ])),
           ),
         )) : const Center(child: CircularProgressIndicator());

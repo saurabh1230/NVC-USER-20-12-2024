@@ -34,7 +34,6 @@ class CustomTextFieldWidget extends StatefulWidget {
   final String? countryDialCode;
   final Function(CountryCode countryCode)? onCountryChanged;
   final bool isRequired;
-  final int? maxLength; // New parameter for max length
 
   const CustomTextFieldWidget({
     super.key,
@@ -65,7 +64,6 @@ class CustomTextFieldWidget extends StatefulWidget {
     this.countryDialCode,
     this.onCountryChanged,
     this.isRequired = false,
-    this.maxLength, // Initialize maxLength parameter
   });
 
   @override
@@ -80,12 +78,12 @@ class CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         widget.showTitle ? Text(widget.titleText, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)) : const SizedBox(),
         SizedBox(height: widget.showTitle ? ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeExtraSmall : 0),
 
         TextField(
           maxLines: widget.maxLines,
-          maxLength: widget.maxLength, // Set max length for the text field
           controller: widget.controller,
           focusNode: widget.focusNode,
           textAlign: widget.textAlign,
@@ -119,35 +117,36 @@ class CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             filled: true,
             prefixIcon:  widget.isPhone ? SizedBox(width: 95, child: Row(children: [
               Container(
-                width: 85,height: 50,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Dimensions.radiusSmall),
-                    bottomLeft: Radius.circular(Dimensions.radiusSmall),
-                  ),
-                ),
-                margin: const EdgeInsets.only(right: 0),
-                padding: const EdgeInsets.only(left: 5),
-                child: Center(
-                  child: CodePickerWidget(
-                    flagWidth: 25,
-                    padding: EdgeInsets.zero,
-                    onChanged: widget.onCountryChanged,
-                    initialSelection: widget.countryDialCode,
-                    favorite: [widget.countryDialCode!],
-                    dialogBackgroundColor: Theme.of(context).cardColor,
-                    textStyle: robotoRegular.copyWith(
-                      fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color,
+                  width: 85,height: 50,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.radiusSmall),
+                      bottomLeft: Radius.circular(Dimensions.radiusSmall),
                     ),
                   ),
-                ),
+                  margin: const EdgeInsets.only(right: 0),
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Center(
+                    child: CodePickerWidget(
+                      flagWidth: 25,
+                      padding: EdgeInsets.zero,
+                      onChanged: widget.onCountryChanged,
+                      initialSelection: widget.countryDialCode,
+                      favorite: [widget.countryDialCode!],
+                      dialogBackgroundColor: Theme.of(context).cardColor,
+                      textStyle: robotoRegular.copyWith(
+                        fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                    ),
+                  ),
               ),
 
               Container(
                 height: 20, width: 2,
                 color: Theme.of(context).disabledColor,
               )
-            ]),) : widget.prefixImage != null && widget.prefixIcon == null ? Padding(
+            ]),
+            ) : widget.prefixImage != null && widget.prefixIcon == null ? Padding(
               padding: EdgeInsets.symmetric(horizontal: widget.prefixSize),
               child: Image.asset(widget.prefixImage!, height: 20, width: 20),
             ) : widget.prefixImage == null && widget.prefixIcon != null ? Icon(widget.prefixIcon, size: widget.iconSize) : null,
@@ -162,6 +161,7 @@ class CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         ),
 
         widget.divider ? const Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge), child: Divider()) : const SizedBox(),
+
       ],
     );
   }
@@ -172,3 +172,4 @@ class CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
     });
   }
 }
+

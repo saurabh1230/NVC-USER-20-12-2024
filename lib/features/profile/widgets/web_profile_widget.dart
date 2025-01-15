@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/profile/widgets/profile_button_widget.dart';
@@ -5,6 +7,7 @@ import 'package:stackfood_multivendor/features/profile/widgets/profile_card_widg
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
 import 'package:stackfood_multivendor/helper/date_converter.dart';
+import 'package:stackfood_multivendor/helper/extensions.dart';
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
@@ -15,6 +18,8 @@ import 'package:stackfood_multivendor/common/widgets/confirmation_dialog_widget.
 import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../home/widgets/arrow_icon_button_widget.dart';
 
 class WebProfileWidget extends StatelessWidget {
   const WebProfileWidget({super.key});
@@ -40,7 +45,19 @@ class WebProfileWidget extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Padding(
                     padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault),
-                    child: Text('profile'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                    child: Column(
+                      children: [
+                        Align(alignment: Alignment.topLeft,
+                          child: ArrowIconButtonWidget(isLeft: true,
+                            paddingLeft: Dimensions.paddingSizeSmall,
+                            onTap: () {
+                              Get.toNamed(RouteHelper.getMainRoute(1.toString()));
+                            },
+                          ),
+                        ),
+                        Text('profile'.tr, style: robotoLight.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -60,7 +77,7 @@ class WebProfileWidget extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    isLoggedIn ? '${profileController.userInfoModel!.fName} ${profileController.userInfoModel!.lName}' : 'guest_user'.tr,
+                    isLoggedIn ? '${profileController.userInfoModel!.fName!.toTitleCase()} ${profileController.userInfoModel!.lName!.toTitleCase()}' : 'guest_user'.tr,
                     style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
                   ),
                 ),
@@ -133,10 +150,14 @@ class WebProfileWidget extends StatelessWidget {
             SizedBox(width: Get.find<SplashController>().configModel!.customerWalletStatus == 1 ? Dimensions.paddingSizeOverLarge : 0),
 
             isLoggedIn ? Expanded(
-              child: ProfileCardWidget(
-                image: Images.shoppingBagIcon,
-                data: profileController.userInfoModel!.orderCount.toString(),
-                title: 'total_order'.tr,
+              child: InkWell(onTap: () {
+                Get.offNamed(RouteHelper.getOrderRoute());
+              },
+                child: ProfileCardWidget(
+                  image: Images.shoppingBagIcon,
+                  data: profileController.userInfoModel!.orderCount.toString(),
+                  title: 'total_order'.tr,
+                ),
               ),
             ) : const SizedBox(),
             SizedBox(width: Get.find<SplashController>().configModel!.customerWalletStatus == 1 ? Dimensions.paddingSizeOverLarge : 0),
@@ -159,10 +180,6 @@ class WebProfileWidget extends StatelessWidget {
             crossAxisCount: 2,
             childAspectRatio: 9,
             children: <Widget>[
-
-              ProfileButtonWidget(icon: Icons.tonality_outlined, title: 'dark_mode'.tr, isButtonActive: Get.isDarkMode, onTap: () {
-                Get.find<ThemeController>().toggleTheme();
-              }),
 
               isLoggedIn ? GetBuilder<AuthController>(builder: (authController) {
                 return ProfileButtonWidget(

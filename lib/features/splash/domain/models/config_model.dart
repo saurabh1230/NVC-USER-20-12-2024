@@ -214,7 +214,6 @@ class ConfigModel {
     canceledByDeliveryman = json['canceled_by_deliveryman'];
     canceledByRestaurant = json['canceled_by_restaurant'];
     timeformat = json['timeformat'];
-    // toggleVegNonVeg = json['toggle_veg_non_veg'];
     toggle_cooked_uncooked = json['toggle_cooked_uncooked'];
     toggleDmRegistration = json['toggle_dm_registration'];
     toggleRestaurantRegistration = json['toggle_restaurant_registration'];
@@ -337,7 +336,6 @@ class ConfigModel {
     data['timeformat'] = timeformat;
     // data['toggle_veg_non_veg'] = toggleVegNonVeg;
     data['toggle_cooked_uncooked'] = toggle_cooked_uncooked;
-
     data['toggle_dm_registration'] = toggleDmRegistration;
     data['toggle_restaurant_registration'] = toggleRestaurantRegistration;
     if (socialLogin != null) {

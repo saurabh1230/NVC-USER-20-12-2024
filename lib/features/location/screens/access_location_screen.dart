@@ -62,20 +62,7 @@ class AccessLocationScreen extends StatelessWidget {
                     },
                   )));
                 },
-              ) :
-
-              Column(children: [
-                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
-                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
-                const SizedBox(height: Dimensions.paddingSizeOverLarge,),
-
-                Image.asset(Images.address),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-                 Text("Pick address to continue",
-                  style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black.withOpacity(0.60))
-                )
-              ],)
-                  : const Center(child: CircularProgressIndicator()),
+              ) : const NoDataScreen(title: 'Add Address To Continue') : const Center(child: CircularProgressIndicator()),
               SizedBox(height: (addressController.addressList != null && addressController.addressList!.length < 4) ? 200 : Dimensions.paddingSizeLarge),
 
               ResponsiveHelper.isDesktop(context) ? BottomButton(addressController: addressController, fromSignUp: fromSignUp, route: route) : const SizedBox(),
@@ -89,17 +76,21 @@ class AccessLocationScreen extends StatelessWidget {
               child: SizedBox(width: 700, child: Column(children: [
                 Image.asset(Images.deliveryLocation, height: 220),
                 const SizedBox(height: Dimensions.paddingSizeLarge),
+                // Text(
+                //   'find_restaurants_and_foods'.tr.toUpperCase(), textAlign: TextAlign.center,
+                //   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+                // ),
                 Text(
-                  'find_restaurants_and_foods'.tr.toUpperCase(), textAlign: TextAlign.center,
+                  'Allow Location Access To Continue'.toUpperCase(), textAlign: TextAlign.center,
                   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
-                  child: Text(
-                    'by_allowing_location_access'.tr, textAlign: TextAlign.center,
-                    style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
+                //   child: Text(
+                //     'by_allowing_location_access'.tr, textAlign: TextAlign.center,
+                //     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
+                //   ),
+                // ),
                 const SizedBox(height: Dimensions.paddingSizeLarge),
                 BottomButton(addressController: addressController, fromSignUp: fromSignUp, route: route),
               ])),

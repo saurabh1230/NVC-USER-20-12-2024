@@ -1,5 +1,6 @@
 import 'package:stackfood_multivendor/common/models/review_model.dart';
 import 'package:stackfood_multivendor/common/widgets/rating_bar_widget.dart';
+import 'package:stackfood_multivendor/controller/borzo_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/offline_info_edit_dialog.dart';
 import 'package:stackfood_multivendor/features/notification/domain/models/notification_body_model.dart';
@@ -7,6 +8,7 @@ import 'package:stackfood_multivendor/features/order/controllers/order_controlle
 import 'package:stackfood_multivendor/features/order/widgets/delivery_details.dart';
 import 'package:stackfood_multivendor/features/order/widgets/log_dialog.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_product_widget.dart';
+import 'package:stackfood_multivendor/features/order/widgets/time_display_widget.dart';
 import 'package:stackfood_multivendor/features/review/widgets/review_dialog_widget.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_model.dart';
@@ -76,19 +78,62 @@ class OrderInfoSection extends StatelessWidget {
 
             Text('your_food_will_delivered_within'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor)),
             const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+ 
+            // TextButton(onPressed: ( ) {
+            //   print('Trend');
+            //   print(order.restaurant!.deliveryTime);
+            //   print(order.createdAt);
+            //   print(order.processingTime);
+            //   print(order.scheduleAt);
+            //   print(order.orderStatus!.tr);
 
+            // }, child: Text('Trend')),
             Center(
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-
-                Text(
-                  DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt) < 5 ? '1 - 5'
-                      : '${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)-5} '
-                      '- ${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)}',
+                 order.orderStatus!.tr  == "Pending" ?  
+                   Text('${order.restaurant!.deliveryTime.toString()}',
                   style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
-                ),
-                const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                ) : 
+               order.orderStatus!.tr == "Confirmed" ?  
+                   Text('${order.restaurant!.deliveryTime.toString()}',
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                )  : 
+                order.orderStatus!.tr== "Processing" ?  
+                   Text('${order.processingTime.toString()} min',
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                )  : 
+                order.orderStatus!.tr == "Handover" ?  
+          //        TimeDisplayWidget(
+          // datetime: order.brozohistory!.brozoDeliveryRecord.points[0].requiredStartDatetime,
+          //  )
 
-                Text('min'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+                   Text("30-40 mins",
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                )  
+                 : 
+                 order.orderStatus!.tr == "Out for delivery" ?  
+                   Text("30-40 mins",
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                ) :
+                   order.orderStatus!.tr == "Delivered" ?  
+                   Text('Delivered',
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                ) : 
+                   Text('',
+                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                ) ,
+
+
+
+                // Text(
+                //   DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt) < 5 ? '1 - 5'
+                //       : '${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)-5} '
+                //       '- ${DateConverter.differenceInMinute(order.restaurant!.deliveryTime, order.createdAt, order.processingTime, order.scheduleAt)}',
+                //   style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textDirection: TextDirection.ltr,
+                // ),
+                // const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+
+                // Text('min'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
               ]),
             ),
             const SizedBox(height: Dimensions.paddingSizeExtraLarge),
@@ -157,7 +202,7 @@ class OrderInfoSection extends StatelessWidget {
                     cod ? 'cash_on_delivery'.tr
                         : order.paymentMethod == 'wallet' ? 'wallet_payment'.tr
                         : order.paymentMethod == 'partial_payment' ? 'partial_payment'.tr
-                        : order.paymentMethod == 'offline_payment' ? 'Prepaid'.tr : 'Prepaid'.tr,
+                        : order.paymentMethod == 'offline_payment' ? 'offline_payment'.tr : 'digital_payment'.tr,
                     style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeExtraSmall),
                   ),
                 ),
@@ -255,19 +300,19 @@ class OrderInfoSection extends StatelessWidget {
               ),
               // const Divider(height: Dimensions.paddingSizeLarge),
 
-              // Column(children: [
-              //   const Divider(height: Dimensions.paddingSizeLarge),
-              //
-              //   Row(children: [
-              //     Text('${'cutlery'.tr}: ', style: robotoRegular),
-              //     const Expanded(child: SizedBox()),
-              //
-              //     Text(
-              //       order.cutlery! ? 'yes'.tr : 'no'.tr,
-              //       style: robotoRegular,
-              //     ),
-              //   ]),
-              // ]),
+              Column(children: [
+                const Divider(height: Dimensions.paddingSizeLarge),
+
+                Row(children: [
+                  Text('${'cutlery'.tr}: ', style: robotoRegular),
+                  const Expanded(child: SizedBox()),
+
+                  Text(
+                    order.cutlery! ? 'yes'.tr : 'no'.tr,
+                    style: robotoRegular,
+                  ),
+                ]),
+              ]),
 
               order.unavailableItemNote != null ? Column(
                 children: [

@@ -37,7 +37,7 @@ class _CampaignScreenState extends State<CampaignScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+      appBar: ResponsiveHelper.isDesktop(context) ?  WebMenuBar() : null,
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       backgroundColor: Theme.of(context).cardColor,
       body: GetBuilder<CampaignController>(builder: (campaignController) {

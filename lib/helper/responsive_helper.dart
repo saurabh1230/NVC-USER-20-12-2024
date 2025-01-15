@@ -36,6 +36,8 @@ class ResponsiveHelper {
     }
   }
 
+  
+
   static bool isDesktop(context) {
     final size = MediaQuery
         .of(context)

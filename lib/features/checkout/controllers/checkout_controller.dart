@@ -31,8 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 class CheckoutController extends GetxController implements GetxService {
   final CheckoutServiceInterface checkoutServiceInterface;
   CheckoutController({required this.checkoutServiceInterface});
@@ -291,7 +290,6 @@ class CheckoutController extends GetxController implements GetxService {
   void setCustomDate(DateTime? date, bool instanceOrder, {bool canUpdate = true}) {
     _selectedCustomDate = date;
     _selectedTimeSlot = checkoutServiceInterface.selectTimeSlot(instanceOrder);
-
     if(canUpdate) {
       update();
     }
@@ -336,7 +334,6 @@ class CheckoutController extends GetxController implements GetxService {
   void updateTips(int index, {bool notify = true}) {
     _selectedTips = index;
     _tips = checkoutServiceInterface.updateTips(index, _selectedTips);
-
     if(notify) {
       update();
     }
@@ -388,7 +385,7 @@ class CheckoutController extends GetxController implements GetxService {
 
   Future<bool> checkBalanceStatus(double totalPrice, {double discount = 0, double extraCharge = 0}) async {
     totalPrice = (totalPrice - discount) + extraCharge;
-    if(isPartialPay){
+    if(isPartialPay) {
       changePartialPayment();
     }
     setPaymentMethod(-1);
@@ -538,33 +535,18 @@ class CheckoutController extends GetxController implements GetxService {
     return _distance;
   }
 
-
-  Future<String> placeOrder(
-      PlaceOrderBodyModel placeOrderBody,
-      int? zoneID,
-      double amount,
-      double? maximumCodOrderAmount,
-      bool fromCart,
-      bool isCashOnDeliveryActive,
-      {bool isOfflinePay = false}) async {
+  Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart,
+      bool isCashOnDeliveryActive, {bool isOfflinePay = false}) async {
     _isLoading = true;
     update();
-
-    // Print the complete payload before the API call
-
-    print('------ API Payload Sent to placeOrder ------');
-    print(jsonEncode(placeOrderBody.toJson()));
-
     String orderID = '';
     Response response = await checkoutServiceInterface.placeOrder(placeOrderBody);
-
     _isLoading = false;
-    print('1${amount}');
     if (response.statusCode == 200) {
       String? message = response.body['message'];
       orderID = response.body['order_id'].toString();
       checkoutServiceInterface.sendNotificationRequest(orderID, Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
-      if (!isOfflinePay) {
+      if(!isOfflinePay) {
         _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
       } else {
         Get.find<CartController>().getCartDataOnline();
@@ -573,201 +555,15 @@ class CheckoutController extends GetxController implements GetxService {
         print('-------- Order placed successfully $orderID ----------');
       }
     } else {
-      print('isOfflinePay');
-      if (!isOfflinePay) {
-        _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart,
-            isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
-      } else {
-        print('take away error');
+      if(!isOfflinePay){
+        _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
+      }else{
         showCustomSnackBar(response.statusText);
       }
     }
-
     update();
     return orderID;
   }
-
-
-  // Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart,
-  //     bool isCashOnDeliveryActive, {bool isOfflinePay = false}) async {
-  //   _isLoading = true;
-  //   update();
-  //   print('Request cart: ${placeOrderBody.cart!.length}');
-  //   print('Request couponDiscountAmount: ${placeOrderBody.couponDiscountAmount}');
-  //   print('Request couponDiscountTitle: ${placeOrderBody.couponDiscountTitle}');
-  //   print('Request orderAmount: ${placeOrderBody.orderAmount}');
-  //   print('Request orderType: ${placeOrderBody.orderType}');
-  //   print('Request paymentMethod: ${placeOrderBody.paymentMethod}');
-  //   print('Request orderNote: ${placeOrderBody.orderNote}');
-  //   print('Request couponCode: ${placeOrderBody.couponCode}');
-  //   print('Request restaurantId: ${placeOrderBody.restaurantId}');
-  //   print('Request distance: ${placeOrderBody.distance}');
-  //   print('Request scheduleAt: ${placeOrderBody.scheduleAt}');
-  //   print('Request discountAmount: ${placeOrderBody.discountAmount}');
-  //   print('Request taxAmount: ${placeOrderBody.taxAmount}');
-  //   print('Request address: ${placeOrderBody.address}');
-  //   print('Request latitude: ${placeOrderBody.latitude}');
-  //   print('Request longitude: ${placeOrderBody.longitude}');
-  //   print('Request contactPersonName: ${placeOrderBody.contactPersonName}');
-  //   print('Request contactPersonNumber: ${placeOrderBody.contactPersonNumber}');
-  //   print('Request road: ${placeOrderBody.road}');
-  //   print('Request house: ${placeOrderBody.house}');
-  //
-  //
-  //   String orderID = '';
-  //   Response response = await checkoutServiceInterface.placeOrder(placeOrderBody);
-  //   _isLoading = false;
-  //    print('1${amount}');
-  //   if (response.statusCode == 200) {
-  //     String? message = response.body['message'];
-  //     orderID = response.body['order_id'].toString();
-  //
-  //     checkoutServiceInterface.sendNotificationRequest(orderID, Get.find<AuthController>().isLoggedIn() ? null : Get.find<AuthController>().getGuestId());
-  //     if(!isOfflinePay) {
-  //       _callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
-  //     } else {
-  //       Get.find<CartController>().getCartDataOnline();
-  //     }
-  //     if (kDebugMode) {
-  //       print('-------- Order placed successfully $orderID ----------');
-  //     }
-  //   } else {
-  //     print('isOfflinePay');
-  //     if(!isOfflinePay){
-  //       _callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!);
-  //     }else{
-  //       print('take away error');
-  //
-  //       showCustomSnackBar(response.statusText);
-  //     }
-  //   }
-  //
-  //   update();
-  //   return orderID;
-  // }
-
-
-
-  // Future<String> placeOrder(
-  //     PlaceOrderBodyModel placeOrderBody,
-  //     int? zoneID,
-  //     double amount,
-  //     double? maximumCodOrderAmount,
-  //     bool fromCart,
-  //     bool isCashOnDeliveryActive, {
-  //       bool isOfflinePay = false,
-  //     }) async {
-  //   _isLoading = true;
-  //   update();
-  //
-  //   // Print the entire body before sending
-  //   print('Request couponDiscountAmount: ${placeOrderBody.couponDiscountAmount}');
-  //   print('Request couponDiscountTitle: ${placeOrderBody.couponDiscountTitle}');
-  //   print('Request orderAmount: ${placeOrderBody.orderAmount}');
-  //   print('Request orderType: ${placeOrderBody.orderType}');
-  //   print('Request paymentMethod: ${placeOrderBody.paymentMethod}');
-  //   print('Request orderNote: ${placeOrderBody.orderNote}');
-  //   print('Request couponCode: ${placeOrderBody.couponCode}');
-  //   print('Request restaurantId: ${placeOrderBody.restaurantId}');
-  //   print('Request distance: ${placeOrderBody.distance}');
-  //   print('Request scheduleAt: ${placeOrderBody.scheduleAt}');
-  //   print('Request discountAmount: ${placeOrderBody.discountAmount}');
-  //   print('Request taxAmount: ${placeOrderBody.taxAmount}');
-  //   print('Request address: ${placeOrderBody.address}');
-  //   print('Request latitude: ${placeOrderBody.latitude}');
-  //   print('Request longitude: ${placeOrderBody.longitude}');
-  //   print('Request contactPersonName: ${placeOrderBody.contactPersonName}');
-  //   print('Request contactPersonNumber: ${placeOrderBody.contactPersonNumber}');
-  //   print('Request road: ${placeOrderBody.road}');
-  //   print('Request house: ${placeOrderBody.house}');
-  //
-  //   String orderID = '';
-  //   try {
-  //
-  //     var url = Uri.parse('${AppConstants.baseUrl}/api/v1/customer/order/place'); // Update with your endpoint
-  //     var headers = {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjIzYzRjNGI2ZmJjNDU0MjgyZGZjZWU2NjI5ZjY0OWZkYzc4YjAyOTlkNjU2MjQ4ZjAyMzlkOGI0ZDA4NGY5NjMzYTRiZDg4ZDNhM2M4YmMiLCJpYXQiOjE3MzM4OTIzNzEuMjI2MzMxLCJuYmYiOjE3MzM4OTIzNzEuMjI2MzM3LCJleHAiOjE3NjU0MjgzNzEuMTk4NzEyLCJzdWIiOiI3OCIsInNjb3BlcyI6W119.73i59woSy6gNHQ9dVEY3lCo5onUKi6WHUs__JpOV1hrkHmX4nMvgoQLhGqS7xAn6Iu3TVo-a-O-fMmPLOyNvGIwDAp2Qbhvke88t6ORsLV3cL-xOq0Ay3JJ1AnxSamV2CizrHz4ZUDAvecoh_9DR3rbcL3f_AVQGZc8vmsdwRlNwGvpD9kJnmXCJufXu7--Eh9-uiggISRuND_5V-BTgd9aiw6Q5K4ULJnt-pg1EKIAeDrINI2nY1nSZQSIlQRwULb9AFcy2Rfo94X9k76QrKWcQpYaOK0viJeTRfE1yLvXC93_Pa-hnOSyhfZM1WgZ5d2L_KEu57ewSSCNQX5WgM_ABe8wIriE9RrLttIrnpx6dJULx5bx86zpg2Uo1L5_QDH4_xdROmxKb-gynpOf-Xy_XHBeRMS2h1BWQods4t28zob_s3Et3F19V7mnX7rJvE7x-kgejtx6TyLCDoMtX8sr99EuvS1RUhTYK_1d7yLooB56yXVUS6nC5DV6ihuy2Ir9kS1vVCF44joUStM7p-vhf8uE8gCq-3iHEEQixZ_gRMzd7ZztD1Ww1zCgoS3dNPLqgJ12e52p_a-pkcRfjR8BmCFgh27zzioYYTm3efgqFmZHHgcmZH9drufKSJ-2FoF3E2JZVb8LtQub6Wdgs0Ve-oYHahJu3-Dt2OlSpheQ',
-  //     };
-  //
-  //
-  //     var response = await http.post(
-  //       url,
-  //       headers: headers,
-  //       body: jsonEncode(placeOrderBody.toJson()), // Convert body to JSON
-  //     );
-  //     print(' print(placeOrderBody.toJson());');
-  //     print(placeOrderBody.toJson());
-  //     print('placeOrderBody.toJson()');
-  //
-  //     _isLoading = false;
-  //     print('1 $amount');
-  //
-  //     if (response.statusCode == 200) {
-  //       var responseBody = jsonDecode(response.body);
-  //       print('Response Body =====================>>>>>>>> ${responseBody}');
-  //
-  //       String? message = responseBody['message'];
-  //       orderID = responseBody['order_id'].toString();
-  //
-  //
-  //       checkoutServiceInterface.sendNotificationRequest(
-  //         orderID,
-  //         Get.find<AuthController>().isLoggedIn()
-  //             ? null
-  //             : Get.find<AuthController>().getGuestId(),
-  //       );
-  //
-  //       if (!isOfflinePay) {
-  //         _callback(
-  //           true,
-  //           message,
-  //           orderID,
-  //           zoneID,
-  //           amount,
-  //           maximumCodOrderAmount,
-  //           fromCart,
-  //           isCashOnDeliveryActive,
-  //           placeOrderBody.contactPersonNumber!,
-  //         );
-  //       } else {
-  //         Get.find<CartController>().getCartDataOnline();
-  //       }
-  //
-  //       if (kDebugMode) {
-  //         print('2 $amount');
-  //         print('-------- Order placed successfully $orderID ----------');
-  //       }
-  //     } else {
-  //       print('isOfflinePay');
-  //       if (!isOfflinePay) {
-  //         _callback(
-  //           false,
-  //           response.reasonPhrase,
-  //           '-1',
-  //           zoneID,
-  //           amount,
-  //           maximumCodOrderAmount,
-  //           fromCart,
-  //           isCashOnDeliveryActive,
-  //           placeOrderBody.contactPersonNumber!,
-  //         );
-  //       } else {
-  //         print('take away error');
-  //         showCustomSnackBar(response.reasonPhrase);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     _isLoading = false;
-  //     print('Error placing order: $e');
-  //     showCustomSnackBar('Failed to place order. Please try again.');
-  //   }
-  //
-  //   update();
-  //   return orderID;
-  // }
-
-
 
   void _callback(bool isSuccess, String? message, String orderID, int? zoneID, double amount,
       double? maximumCodOrderAmount, bool fromCart, bool isCashOnDeliveryActive, String? contactNumber) async {
@@ -808,7 +604,6 @@ class CheckoutController extends GetxController implements GetxService {
       updateTips(0);
       Get.find<CouponController>().removeCouponData(false);
     }else {
-      // print('take away error2');
       showCustomSnackBar(message);
     }
   }

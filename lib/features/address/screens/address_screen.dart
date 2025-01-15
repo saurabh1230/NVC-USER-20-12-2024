@@ -91,8 +91,8 @@ class _AddressScreenState extends State<AddressScreen> {
                           child: GridView.builder(
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisSpacing: Dimensions.paddingSizeLarge,
-                              mainAxisSpacing:  0.01,
-                              childAspectRatio:  4,
+                              mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : 0.01,
+                              childAspectRatio: ResponsiveHelper.isDesktop(context) ? 4 : 5,
                               crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isTab(context) ? 2 : 3,
                             ),
                             physics: const NeverScrollableScrollPhysics(),
@@ -148,7 +148,7 @@ class _AddressScreenState extends State<AddressScreen> {
                               );
                             },
                           ),
-                        ) : NoDataScreen(title: 'no_saved_address_found'.tr, fromAddress: true) : const Center(child: CircularProgressIndicator()),
+                        ) : NoDataScreen(title: 'Add Address To Continue', fromAddress: true) : const Center(child: CircularProgressIndicator()),
 
                       ]),
                     ),
@@ -157,7 +157,9 @@ class _AddressScreenState extends State<AddressScreen> {
                 ]),
               )),
             );
-          }) : NotLoggedInScreen(callBack: (value){
+          }) : NotLoggedInScreen(
+            isBackButton: true,
+              callBack: (value){
             _initCall();
             setState(() {});
           }),

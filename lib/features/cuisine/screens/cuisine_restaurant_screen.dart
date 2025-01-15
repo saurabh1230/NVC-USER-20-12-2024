@@ -8,6 +8,7 @@ import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class CuisineRestaurantScreen extends StatefulWidget {
   final int cuisineId;
   final String? name;

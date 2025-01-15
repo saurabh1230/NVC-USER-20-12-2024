@@ -20,6 +20,7 @@ class HtmlRepository implements HtmlRepositoryInterface {
         'Accept': 'application/json',
         AppConstants.localizationKey: languageCode,
       },
+
     );
   }
 

@@ -92,7 +92,7 @@ class OrderProductWidget extends StatelessWidget {
                     color: Theme.of(context).primaryColor.withOpacity(0.05),
                   ),
                   child: Text(
-                    orderDetails.foodDetails!.food_type == 1 ? 'Cooked' : 'Uncooked',
+                    orderDetails.foodDetails!.food_type == 1 ? 'Cooked'.tr : 'UnCooked'.tr,
                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
                   ),
                 ) : const SizedBox(),

@@ -16,6 +16,9 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../helper/responsive_helper.dart';
+import '../widgets/order_successfull_dialog_widget.dart';
+
 class PaymentWebViewScreen extends StatefulWidget {
   final OrderModel orderModel;
   final String paymentMethod;
@@ -165,7 +168,13 @@ class PaymentScreenState extends State<PaymentWebViewScreen> {
         if (isSuccess) {
           double total = ((widget.orderModel.orderAmount! / 100) * Get.find<SplashController>().configModel!.loyaltyPointItemPurchasePoint!);
           Get.find<LoyaltyController>().saveEarningPoint(total.toStringAsFixed(0));
-          Get.offNamed(RouteHelper.getOrderSuccessRoute(widget.orderModel.id.toString(), 'success', widget.orderModel.orderAmount, contactNumber));
+          if(ResponsiveHelper.isDesktop(Get.context)) {
+            Get.offNamed(RouteHelper.getInitialRoute());
+            Future.delayed(const Duration(seconds: 2) , () => Get.dialog(Center(child: SizedBox(height: 350, width : 500, child: OrderSuccessfulDialogWidget(orderID: widget.orderModel.id.toString(), contactNumber: contactNumber)))));
+          } else {
+            Get.offNamed(RouteHelper.getOrderSuccessRoute(widget.orderModel.id.toString(), 'success', widget.orderModel.orderAmount, contactNumber));
+          }
+          // Get.offNamed(RouteHelper.getOrderSuccessRoute(widget.orderModel.id.toString(), 'success', widget.orderModel.orderAmount, contactNumber));
         } else if (isFailed || isCancel) {
           Get.offNamed(RouteHelper.getOrderSuccessRoute(widget.orderModel.id.toString(), 'fail', widget.orderModel.orderAmount, contactNumber));
         }

@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:stackfood_multivendor/features/home/widgets/restaurant_details_sheet_widget.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';

@@ -29,81 +29,81 @@ class CheckoutButtonWidget extends StatelessWidget {
 
     return GetBuilder<BorzoController>(builder: (borzoControl) {
       return Container(
-          width: Dimensions.webMaxWidth,
-          padding:  const EdgeInsets.all(Dimensions.paddingSizeSmall),
-          decoration: isDesktop ? null : BoxDecoration(
-              color: Theme.of(context).cardColor,
-              boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.2), blurRadius: 10)]
-          ),
-          child: SafeArea(
-            child: GetBuilder<RestaurantController>(builder: (restaurantController) {
-              if(Get.find<RestaurantController>().restaurant != null && Get.find<RestaurantController>().restaurant!.freeDelivery != null && !Get.find<RestaurantController>().restaurant!.freeDelivery! &&  Get.find<SplashController>().configModel!.freeDeliveryOver != null){
-                percentage = cartController.subTotal/Get.find<SplashController>().configModel!.freeDeliveryOver!;
-              }
-              return Column(mainAxisSize: MainAxisSize.min, children: [
-                (restaurantController.restaurant != null && restaurantController.restaurant!.freeDelivery != null && !restaurantController.restaurant!.freeDelivery!
-                    && Get.find<SplashController>().configModel!.freeDeliveryOver != null && percentage < 1)
-                    ? Padding(
-                  padding: EdgeInsets.only(bottom: isDesktop ? Dimensions.paddingSizeLarge : 0),
-                  child: Column(children: [
-                    Row(children: [
-                      Image.asset(Images.percentTag, height: 20, width: 20),
-                      const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+        width: Dimensions.webMaxWidth,
+        padding:  const EdgeInsets.all(Dimensions.paddingSizeSmall),
+        decoration: isDesktop ? null : BoxDecoration(
+            color: Theme.of(context).cardColor,
+            boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.2), blurRadius: 10)]
+        ),
+        child: SafeArea(
+          child: GetBuilder<RestaurantController>(builder: (restaurantController) {
+            if(Get.find<RestaurantController>().restaurant != null && Get.find<RestaurantController>().restaurant!.freeDelivery != null && !Get.find<RestaurantController>().restaurant!.freeDelivery! &&  Get.find<SplashController>().configModel!.freeDeliveryOver != null){
+              percentage = cartController.subTotal/Get.find<SplashController>().configModel!.freeDeliveryOver!;
+            }
+            return Column(mainAxisSize: MainAxisSize.min, children: [
+              (restaurantController.restaurant != null && restaurantController.restaurant!.freeDelivery != null && !restaurantController.restaurant!.freeDelivery!
+                  && Get.find<SplashController>().configModel!.freeDeliveryOver != null && percentage < 1)
+                  ? Padding(
+                padding: EdgeInsets.only(bottom: isDesktop ? Dimensions.paddingSizeLarge : 0),
+                child: Column(children: [
+                  Row(children: [
+                    Image.asset(Images.percentTag, height: 20, width: 20),
+                    const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                      PriceConverter.convertAnimationPrice(
-                        Get.find<SplashController>().configModel!.freeDeliveryOver! - cartController.subTotal,
-                        textStyle: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
-                      ),
-                      const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-
-                      Text('more_for_free_delivery'.tr, style: robotoMedium.copyWith(color: Theme.of(context).disabledColor)),
-                    ]),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                    LinearProgressIndicator(
-                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                      value: percentage,
+                    PriceConverter.convertAnimationPrice(
+                      Get.find<SplashController>().configModel!.freeDeliveryOver! - cartController.subTotal,
+                      textStyle: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
                     ),
+                    const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+
+                    Text('more_for_free_delivery'.tr, style: robotoMedium.copyWith(color: Theme.of(context).disabledColor)),
                   ]),
-                ) : const SizedBox(),
+                  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-
-                !isDesktop ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('subtotal'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
-                      PriceConverter.convertAnimationPrice(cartController.subTotal, textStyle: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
-                    ],
+                  LinearProgressIndicator(
+                    backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    value: percentage,
                   ),
-                ) : const SizedBox(),
-
-                GetBuilder<CartController>(
-                    builder: (cartController) {
-                      return CustomButtonWidget(
-                        radius: 10,
-                        buttonText: 'proceed_to_checkout'.tr,
-                        onPressed: cartController.isLoading ? null : () {
-                          _processToCheckoutButtonPressed(restaurantController);
-                          // borzoControl.getBorzoDeliveryFees(
-                          //     AddressHelper.getAddressFromSharedPref()!.address!,
-                          //     AddressHelper.getAddressFromSharedPref()!.latitude!,
-                          //     AddressHelper.getAddressFromSharedPref()!.longitude!,
-                          //     restaurantController.restaurant!.id.toString()
-                          // );
+                ]),
+              ) : const SizedBox(),
 
 
-
-                        },
-                      );
-                    }
+              !isDesktop ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('subtotal'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                    PriceConverter.convertAnimationPrice(cartController.subTotal, textStyle: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
+                  ],
                 ),
-                SizedBox(height: isDesktop ? Dimensions.paddingSizeExtraLarge : 0),
-              ]);
-            }),
-          ),
-        );
+              ) : const SizedBox(),
+
+              GetBuilder<CartController>(
+                  builder: (cartController) {
+                    return CustomButtonWidget(
+                      radius: 10,
+                      buttonText: 'proceed_to_checkout'.tr,
+                      onPressed: cartController.isLoading ? null : () {
+                        _processToCheckoutButtonPressed(restaurantController);
+                        // borzoControl.getBorzoDeliveryFees(
+                        //     AddressHelper.getAddressFromSharedPref()!.address!,
+                        //     AddressHelper.getAddressFromSharedPref()!.latitude!,
+                        //     AddressHelper.getAddressFromSharedPref()!.longitude!,
+                        //     restaurantController.restaurant!.id.toString()
+                        // );
+
+
+
+                      },
+                    );
+                  }
+              ),
+              SizedBox(height: isDesktop ? Dimensions.paddingSizeExtraLarge : 0),
+            ]);
+          }),
+        ),
+      );
     });
   }
 

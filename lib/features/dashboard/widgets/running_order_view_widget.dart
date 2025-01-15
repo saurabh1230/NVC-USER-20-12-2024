@@ -45,12 +45,9 @@ class RunningOrderViewWidget extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemBuilder: (context, index){
-
                 bool isFirstOrder =  index == 0;
-
                 String? orderStatus = reversOrder[index].orderStatus ?? '';
                 int status = 0;
-
                 if(orderStatus == AppConstants.pending){
                   status = 1;
                 }else if(orderStatus == AppConstants.accepted || orderStatus == AppConstants.processing || orderStatus == AppConstants.confirmed){

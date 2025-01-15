@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_model.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart';
@@ -12,7 +13,7 @@ import 'package:stackfood_multivendor/util/images.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../util/dimensions.dart';
-
+import '../../home/widgets/arrow_icon_button_widget.dart';
 
 class OrderTrackingScreen extends StatefulWidget {
   final String? orderID;
@@ -63,6 +64,14 @@ class OrderTrackingScreenState extends State<OrderTrackingScreen> with WidgetsBi
             width: Dimensions.webMaxWidth,
             child: Stack(
               children: [
+
+                Positioned(
+                  top: Dimensions.paddingSizeDefault,
+                  left: Dimensions.paddingSizeDefault,
+                  child: ArrowIconButtonWidget(isLeft: true,
+                    onTap: () { Get.back();},
+                  ),
+                ),
                 track.brozohistory != null && track.brozohistory!.fromTrackingUrl != null
                     ? InAppWebView(
                   initialUrlRequest: URLRequest(

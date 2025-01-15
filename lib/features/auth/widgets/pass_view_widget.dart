@@ -14,15 +14,10 @@ class PassViewWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
           child: Wrap(children: [
-
             view('8_or_more_character'.tr, deliverymanRegiController.lengthCheck),
-
             view('1_number'.tr, deliverymanRegiController.numberCheck),
-
             view('1_upper_case'.tr, deliverymanRegiController.uppercaseCheck),
-
             view('1_lower_case'.tr, deliverymanRegiController.lowercaseCheck),
-
             view('1_special_character'.tr, deliverymanRegiController.spatialCheck),
 
           ]),

@@ -8,6 +8,7 @@ import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
+
 class TimeSlotSection extends StatelessWidget {
   final bool fromCart;
   final CheckoutController checkoutController;

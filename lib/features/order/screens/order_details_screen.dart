@@ -1,8 +1,6 @@
-import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/offline_success_dialog.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/subscription_schedule_model.dart';
-import 'package:stackfood_multivendor/features/order/screens/invoice_screen.dart';
 import 'package:stackfood_multivendor/features/order/widgets/bottom_view_widget.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_info_section.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_pricing_section.dart';
@@ -20,7 +18,6 @@ import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final OrderModel? orderModel;
@@ -106,7 +103,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
           OrderModel? order = orderController.trackModel;
           bool subscription = false;
           List<String> schedules = [];
-
           if(orderController.orderDetails != null && order != null) {
             subscription = order.subscription != null;
 
@@ -151,7 +147,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
             }
           }
           double subTotal = itemsPrice + addOns;
-
           double total = itemsPrice + addOns - discount! + (taxIncluded! ? 0 : tax!) + deliveryCharge! - couponDiscount! + dmTips! + additionalCharge;
 
         return Scaffold(
@@ -164,7 +159,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                 Get.back();
               }
             }),
-
             endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
             body: SafeArea(
               child: (order != null && orderController.orderDetails != null) ? Column(children: [
@@ -175,37 +169,34 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBind
                   physics: const BouncingScrollPhysics(),
                   controller: scrollController,
                   child: FooterViewWidget(child: SizedBox(width: Dimensions.webMaxWidth,
-                    child: Column(children: [
+                    child: ResponsiveHelper.isDesktop(context) ? Padding(
+                      padding: const EdgeInsets.only(top: Dimensions.paddingSizeLarge),
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+                        Expanded(flex: 6, child: OrderInfoSection(order: order, orderController: orderController, schedules: schedules, showChatPermission: showChatPermission, contactNumber: widget.contactNumber,)),
+                        const SizedBox(width: Dimensions.paddingSizeLarge),
+
+                        Expanded(flex: 4,child: OrderPricingSection(
+                          itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
+                          couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: order.deliveryCharge!,
+                          total: order.orderAmount!, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
+                        ),)
+
+                      ]),
+                    ) : Column(children: [
+
                       OrderInfoSection(order: order, orderController: orderController, schedules: schedules, showChatPermission: showChatPermission, contactNumber: widget.contactNumber,),
+
                       OrderPricingSection(
                         itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
                         couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: order.deliveryCharge!,
                         total: order.orderAmount!, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        child: CustomButtonWidget(buttonText: "Download Invoice",
-                          onPressed: () {
-                            Get.dialog(InvoiceDialogWidget(
-                              restaurantLogo: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}/${order.restaurant!.logo}',
-                              restaurantName: order.restaurant!.name!,
-                              restaurantAddress:order.restaurant!.address!,
-                              restaurantPhone: order.restaurant!.phone!,
-                              orderController: orderController,
-                              itemsPrice: itemsPrice,
-                              addons: addOns,
-                              subtotal: subTotal,
-                              discount: discount!,
-                              tax: tax!,
-                              deliveryCharge: order.deliveryCharge!,
-                              total: order.orderAmount!,
-                              orderID: widget.orderId!, couponDiscount: couponDiscount!, order: order,  restaurantGst: order.restaurant!.gst_code!,
-                            ));
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: Dimensions.paddingSizeExtraLarge,)
+                      // OrderPricingSection(
+                      //   itemsPrice: itemsPrice, addOns: addOns, order: order, subTotal: subTotal, discount: discount,
+                      //   couponDiscount: couponDiscount, tax: tax!, dmTips: dmTips, deliveryCharge: deliveryCharge,
+                      //   total: total, orderController: orderController, orderId: widget.orderId, contactNumber: widget.contactNumber,
+                      // ),
 
                     ]),
                   )),

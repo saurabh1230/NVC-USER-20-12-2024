@@ -30,7 +30,7 @@ class WalletCardWidget extends StatelessWidget {
                 padding: EdgeInsets.all(isDesktop ? 35 : Dimensions.paddingSizeExtraLarge),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                  color: Get.find<ThemeController>().darkTheme ? Colors.white60 : const Color(0xff3A3E42),
+                  color: const Color(0xff3A3E42),
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
                   Text('wallet_amount'.tr,style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)),

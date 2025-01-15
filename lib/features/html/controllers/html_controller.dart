@@ -12,14 +12,9 @@ class HtmlController extends GetxController implements GetxService {
   String? get htmlText => _htmlText;
 
   Future<void> getHtmlText(HtmlType htmlType) async {
-    // Clear the _htmlText before making the API call
     _htmlText = null;
     update();
-
-    // Fetch the new HTML text from the API
     _htmlText = await htmlServiceInterface.getHtmlText(htmlType, Get.find<LocalizationController>().locale.languageCode);
     update();
   }
-
-
 }

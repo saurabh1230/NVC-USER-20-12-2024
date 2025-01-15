@@ -27,6 +27,10 @@ import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
 
+import '../../../util/images.dart';
+import '../widgets/banner_view_widget.dart';
+import '../widgets/web/cooked_and_uncooked_view_widget.dart';
+
 class Theme1HomeScreen extends StatelessWidget {
   final ScrollController scrollController;
   const Theme1HomeScreen({super.key, required this.scrollController});
@@ -137,10 +141,12 @@ class Theme1HomeScreen extends StatelessWidget {
           child: Center(child: SizedBox(
             width: Dimensions.webMaxWidth,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const CustomStaticBannerWidget(),
 
-              const BannerViewWidget1(),
+              // const BannerViewWidget1(),
               const BadWeatherWidget(),
               const CategoryWidget1(),
+
               const ItemCampaignWidget1(),
               isLogin ? const PopularStoreWidget1(isOrderAgainViewed: true, isPopular: false) : const SizedBox(),
               configModel.mostReviewedFoods == 1 ? const BestReviewedItemWidget1() : const SizedBox(),

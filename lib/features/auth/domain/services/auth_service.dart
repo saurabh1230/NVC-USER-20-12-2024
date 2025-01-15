@@ -4,9 +4,9 @@ import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_
 import 'package:stackfood_multivendor/features/auth/domain/reposotories/auth_repo_interface.dart';
 import 'package:stackfood_multivendor/features/auth/domain/services/auth_service_interface.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService implements AuthServiceInterface{
   final AuthRepoInterface authRepoInterface;
@@ -35,7 +35,7 @@ class AuthService implements AuthServiceInterface{
       }else {
         authRepoInterface.saveUserToken(response.body['token'], alreadyInApp: alreadyInApp);
         await authRepoInterface.updateToken();
-        // await authRepoInterface.clearGuestId();
+        await authRepoInterface.clearGuestId();
       }
       return ResponseModel(true, '${response.body['is_phone_verified']}${response.body['token']}');
     } else {
@@ -144,9 +144,9 @@ class AuthService implements AuthServiceInterface{
 
   @override
   Future<void> socialLogout() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    googleSignIn.disconnect();
-    await FacebookAuth.instance.logOut();
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
+    // googleSignIn.disconnect();
+    // await FacebookAuth.instance.logOut();
   }
 
   @override

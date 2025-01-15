@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:stackfood_multivendor/common/widgets/custom_shimmer.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
 import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
@@ -16,6 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import '../../../util/images.dart';
+import '../../category/controllers/category_controller.dart';
+
 class BannerViewWidget extends StatelessWidget {
   const BannerViewWidget({super.key});
 
@@ -23,17 +28,20 @@ class BannerViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetBuilder<HomeController>(builder: (homeController) {
-      return (homeController.bannerImageList != null && homeController.bannerImageList!.isEmpty) ? const SizedBox() : Container(
+      return (homeController.bannerImageList != null && homeController.bannerImageList!.isEmpty) ? const SizedBox() :
+      Container(
+
         width: MediaQuery.of(context).size.width,
-        height: GetPlatform.isDesktop ? 500 : MediaQuery.of(context).size.width * 0.405,
+        // height:  1,
         padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault),
         child: homeController.bannerImageList != null ? Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CarouselSlider.builder(
               options: CarouselOptions(
-                aspectRatio: 3.0,
-                enlargeFactor: 0.3,
+                aspectRatio: 2.9,
+                // viewportFraction: 0.5,
+                enlargeFactor: 0.2,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 disableCenter: true,
@@ -58,8 +66,9 @@ class BannerViewWidget extends StatelessWidget {
                       );
                     }else if(homeController.bannerDataList![index] is Restaurant) {
                       Restaurant restaurant = homeController.bannerDataList![index];
+                      String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-');
                       Get.toNamed(
-                        RouteHelper.getRestaurantRoute(restaurant.id),
+                        RouteHelper.getRestaurantRoute(slug,restaurant.id!),
                         arguments: RestaurantScreen(restaurant: restaurant),
                       );
                     }else if(homeController.bannerDataList![index] is BasicCampaignModel) {
@@ -78,7 +87,7 @@ class BannerViewWidget extends StatelessWidget {
                       child: GetBuilder<SplashController>(builder: (splashController) {
                         return CustomImageWidget(
                           image: '$baseUrl/${homeController.bannerImageList![index]}',
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         );
                       },
                       ),
@@ -87,8 +96,8 @@ class BannerViewWidget extends StatelessWidget {
                 );
               },
             ),
-
-            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+            //
+            // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.center,
             //   children: homeController.bannerImageList!.map((bnr) {
@@ -111,13 +120,216 @@ class BannerViewWidget extends StatelessWidget {
         ) : Shimmer(
           duration: const Duration(seconds: 2),
           enabled: homeController.bannerImageList == null,
-          child: Container(margin: const EdgeInsets.symmetric(horizontal: 10), decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-            color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300],
-          )),
+          child: CarouselSlider.builder(
+            options: CarouselOptions(
+              aspectRatio: 2.9,
+              // viewportFraction: 0.5,
+              enlargeFactor: 0.2,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              disableCenter: true,
+              autoPlayInterval: const Duration(seconds: 7),
+              onPageChanged: (index, reason) {
+                homeController.setCurrentIndex(index, true);
+              },
+            ),
+            itemCount: 1,
+            itemBuilder: (context, index, _) {
+              return InkWell(
+                onTap: () {
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                    boxShadow: [BoxShadow(color: Colors.grey[Get.isDarkMode ? 800 : 200]!, spreadRadius: 1, blurRadius: 5)],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       );
     });
   }
 
+}
+
+class CustomStaticBannerWidget extends StatelessWidget {
+  const CustomStaticBannerWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Get.find<CategoryController>().getCategoryList(false);
+
+    return GetBuilder<CategoryController>(builder: (categoryController) {
+      return ResponsiveHelper.isMobile(context) ?
+      Container(
+        width : Get.size.width,
+        // padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+        child: Image.asset(Images.topBanner,),)
+          :
+        categoryController.categoryList != null ?
+        Stack(
+          children: [
+            Container(
+              // color: const Color(0xff171a29),
+            height: 300,width : Get.size.width,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomShimmerEffect(
+                          child: Container(
+                            height: 250,
+                            width: Get.size.width,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            ),
+
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15,),
+                      Expanded(
+                        child: CustomShimmerEffect(
+                          child: Container(
+                            height: 250,
+                            width: Get.size.width,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            ),
+
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15,),
+                      Expanded(
+                        child: CustomShimmerEffect(
+                          child: Container(
+                            height: 250,
+                            width: Get.size.width,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            ),
+
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15,),
+                      Expanded(
+                        child: CustomShimmerEffect(
+                          child: Container(
+                            height: 250,
+                            width: Get.size.width,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                            ),
+
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // const CustomLoader(),
+                // Center(child: Image.asset("assets/image/loadingImage.png",height: 40,color: Colors.white,))
+
+              ],
+            ),
+            ),
+            Image.asset(Images.topBanner,fit: BoxFit.cover,height: 300, width :Get.size.width),
+          ],
+        ) :
+      Container(width : Get.size.width,height: 300,
+        // color: const Color(0xff171a29),
+        // padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+        child:  Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomShimmerEffect(
+                      child: Container(
+                        height: 250,
+                        width: Get.size.width,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        ),
+
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15,),
+                  Expanded(
+                    child: CustomShimmerEffect(
+                      child: Container(
+                        height: 250,
+                        width: Get.size.width,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        ),
+
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15,),
+                  Expanded(
+                    child: CustomShimmerEffect(
+                      child: Container(
+                        height: 250,
+                        width: Get.size.width,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        ),
+
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15,),
+                  Expanded(
+                    child: CustomShimmerEffect(
+                      child: Container(
+                        height: 250,
+                        width: Get.size.width,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        ),
+
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const CustomLoader(),
+            // Center(child: Image.asset("assets/image/loadingImage.png",height: 40,color: Colors.white,))
+
+          ],
+        ),
+        );
+    });
+
+  }
 }

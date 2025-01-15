@@ -29,7 +29,7 @@ class WebNewOnStackFoodViewWidget extends StatelessWidget {
                 child: Row(children: [
                   Expanded(
                     child: Column(children: [
-                      Text('${'new_on'.tr} ${AppConstants.appName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                      Text('${'new_on'.tr} ${AppConstants.appName}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).primaryColor)),
                     ],
                     ),
                   ),

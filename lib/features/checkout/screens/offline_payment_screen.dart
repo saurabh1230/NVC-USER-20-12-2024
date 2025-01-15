@@ -35,7 +35,6 @@ class OfflinePaymentScreen extends StatefulWidget {
 }
 
 class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
-  //PageController pageController = PageController(viewportFraction: 0.85, initialPage: Get.find<OrderController>().selectedOfflineBankIndex);
   final TextEditingController _customerNoteController = TextEditingController();
   final FocusNode _customerNoteNode = FocusNode();
   final ScrollController scrollController = ScrollController();
@@ -83,9 +82,8 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
               child: Center(
                 child: SizedBox(
                   width: Dimensions.webMaxWidth,
-                  child: /*ResponsiveHelper.isMobile(context) ?*/ Column(mainAxisSize: MainAxisSize.min, children: [
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
                     const SizedBox(height: Dimensions.paddingSizeLarge),
-
                     Theme(
                       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                       child: Container(
@@ -112,14 +110,10 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
                                     border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 2),
                                   ),
                                   child: Column(children: [
-
                                     Row(children: [
-
                                       Image.asset(Images.bankInfoIcon, width: 25, height: 25, color: Theme.of(context).primaryColor),
                                       const SizedBox(width: Dimensions.paddingSizeSmall),
-
                                       Text('${'bank_information'.tr} (${checkoutController.offlineMethodList![checkoutController.selectedOfflineBankIndex].methodName})', style: robotoMedium),
-
                                     ]),
                                     const SizedBox(height: Dimensions.paddingSizeDefault),
 
@@ -137,7 +131,6 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
                                         );
                                       },
                                     ),
-
                                   ]),
                                 );
                               },
@@ -206,7 +199,6 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
                             onPressed: () async {
                               bool complete = _completelyProvideInput(methodInformation, checkoutController);
                               String text = _setMessageText(methodInformation, checkoutController);
-
                               if(complete) {
                                 await _saveOfflineInformation(checkoutController, methodInformation);
                               } else {
@@ -236,7 +228,6 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
               onPressed: () async {
                 bool complete = _completelyProvideInput(methodInformation, checkoutController);
                 String text = _setMessageText(methodInformation, checkoutController);
-
                 if(complete) {
                   await _saveOfflineInformation(checkoutController, methodInformation);
                 } else {
@@ -245,7 +236,6 @@ class _OfflinePaymentScreenState extends State<OfflinePaymentScreen> {
               },
             ),
           ),
-
         ]) : const Center(child: CircularProgressIndicator());
       }),
     );

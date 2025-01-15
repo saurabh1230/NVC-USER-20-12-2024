@@ -1,6 +1,7 @@
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
+import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
@@ -41,75 +42,97 @@ class _GuestTrackOrderInputViewWidgetState extends State<GuestTrackOrderInputVie
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge, vertical: Dimensions.paddingSizeLarge),
+      padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge,),
       child: Center(
         child: SingleChildScrollView(
-          child: FooterViewWidget(
-            child: SizedBox(
-              width: Dimensions.webMaxWidth,
-              child: Column(children: [
-
-                SizedBox(height: ResponsiveHelper.isDesktop(context) ? 100 : 0),
-
-                CustomTextFieldWidget(
-                  titleText: 'order_id'.tr,
-                  hintText: '',
-                  controller: _orderIdController,
-                  focusNode: _orderFocus,
-                  nextFocus: _phoneFocus,
-                  inputType: TextInputType.number,
-                  showTitle: ResponsiveHelper.isDesktop(context),
+          child: SizedBox(width: Dimensions.webMaxWidth,
+            child: Column(
+              children: [
+                const SizedBox(height: Dimensions.paddingSizeLarge,),
+                Align(alignment: Alignment.topLeft,
+                  child: ArrowIconButtonWidget(isLeft: true,
+                    paddingLeft: Dimensions.paddingSizeSmall,
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getMainRoute(1.toString()));
+                    },
+                  ),
                 ),
-                const SizedBox(height: Dimensions.paddingSizeDefault),
+                Container(width: 550,
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeOverLarge),
+                  margin:   EdgeInsets.only(left:Dimensions.paddingSizeDefault,
+                    right:Dimensions.paddingSizeDefault,
+                    bottom:Dimensions.paddingSizeDefault,
+                    top:ResponsiveHelper.isDesktop(context) ? 50 : 50,),
+                  decoration: context.width > 550 ? BoxDecoration(
+                    color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                    boxShadow: null,
+                  ) : null,
+                  child: Column(children: [
+                    SizedBox(height: ResponsiveHelper.isDesktop(context) ? 50 : 50),
 
-                CustomTextFieldWidget(
-                  titleText: 'enter_phone_number'.tr,
-                  hintText: '',
-                  controller: _phoneNumberController,
-                  focusNode: _phoneFocus,
-                  inputType: TextInputType.phone,
-                  inputAction: TextInputAction.done,
-                  isPhone: true,
-                  showTitle: ResponsiveHelper.isDesktop(context),
-                  onCountryChanged: (CountryCode countryCode) {
-                    _countryDialCode = countryCode.dialCode;
-                  },
-                  countryDialCode: _countryDialCode ?? Get.find<LocalizationController>().locale.countryCode,
-                ),
-                const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                    CustomTextFieldWidget(
+                      titleText: 'order_id'.tr,
+                      hintText: '',
+                      controller: _orderIdController,
+                      focusNode: _orderFocus,
+                      nextFocus: _phoneFocus,
+                      inputType: TextInputType.number,
+                      showTitle: ResponsiveHelper.isDesktop(context),
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
+                    CustomTextFieldWidget(
+                      titleText: 'enter_phone_number'.tr,
+                      hintText: '',
+                      controller: _phoneNumberController,
+                      focusNode: _phoneFocus,
+                      inputType: TextInputType.phone,
+                      inputAction: TextInputAction.done,
+                      isPhone: true,
+                      showTitle: ResponsiveHelper.isDesktop(context),
+                      onCountryChanged: (CountryCode countryCode) {
+                        _countryDialCode = countryCode.dialCode;
+                      },
+                      countryDialCode: _countryDialCode ?? Get.find<LocalizationController>().locale.countryCode,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
 
-                GetBuilder<OrderController>(
-                    builder: (orderController) {
-                      return CustomButtonWidget(
-                        buttonText: 'track_order'.tr,
-                        isLoading: orderController.isLoading,
-                        width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
-                        onPressed: () async {
-                          String phone = _phoneNumberController.text.trim();
-                          String orderId = _orderIdController.text.trim();
-                          String numberWithCountryCode = _countryDialCode! + phone;
-                          PhoneValid phoneValid = await CustomValidator.isPhoneValid(numberWithCountryCode);
-                          numberWithCountryCode = phoneValid.phone;
+                    GetBuilder<OrderController>(
+                        builder: (orderController) {
+                          return CustomButtonWidget(
+                            buttonText: 'track_order'.tr,
+                            isLoading: orderController.isLoading,
+                            width: /*ResponsiveHelper.isDesktop(context) ? 300 :*/ double.infinity,
+                            onPressed: () async {
+                              String phone = _phoneNumberController.text.trim();
+                              String orderId = _orderIdController.text.trim();
+                              String numberWithCountryCode = _countryDialCode! + phone;
+                              PhoneValid phoneValid = await CustomValidator.isPhoneValid(numberWithCountryCode);
+                              numberWithCountryCode = phoneValid.phone;
 
-                          if(orderId.isEmpty) {
-                            showCustomSnackBar('please_enter_order_id'.tr);
-                          } else if (phone.isEmpty) {
-                            showCustomSnackBar('enter_phone_number'.tr);
-                          }else if (!phoneValid.isValid) {
-                            showCustomSnackBar('invalid_phone_number'.tr);
-                          } else {
-                            orderController.trackOrder(orderId, null, false, contactNumber: numberWithCountryCode, fromGuestInput: true).then((response) {
-                              if(response.isSuccess) {
-                                Get.toNamed(RouteHelper.getGuestTrackOrderScreen(orderId, numberWithCountryCode));
+                              if(orderId.isEmpty) {
+                                showCustomSnackBar('please_enter_order_id'.tr);
+                              } else if (phone.isEmpty) {
+                                showCustomSnackBar('enter_phone_number'.tr);
+                              }else if (!phoneValid.isValid) {
+                                showCustomSnackBar('invalid_phone_number'.tr);
+                              } else {
+                                orderController.trackOrder(orderId, null, false, contactNumber: numberWithCountryCode, fromGuestInput: true).then((response) {
+                                  if(response.isSuccess) {
+                                    Get.toNamed(RouteHelper.getGuestTrackOrderScreen(orderId, numberWithCountryCode));
+                                  }
+                                });
                               }
-                            });
-                          }
-                        },
-                      );
-                    }
-                )
-
-              ]),
+                            },
+                          );
+                        }
+                    ),
+                    SizedBox(height: ResponsiveHelper.isDesktop(context) ? 50 : 50),
+                  ]),
+                ),
+                const FooterViewWidget(minHeight: 0.0,
+                    child: SizedBox.shrink())
+              ],
             ),
           ),
         ),

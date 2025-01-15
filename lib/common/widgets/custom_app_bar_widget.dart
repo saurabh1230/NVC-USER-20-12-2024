@@ -20,26 +20,20 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20.0), // Adjust the radius as needed
-          bottomRight: Radius.circular(20.0), // Adjust the radius as needed
-        ),
-      ),
-      title: Text(title, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: bgColor == null ? Colors.white : Theme.of(context).cardColor)),
+    return /*GetPlatform.isDesktop ? */ WebMenuBar() /*: AppBar(
+      title: Text(title, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: bgColor == null ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).cardColor)),
       centerTitle: true,
       leading: isBackButtonExist ? IconButton(
-        icon: const Icon(Icons.arrow_back,color: Colors.white,),
+        icon: const Icon(Icons.arrow_back_ios),
         color: bgColor == null ? Theme.of(context).textTheme.bodyLarge!.color : Theme.of(context).cardColor,
         onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
       ) : const SizedBox(),
-      backgroundColor: bgColor ?? Theme.of(context).primaryColor,
+      backgroundColor: bgColor ?? Theme.of(context).cardColor,
       elevation: 0,
       actions: showCart || onVegFilterTap != null ? [
         showCart ? IconButton(
           onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
-          icon: const CartWidget(color: Colors.white, size: 25),
+          icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
         ) : const SizedBox(),
 
         onVegFilterTap != null ? VegFilterWidget(
@@ -48,9 +42,9 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
           fromAppBar: true,
         ) : const SizedBox(),
       ] : [const SizedBox()],
-    );
+    )*/;
   }
 
   @override
-  Size get preferredSize => Size(Dimensions.webMaxWidth, GetPlatform.isDesktop ? 100 : 50);
+  Size get preferredSize => const Size(Dimensions.webMaxWidth,  90 );
 }

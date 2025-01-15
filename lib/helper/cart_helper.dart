@@ -6,7 +6,6 @@ import 'package:stackfood_multivendor/common/models/product_model.dart' as pv;
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 
 class CartHelper {
-
   static List<OrderVariation> getSelectedVariations ({required List<pv.Variation>? productVariations, required List<List<bool?>> selectedVariations}) {
     List<OrderVariation> variations = [];
     for(int i=0; i<productVariations!.length; i++) {
@@ -39,58 +38,7 @@ class CartHelper {
     return listOfAddOnQty;
   }
 
-  static List<CartModel> formatOnlineCartToLocalCart({required List<OnlineCartModel> onlineCartModel}) {
 
-    List<CartModel> cartList = [];
-    for (OnlineCartModel cart in onlineCartModel) {
-      double price = cart.price!;
-      double? discount = cart.product!.restaurantDiscount == 0 ? cart.product!.discount! : cart.product!.restaurantDiscount!;
-      String? discountType = (cart.product!.restaurantDiscount == 0) ? cart.product!.discountType : 'percent';
-      double discountedPrice = PriceConverter.convertWithDiscount(price, discount, discountType)!;
-
-      double? discountAmount = price - discountedPrice;
-      int? quantity = cart.quantity;
-
-      List<List<bool?>> selectedFoodVariations = [];
-      List<bool> collapsVariation = [];
-
-      for(int index=0; index<cart.product!.variations!.length; index++) {
-        selectedFoodVariations.add([]);
-        collapsVariation.add(true);
-        for(int i=0; i < cart.product!.variations![index].variationValues!.length; i++) {
-          if(cart.product!.variations![index].variationValues![i].isSelected ?? false){
-            selectedFoodVariations[index].add(true);
-          } else {
-            selectedFoodVariations[index].add(false);
-          }
-        }
-      }
-
-      List<AddOn> addOnIdList = [];
-      List<AddOns> addOnsList = [];
-      for (int index = 0; index < cart.addOnIds!.length; index++) {
-        addOnIdList.add(AddOn(id: cart.addOnIds![index], quantity: cart.addOnQtys![index]));
-        for (int i=0; i< cart.product!.addOns!.length; i++) {
-          if(cart.addOnIds![index] == cart.product!.addOns![i].id) {
-            addOnsList.add(AddOns(id: cart.product!.addOns![i].id, name: cart.product!.addOns![i].name, price: cart.product!.addOns![i].price));
-          }
-        }
-      }
-
-      int? quantityLimit = cart.product!.quantityLimit;
-
-      cartList.add(
-        CartModel(
-          cart.id, price, discountedPrice, discountAmount, quantity,
-          addOnIdList, addOnsList, false, cart.product, selectedFoodVariations, quantityLimit,
-        ),
-      );
-
-    }
-
-
-    return cartList;
-  }
 
   static String setupVariationText({required CartModel cart}) {
     String variationText = '';

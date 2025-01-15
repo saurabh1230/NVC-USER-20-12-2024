@@ -2,6 +2,12 @@ import 'package:stackfood_multivendor/util/app_constants.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:flutter/material.dart';
 
+final robotoLight = TextStyle(
+  fontFamily: AppConstants.fontFamily,
+  fontWeight: FontWeight.w200,
+  fontSize: Dimensions.fontSizeDefault,
+);
+
 final robotoRegular = TextStyle(
   fontFamily: AppConstants.fontFamily,
   fontWeight: FontWeight.w400,

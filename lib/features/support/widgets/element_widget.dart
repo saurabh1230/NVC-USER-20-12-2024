@@ -17,13 +17,15 @@ class ElementWidget extends StatelessWidget {
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset(image, height: isDesktop ? 70 : 45, width: isDesktop ? 70 : 45, fit: BoxFit.cover),
         SizedBox(height: isDesktop ? Dimensions.paddingSizeExtraLarge : 0),
-
-        Text(title, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-        SizedBox(height: isDesktop ? Dimensions.paddingSizeExtraLarge : 0),
+        Text(title, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault,
+        color: Theme.of(context).primaryColor),textAlign: TextAlign.center,),
+        // SizedBox(height: isDesktop ? Dimensions.paddingSizeExtraLarge : 0),
+         Divider(color: Colors.black.withOpacity(0.80),),
 
         Text(
           subTitle,
-          style: robotoMedium.copyWith(fontSize: isDesktop ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor),
+          textAlign: TextAlign.center,
+          style: robotoMedium.copyWith(fontSize: isDesktop ? Dimensions.fontSizeSmall : Dimensions.fontSizeDefault, color: Colors.black),
         ),
 
       ]),

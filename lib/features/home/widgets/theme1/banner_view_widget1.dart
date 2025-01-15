@@ -59,11 +59,12 @@ class BannerViewWidget1 extends StatelessWidget {
                         );
                       }else if(bannerDataList[index] is Restaurant) {
                         Restaurant restaurant = bannerDataList[index];
+                        String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-');
                         Get.toNamed(
-                          RouteHelper.getRestaurantRoute(restaurant.id),
+                          RouteHelper.getRestaurantRoute(slug, restaurant.id!),
                           arguments: RestaurantScreen(restaurant: restaurant),
                         );
-                      }else if(bannerDataList[index] is BasicCampaignModel) {
+                      } else if(bannerDataList[index] is BasicCampaignModel) {
                         BasicCampaignModel campaign = bannerDataList[index];
                         Get.toNamed(RouteHelper.getBasicCampaignRoute(campaign));
                       }

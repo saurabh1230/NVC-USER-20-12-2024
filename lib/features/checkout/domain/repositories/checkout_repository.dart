@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:stackfood_multivendor/api/api_client.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/offline_method_model.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
@@ -16,28 +15,21 @@ class CheckoutRepository implements CheckoutRepositoryInterface {
   Future<int?> getDmTipMostTapped() async {
     int mostDmTipAmount = 0;
     Response response = await apiClient.getData(AppConstants.mostTipsUri);
-
-    if (response.statusCode == 200) {
-      // Safely handle null values
-      mostDmTipAmount = response.body['most_tips_amount'] ?? 0;
+    if(response.statusCode == 200){
+      mostDmTipAmount = response.body['most_tips_amount'];
     }
     return mostDmTipAmount;
   }
-
 
   @override
   Future<List<OfflineMethodModel>> getOfflineMethodList() async {
     List<OfflineMethodModel> offlineMethodList = [];
     Response response = await apiClient.getData(AppConstants.offlineMethodListUri);
-
     if (response.statusCode == 200) {
-      response.body.values.forEach(
-            (method) => offlineMethodList.add(OfflineMethodModel.fromJson(method)),
-      );
+      response.body.forEach((method) => offlineMethodList.add(OfflineMethodModel.fromJson(method)));
     }
     return offlineMethodList;
   }
-
 
   @override
   Future<double> getExtraCharge(double? distance) async {

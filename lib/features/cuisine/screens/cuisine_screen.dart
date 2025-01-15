@@ -10,6 +10,7 @@ import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class CuisineScreen extends StatefulWidget {
   const CuisineScreen({super.key});
 
@@ -37,7 +38,6 @@ class _CuisineScreenState extends State<CuisineScreen> {
           child: Column(
             children: [
               WebScreenTitleWidget(title: 'cuisines'.tr),
-
               Center(child: FooterViewWidget(
                 child: SizedBox(
                   width: Dimensions.webMaxWidth,

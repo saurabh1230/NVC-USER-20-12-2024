@@ -1,7 +1,6 @@
 import 'package:stackfood_multivendor/features/checkout/controllers/checkout_controller.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
@@ -22,7 +21,7 @@ class PartialPayView extends StatelessWidget {
         && Get.find<ProfileController>().userInfoModel!.walletBalance! > 0 ? AnimatedContainer(
           duration: const Duration(seconds: 2),
           decoration: BoxDecoration(
-            color: Get.find<ThemeController>().darkTheme ? Theme.of(context).primaryColor.withOpacity(0.2) : Theme.of(context).primaryColor.withOpacity(0.05),
+            color:  Theme.of(context).primaryColor.withOpacity(0.05),
             border: Border.all(color: Theme.of(context).primaryColor, width: 0.5),
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
             image: const DecorationImage(

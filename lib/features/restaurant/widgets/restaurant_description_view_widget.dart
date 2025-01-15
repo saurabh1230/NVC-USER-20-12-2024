@@ -23,8 +23,10 @@ class RestaurantDescriptionViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isAvailable = Get.find<RestaurantController>().isRestaurantOpenNow(restaurant!.active!, restaurant!.schedules);
     Color? textColor = ResponsiveHelper.isDesktop(context) ? Colors.white : null;
+
     return Column(children: [
       ResponsiveHelper.isDesktop(context) ? Row(children: [
+
         ClipRRect(
           borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
           child: Stack(children: [

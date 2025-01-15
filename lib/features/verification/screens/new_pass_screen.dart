@@ -154,7 +154,7 @@ class _NewPassScreenState extends State<NewPassScreen> {
         if(!ResponsiveHelper.isDesktop(context)) {
           Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
         }else{
-          Get.offAllNamed(RouteHelper.getInitialRoute(fromSplash: false))?.then((value) {
+          Get.offAllNamed(RouteHelper.getInitialRoute(/*fromSplash: false*/))?.then((value) {
             Get.dialog(const SignInScreen(exitFromApp: true, backFromThis: false));
           });
         }

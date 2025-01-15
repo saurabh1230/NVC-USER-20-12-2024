@@ -27,9 +27,12 @@ class CustomButtonWidget extends StatelessWidget {
           ? Colors.transparent : color ?? Theme.of(context).primaryColor,
       minimumSize: Size(width != null ? width! : Dimensions.webMaxWidth, height != null ? height! : 50),
       padding: EdgeInsets.zero,
+      side: BorderSide(color: Theme.of(context).primaryColor,width: 1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius),
       ),
+
+
     );
 
     return Center(child: SizedBox(width: width ?? Dimensions.webMaxWidth, child: Padding(

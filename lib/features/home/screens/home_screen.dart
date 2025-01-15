@@ -1,38 +1,43 @@
-import 'package:flutter/cupertino.dart';
+import 'package:stackfood_multivendor/common/widgets/customizable_space_bar_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
-import 'package:stackfood_multivendor/features/home/screens/cooked_and_uncooked_banner_Widget.dart';
-import 'package:stackfood_multivendor/features/home/screens/uncooked_particle_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/new_on_stackfood_view_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/mobile_all_restaurant.dart';
+import 'package:stackfood_multivendor/features/home/screens/mobile_category_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/mobile_popular_restaurant_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/particular_cooked_product_widget.dart';
+import 'package:stackfood_multivendor/features/home/screens/petfood_and_masala_particle_view.dart';
+import 'package:stackfood_multivendor/features/home/widgets/all_restaurant_filter_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/mobile_view_particle/cooked_particle_view_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/mobile_view_particle/uncooked_particle_view.dart';
+import 'package:stackfood_multivendor/features/home/widgets/particular_category_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/web/web_new_on_stackfood_view_widget.dart';
+import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
 import 'package:stackfood_multivendor/features/home/screens/web_home_screen.dart';
-import 'package:stackfood_multivendor/features/home/widgets/all_restaurant_filter_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/all_restaurants_widget.dart';
+import 'package:stackfood_multivendor/features/home/widgets/bad_weather_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/banner_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/best_review_item_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/enjoy_off_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/order_again_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/popular_foods_nearby_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/popular_restaurants_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/screens/theme1_home_screen.dart';
-import 'package:stackfood_multivendor/features/home/widgets/today_trends_view_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
 import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
 import 'package:stackfood_multivendor/features/notification/controllers/notification_controller.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/common/widgets/customizable_space_bar_widget.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
 import 'package:stackfood_multivendor/features/address/controllers/address_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
 import 'package:stackfood_multivendor/features/cuisine/controllers/cuisine_controller.dart';
-import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/product_controller.dart';
 import 'package:stackfood_multivendor/features/review/controllers/review_controller.dart';
 import 'package:stackfood_multivendor/helper/address_helper.dart';
+import 'package:stackfood_multivendor/helper/responsive.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
@@ -42,11 +47,8 @@ import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
 import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../address/domain/models/address_model.dart';
-import '../../location/domain/models/zone_response_model.dart';
-import '../widgets/Pet_and_masala_partilcle.dart';
-import 'cooked_particle_view_widget.dart';
+import '../widgets/web/cooked_and_uncooked_view_widget.dart';
+import '../widgets/web/web_banner_view_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -107,10 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
     double scrollPoint = 0.0;
     return GetBuilder<LocalizationController>(builder: (localizationController) {
       return Scaffold(
-        appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+        appBar: ResponsiveHelper.isDesktop(context) ?  WebMenuBar() : null,
         endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
+        body: ResponsiveHelper.isMobile(context) ?
+        SafeArea(
           top: (Get.find<SplashController>().configModel!.theme == 2),
           child: RefreshIndicator(
             onRefresh: () async {
@@ -274,53 +277,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Center(child: SizedBox(
                     width: Dimensions.webMaxWidth,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const BannerViewWidget(),
-                      const CookedAndUncookedBannerWidget(),
-
-                      const WhatOnYourMindViewWidget(),
-                      // const PetFoodAndMasalaParticle(),
-
-                      const TodayTrendsViewWidget(),
-
-                      // const LocationBannerViewWidget(),
-
-                      _isLogin ? const OrderAgainViewWidget() : const SizedBox(),
+                       ResponsiveHelper.isMobile(context) ?
+                      BannerViewWidget() :
+                      CarouselBannerWidget(),
+                      MobileWhatOnYourMindViewWidget(),
+                      const CookedAndUnCookedView(),
+                      const SizedBox(height: Dimensions.paddingSizeDefault,),
                       Image.asset(Images.uncookedPromotionalBanner),
+                      const SizedBox(height: Dimensions.paddingSizeDefault,),
                       const UNCookedParticleViewWidget(isPopular: false,),
+                      const SizedBox(height: Dimensions.paddingSizeDefault,),
                       Image.asset(Images.cookedPromotionalBanner),
                       const CookedParticleViewWidget(isPopular: false,),
-
-                      _configModel!.mostReviewedFoods == 1 ?  const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
-
-                      /*const CuisineViewWidget(),*/
-
-                      _configModel.popularRestaurant == 1 ? const PopularRestaurantsViewWidget() : const SizedBox(),
-
-                      // _isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: true) : const SizedBox(),
-
-                      // _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
-
-                      _configModel.newRestaurant == 1 ? const NewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
+                      // const PetFoodAndMasalaParticle(),
+                      _configModel!.mostReviewedFoods == 1 ?   const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
+                      _configModel.popularRestaurant == 1 ? const MobilePopularRestaurantsViewWidget() : const SizedBox(),
+                      _configModel.popularFood == 1 ? const PopularFoodNearbyViewWidget() : const SizedBox(),
                       const PromotionalBannerViewWidget(),
 
                     ]),
                   )),
                 ),
-                // SliverToBoxAdapter(
-                //   child: Center(child: SizedBox(
-                //     width: Dimensions.webMaxWidth,
-                //     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                //       Image.asset("assets/image/fssai.png",height: 80,)
-                //
-                //     ]),
-                //   )),
-                // ),
-
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverDelegate(
-                    height: 60,
-                    child: const AllRestaurantFilterWidget(),
+                    height: 50,
+                    child:  const AllRestaurantFilterWidget(),
                   ),
                 ),
 
@@ -328,14 +310,145 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(child: Center(child: FooterViewWidget(
                   child: Padding(
                     padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
-                    child: AllRestaurantsWidget(scrollController: _scrollController),
+                    child: MobileAllRestaurantsWidget(scrollController: _scrollController),
                   ),
                 ))),
-
               ],
             ),
           ),
+        ) : 
+           CustomScrollView(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      slivers: [
+         SliverToBoxAdapter(
+             child:CarouselBannerWidget()),
+        // const SliverToBoxAdapter(child:
+        // CustomStaticBannerWidget(),
+        // ),
+        // SliverToBoxAdapter(child: GetBuilder<HomeController>(builder: (bannerController) {
+        //   return bannerController.bannerImageList == null ?
+        //   CarouselBannerWidget(homeController: bannerController)
+        //       : bannerController.bannerImageList!.isEmpty ? const SizedBox() :
+        //   CarouselBannerWidget(homeController: bannerController);
+        // })),
+        // SliverToBoxAdapter(child: GetBuilder<HomeController>(builder: (bannerController) {
+        //   return bannerController.bannerImageList == null ?
+        //   WebBannerViewWidget(homeController: bannerController)
+        //       : bannerController.bannerImageList!.isEmpty ? const SizedBox() :
+        //   WebBannerViewWidget(homeController: bannerController);
+        // })),
+
+         SliverToBoxAdapter(
+          child: Center(child: SizedBox(width: Dimensions.webMaxWidth,
+              child: Column(
+                children: [
+                  const SizedBox(height: Dimensions.paddingSizeExtraLarge,),
+                  // CarouselBannerWidget(),
+                  WhatOnYourMindViewWidget(isTitle: true,isBackButton: false,),
+                ],
+              )),
+          ),
         ),
+
+       /* SliverToBoxAdapter(child: GetBuilder<HomeController>(builder: (bannerController) {
+          return bannerController.bannerImageList == null ? WebBannerViewWidget(homeController: bannerController)
+              : bannerController.bannerImageList!.isEmpty ? const SizedBox() : WebBannerViewWidget(homeController: bannerController);
+        })),*/
+
+
+         SliverToBoxAdapter(
+            child: Center(child: SizedBox(
+              width: Dimensions.webMaxWidth,
+              child: Column(children: [
+                const CookedAndUnCookedView(),
+                // const ParticularCategoryWidget(),
+                const ParticularCategoryWidget(categoryID: '12', categoryName: 'uncooked', categoryBanner: Images.foodTypeUncookedBanner, heading: 'Latest UnCooked Items',),
+                const ParticularUnCookedCategoryWidget(categoryID: '12', categoryName: 'cooked', categoryBanner: Images.foodTypeCookedBanner, heading: 'Latest UnCooked Items',),
+                const PetFoodAndMasalaParticle(),
+
+                // PetFoodCategoryWidget(categoryID: '12', categoryName: 'cooked',
+                //   categoryBanner: Images.unCookedBanner,
+                //   heading: 'Latest UnCooked Items',),
+
+                // PopularFishItems(categoryID: '14', categoryName: 'Uncooked', categoryBanner: Images.unCookedBanner, heading: 'Latest UnCooked Items',),
+                // PopularMuttonItems(categoryID: '18', categoryName: 'Uncooked', categoryBanner: Images.unCookedBanner, heading: 'Latest UnCooked Items',),
+                // PetFoodItems(categoryID: '69', categoryName: 'Nvc Pet Food', categoryBanner: Images.unCookedBanner, heading: 'Nvc Pet Food Items',),
+
+                // const ParticularCategoryWidget(categoryID: '8', categoryName: 'Uncooked', categoryBanner: Images.cookedBanner, heading: 'Top Recommended',),
+
+                // const CookedCategoryWidget(categoryID: '7', categoryName: 'Cooked', categoryBanner: Images.cookedBanner,),
+
+                // const ParticularCartegoryWidget(categoryID: '1', categoryName: 'uncooked',),
+
+                // const BadWeatherWidget(),
+
+                // const TodayTrendsViewWidget(),
+
+                // isLogin ? const OrderAgainViewWidget() : const SizedBox(),
+
+
+                _configModel!.popularFood == 1 ?   const BestReviewItemViewWidget(isPopular: false) : const SizedBox(),
+
+               /* const WebCuisineViewWidget(),*/
+                // PopularFoodScreen(isPopular: true, fromIsRestaurantFood: false,),
+
+                PopularRestaurantsViewWidget(),
+
+                // const PopularFoodNearbyViewWidget(),
+
+                // isLogin ? const PopularRestaurantsViewWidget(isRecentlyViewed: false,) : const SizedBox(),
+                //
+                /*const WebLocationAndReferBannerViewWidget(),*/
+
+                _configModel!.newRestaurant == 1 ? const WebNewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
+
+
+                // AllVendorsWidget(/*scrollController: widget.scrollController*/),
+                const AllUncookedVendorsWidget(),
+                const AllCookedVendorsWidget(),
+                const PromotionalBannerViewWidget(),
+                // PopularFoodScreen(isPopular: true, fromIsRestaurantFood: false,),
+              ]),
+            ))
+        ),
+
+
+
+
+
+
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: SliverDelegate(
+            child:  const AllRestaurantFilterWidget(),
+          ),
+        ),
+        // SliverPersistentHeader(
+        //   pinned: true,
+        //   delegate: SliverDelegate(
+        //     child:  AllRestaurantFilterWidget(),
+        //   ),
+        // ),
+        SliverToBoxAdapter(child: Center(child: FooterViewWidget(
+          child: Padding(
+            padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.only(bottom: Dimensions.paddingSizeOverLarge),
+            child: MobileAllRestaurantsWidget(scrollController: _scrollController),
+          ),
+        ))),
+
+        // SliverToBoxAdapter(child: SizedBox(width: Dimensions.webMaxWidth,
+        //   child: AllFoodWidget(scrollController: widget.scrollController),
+        // )),
+        //  SliverToBoxAdapter(child: SizedBox(width: Dimensions.webMaxWidth,
+        //   child: FooterViewWidget(minHeight: 0.0,
+        //     child: AllFoodWidget(scrollController: widget.scrollController),),
+        // )),
+
+
+
+      ],
+    ),
       );
     });
   }

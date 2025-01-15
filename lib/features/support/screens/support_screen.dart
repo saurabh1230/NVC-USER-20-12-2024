@@ -29,7 +29,7 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: CustomAppBarWidget(title: 'help_support'.tr, bgColor: Theme.of(context).primaryColor),
+      appBar: CustomAppBarWidget(title: 'help_support'.tr, bgColor: Theme.of(context).cardColor),
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       body: Center(
         child: ResponsiveHelper.isDesktop(context) ? SingleChildScrollView(
@@ -72,7 +72,7 @@ class _SupportScreenState extends State<SupportScreen> {
                             color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                             boxShadow: [BoxShadow(
-                              color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]!,
+                              color: Colors.grey[300]!,
                               blurRadius: 5, spreadRadius: 1,
                             )],
                           ),

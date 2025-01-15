@@ -6,6 +6,7 @@ import 'package:stackfood_multivendor/common/widgets/customizable_space_bar_widg
 import 'package:stackfood_multivendor/features/restaurant/widgets/info_view_widget.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
+import 'package:stackfood_multivendor/helper/responsive.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
@@ -14,6 +15,8 @@ import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
+
+import '../../home/widgets/arrow_icon_button_widget.dart';
 
 class RestaurantInfoSectionWidget extends StatelessWidget {
   final Restaurant restaurant;
@@ -27,9 +30,11 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
     final double realSpaceNeeded = xyz/2;
 
     return SliverAppBar(
-      expandedHeight: isDesktop ? 350 : 400,
-      toolbarHeight: isDesktop ? 150 : 100,
-      pinned: true, floating: false, elevation: 0.5,
+      expandedHeight: Responsive.isLargeMobile(context) ? 400 : 350,
+      toolbarHeight: Responsive.isLargeMobile(context) ? 100 : 160,
+      // expandedHeight: isDesktop ? 350 : 400,
+      // toolbarHeight: isDesktop ? 150 : 100,
+      pinned: true, floating: false, elevation: 1,
       backgroundColor: Theme.of(context).cardColor,
       leading: !isDesktop ? IconButton(
         icon: Container(
@@ -63,7 +68,7 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: Container(
-                        height: (hasCoupon ? 260 : 160) - (scrollingRate * 25),
+                        height: (hasCoupon ? 270 : 170) - (scrollingRate * 25),
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
@@ -78,6 +83,7 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall - (scrollingRate * Dimensions.paddingSizeSmall)),
                           child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: [
+
 
                             InfoViewWidget(restaurant: restaurant, restController: restController, scrollingRate: scrollingRate),
                             SizedBox(height: Dimensions.paddingSizeLarge - (scrollingRate * (isDesktop ? 2 : Dimensions.paddingSizeLarge))),
@@ -100,34 +106,34 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
                       child: Column(
                         children: [
-                          restaurant.announcementActive != null && restaurant.announcementActive! && restaurant.announcementMessage != null ? Container(
-                            height: 40 - (scrollingRate * 40),
-                            padding: EdgeInsets.only(
-                              left: Get.find<LocalizationController>().isLtr ? 250 : 20,
-                              right: Get.find<LocalizationController>().isLtr ? 20 : 250,
-                            ),
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
-                            ),
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              Image.asset(Images.announcement, height: 26, width: 26),
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                              Flexible(
-                                child: Marquee(
-                                  text: restaurant.announcementMessage!,
-                                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
-                                  blankSpace: 20.0,
-                                  velocity: 100.0,
-                                  accelerationDuration: const Duration(seconds: 5),
-                                  decelerationDuration: const Duration(milliseconds: 500),
-                                  accelerationCurve: Curves.linear,
-                                  decelerationCurve: Curves.easeOut,
-                                ),
-                              ),
-                            ]),
-                          ) : const SizedBox(),
+                          // restaurant.announcementActive != null && restaurant.announcementActive! && restaurant.announcementMessage != null ? Container(
+                          //   height: 40 - (scrollingRate * 40),
+                          //   padding: EdgeInsets.only(
+                          //     left: Get.find<LocalizationController>().isLtr ? 250 : 20,
+                          //     right: Get.find<LocalizationController>().isLtr ? 20 : 250,
+                          //   ),
+                          //   decoration: const BoxDecoration(
+                          //     color: Colors.green,
+                          //     borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimensions.radiusDefault), topRight: Radius.circular(Dimensions.radiusDefault)),
+                          //   ),
+                          //   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          //     Image.asset(Images.announcement, height: 26, width: 26),
+                          //     const SizedBox(width: Dimensions.paddingSizeSmall),
+                          //
+                          //     Flexible(
+                          //       child: Marquee(
+                          //         text: restaurant.announcementMessage!,
+                          //         style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                          //         blankSpace: 20.0,
+                          //         velocity: 100.0,
+                          //         accelerationDuration: const Duration(seconds: 5),
+                          //         decelerationDuration: const Duration(milliseconds: 500),
+                          //         accelerationCurve: Curves.linear,
+                          //         decelerationCurve: Curves.easeOut,
+                          //       ),
+                          //     ),
+                          //   ]),
+                          // ) : const SizedBox(),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
                             child: Stack(
@@ -153,7 +159,7 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                                   ),
                                   padding: const EdgeInsets.all(2),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(500),
+                                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                                     child: Stack(children: [
                                       CustomImageWidget(
                                         image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}/${restaurant.logo}',
@@ -176,7 +182,8 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                                       ),
                                     ]),
                                   ),
-                                ))
+                                )),
+
                               ],
                             ),
                           ),
@@ -186,12 +193,13 @@ class RestaurantInfoSectionWidget extends StatelessWidget {
                   );
                 },
               ),
-              background: Container(
+              background:
+              Container(
                 margin: EdgeInsets.only(bottom: isDesktop ? 100 : (hasCoupon ? 200 : 100)),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(Dimensions.radiusLarge)),
                   child: CustomImageWidget(
-                    height: 80,
+                    height: 100,
                     fit: BoxFit.cover, placeholder: Images.restaurantCover,
                     image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantCoverPhotoUrl}/${restaurant.coverPhoto}',
                   ),

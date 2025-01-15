@@ -76,40 +76,40 @@ class SignInScreenState extends State<SignInScreen> {
         body: SafeArea(child: Scrollbar(
           child: Center(
             child: Container(
-              width: context.width > 700 ? 500 : context.width,
-              padding: context.width > 700 ? const EdgeInsets.all(50) :  const EdgeInsets.all(Dimensions.paddingSizeExtraLarge),
-              margin: context.width > 700 ? const EdgeInsets.all(50) : EdgeInsets.zero,
-              decoration: context.width > 700 ? BoxDecoration(
-                color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                boxShadow: ResponsiveHelper.isDesktop(context) ? null : [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 5, spreadRadius: 1)],
-              ) : null,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              child: Container(
+                width: context.width > 700 ? 500 : context.width,
+                padding: context.width > 700 ? const EdgeInsets.all(50) :  const EdgeInsets.all(0),
+                margin: context.width > 700 ? const EdgeInsets.all(50) : EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                  boxShadow: ResponsiveHelper.isDesktop(context) ? null : [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 5, spreadRadius: 1)],
+                ),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      //
+                      // ResponsiveHelper.isDesktop(context) ? Align(
+                      //   alignment: Alignment.topRight,
+                      //   child: IconButton(
+                      //     onPressed: () => Get.back(),
+                      //     icon: const Icon(Icons.clear),
+                      //   ),
+                      // ) : const SizedBox(),
 
-                    ResponsiveHelper.isDesktop(context) ? Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        onPressed: () => Get.back(),
-                        icon: const Icon(Icons.clear),
-                      ),
-                    ) : const SizedBox(),
+                      Image.asset(Images.logo, width: 180),
 
-                    Image.asset(Images.logo, width: 140),
-                    // const SizedBox(height: Dimensions.paddingSizeSmall),
-                    // Image.asset(Images.logoName, width: 100),
-                    const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                      const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                      //
+                      // Align(
+                      //   alignment: Alignment.topLeft,
+                      //   child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                      // ),
+                      // const SizedBox(height: Dimensions.paddingSizeDefault),
 
-                    Align(
-                      // alignment: Alignment.topLeft,
-                      child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: 18,
-                      color: Theme.of(context).primaryColor)),
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                      SignInWidget(exitFromApp: widget.exitFromApp, backFromThis: widget.backFromThis),
 
-                    SignInWidget(exitFromApp: widget.exitFromApp, backFromThis: widget.backFromThis),
-
-                  ]),
+                    ]),
+                  ),
                 ),
               ),
             ),

@@ -29,8 +29,9 @@ class RestaurantDetailsSheetWidget extends StatelessWidget {
 
           InkWell(
             onTap: () {
+              String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-');
               Get.toNamed(
-                RouteHelper.getRestaurantRoute(restaurant.id),
+                RouteHelper.getRestaurantRoute(slug,restaurant.id!),
                 arguments: RestaurantScreen(restaurant: restaurant),
               );
             },

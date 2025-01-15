@@ -19,7 +19,7 @@ class LocationBannerViewWidget extends StatelessWidget {
         padding: EdgeInsets.all(ResponsiveHelper.isMobile(context) ? 0 : Dimensions.paddingSizeLarge),
         height: ResponsiveHelper.isMobile(context) ? 95 : 147,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(Get.find<ThemeController>().darkTheme ? 0.5 : 0.1),
+          color: Theme.of(context).primaryColor.withOpacity( 0.1),
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
         ),
         child: Row(children: [

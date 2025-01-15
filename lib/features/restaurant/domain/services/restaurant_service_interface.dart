@@ -26,8 +26,9 @@ abstract class RestaurantServiceInterface {
   AddressModel prepareAddressModel(Position storePosition, ZoneResponseModel responseModel, String addressFromGeocode);
   Future<List<Product>?> getCartRestaurantSuggestedItemList(int? restaurantID);
   Future<ProductModel?> getRestaurantProductList(int? restaurantID, int offset, int? categoryID, String type);
-  Future<ProductModel?> getRestaurantParticularProductList(int? restaurantID, int offset, int? categoryID, String type);
   Future<ProductModel?> getRestaurantSearchProductList(String searchText, String? storeID, int offset, String type);
   bool isRestaurantClosed(DateTime dateTime, bool active, List<Schedules>? schedules);
   bool isRestaurantOpenNow(bool active, List<Schedules>? schedules);
+
+  Future<ProductModel?> getRestaurantParticularProductList(int? restaurantID, int offset, int? categoryID, String type);
 }

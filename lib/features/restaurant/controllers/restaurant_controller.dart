@@ -57,7 +57,7 @@ class RestaurantController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String _restaurantType = '';
+  String _restaurantType = 'all';
   String get restaurantType => _restaurantType;
 
   bool _foodPaginate = false;
@@ -116,21 +116,11 @@ class RestaurantController extends GetxController implements GetxService {
   int _nonVeg = 0;
   int get nonVeg => _nonVeg;
 
-  // void clearSubCategoryList() {
-  //   selectedCookedCategoryId = null;
-  //   _subCategoryList = null;
-  //   _subCategoryIndex = 0;
-  //   _categoryProductList = null;
-  //   _isRestaurant = false;
-  //   _categoryRestaurantList = null;
-  //   // update(); // call update to notify listeners
-  // }
-
   double getRestaurantDistance(LatLng restaurantLatLng){
     return restaurantServiceInterface.getRestaurantDistanceFromUser(restaurantLatLng);
   }
 
-  String filteringUrl(String slug) {
+  String filteringUrl(String slug){
     return restaurantServiceInterface.filterRestaurantLinkUrl(slug, _restaurant?.id);
   }
 
@@ -168,7 +158,7 @@ class RestaurantController extends GetxController implements GetxService {
     update();
   }
 
-  Future<void> getRestaurantList(int offset, bool reload, {bool fromMap = false}) async {
+  Future<void> getRestaurantList(int offset, bool reload, {bool fromMap = false,}) async {
     if(reload) {
       _restaurantModel = null;
       update();
@@ -212,6 +202,7 @@ class RestaurantController extends GetxController implements GetxService {
   }
 
   Future<void> getPopularRestaurantList(bool reload, String type, bool notify) async {
+    print('check getPopularRestaurantList');
     _type = type;
     if(reload){
       _popularRestaurantList = null;
@@ -257,7 +248,6 @@ class RestaurantController extends GetxController implements GetxService {
       if(_restaurant != null && _restaurant!.latitude != null){
         await _setRequiredDataAfterRestaurantGet(slug, fromCart);
       }
-
       Get.find<CheckoutController>().setOrderType(
         (_restaurant != null && _restaurant!.delivery != null) ? _restaurant!.delivery! ? 'delivery' : 'take_away' : 'delivery', notify: false,
       );
@@ -340,54 +330,6 @@ class RestaurantController extends GetxController implements GetxService {
     }
   }
 
-  void clearRestaurantParticularProductList() {
-    _categoryRestaurantProduct = null;
-    // update(); // call update to notify listeners
-  }
-  bool _categoryProductLoading = false;
-  bool get categoryProductLoading => _categoryProductLoading;
-
-  List<Product>? _categoryRestaurantProduct;
-  List<Product>? get categoryRestaurantProductList => _categoryRestaurantProduct;
-
-  Future<void> getRestaurantParticularProductList(int? restaurantID, int offset,int categoryID, String type, bool notify) async {
-    _categoryProductLoading = true;
-    _foodOffset = offset;
-    if(offset == 1 || _categoryRestaurantProduct == null) {
-      _type = type;
-      _foodOffsetList = [];
-      _categoryRestaurantProduct = null;
-      _foodOffset = 1;
-      if(notify) {
-        update();
-      }
-    }
-    if (!_foodOffsetList.contains(offset)) {
-      _foodOffsetList.add(offset);
-      ProductModel? productModel = await restaurantServiceInterface.getRestaurantParticularProductList(restaurantID, offset,
-          /*(_restaurant != null && _restaurant!.categoryIds!.isNotEmpty && _categoryIndex != 0)
-              ? _categoryList![_categoryIndex].id : 0*/
-          categoryID, type);
-      _categoryProductLoading = false;
-      if (productModel != null) {
-        if (offset == 1) {
-          _categoryRestaurantProduct = [];
-        }
-        _categoryRestaurantProduct!.addAll(productModel.products!);
-        _foodPageSize = productModel.totalSize;
-        _foodPageOffset = productModel.offset;
-        _foodPaginate = false;
-        update();
-      }
-    } else {
-      _categoryProductLoading = false;
-      if(_foodPaginate) {
-        _foodPaginate = false;
-        update();
-      }
-    }
-  }
-
   void showFoodBottomLoader() {
     _foodPaginate = true;
     update();
@@ -460,7 +402,54 @@ class RestaurantController extends GetxController implements GetxService {
 
   String? getDiscountType(Restaurant restaurant) => restaurant.discount != null ? restaurant.discount!.discountType : 'percent';
 
+  void clearRestaurantParticularProductList() {
+    _categoryRestaurantProduct = null;
+    // update(); // call update to notify listeners
+  }
 
+  bool _categoryProductLoading = false;
+  bool get categoryProductLoading => _categoryProductLoading;
+
+  List<Product>? _categoryRestaurantProduct;
+  List<Product>? get categoryRestaurantProductList => _categoryRestaurantProduct;
+
+  Future<void> getRestaurantParticularProductList(int? restaurantID, int offset,int categoryID, String type, bool notify) async {
+    _categoryProductLoading = true;
+    _foodOffset = offset;
+    if(offset == 1 || _categoryRestaurantProduct == null) {
+      _type = type;
+      _foodOffsetList = [];
+      _categoryRestaurantProduct = null;
+      _foodOffset = 1;
+      if(notify) {
+        update();
+      }
+    }
+    if (!_foodOffsetList.contains(offset)) {
+      _foodOffsetList.add(offset);
+      ProductModel? productModel = await restaurantServiceInterface.getRestaurantParticularProductList(restaurantID, offset,
+          /*(_restaurant != null && _restaurant!.categoryIds!.isNotEmpty && _categoryIndex != 0)
+              ? _categoryList![_categoryIndex].id : 0*/
+          categoryID, type);
+      _categoryProductLoading = false;
+      if (productModel != null) {
+        if (offset == 1) {
+          _categoryRestaurantProduct = [];
+        }
+        _categoryRestaurantProduct!.addAll(productModel.products!);
+        _foodPageSize = productModel.totalSize;
+        _foodPageOffset = productModel.offset;
+        _foodPaginate = false;
+        update();
+      }
+    } else {
+      _categoryProductLoading = false;
+      if(_foodPaginate) {
+        _foodPaginate = false;
+        update();
+      }
+    }
+  }
 
 
 

@@ -225,18 +225,6 @@ class CartController extends GetxController implements GetxService {
     }
   }
 
-  // Future<void> updateCartOnline(OnlineCart cart) async {
-  //   _isLoading = true;
-  //   update();
-  //   List<OnlineCartModel> onlineCartList = cartServiceInterface.updateCartOnline(cart, AuthHelper.isLoggedIn() ? null : int.parse(AuthHelper.getGuestId())) as List<OnlineCartModel>;
-  //   if(onlineCartList.isNotEmpty) {
-  //     _cartList = [];
-  //     _cartList.addAll(cartServiceInterface.formatOnlineCartToLocalCart(onlineCartModel: onlineCartList));
-  //     calculationCart();
-  //   }
-  //   _isLoading = false;
-  //   update();
-  // }
 
   Future<void> updateCartQuantityOnline(int cartId, double price, int quantity) async {
     _isLoading = true;
@@ -281,6 +269,4 @@ class CartController extends GetxController implements GetxService {
     update();
     return success;
   }
-
-
 }

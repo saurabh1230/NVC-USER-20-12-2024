@@ -15,12 +15,7 @@ class DeliveryInstructionView extends StatefulWidget {
 
 class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
   ExpansionTileController controller = ExpansionTileController();
-  static List<IconData> deliveryInstructionIcons = [
-    Icons.notifications_off,
-    Icons.door_front_door,
-    Icons.call,
-    Icons.security,
-  ];
+
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +26,7 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, spreadRadius: 1, offset: const Offset(1, 2))],
       ),
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
-      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: Dimensions.paddingSizeSmall),
+      margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
       child: GetBuilder<CheckoutController>(
         builder: (checkoutController) {
           return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -39,18 +34,18 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
             ExpansionTile(
               key: widget.key,
               controller: controller,
-              title: Text('Delivery Instruction'.tr, style: robotoMedium),
+              title: Text('add_more_delivery_instruction'.tr, style: robotoMedium),
               trailing: Icon(checkoutController.isExpanded ? Icons.remove : Icons.add, size: 18),
               tilePadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               onExpansionChanged: (value) => checkoutController.expandedUpdate(value),
 
               children: [
 
-               /* ResponsiveHelper.isDesktop(context) ? */GridView.builder(
+                ResponsiveHelper.isDesktop(context) ? GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: Dimensions.paddingSizeSmall,
                     mainAxisSpacing: Dimensions.paddingSizeExtraSmall,
-                    childAspectRatio: 2,
+                    childAspectRatio: 3.5,
                     crossAxisCount:  2,
                   ),
                   physics: const NeverScrollableScrollPhysics(),
@@ -72,13 +67,12 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
                         ),
                         child: Row(
                           children: [
-                            Icon(deliveryInstructionIcons[index],
-                                color: isSelected ? Theme.of(context).primaryColor : Colors.black, size: 24),
+                            Icon(Icons.ac_unit, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor, size: 18),
                             const SizedBox(width: Dimensions.paddingSizeSmall),
                             Expanded(
                               child: Text(
                                 AppConstants.deliveryInstructionList[index].tr,
-                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: isSelected ? Theme.of(context).primaryColor : Colors.black),
+                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor),
                               ),
                             ),
                           ],
@@ -86,9 +80,8 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
                       ),
                     );
                   },
-                ) /*: ListView.builder(
+                ) : ListView.builder(
                     shrinkWrap: true,
-                    // scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: AppConstants.deliveryInstructionList.length,
                     itemBuilder: (context, index){
@@ -109,8 +102,9 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
                           padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                           margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
                           child: Row(children: [
-                            Icon(Icons.doorbell, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor, size: 18),
+                            Icon(Icons.ac_unit, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor, size: 18),
                             const SizedBox(width: Dimensions.paddingSizeSmall),
+
                             Expanded(
                               child: Text(
                                 AppConstants.deliveryInstructionList[index].tr,
@@ -121,7 +115,7 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
 
                         ),
                       );
-                    })*/,
+                    }),
               ],
             ),
 

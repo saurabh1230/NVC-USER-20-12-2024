@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
+import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/notification/domain/models/notification_body_model.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
@@ -122,174 +124,192 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               )
             ],
-          ) : const WebMenuBar(),
+          ) :  WebMenuBar(),
 
           body: isLoggedIn ? SafeArea(
             child: Center(
-              child: SizedBox(
-                width: ResponsiveHelper.isDesktop(context) ? Dimensions.webMaxWidth : MediaQuery.of(context).size.width,
-                child: Column(children: [
+              child: Column(
+                children: [
+                  WebScreenTitleWidget(title: 'live_chat'.tr,tap: () {
+                    Get.back();
+                    // Get.offNamed(RouteHelper.getOrderRoute());
 
-                  GetBuilder<ChatController>(builder: (chatController) {
-                    return Expanded(child: chatController.messageModel != null ? chatController.messageModel!.messages!.isNotEmpty ? SingleChildScrollView(
-                      controller: _scrollController,
-                      reverse: true,
-                      child: PaginatedListViewWidget(
-                        scrollController: _scrollController,
-                        reverse: true,
-                        totalSize: chatController.messageModel?.totalSize,
-                        offset: chatController.messageModel?.offset,
-                        onPaginate: (int? offset) async => await chatController.getMessages(
-                          offset!, widget.notificationBody, widget.user, widget.conversationID,
-                        ),
-                        productView: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          reverse: true,
-                          itemCount: chatController.messageModel!.messages!.length,
-                          itemBuilder: (context, index) {
-                            return MessageBubbleWidget(
-                              message: chatController.messageModel!.messages![index],
-                              user: chatController.messageModel!.conversation!.receiver,
-                              userType: widget.notificationBody!.adminId != null ? UserType.admin
-                                  : widget.notificationBody!.deliverymanId != null ? UserType.delivery_man : UserType.vendor,
-                            );
-                          },
-                        ),
-                      ),
-                    ) : Center(child: Text('no_message_found'.tr)) : const Center(child: CircularProgressIndicator()));
-                  }),
-
-                  (chatController.messageModel != null && (chatController.messageModel!.status! || chatController.messageModel!.messages!.isEmpty)) ? Container(
-                    color: Theme.of(context).cardColor,
-                    child: Column(children: [
-
-                      GetBuilder<ChatController>(builder: (chatController) {
-
-                        return chatController.chatImage.isNotEmpty ? SizedBox(height: 100,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: chatController.chatImage.length,
-                              itemBuilder: (BuildContext context, index){
-                                return  chatController.chatImage.isNotEmpty ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Stack(children: [
-
-                                    Container(width: 100, height: 100,
-                                      decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(20))),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
-                                        child: Image.memory(
-                                          chatController.chatRawImage[index], width: 100, height: 100, fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-
-                                    Positioned(top:0, right:0,
-                                      child: InkWell(
-                                        onTap : () => chatController.removeImage(index, _inputMessageController.text.trim()),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault))
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(4.0),
-                                            child: Icon(Icons.clear, color: Colors.red, size: 15),
-                                          ),
-                                        ),
-                                      ),
-                                    )],
-                                  ),
-                                ) : const SizedBox();
-                              }),
-                        ) : const SizedBox();
-                      }),
-
-
-                      Row(children: [
-
-                        InkWell(
-                          onTap: () async {
-                            Get.find<ChatController>().pickImage(false);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                            child: Image.asset(Images.image, width: 25, height: 25, color: Theme.of(context).hintColor),
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: 25,
-                          child: VerticalDivider(width: 0, thickness: 1, color: Theme.of(context).hintColor),
-                        ),
-                        const SizedBox(width: Dimensions.paddingSizeDefault),
-
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [LengthLimitingTextInputFormatter(Dimensions.messageInputLength)],
-                            controller: _inputMessageController,
-                            textCapitalization: TextCapitalization.sentences,
-                            style: robotoRegular,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'type_here'.tr,
-                              hintStyle: robotoRegular.copyWith(color: Theme.of(context).hintColor, fontSize: Dimensions.fontSizeLarge),
-                            ),
-                            onSubmitted: (String newText) {
-                              if(newText.trim().isNotEmpty && !Get.find<ChatController>().isSendButtonActive) {
-                                Get.find<ChatController>().toggleSendButtonActivity();
-                              }else if(newText.isEmpty && Get.find<ChatController>().isSendButtonActive) {
-                                Get.find<ChatController>().toggleSendButtonActivity();
-                              }
-                            },
-                            onChanged: (String newText) {
-                              if(newText.trim().isNotEmpty && !Get.find<ChatController>().isSendButtonActive) {
-                                Get.find<ChatController>().toggleSendButtonActivity();
-                              }else if(newText.isEmpty && Get.find<ChatController>().isSendButtonActive) {
-                                Get.find<ChatController>().toggleSendButtonActivity();
-                              }
-                            },
-                          ),
-                        ),
-
+                  },),
+                  Expanded(
+                    child: SizedBox(
+                      width: ResponsiveHelper.isDesktop(context) ? Dimensions.webMaxWidth : MediaQuery.of(context).size.width,
+                      child: Column(children: [
                         GetBuilder<ChatController>(builder: (chatController) {
-                          return chatController.isLoading ? const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                            child: SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
-                          ) : InkWell(
-                            onTap: () async {
-                              if(chatController.isSendButtonActive) {
-                                await chatController.sendMessage(
-                                  message: _inputMessageController.text, notificationBody: widget.notificationBody,
-                                  conversationID: widget.conversationID, index: widget.index,
-                                );
-                                _inputMessageController.clear();
-                              }else {
-                                showCustomSnackBar('write_something'.tr);
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                              child: Image.asset(
-                                Images.send, width: 25, height: 25,
-                                color: chatController.isSendButtonActive ? Theme.of(context).primaryColor : Theme.of(context).hintColor,
+                          return Expanded(child: chatController.messageModel != null ? chatController.messageModel!.messages!.isNotEmpty ? SingleChildScrollView(
+                            controller: _scrollController,
+                            reverse: true,
+                            child: PaginatedListViewWidget(
+                              scrollController: _scrollController,
+                              reverse: true,
+                              totalSize: chatController.messageModel?.totalSize,
+                              offset: chatController.messageModel?.offset,
+                              onPaginate: (int? offset) async => await chatController.getMessages(
+                                offset!, widget.notificationBody, widget.user, widget.conversationID,
+                              ),
+                              productView: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                reverse: true,
+                                itemCount: chatController.messageModel!.messages!.length,
+                                itemBuilder: (context, index) {
+                                  return MessageBubbleWidget(
+                                    message: chatController.messageModel!.messages![index],
+                                    user: chatController.messageModel!.conversation!.receiver,
+                                    userType: widget.notificationBody!.adminId != null ? UserType.admin
+                                        : widget.notificationBody!.deliverymanId != null ? UserType.delivery_man : UserType.vendor,
+                                  );
+                                },
                               ),
                             ),
-                          );
-                        }
-                        ),
+                          ) : Center(child: Text('no_message_found'.tr)) : const Center(child: CircularProgressIndicator()));
+                        }),
+                    
+                        (chatController.messageModel != null && (chatController.messageModel!.status! || chatController.messageModel!.messages!.isEmpty)) ? Container(
+                          color: Theme.of(context).cardColor,
+                          child: Column(children: [
+                    
+                            GetBuilder<ChatController>(builder: (chatController) {
+                    
+                              return chatController.chatImage.isNotEmpty ? SizedBox(height: 100,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: chatController.chatImage.length,
+                                    itemBuilder: (BuildContext context, index){
+                                      return  chatController.chatImage.isNotEmpty ? Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(children: [
+                    
+                                          Container(width: 100, height: 100,
+                                            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(20))),
+                                            child: ClipRRect(
+                                              borderRadius: const BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault)),
+                                              child: Image.memory(
+                                                chatController.chatRawImage[index], width: 100, height: 100, fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                    
+                                          Positioned(top:0, right:0,
+                                            child: InkWell(
+                                              onTap : () => chatController.removeImage(index, _inputMessageController.text.trim()),
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.all(Radius.circular(Dimensions.paddingSizeDefault))
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  child: Icon(Icons.clear, color: Colors.red, size: 15),
+                                                ),
+                                              ),
+                                            ),
+                                          )],
+                                        ),
+                                      ) : const SizedBox();
+                                    }),
+                              ) : const SizedBox();
+                            }),
+                    
+                    
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                  border: Border.all(width: 0.5,color: Theme.of(context).primaryColor)
+                              ),
+                              child: Row(children: [
 
-                      ]),
-                    ]),
-                  ) : const SizedBox(),
+                                InkWell(
+                                  onTap: () async {
+                                    Get.find<ChatController>().pickImage(false);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                                    child: Image.asset(Images.image, width: 25, height: 25, color: Theme.of(context).hintColor),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  height: 25,
+                                  child: VerticalDivider(width: 0, thickness: 1, color: Theme.of(context).hintColor),
+                                ),
+                                const SizedBox(width: Dimensions.paddingSizeDefault),
+
+                                Expanded(
+                                  child: TextField(
+                                    inputFormatters: [LengthLimitingTextInputFormatter(Dimensions.messageInputLength)],
+                                    controller: _inputMessageController,
+                                    textCapitalization: TextCapitalization.sentences,
+                                    style: robotoRegular,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'type_here'.tr,
+                                      hintStyle: robotoRegular.copyWith(color: Theme.of(context).hintColor, fontSize: Dimensions.fontSizeLarge),
+                                    ),
+                                    onSubmitted: (String newText) {
+                                      if(newText.trim().isNotEmpty && !Get.find<ChatController>().isSendButtonActive) {
+                                        Get.find<ChatController>().toggleSendButtonActivity();
+                                      }else if(newText.isEmpty && Get.find<ChatController>().isSendButtonActive) {
+                                        Get.find<ChatController>().toggleSendButtonActivity();
+                                      }
+                                    },
+                                    onChanged: (String newText) {
+                                      if(newText.trim().isNotEmpty && !Get.find<ChatController>().isSendButtonActive) {
+                                        Get.find<ChatController>().toggleSendButtonActivity();
+                                      }else if(newText.isEmpty && Get.find<ChatController>().isSendButtonActive) {
+                                        Get.find<ChatController>().toggleSendButtonActivity();
+                                      }
+                                    },
+                                  ),
+                                ),
+
+                                GetBuilder<ChatController>(builder: (chatController) {
+                                  return chatController.isLoading ? const Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                                    child: SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+                                  ) : InkWell(
+                                    onTap: () async {
+                                      if(chatController.isSendButtonActive) {
+                                        await chatController.sendMessage(
+                                          message: _inputMessageController.text, notificationBody: widget.notificationBody,
+                                          conversationID: widget.conversationID, index: widget.index,
+                                        );
+                                        _inputMessageController.clear();
+                                      }else {
+                                        showCustomSnackBar('write_something'.tr);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                                      child: Image.asset(
+                                        Images.send, width: 25, height: 25,
+                                        color: chatController.isSendButtonActive ? Theme.of(context).primaryColor : Theme.of(context).hintColor,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                ),
+
+                              ]),
+                            ),
+                            const SizedBox(height: Dimensions.paddingSizeExtraLarge,)
+                          ]),
+                        ) : const SizedBox(),
+                      ],
+                      ),
+                    ),
+                  ),
                 ],
-                ),
               ),
             ),
-          ) : NotLoggedInScreen(callBack: (value){
+          ) : NotLoggedInScreen(
+              callBack: (value){
             _initCall();
             setState(() {});
           }),

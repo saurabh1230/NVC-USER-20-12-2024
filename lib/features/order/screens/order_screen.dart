@@ -1,3 +1,4 @@
+import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/order/widgets/guest_track_order_input_view_widget.dart';
 import 'package:stackfood_multivendor/features/order/widgets/order_view_widget.dart';
@@ -9,6 +10,8 @@ import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart'
 import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../helper/route_helper.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -24,7 +27,7 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
     initCall();
   }
 
@@ -50,10 +53,22 @@ class OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin 
             Container(
               color: ResponsiveHelper.isDesktop(context) ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
               child: Column(children: [
-
+                  const SizedBox(height: Dimensions.paddingSizeExtraLarge,),
+                  SizedBox(width: Dimensions.webMaxWidth,
+                    child: Align(alignment: Alignment.topLeft,
+                      child: ArrowIconButtonWidget(isLeft: true,
+                        paddingLeft: Dimensions.paddingSizeSmall,
+                        onTap: () {
+                        // Navigator.pop(context);
+                          // Get.offNamed(RouteHelper.getProfileRoute());
+                        Get.toNamed(RouteHelper.getMainRoute(1.toString()));
+                    },
+                      ),
+                      ),
+                  ),
                 ResponsiveHelper.isDesktop(context) ? Center(child: Padding(
                   padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
-                  child: Text('my_orders'.tr, style: robotoMedium),
+                  child: Text('my_orders'.tr, style: robotoBlack.copyWith(fontSize: 24)),
                 )) : const SizedBox(),
 
                 Center(

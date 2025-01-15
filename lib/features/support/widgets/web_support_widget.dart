@@ -22,8 +22,8 @@ class WebSupportScreen extends StatelessWidget {
 
         Positioned(
           child: Column(children: [
-            Expanded(flex: 1, child: Container(color: Theme.of(context).primaryColor.withOpacity(0.10))),
-            Expanded(flex: 4, child: Container(color: Theme.of(context).primaryColor)),
+            // Expanded(flex: 1, child: Container(color: Theme.of(context).primaryColor.withOpacity(0.10))),
+            Expanded(flex: 4, child: Container(color: Theme.of(context).primaryColor.withOpacity(0.80))),
             Expanded(flex: 7, child: Container(color: Theme.of(context).cardColor)),
           ]),
         ),
@@ -32,18 +32,19 @@ class WebSupportScreen extends StatelessWidget {
           child: Align(
             alignment: Alignment.center,
             child: Column(children: [
-              WebScreenTitleWidget(title: 'help_support'.tr),
+              WebScreenTitleWidget(title: 'help_support'.tr,color: Theme.of(context).cardColor,),
+              const SizedBox(height: Dimensions.paddingSizeLarge,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
                 child: Column(children: [
-                  const SizedBox(height: 50),
+                  // const SizedBox(height: 50),
 
-                  Text('how_we_can_help_you'.tr, style: robotoBold.copyWith( fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).cardColor,
-                  )),
-                  const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                  Text('hey_let_us_know_your_problem'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)),
-                  const SizedBox(height: 50),
+                  // Text('how_we_can_help_you'.tr, style: robotoBold.copyWith( fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).cardColor,
+                  // )),
+                  // const SizedBox(height: Dimensions.paddingSizeSmall),
+                  //
+                  // Text('hey_let_us_know_your_problem'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)),
+                  // const SizedBox(height: 50),
 
                   Stack(clipBehavior: Clip.none, children: [
                     Container(
@@ -55,6 +56,12 @@ class WebSupportScreen extends StatelessWidget {
                         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
                       ),
                     ),
+                    // Text('how_we_can_help_you'.tr, style: robotoBold.copyWith( fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).cardColor,
+                    // )),
+                    // const SizedBox(height: Dimensions.paddingSizeSmall),
+                    //
+                    // Text('hey_let_us_know_your_problem'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)),
+                    // const SizedBox(height: 50),
 
                     Positioned(
                       top: -20, left: 20, right: 20,
@@ -62,6 +69,7 @@ class WebSupportScreen extends StatelessWidget {
                         Row(children: [
                           const SizedBox(width: Dimensions.paddingSizeOverLarge),
                           const SizedBox(width: Dimensions.paddingSizeOverLarge),
+
 
                           Expanded(child: CustomCardWidget(
                             child: ElementWidget(

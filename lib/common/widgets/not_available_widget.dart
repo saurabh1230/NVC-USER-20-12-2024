@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class NotAvailableWidget extends StatelessWidget {
   final double fontSize;
   final bool isRestaurant;
-  const NotAvailableWidget({super.key, this.fontSize = 8, this.isRestaurant = false});
+  const NotAvailableWidget({super.key, this.fontSize = 12, this.isRestaurant = false});
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+
 
 class FilterWidget extends StatelessWidget {
   final double? maxValue;
@@ -18,7 +18,7 @@ class FilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 600,
-      constraints: BoxConstraints(maxHeight: context.height * 0.7, minHeight: context.height * 0.5),
+      constraints: BoxConstraints(maxHeight: context.height * 0.8, minHeight: context.height * 0.5),
       decoration: ResponsiveHelper.isMobile(context)
           ? BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -139,6 +139,7 @@ class FilterWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('price'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
+        const SizedBox(height: Dimensions.paddingSizeDefault,),
         Wrap(
           spacing: 6.0,
           runSpacing: 4.0,
@@ -163,9 +164,9 @@ class FilterWidget extends StatelessWidget {
         ),
         RangeSlider(
           values:  RangeValues(
-          searchController.lowerValue.clamp(0, maxValue!.toDouble()), // Ensure lowerValue is within bounds
-    searchController.upperValue.clamp(0, maxValue!.toDouble()), // Ensure upperValue is within bounds
-    ),
+            searchController.lowerValue.clamp(0, maxValue!.toDouble()), // Ensure lowerValue is within bounds
+            searchController.upperValue.clamp(0, maxValue!.toDouble()), // Ensure upperValue is within bounds
+          ),
           max: maxValue!.toInt().toDouble(),
           min: 0,
           divisions: maxValue!.toInt(),
@@ -219,39 +220,42 @@ class FilterWidget extends StatelessWidget {
 
   Widget buildFooter(BuildContext context, search.SearchController searchController) {
     return SafeArea(
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: CustomButtonWidget(
-              color: Theme.of(context).disabledColor.withOpacity(0.5),
-              textColor: Theme.of(context).textTheme.bodyLarge!.color,
-              onPressed: () {
-                if (isRestaurant) {
-                  searchController.resetRestaurantFilter();
-                } else {
-                  searchController.resetFilter();
-                }
-              },
-              buttonText: 'reset'.tr,
+      child: Padding(
+        padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: CustomButtonWidget(
+                color: Theme.of(context).disabledColor.withOpacity(0.5),
+                textColor: Theme.of(context).textTheme.bodyLarge!.color,
+                onPressed: () {
+                  if (isRestaurant) {
+                    searchController.resetRestaurantFilter();
+                  } else {
+                    searchController.resetFilter();
+                  }
+                },
+                buttonText: 'reset'.tr,
+              ),
             ),
-          ),
-          const SizedBox(width: Dimensions.paddingSizeSmall),
-          Expanded(
-            flex: 2,
-            child: CustomButtonWidget(
-              buttonText: 'apply'.tr,
-              onPressed: () {
-                if (isRestaurant) {
-                  searchController.sortRestSearchList();
-                } else {
-                  searchController.sortFoodSearchList();
-                }
-                Get.back();
-              },
+            const SizedBox(width: Dimensions.paddingSizeSmall),
+            Expanded(
+              flex: 2,
+              child: CustomButtonWidget(
+                buttonText: 'apply'.tr,
+                onPressed: () {
+                  if (isRestaurant) {
+                    searchController.sortRestSearchList();
+                  } else {
+                    searchController.sortFoodSearchList();
+                  }
+                  Get.back();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

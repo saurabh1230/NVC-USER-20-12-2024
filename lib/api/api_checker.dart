@@ -10,9 +10,8 @@ class ApiChecker {
       Get.find<AuthController>().clearSharedData();
       Get.find<FavouriteController>().removeFavourites();
       Get.offAllNamed(GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(null, null));
-      // Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
     }else {
-      showCustomSnackBar(response.statusText, showToaster: showToaster);
+      // showCustomSnackBar(response.statusText, showToaster: showToaster);
     }
   }
 }

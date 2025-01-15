@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
+import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
 import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
 import 'package:stackfood_multivendor/features/notification/domain/models/notification_body_model.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
@@ -22,7 +23,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:meta_seo/meta_seo.dart';
@@ -35,7 +36,6 @@ Future<void> main() async {
   if(ResponsiveHelper.isMobilePhone()) {
     HttpOverrides.global = MyHttpOverrides();
   }
-
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -50,25 +50,17 @@ Future<void> main() async {
   // };
 
   DeepLinkBody? linkBody;
-  await Firebase.initializeApp(options: const FirebaseOptions(
-    apiKey: 'AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys',
-    appId: '1:1062257757813:android:4e2e7067e11c88be84323c',
-    messagingSenderId: '1062257757813',
-    projectId: 'non-veg-city',
-  ));
-  // MetaSEO().config();
+
   // if(GetPlatform.isWeb) {
   //   await Firebase.initializeApp(options: const FirebaseOptions(
-  //     apiKey: 'AIzaSyB1LgWUexJzGRP6c2SH6c5eOOZ1AB1bXys',
-  //     appId: '1:1062257757813:android:4e2e7067e11c88be84323c',
-  //     messagingSenderId: '1062257757813',
-  //     projectId: 'non-veg-city',
+  //     apiKey: 'AIzaSyCeaw_gVN0iQwFHyuF8pQ6PbVDmSVQw8AY',
+  //     appId: '1:1049699819506:web:a4b5e3bedc729aab89956b',
+  //     messagingSenderId: '1049699819506',
+  //     projectId: 'stackfood-bd3ee',
   //   ));
   //   MetaSEO().config();
   // }else {
   //   await Firebase.initializeApp();
-  //
-  //
   //
   //   // try {
   //   //   String initialLink = await getInitialLink();
@@ -82,26 +74,25 @@ Future<void> main() async {
   Map<String, Map<String, String>> languages = await di.init();
 
   NotificationBodyModel? body;
-  try {
-    if (GetPlatform.isMobile) {
-      print('check firebase');
-      final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
-      if (remoteMessage != null) {
-        body = NotificationHelper.convertNotification(remoteMessage.data);
-      }
-      await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
-      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-    }
-  }catch(_) {}
+  // try {
+  //   if (GetPlatform.isMobile) {
+  //     final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
+  //     if (remoteMessage != null) {
+  //       body = NotificationHelper.convertNotification(remoteMessage.data);
+  //     }
+  //     await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
+  //     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+  //   }
+  // }catch(_) {}
 
-  if (ResponsiveHelper.isWeb()) {
-    await FacebookAuth.instance.webAndDesktopInitialize(
-      appId: "452131619626499",
-      cookie: true,
-      xfbml: true,
-      version: "v13.0",
-    );
-  }
+  // if (ResponsiveHelper.isWeb()) {
+  //   await FacebookAuth.instance.webAndDesktopInitialize(
+  //     appId: "452131619626499",
+  //     cookie: true,
+  //     xfbml: true,
+  //     version: "v13.0",
+  //   );
+  // }
   runApp(MyApp(languages: languages, body: body, linkBody: linkBody));
 }
 
@@ -121,16 +112,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-
-
-
     _route();
   }
 
-
-
   Future<void> _route() async {
-    if(GetPlatform.isWeb) {
+    // if(GetPlatform.isWeb) {
       Get.find<SplashController>().initSharedData();
       if(!Get.find<AuthController>().isLoggedIn() && !Get.find<AuthController>().isGuestLoggedIn() /*&& !ResponsiveHelper.isDesktop(Get.context!)*/) {
         await Get.find<AuthController>().guestLogin();
@@ -138,7 +124,7 @@ class _MyAppState extends State<MyApp> {
       if(Get.find<AuthController>().isLoggedIn() || Get.find<AuthController>().isGuestLoggedIn()) {
         Get.find<CartController>().getCartDataOnline();
       }
-    }
+    // }
     Get.find<SplashController>().getConfigData().then((bool isSuccess) async {
       if (isSuccess) {
         if (Get.find<AuthController>().isLoggedIn()) {
@@ -152,7 +138,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<SplashController>(builder: (splashController) {
           return (GetPlatform.isWeb && splashController.configModel == null) ? const SizedBox() : GetMaterialApp(
@@ -162,13 +147,14 @@ class _MyAppState extends State<MyApp> {
             scrollBehavior: const MaterialScrollBehavior().copyWith(
               dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
             ),
-            theme: themeController.darkTheme ? dark : light,
+            theme: light,
             locale: localizeController.locale,
             translations: Messages(languages: widget.languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
-            initialRoute: GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(widget.body, widget.linkBody),
+            initialRoute:  RouteHelper.getMainRoute(1.toString()) ,
             getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
+            home: HomeScreen(),
             transitionDuration: const Duration(milliseconds: 500),
             builder: (BuildContext context, widget) {
               return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)), child: Material(
@@ -189,7 +175,7 @@ class _MyAppState extends State<MyApp> {
           );
         });
       });
-    });
+
   }
 }
 

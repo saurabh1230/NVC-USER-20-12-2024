@@ -1,6 +1,7 @@
 import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart';
 import 'package:stackfood_multivendor/features/home/widgets/icon_with_text_row_widget.dart';
 import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:stackfood_multivendor/features/restaurant/screens/RestaurantProductScreenWeb.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
@@ -20,7 +21,8 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 
 class RestaurantsViewWidget extends StatelessWidget {
   final List<Restaurant?>? restaurants;
-  const RestaurantsViewWidget({super.key, this.restaurants});
+  final bool? isPopular;
+  const RestaurantsViewWidget({super.key, this.restaurants, this.isPopular = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class RestaurantsViewWidget extends StatelessWidget {
       width: Dimensions.webMaxWidth,
       child: restaurants != null ? restaurants!.isNotEmpty ? GridView.builder(
         shrinkWrap: true,
-        itemCount: restaurants!.length,
+        itemCount: isPopular!
+            ? (restaurants!.length > 8 ? 8 : restaurants!.length) // Limit to 8 if popular
+            : restaurants!.length,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isTab(context) ? 3 : 4,
@@ -58,13 +62,12 @@ class RestaurantsViewWidget extends StatelessWidget {
           return const WebRestaurantShimmer();
         },
       ),
-
     );
   }
 
   Widget restaurantView(BuildContext context, Restaurant restaurant) {
-    bool isAvailable = restaurant.open == 1 && restaurant.active!;
-
+    bool isAvailable = /*restaurant.open == 1 &&*/ restaurant.active!;
+    print('check restaurant status check ${restaurant.active!}');
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -72,12 +75,56 @@ class RestaurantsViewWidget extends StatelessWidget {
       ),
       child: CustomInkWellWidget(
         onTap: () {
-          if(restaurant.restaurantStatus == 1){
-            Get.toNamed(RouteHelper.getRestaurantRoute(restaurant.id), arguments: RestaurantScreen(restaurant: restaurant));
-          }else if(restaurant.restaurantStatus == 0){
+          if (restaurant.restaurantStatus == 1) {
+            String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-'); // Generate slug from restaurant name
+            int id = restaurant.id!; // Get restaurant id
+            print('check meta ');
+            print(restaurant.meta_title.toString());
+            print(restaurant.meta_description.toString());
+            updateMetaTitleAndDescription(restaurant.meta_title.toString(), restaurant.meta_description.toString());
+
+            Get.toNamed(
+              RouteHelper.getRestaurantProductsRoute(slug, id), // Pass slug and id as arguments
+              arguments: RestaurantProductScreenWeb(
+                restaurant: restaurant,
+                product: null,
+                categoryName: '',
+                categoryID: '',
+              ),
+            );
+          } else if (restaurant.restaurantStatus == 0) {
             showCustomSnackBar('restaurant_is_not_available'.tr);
           }
         },
+
+
+        //   onTap: () {
+        //     if (restaurant.restaurantStatus == 1) {
+        //       String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-'); // Create slug from restaurant name
+        //       int id = restaurant.id!;
+        //       Get.toNamed(RouteHelper.getRestaurantProductsRoute(restaurant.id),
+        //           arguments: RestaurantProductScreenWeb(restaurant: restaurant, product: null, categoryName: '', categoryID: '',));
+        //       // Get.toNamed(RouteHelper.getRestaurantRoute(slug, id));
+        //     } else if (restaurant.restaurantStatus == 0) {
+        //       showCustomSnackBar('restaurant_is_not_available'.tr);
+        //     }
+        //
+        //   // if (restaurant.restaurantStatus == 1) {
+        //   //   String slug = restaurant.name!.toLowerCase().replaceAll(' ', '-'); // Create slug from restaurant name
+        //   //   Get.toNamed(RouteHelper.getRestaurantRoute(slug), arguments: restaurant); // Pass the entire restaurant object
+        //   // } else if (restaurant.restaurantStatus == 0) {
+        //   //   showCustomSnackBar('restaurant_is_not_available'.tr);
+        //   // }
+        // },
+
+
+        // onTap: () {
+        //   if(restaurant.restaurantStatus == 1){
+        //     Get.toNamed(RouteHelper.getRestaurantRoute(restaurant.id), arguments: RestaurantScreen(restaurant: restaurant));
+        //   }else if(restaurant.restaurantStatus == 0){
+        //     showCustomSnackBar('restaurant_is_not_available'.tr);
+        //   }
+        // },
         radius: Dimensions.radiusDefault,
         child: Stack(
           clipBehavior: Clip.none,
@@ -98,8 +145,8 @@ class RestaurantsViewWidget extends StatelessWidget {
 
             !isAvailable ? Positioned(top: 10, left: 10, child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.error.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(Dimensions.radiusLarge)
+                  color: Theme.of(context).colorScheme.error.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(Dimensions.radiusLarge)
               ),
               padding: EdgeInsets.symmetric(horizontal: Dimensions.fontSizeExtraLarge, vertical: Dimensions.paddingSizeExtraSmall),
               child: Row(children: [

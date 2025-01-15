@@ -182,5 +182,5 @@ class RestaurantRepository implements RestaurantRepositoryInterface {
 
 
 
-  
+
 }

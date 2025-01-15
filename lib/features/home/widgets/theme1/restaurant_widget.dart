@@ -30,16 +30,17 @@ class RestaurantWidget extends StatelessWidget {
     bool desktop = ResponsiveHelper.isDesktop(context);
     return InkWell(
       onTap: () {
-
-        if(restaurant != null && restaurant!.restaurantStatus == 1){
+        if (restaurant != null && restaurant!.restaurantStatus == 1) {
+          String slug = restaurant!.name!.toLowerCase().replaceAll(' ', '-');
           Get.toNamed(
-            RouteHelper.getRestaurantRoute(restaurant!.id),
+            RouteHelper.getRestaurantRoute(slug, restaurant!.id!),
             arguments: RestaurantScreen(restaurant: restaurant),
           );
-        }else if(restaurant!.restaurantStatus == 0){
+        } else if (restaurant!.restaurantStatus == 0) {
           showCustomSnackBar('restaurant_is_not_available'.tr);
         }
       },
+
       child: Container(
         margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
         decoration: BoxDecoration(
@@ -149,7 +150,8 @@ class RestaurantShimmer extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
           Container(
-            height: context.width * 0.3, width: Dimensions.webMaxWidth,
+            height: context.width * 0.3,
+            width: Dimensions.webMaxWidth,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusSmall)),
               color: Colors.grey[300],

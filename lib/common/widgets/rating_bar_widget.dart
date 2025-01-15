@@ -17,7 +17,7 @@ class RatingBarWidget extends StatelessWidget {
 
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
-        starList.add(Icon(Icons.star, color: Theme.of(context).primaryColor, size: size));
+        starList.add(Icon(Icons.star, color: Color(0xffffe234), size: size));
       } else if (i == realNumber) {
         starList.add(SizedBox(
           height: size,
@@ -41,7 +41,7 @@ class RatingBarWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtraSmall),
       child: Text(
         '($ratingCount)', textDirection: TextDirection.ltr,
-        style: robotoRegular.copyWith(fontSize: size*0.8, color: Theme.of(context).disabledColor),
+        style: robotoRegular.copyWith(fontSize: size*0.8, ),
       ),
     )) : const SizedBox();
 

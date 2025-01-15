@@ -28,6 +28,8 @@ class InfoViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDesktop = ResponsiveHelper.isDesktop(context);
+    print('check cover image url ${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}');
+    print('check restaurant.active ${restaurant.active} ${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}');
     return Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
       Row(children: [
 
@@ -44,7 +46,7 @@ class InfoViewWidget extends StatelessWidget {
                 image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantImageUrl}/${restaurant.logo}',
                 height: 60 - (scrollingRate * 15), width: 60 - (scrollingRate * 15), fit: BoxFit.cover,
               ),
-              restController.isRestaurantOpenNow(restaurant.active!, restaurant.schedules) ? const SizedBox() : Positioned(
+              restaurant.active! ?  Positioned(
                 left: 0, right: 0, bottom: 0,
                 child: Container(
                   height: 30,
@@ -58,7 +60,7 @@ class InfoViewWidget extends StatelessWidget {
                     style: robotoRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall),
                   ),
                 ),
-              ),
+              ) :const SizedBox(),
             ]),
           ),
         ) : const SizedBox(),

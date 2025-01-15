@@ -6,7 +6,7 @@ class PredictionModel {
   String? reference;
 
   PredictionModel(
-      {this.description,
+       {this.description,
         this.id,
         this.distanceMeters,
         this.placeId,

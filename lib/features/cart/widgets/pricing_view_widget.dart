@@ -33,7 +33,7 @@ class PricingViewWidget extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
-                  child: Text('ary'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                  child: Text('order_summary'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
                 ),
               ),
 
@@ -41,7 +41,7 @@ class PricingViewWidget extends StatelessWidget {
 
               !isDesktop ? NotAvailableProductViewWidget(cartController: cartController) : const SizedBox(),
 
-              // !isDesktop ? const DeliveryInstructionView() : const SizedBox(),
+              !isDesktop ? const DeliveryInstructionView() : const SizedBox(),
 
               isDesktop ? const SizedBox() : const SizedBox(height: Dimensions.paddingSizeSmall),
 

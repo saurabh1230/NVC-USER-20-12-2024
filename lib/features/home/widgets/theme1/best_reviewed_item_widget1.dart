@@ -119,7 +119,7 @@ class BestReviewedItemWidget1 extends StatelessWidget {
                                     const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
                                     (Get.find<SplashController>().configModel!.toggle_cooked_uncooked!)
-                                        ? Image.asset(productList[index].veg == 0 ? Images.nonVegImage : Images.vegImage,
+                                        ? Image.asset(productList[index].food_type == 1 ? Images.nonVegImage : Images.vegImage,
                                         height: 10, width: 10, fit: BoxFit.contain,
                                     ) : const SizedBox(),
                                   ]),
@@ -201,7 +201,7 @@ class BestReviewedItemShimmer extends StatelessWidget {
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               boxShadow: [BoxShadow(
-                color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]!,
+                color: Colors.grey[300]!,
                 blurRadius: 5, spreadRadius: 1,
               )],
             ),

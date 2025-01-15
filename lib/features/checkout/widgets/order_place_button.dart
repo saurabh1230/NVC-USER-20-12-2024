@@ -73,44 +73,44 @@ class OrderPlaceButton extends StatelessWidget {
             radius: Dimensions.radiusDefault,
             isLoading: checkoutController.isLoading,
             onPressed: () {
-          DateTime scheduleStartDate = _processScheduleStartDate();
-          DateTime scheduleEndDate = _processScheduleEndDate();
-          bool isAvailable = _checkAvailability(scheduleStartDate, scheduleEndDate);
-          bool isGuestLogIn = Get.find<AuthController>().isGuestLoggedIn();
-          bool datePicked = _isDatePicked();
+              DateTime scheduleStartDate = _processScheduleStartDate();
+              DateTime scheduleEndDate = _processScheduleEndDate();
+              bool isAvailable = _checkAvailability(scheduleStartDate, scheduleEndDate);
+              bool isGuestLogIn = Get.find<AuthController>().isGuestLoggedIn();
+              bool datePicked = _isDatePicked();
 
-          if(checkoutController.isDmTipSave && checkoutController.selectedTips != AppConstants.tips.length - 1) {
-            Get.find<AuthController>().saveDmTipIndex(checkoutController.selectedTips.toString());
-          }
-          if(!checkoutController.isDmTipSave){
-            Get.find<AuthController>().saveDmTipIndex('0');
-          }
+              if(checkoutController.isDmTipSave && checkoutController.selectedTips != AppConstants.tips.length - 1) {
+                Get.find<AuthController>().saveDmTipIndex(checkoutController.selectedTips.toString());
+              }
+              if(!checkoutController.isDmTipSave){
+                Get.find<AuthController>().saveDmTipIndex('0');
+              }
 
-          if(_showsWarningMessage(context, isGuestLogIn, datePicked, isAvailable)) {
-            debugPrint('Warning shows');
-          } else {
+              if(_showsWarningMessage(context, isGuestLogIn, datePicked, isAvailable)) {
+                debugPrint('Warning shows');
+              } else {
 
 
-            AddressModel? finalAddress = _processFinalAddress(isGuestLogIn);
-            List<place_order_model.OnlineCart> carts = _generateOnlineCartList();
-            List<place_order_model.SubscriptionDays> days = _generateSubscriptionDays();
-            PlaceOrderBodyModel placeOrderBody = _preparePlaceOrderModel(carts, scheduleStartDate, finalAddress, isGuestLogIn, days);
+                AddressModel? finalAddress = _processFinalAddress(isGuestLogIn);
+                List<place_order_model.OnlineCart> carts = _generateOnlineCartList();
+                List<place_order_model.SubscriptionDays> days = _generateSubscriptionDays();
+                PlaceOrderBodyModel placeOrderBody = _preparePlaceOrderModel(carts, scheduleStartDate, finalAddress, isGuestLogIn, days);
 
-            if(checkoutController.paymentMethodIndex == 3){
-              print('check paymentMethodIndex');
-              Get.toNamed(RouteHelper.getOfflinePaymentScreen(placeOrderBody: placeOrderBody, zoneId: checkoutController.restaurant!.zoneId!, total: total, maxCodOrderAmount: maxCodOrderAmount,
-                fromCart: fromCart, isCodActive: isCashOnDeliveryActive,
-                pricingView: PricingViewModel(
-                  subTotal: subTotal, subscriptionQty: subscriptionQty, discount: discount!, taxIncluded: taxIncluded,
-                  tax: tax, deliveryCharge: deliveryCharge!, total: total, taxPercent: taxPercent,
-                ),
-              ));
-            }else{
-              checkoutController.placeOrder(placeOrderBody, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
-            }
+                if(checkoutController.paymentMethodIndex == 3){
+                  print('check paymentMethodIndex');
+                  Get.toNamed(RouteHelper.getOfflinePaymentScreen(placeOrderBody: placeOrderBody, zoneId: checkoutController.restaurant!.zoneId!, total: total, maxCodOrderAmount: maxCodOrderAmount,
+                    fromCart: fromCart, isCodActive: isCashOnDeliveryActive,
+                    pricingView: PricingViewModel(
+                      subTotal: subTotal, subscriptionQty: subscriptionQty, discount: discount!, taxIncluded: taxIncluded,
+                      tax: tax, deliveryCharge: deliveryCharge!, total: total, taxPercent: taxPercent,
+                    ),
+                  ));
+                }else{
+                  checkoutController.placeOrder(placeOrderBody, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
+                }
 
-          }
-        }),
+              }
+            }),
       ),
     );
   }
@@ -201,10 +201,12 @@ class OrderPlaceButton extends StatelessWidget {
         );
       }
       return true;
-    }else if(orderAmount < checkoutController.restaurant!.minimumOrder!) {
-      showCustomSnackBar('${'minimum_order_amount_is'.tr} ${checkoutController.restaurant!.minimumOrder}');
-      return true;
-    }else if(checkoutController.subscriptionOrder && checkoutController.subscriptionRange == null) {
+    }
+    // else if(orderAmount < checkoutController.restaurant!.minimumOrder!) {
+    //   showCustomSnackBar('${'minimum_order_amount_is'.tr} ${checkoutController.restaurant!.minimumOrder}');
+    //   return true;
+    // }
+    else if(checkoutController.subscriptionOrder && checkoutController.subscriptionRange == null) {
       showCustomSnackBar('select_a_date_range_for_subscription'.tr);
       return true;
     }else if(checkoutController.subscriptionOrder && !datePicked && checkoutController.subscriptionType == 'daily') {

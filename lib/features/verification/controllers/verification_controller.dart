@@ -67,7 +67,7 @@ class VerificationController extends GetxController implements GetxService {
     update();
     ResponseModel responseModel = await verificationServiceInterface.verifyPhone(phone, token, _verificationCode);
     if(responseModel.isSuccess) {
-      // Get.find<ProfileController>().getUserInfo();
+      Get.find<ProfileController>().getUserInfo();
     }
     _isLoading = false;
     update();

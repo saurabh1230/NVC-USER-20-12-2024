@@ -283,32 +283,9 @@ class ChatController extends GetxController implements GetxService {
     update();
   }
 
-  void setIsMe(bool value) {
-    _isMe = value;
-  }
 
-  void reloadConversationWithNotification(int conversationID) {
-    int index0 = -1;
-    Conversation? conversation;
-    for(int index=0; index<_conversationModel!.conversations!.length; index++) {
-      if(_conversationModel!.conversations![index]!.id == conversationID) {
-        index0 = index;
-        conversation = _conversationModel!.conversations![index];
-        break;
-      }
-    }
-    if(index0 != -1) {
-      _conversationModel!.conversations!.removeAt(index0);
-    }
-    conversation!.unreadMessageCount = conversation.unreadMessageCount! + 1;
-    _conversationModel!.conversations!.insert(0, conversation);
-    update();
-  }
 
-  void reloadMessageWithNotification(Message message) {
-    _messageModel!.messages!.insert(0, message);
-    update();
-  }
+
 
   void setNotificationBody(NotificationBodyModel notificationBody) {
     _notificationBody = notificationBody;

@@ -1,8 +1,5 @@
 
 import 'dart:convert';
-
-import 'package:stackfood_multivendor/api/repo/borzo_repo.dart';
-import 'package:stackfood_multivendor/controller/borzo_controller.dart';
 import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
 import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
@@ -165,6 +162,9 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
+import '../api/borzo_repo.dart';
+import '../controller/borzo_controller.dart';
+
 Future<Map<String, Map<String, String>>> init() async {
   /// Core
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -296,8 +296,8 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => campaignServiceInterface);
   Get.lazyPut(() => BorzoRepo(apiClient: Get.find()));
 
+
   /// Controller
-  Get.lazyPut(() => ThemeController(splashServiceInterface: Get.find()));
   Get.lazyPut(() => SplashController(splashServiceInterface: Get.find()));
   Get.lazyPut(() => LocalizationController(languageServiceInterface: Get.find()));
   Get.lazyPut(() => OnBoardingController(onboardServiceInterface: Get.find()));

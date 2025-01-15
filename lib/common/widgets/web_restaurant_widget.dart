@@ -28,7 +28,9 @@ class WebRestaurantWidget extends StatelessWidget {
       child: InkWell(
         onTap: (){
           if(restaurant != null && restaurant!.restaurantStatus == 1){
-            Get.toNamed(RouteHelper.getRestaurantRoute(restaurant!.id), arguments: RestaurantScreen(restaurant: restaurant));
+            String slug = restaurant!.name!.toLowerCase().replaceAll(' ', '-');
+
+            Get.toNamed(RouteHelper.getRestaurantRoute(slug,restaurant!.id!), arguments: RestaurantScreen(restaurant: restaurant));
           }else if(restaurant!.restaurantStatus == 0){
             showCustomSnackBar('restaurant_is_not_available'.tr);
           }
@@ -140,7 +142,7 @@ class WebRestaurantShimmer extends StatelessWidget {
             height: 120, width: 300,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusSmall)),
-                color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]
+                color: Colors.grey[300]
             ),
           ),
 
@@ -148,10 +150,10 @@ class WebRestaurantShimmer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(height: 15, width: 100, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                Container(height: 15, width: 100, color: Colors.grey[300]),
                 const SizedBox(height: 5),
 
-                Container(height: 10, width: 130, color: Colors.grey[Get.find<ThemeController>().darkTheme ? 700 : 300]),
+                Container(height: 10, width: 130, color: Colors.grey[300]),
                 const SizedBox(height: 5),
 
                 const RatingBarWidget(rating: 0.0, size: 12, ratingCount: 0),

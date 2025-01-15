@@ -40,14 +40,12 @@ class CartProductWidget extends StatelessWidget {
           //   context: context,
           //   isScrollControlled: true,
           //   backgroundColor: Colors.transparent,
-          //   builder: (con) => ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart,
-          //   ),
+          //   builder: (con) => ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
           // ) : showDialog(context: context, builder: (con) => Dialog(
           //   child: ProductBottomSheetWidget(product: cart.product, cartIndex: cartIndex, cart: cart),
           // ));
         },
-        child:
-        GetBuilder<CartController>(
+        child: GetBuilder<CartController>(
           builder: (cartController) {
             return Slidable(
               key: UniqueKey(),
@@ -117,7 +115,7 @@ class CartProductWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                                 color: Theme.of(context).primaryColor.withOpacity(0.2),
                               ),
-                              child: Text( cart.product!.food_type == 1 ? 'cooked' : 'uncooked',
+                              child: Text( cart.product!.food_type == 1 ? 'Cooked'.tr : 'UnCooked'.tr,
                                 style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
                               ),
                             ),
@@ -148,12 +146,7 @@ class CartProductWidget extends StatelessWidget {
                         builder: (cartController) {
                           return Row(children: [
                             QuantityButton(
-                              onTap: /*cartController.isLoading ? () {} : */() {
-                                // if (productController.addOnQtyList[index]! > 1) {
-                                //   productController.setAddOnQuantity(false, index);
-                                // } else {
-                                //   productController.addAddOn(false, index);
-                                // }
+                              onTap: cartController.isLoading ? () {} : () {
                                 if (cart.quantity! > 1) {
                                   cartController.setQuantity(false, cart);
                                 }else {
@@ -171,24 +164,13 @@ class CartProductWidget extends StatelessWidget {
                             ),
                             // Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
                             QuantityButton(
-                              onTap: /*cartController.isLoading ? (){} :*/ () => cartController.setQuantity(true, cart),
+                              onTap: cartController.isLoading ? (){} : () => cartController.setQuantity(true, cart),
                               isIncrement: true,
                               color: cartController.isLoading ? Theme.of(context).disabledColor : null,
                             ),
                           ]);
                         }
                       ),
-
-                      // !ResponsiveHelper.isMobile(context) ? Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                      //   child: IconButton(
-                      //     onPressed: () {
-                      //       Get.find<CartController>().removeFromCart(cartIndex);
-                      //     },
-                      //     icon: const Icon(Icons.delete, color: Colors.red),
-                      //   ),
-                      // ) : const SizedBox(),
-
                     ]),
 
                     addOnText.isNotEmpty ? Padding(

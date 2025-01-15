@@ -65,7 +65,6 @@ class Product {
   int? quantityLimit;
   bool? isActive;
 
-
   Product(
       {this.id,
         this.name,
@@ -186,7 +185,7 @@ class Product {
     data['veg'] = veg;
     data['food_type'] = food_type;
     data['maximum_cart_quantity'] = quantityLimit;
-    data['active_status'] = isActive;
+    data['isActive'] = isActive;
     return data;
   }
 }

@@ -1,6 +1,5 @@
 class Images {
   static const String logo = 'assets/image/logo.png';
-  static const String splash = 'assets/image/splash_new.png';
   // static const String logoName = 'assets/image/logo_name.png';
   static const String placeholder = 'assets/image/placeholder.png';
   static const String arabic = 'assets/image/arabic.png';
@@ -13,12 +12,9 @@ class Images {
   static const String lock = 'assets/image/lock.png';
   static const String mail = 'assets/image/mail.png';
   static const String map = 'assets/image/map.png';
-  // static const String onboard_1 = 'assets/image/onboard_1.png';
-  // static const String onboard_2 = 'assets/image/onboard_2.png';
-  // static const String onboard_3 = 'assets/image/onboard_3.png';
-  static const String onboard_1 = 'assets/image/onboard1.png';
-  static const String onboard_2 = 'assets/image/onboard2.png';
-  static const String onboard_3 = 'assets/image/onboard3.png';
+  static const String onboard_1 = 'assets/image/onboard_1.png';
+  static const String onboard_2 = 'assets/image/onboard_2.png';
+  static const String onboard_3 = 'assets/image/onboard_3.png';
   static const String restaurantMarker = 'assets/image/restaurant_marker.png';
   static const String deliveryManMarker = 'assets/image/delivery_man_marker.png';
   static const String user = 'assets/image/user.png';
@@ -88,6 +84,7 @@ class Images {
   static const String appleLogo = 'assets/image/apple_logo.png';
   static const String weather = 'assets/image/weather.png';
   static const String resetLock = 'assets/image/reset_lock.png';
+
   static const String forgetIcon = 'assets/image/forget_icon.png';
   static const String loyaltyIcon = 'assets/image/loyalty_icon.png';
   static const String shoppingBagIcon = 'assets/image/shopping_bag_icon.png';
@@ -206,10 +203,34 @@ class Images {
   static const String documentIcon = 'assets/image/documents.png';
   static const String pdfIcon = 'assets/image/pdf.png';
   static const String orderMenuIcon = 'assets/image/order_menu_icon.png';
-  static const String foodTypeCookedBanner = 'assets/image/foodtypecookedbanner.png';
+  static const String profilePlaceHolder = 'assets/image/ic_upload_profile_placeholder.png';
+  static const String webLogo = 'assets/image/weblogo1.png';
+  static const String cooked = 'assets/image/cooked.jpg';
+  static const String unCooked = 'assets/image/uncooked.jpg';
+  static const String topBanner = 'assets/image/topBanner.png';
+  static const String unCookedBanner = 'assets/image/uncooked_banner.png';
+  static const String cookedBanner = 'assets/image/recommanded_banner.png';
+  static const String googleBanner = 'assets/image/google-play-badge-logo-svgrepo-com.png';
+  static const String appleBanner = 'assets/image/social-apple-svgrepo-com.png';
+  static const String googleLogo = 'assets/image/googlelogo.png';
+  static const String apple = 'assets/image/applelogo.png';
+  static const String cookedCategoryBanner = 'assets/image/cookedcategorybanner.png';
+  static const String uncookedCategoryBanner = 'assets/image/uncookedcategorybanner.png';
+  static const String topBanner1 = 'assets/image/homebanner1.jpg';
+  static const String topBanner2 = 'assets/image/homebanner2.jpg';
+  static const String topBanner3 = 'assets/image/homebanner3.jpg';
+  static const String topBanner4 = 'assets/image/homebanner4.jpg';
+  static const String topBanner5 = 'assets/image/homebanner5.jpg';
+  static const String topBanner6 = 'assets/image/homebanner6.jpg';
+  static const String cookedBanner1 = 'assets/image/cookedbanner1.png';
+  static const String cookedBanner2 = 'assets/image/cookedbanner2.png';
+  static const String uncookedBanner1 = 'assets/image/uncookedbanner1.png';
+  static const String uncookedBanner2 = 'assets/image/uncookedbanner2.png';
   static const String foodTypeUncookedBanner = 'assets/image/foodtypeuncookedbanner.png';
-  static const String masalaPickleBanner= 'assets/image/petfoodparticlebanner.png';
-  static const String petFoodParticle = 'assets/image/masala&pickleparticlebanner.png';
+  static const String foodTypeCookedBanner = 'assets/image/foodtypecookedbanner.png';
+  static const String foodTypePetFoodBanner = 'assets/image/foodtypepetbanner.png';
+  static const String petFoodParticleImage = 'assets/image/pet_food_particle_image.png';
+  static const String masalaParticleImage = 'assets/image/masala_particle_image.png';
   static const String uncookedPromotionalBanner = 'assets/image/uncooked_promotional_banner.png';
   static const String cookedPromotionalBanner = 'assets/image/cooked_promotional_banner.png';
 }

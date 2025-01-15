@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:stackfood_multivendor/features/coupon/controllers/coupon_controller.dart';
 import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
 import 'package:stackfood_multivendor/helper/date_converter.dart';
 import 'package:stackfood_multivendor/helper/price_converter.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
@@ -29,8 +27,7 @@ class CouponCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         child: Transform.rotate(
           angle: Get.find<LocalizationController>().isLtr ? 0 : pi,
-          child: Image.asset(
-            Get.find<ThemeController>().darkTheme ? Images.couponBgDark : Images.couponBgLight,
+          child: Image.asset(Images.couponBgLight,
             height: ResponsiveHelper.isMobilePhone() ? 120 : 150,
             fit: ResponsiveHelper.isMobilePhone() ? BoxFit.cover : BoxFit.contain,
           ),

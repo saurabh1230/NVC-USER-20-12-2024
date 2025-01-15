@@ -1,3 +1,4 @@
+import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
 import 'package:stackfood_multivendor/features/checkout/widgets/payment_failed_dialog.dart';
 import 'package:stackfood_multivendor/features/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
@@ -91,6 +92,16 @@ class _OrderSuccessfulDialogWidgetState extends State<OrderSuccessfulDialogWidge
                     textAlign: TextAlign.center,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeSmall),
+                  child: CustomButtonWidget(
+                    onPressed: () {
+                      Get.toNamed(
+                        RouteHelper.getOrderDetailsRoute(int.parse(widget.orderID!)));
+                      
+                    },
+                      buttonText: "Order Details"),
+                )
                 // const SizedBox(height: Dimensions.paddingSizeExtraLarge),
                 //
                 // Padding(

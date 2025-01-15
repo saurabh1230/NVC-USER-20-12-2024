@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:stackfood_multivendor/common/models/product_model.dart';
 import 'package:stackfood_multivendor/common/models/response_model.dart';
 import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
@@ -9,7 +9,6 @@ import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.
 import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
 import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:stackfood_multivendor/features/loyalty/controllers/loyalty_controller.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/borzo_delivery_model.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/delivery_log_model.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_cancellation_body.dart';
 import 'package:stackfood_multivendor/features/order/domain/models/order_details_model.dart';
@@ -23,6 +22,9 @@ import 'package:stackfood_multivendor/helper/date_converter.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../helper/responsive_helper.dart';
+import '../../checkout/widgets/order_successfull_dialog_widget.dart';
 
 class OrderController extends GetxController implements GetxService {
   final OrderServiceInterface orderServiceInterface;
@@ -263,73 +265,8 @@ class OrderController extends GetxController implements GetxService {
   void cancelTimer() {
     _timer?.cancel();
   }
-  OrderModel? _trackborzoOrder;
-  OrderModel? get trackborzoOrder => _trackborzoOrder;
-  // Future<ResponseModel> trackBorzoOrder(String? orderID) async {
-  //   print('Tracking order API');
-  //   _trackborzoOrder = null; // Reset the tracked model
-  //   _showCancelled = false;
-  //
-  //   ResponseModel responseModel;
-  //
-  //   // Check if orderID is null or empty
-  //   if (orderID == null || orderID.isEmpty) {
-  //     print('\x1B[31mError:\x1B[0m Order ID cannot be null or empty.');
-  //     return ResponseModel(false, 'Order ID cannot be null or empty.');
-  //   }
-  //
-  //   if (_trackborzoOrder == null) {
-  //     _isLoading = true; // Start loading
-  //     try {
-  //       // Call the service to track the order
-  //       OrderModel? responseOrderModel = await orderServiceInterface.trackOrder(
-  //         orderID,
-  //         AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId(),
-  //         contactNumber: '99999',
-  //       );
-  //
-  //       // Check if responseOrderModel is not null
-  //       if (responseOrderModel != null) {
-  //         // Print the entire response in purple
-  //         print('\x1B[35mAPI Response:\x1B[0m ${responseOrderModel.toJson()}');
-  //
-  //         // Safely access deliveryAddress and log its details
-  //         if (responseOrderModel.deliveryAddress != null) {
-  //           print('\x1B[35mDelivery Address:\x1B[0m ${responseOrderModel.deliveryAddress!.toJson()}');
-  //         } else {
-  //           print('\x1B[33mWarning:\x1B[0m Delivery address is null.');
-  //         }
-  //
-  //         // Save the response into _trackModel
-  //         _trackborzoOrder = responseOrderModel;
-  //
-  //         responseModel = ResponseModel(true, 'Order tracking successful');
-  //       } else {
-  //         print('\x1B[33mWarning:\x1B[0m Response Order Model is null.');
-  //         responseModel = ResponseModel(false, 'Failed to track order.');
-  //       }
-  //     } catch (e) {
-  //       print('\x1B[31mError:\x1B[0m $e');
-  //       responseModel = ResponseModel(false, 'An error occurred: $e');
-  //     } finally {
-  //       _isLoading = false; // Stop loading
-  //       update(); // Update the UI or state
-  //     }
-  //   } else {
-  //     responseModel = ResponseModel(true, 'Order already being tracked.');
-  //   }
-  //
-  //   return responseModel; // Return the response model
-  // }
-
-
-
-
-
-
 
   Future<ResponseModel> trackOrder(String? orderID, OrderModel? orderModel, bool fromTracking, {String? contactNumber, bool? fromGuestInput = false}) async {
-    print('track order api');
     _trackModel = null;
     if(!fromTracking) {
       _orderDetails = null;
@@ -425,14 +362,7 @@ class OrderController extends GetxController implements GetxService {
     update();
   }
 
-  List<BrozoModel>? _borzoDetails;
-  List<BrozoModel>? get borzoDetails => _borzoDetails;
-
-
-
-
   Future<List<OrderDetailsModel>?> getOrderDetails(String orderID) async {
-    print('==================> Check Order Details');
     _isLoading = true;
     _showCancelled = false;
 
@@ -440,7 +370,6 @@ class OrderController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       _orderDetails = orderServiceInterface.processOrderDetails(response);
       _schedules = orderServiceInterface.processSchedules(response);
-      print('=========>  Response Body ${response.body}');
     }
     _isLoading = false;
     update();
@@ -456,7 +385,13 @@ class OrderController extends GetxController implements GetxService {
         Get.find<LoyaltyController>().saveEarningPoint(points.toStringAsFixed(0));
       }
       if(Get.find<AuthController>().isGuestLoggedIn()) {
-        Get.offNamed(RouteHelper.getOrderSuccessRoute(orderID!, 'success', 0, contactNumber));
+        if(ResponsiveHelper.isDesktop(Get.context)) {
+          Get.offNamed(RouteHelper.getInitialRoute());
+          Future.delayed(const Duration(seconds: 2) , () => Get.dialog(Center(child: SizedBox(height: 350, width : 500, child: OrderSuccessfulDialogWidget(orderID: orderID!, contactNumber: contactNumber)))));
+        } else {
+          Get.offNamed(RouteHelper.getOrderSuccessRoute(orderID!, 'success', 0, contactNumber));
+        }
+        // Get.offNamed(RouteHelper.getOrderSuccessRoute(orderID!, 'success', 0, contactNumber));
       }else {
         await Get.offAllNamed(RouteHelper.getInitialRoute());
       }

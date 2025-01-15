@@ -23,6 +23,7 @@ class InterestController extends GetxController implements GetxService {
     }
     _categoryList = Get.find<CategoryController>().categoryList;
     _interestCategorySelectedList = interestServiceInterface.processCategorySelectedList(_categoryList);
+
     update();
   }
 

@@ -87,7 +87,7 @@ class BottomSectionWidget extends StatelessWidget {
 
         ResponsiveHelper.isDesktop(context) ? Padding(
           padding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge, bottom:Dimensions.paddingSizeSmall),
-          child: Text('ary'.tr, style: robotoBold),
+          child: Text('Order Summary'.tr, style: robotoBold),
         ) : const SizedBox(),
 
         /// Coupon

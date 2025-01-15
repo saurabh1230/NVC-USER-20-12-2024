@@ -57,11 +57,12 @@ class PopularStoreWidget1 extends StatelessWidget {
                   padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall, bottom: 5),
                   child: InkWell(
                     onTap: () {
+                      Restaurant restaurantItem = restaurant[index];
+                      String slug = restaurantItem.name!.toLowerCase().replaceAll(' ', '-');
                       Get.toNamed(
-                        RouteHelper.getRestaurantRoute(restaurant[index].id),
-                        arguments: RestaurantScreen(restaurant: restaurant[index]),
-                      );
-                    },
+                        RouteHelper.getRestaurantRoute(slug, restaurantItem.id!), // Pass slug and id
+                        arguments: RestaurantScreen(restaurant: restaurantItem),
+                      );},
                     child: Container(
                       height: 150,
                       width: 200,
