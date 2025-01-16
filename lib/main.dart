@@ -160,9 +160,7 @@ class _MyAppState extends State<MyApp> {
               return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)), child: Material(
                 child: Stack(children: [
                   widget!,
-
                   GetBuilder<SplashController>(builder: (splashController){
-
                     if(!splashController.savedCookiesData || !splashController.getAcceptCookiesStatus(splashController.configModel?.cookiesText ?? "")){
                       return ResponsiveHelper.isWeb() ? const Align(alignment: Alignment.bottomCenter, child: CookiesViewWidget()) : const SizedBox();
                     }else{

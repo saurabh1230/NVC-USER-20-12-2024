@@ -101,17 +101,17 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                       }),
                       const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
-                      RichText(text: TextSpan(children: [
-                        TextSpan(
-                          text: '${'if_you_have_any_queries_feel_free_to_contact_with_our'.tr} ',
-                          style: robotoRegular.copyWith(color: Theme.of(context).hintColor, fontSize: Dimensions.fontSizeSmall),
-                        ),
-                        TextSpan(
-                          text: 'help_and_support'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => Get.toNamed(RouteHelper.getSupportRoute()),
-                        ),
-                      ]), textAlign: TextAlign.center, maxLines: 3),
+                      // RichText(text: TextSpan(children: [
+                      //   TextSpan(
+                      //     text: '${'if_you_have_any_queries_feel_free_to_contact_with_our'.tr} ',
+                      //     style: robotoRegular.copyWith(color: Theme.of(context).hintColor, fontSize: Dimensions.fontSizeSmall),
+                      //   ),
+                      //   TextSpan(
+                      //     text: 'help_and_support'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault),
+                      //     recognizer: TapGestureRecognizer()
+                      //       ..onTap = () => Get.toNamed(RouteHelper.getSupportRoute()),
+                      //   ),
+                      // ]), textAlign: TextAlign.center, maxLines: 3),
 
                     ]),
                   )
@@ -142,7 +142,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
       }else {
         Get.find<VerificationController>().forgetPassword(numberWithCountryCode).then((status) async {
           if (status.isSuccess) {
-            Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, '', RouteHelper.forgotPassword, ''));
+            Get.toNamed(RouteHelper.getEmailVerificationRoute(numberWithCountryCode, '', RouteHelper.forgotPassword, ''));
           }else {
             showCustomSnackBar(status.message);
           }

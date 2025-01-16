@@ -42,72 +42,17 @@ class CookedUnCookedProductScreenState extends State<CookedUnCookedProductScreen
   @override
   void initState() {
     super.initState();
-    Get.find<CategoryController>().clearSubCategoryList();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<CategoryController>().getUncookedProducts(1,"cooked",false);
-      Get.find<CategoryController>().getFilterRestaurantList(1, "1", false,);
-      Get.find<RestaurantController>().setRestaurantType('1');
+     Get.find<RestaurantController>().getRestaurantCookedList(1,false);
+    });
 
-    });
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryProductList != null
-          && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().pageSize! / 10).ceil();
-        if (Get.find<CategoryController>().offset < pageSize) {
-          debugPrint('end of the page');
-          Get.find<CategoryController>().showBottomLoader();
-          if(Get.find<CategoryController>().selectedCookedCategoryId == null) {
-            Get.find<CategoryController>().getUncookedProducts(Get.find<CategoryController>().offset+1,"cooked",false);
-          } else {
-            Get.find<CategoryController>().getCategoryProductList(
-              Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                  : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-              Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-            );
-          }
-        }
-      }
-    });
-    restaurantScrollController.addListener(() {
-      if (restaurantScrollController.position.pixels == restaurantScrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryRestaurantList != null
-          && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().restaurantPageSize! / 10).ceil();
-        if (Get.find<CategoryController>().offset < pageSize) {
-          debugPrint('end of the page');
-          Get.find<CategoryController>().showBottomLoader();
-          Get.find<CategoryController>().getCategoryRestaurantList(
-            Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-            Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-          );
-        }
-      }
-    });
+
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (catController) {
-      List<Product>? products;
-      List<Restaurant>? restaurants;
-      if(catController.categoryProductList != null && catController.searchProductList != null) {
-        products = [];
-        if (catController.isSearching) {
-          products.addAll(catController.searchProductList!);
-        } else {
-          products.addAll(catController.categoryProductList!);
-        }
-      }
-      if(catController.categoryRestaurantList != null && catController.searchRestaurantList != null) {
-        restaurants = [];
-        if (catController.isSearching) {
-          restaurants.addAll(catController.searchRestaurantList!);
-        } else {
-          restaurants.addAll(catController.categoryRestaurantList!);
-        }
-      }
+
 
       return PopScope(
         canPop: Navigator.canPop(context),

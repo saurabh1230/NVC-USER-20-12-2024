@@ -13,6 +13,7 @@ import 'package:stackfood_multivendor/features/auth/widgets/trams_conditions_che
 import 'package:stackfood_multivendor/helper/custom_validator.dart';
 import 'package:stackfood_multivendor/helper/responsive_helper.dart';
 import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:stackfood_multivendor/util/app_constants.dart';
 import 'package:stackfood_multivendor/util/dimensions.dart';
 import 'package:stackfood_multivendor/util/images.dart';
 import 'package:stackfood_multivendor/util/styles.dart';
@@ -21,7 +22,8 @@ import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart
 import 'package:stackfood_multivendor/common/widgets/custom_text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+  import 'dart:convert';
+import 'package:http/http.dart' as http;
 class SignUpWidget extends StatefulWidget {
   const SignUpWidget({super.key});
 
@@ -217,40 +219,39 @@ class SignUpWidgetState extends State<SignUpWidget> {
   }
 
   void _register(AuthController authController, String countryCode) async {
-
-    SignUpBodyModel? signUpModel = await _prepareSignUpBody(countryCode);
-
-    if(signUpModel == null) {
-      return;
-    } else {
-      authController.registration(signUpModel).then((status) async {
-        _handleResponse(status, countryCode);
-      });
-    }
+    SignUpBodyModel? signUpModel = await _prepareSignUpBody(countryCode,authController);
   }
 
-  void _handleResponse(ResponseModel status, String countryCode) {
-    String password = _passwordController.text.trim();
-    String numberWithCountryCode = countryCode + _phoneController.text.trim();
 
-    if (status.isSuccess) {
-      if(Get.find<SplashController>().configModel!.customerVerification!) {
-        List<int> encoded = utf8.encode(password);
-        String data = base64Encode(encoded);
-        Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
-      }else {
-        Get.find<ProfileController>().getUserInfo();
-        Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
-        if(ResponsiveHelper.isDesktop(context)) {
-          Get.back();
-        }
-      }
-    }else {
-      showCustomSnackBar(status.message);
-    }
-  }
 
-  Future<SignUpBodyModel?> _prepareSignUpBody(String countryCode) async {
+
+  // void _handleResponse(ResponseModel status, String countryCode) {
+  //   String password = _passwordController.text.trim();
+  //   String numberWithCountryCode = countryCode + _phoneController.text.trim();
+  //   print('CHeck Status for signup ${status}');
+  //   // if (status.isSuccess) {
+  //   //   if(Get.find<SplashController>().configModel!.customerVerification!) {
+  //   //     List<int> encoded = utf8.encode(password);
+  //   //     String data = base64Encode(encoded);
+  //   //     Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, status.message, RouteHelper.signUp, data));
+  //   //   }else {
+  //   //     Get.find<ProfileController>().getUserInfo();
+  //   //     Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
+  //   //     if(ResponsiveHelper.isDesktop(context)) {
+  //   //       Get.back();
+  //   //     }
+  //   //   }
+  //   // }else {
+  //   //   showCustomSnackBar(status.message);
+  //   // }
+  // }
+
+
+
+
+
+
+  Future<SignUpBodyModel?> _prepareSignUpBody(String countryCode,AuthController authController) async {
     String firstName = _firstNameController.text.trim();
     String lastName = _lastNameController.text.trim();
     String email = _emailController.text.trim();
@@ -292,6 +293,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
         password: password,
         refCode: referCode,
       );
+      authController.handleResponse(signUpBody,countryCode,context);
       return signUpBody;
     }
     return null;

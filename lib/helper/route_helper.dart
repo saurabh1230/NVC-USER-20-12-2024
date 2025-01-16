@@ -69,6 +69,7 @@ import 'package:stackfood_multivendor/features/product/screens/popular_food_scre
 import 'package:stackfood_multivendor/features/splash/domain/models/deep_link_body.dart';
 import 'package:stackfood_multivendor/features/support/screens/support_screen.dart';
 import 'package:stackfood_multivendor/features/update/screens/update_screen.dart';
+import 'package:stackfood_multivendor/features/verification/screens/email_verification_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/forget_pass_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/new_pass_screen.dart';
 import 'package:stackfood_multivendor/features/verification/screens/verification_screen.dart';
@@ -88,6 +89,7 @@ class RouteHelper {
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
   static const String verification = '/verification';
+    static const String emailverification = '/emailverification';
   static const String accessLocation = '/access-location';
   static const String pickMap = '/pick-map';
   static const String interest = '/interest';
@@ -180,6 +182,9 @@ class RouteHelper {
   static String getSignUpRoute() => signUp;
   static String getVerificationRoute(String? number, String? token, String page, String pass) {
     return '$verification?page=$page&number=$number&token=$token&pass=$pass';
+  }
+    static String getEmailVerificationRoute(String? number, String? token, String page, String pass) {
+    return '$emailverification?page=$page&number=$number&token=$token&pass=$pass';
   }
   static String getAccessLocationRoute(String page) => '$accessLocation?page=$page';
   static String getPickMapRoute(String? page, bool canRoute) => '$pickMap?page=$page&route=${canRoute.toString()}';
@@ -366,6 +371,14 @@ class RouteHelper {
       List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
       String data = utf8.decode(decode);
       return VerificationScreen(
+        number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
+        password: data,
+      );
+    }),
+       GetPage(name: emailverification, page: () {
+      List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return EmailVerificationScreen(
         number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
         password: data,
       );

@@ -7,7 +7,7 @@ class AppConstants {
   static const double appVersion = 1;
   static const String fontFamily = 'Roboto';
   static const bool payInWevView = false;
-  static const String webHostedUrl = 'https://nvcuser.invoidea.in';
+  static const String webHostedUrl = 'https://nonvegcity.com';
   // static const String baseUrl = 'https://lab2.invoidea.in/nvc/public';
     static const String baseUrl = 'https://invoidea.work/nvc/public';
   static const String categoryUri = '/api/v1/categories';

@@ -149,7 +149,7 @@ class MenuDrawerWidgetState extends State<MenuDrawerWidget> with SingleTickerPro
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveHelper.isDesktop(context) ? _buildContent() : const SizedBox();
+    return ResponsiveHelper.isDesktop(context) ? _buildContent() :  _buildContent();
   }
 
   Widget _buildContent() {
@@ -240,4 +240,147 @@ class Menu {
   Function onTap;
 
   Menu({required this.icon, required this.title, required this.onTap});
+}
+
+
+
+class MobileDrawer extends StatefulWidget  {
+  const MobileDrawer({super.key});
+
+  @override
+  State<MobileDrawer> createState() => _MobileDrawerState();
+}
+
+class _MobileDrawerState extends State<MobileDrawer> with SingleTickerProviderStateMixin  {
+  final List<Menu> _menuList = [
+    Menu(icon: Images.profileIcon, title: 'profile'.tr, onTap: () {
+      Get.offNamed(RouteHelper.getProfileRoute());
+    }),
+    Menu(icon: Images.orderMenuIcon, title: 'my_orders'.tr, onTap: () {
+      Get.offNamed(RouteHelper.getOrderRoute());
+    }),
+    Menu(icon: Images.location, title: 'my_address'.tr, onTap: () {
+      Get.offNamed(RouteHelper.getAddressRoute());
+    }),
+    Menu(icon: Images.support, title: 'help_support'.tr, onTap: () {
+      Get.offNamed(RouteHelper.getSupportRoute());
+    }),
+
+  ];
+
+  static const _initialDelayTime = Duration(milliseconds: 200);
+  static const _itemSlideTime = Duration(milliseconds: 250);
+  static const _staggerTime = Duration(milliseconds: 50);
+  static const _buttonDelayTime = Duration(milliseconds: 150);
+  static const _buttonTime = Duration(milliseconds: 500);
+  final _animationDuration = _initialDelayTime + (_staggerTime * 7) + _buttonDelayTime + _buttonTime;
+
+  late AnimationController _staggeredController;
+  final List<Interval> _itemSlideIntervals = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    if(Get.find<SplashController>().configModel!.refundPolicyStatus == 1) {
+      _menuList.add(Menu(icon: Images.refund, title: 'refund_policy'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getHtmlRoute('refund-policy'));
+      }));
+    }
+    if(Get.find<SplashController>().configModel!.cancellationPolicyStatus == 1) {
+      _menuList.add(Menu(icon: Images.cancellation, title: 'cancellation_policy'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getHtmlRoute('cancellation-policy'));
+      }));
+    }
+    if(Get.find<SplashController>().configModel!.shippingPolicyStatus == 1) {
+      _menuList.add(Menu(icon: Images.shippingPolicy, title: 'shipping_policy'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getHtmlRoute('shipping-policy'));
+      }));
+    }
+
+    if(Get.find<SplashController>().configModel!.customerWalletStatus == 1) {
+      _menuList.add(Menu(icon: Images.wallet, title: 'wallet'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getWalletRoute());
+      }));
+    }
+
+    if(Get.find<SplashController>().configModel!.loyaltyPointStatus == 1) {
+      _menuList.add(Menu(icon: Images.loyal, title: 'loyalty_points'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getLoyaltyRoute());
+      }));
+    }
+    if(Get.find<SplashController>().configModel!.refEarningStatus == 1) {
+      _menuList.add(Menu(icon: Images.referCode, title: 'refer_and_earn'.tr, onTap: () {
+        Get.offNamed(RouteHelper.getReferAndEarnRoute());
+      }));
+    }
+    if(Get.find<SplashController>().configModel!.toggleDmRegistration!) {
+      _menuList.add(Menu(
+        icon: Images.deliveryManJoin, title: 'join_as_a_delivery_man'.tr,onTap: (){
+          Get.toNamed(RouteHelper.getDeliverymanRegistrationRoute());
+      }));
+    }
+    if(Get.find<SplashController>().configModel!.toggleRestaurantRegistration!) {
+      _menuList.add(Menu(
+        icon: Images.restaurantJoin, title: 'join_as_a_restaurant'.tr,
+        onTap: () => Get.toNamed(RouteHelper.getRestaurantRegistrationRoute()),
+      ));
+    }
+    _menuList.add(Menu(icon: Images.logOut, title: Get.find<AuthController>().isLoggedIn() ? 'logout'.tr : 'sign_in'.tr, onTap: () {
+      Get.back();
+      if(Get.find<AuthController>().isLoggedIn()) {
+        Get.dialog(ConfirmationDialogWidget(icon: Images.support, description: 'are_you_sure_to_logout'.tr, isLogOut: true, onYesPressed: () {
+          Get.find<AuthController>().clearSharedData();
+          Get.find<CartController>().clearCartList();
+          Get.find<AuthController>().socialLogout();
+          Get.find<FavouriteController>().removeFavourites();
+          if(ResponsiveHelper.isDesktop(Get.context)) {
+            Get.offAllNamed(RouteHelper.getInitialRoute());
+          }else{
+            Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
+          }
+        }), useSafeArea: false);
+      }else {
+        Get.find<FavouriteController>().removeFavourites();
+        if(ResponsiveHelper.isDesktop(context)){
+          Get.dialog( Center(child: SignInWidget(exitFromApp: false,backFromThis: true,),));
+        }else{
+          Get.toNamed(RouteHelper.getSignInRoute(RouteHelper.main));
+        }
+      }
+    }));
+
+    _createAnimationIntervals();
+
+    _staggeredController = AnimationController(
+      vsync: this,
+      duration: _animationDuration,
+    )..forward();
+  }
+
+  void _createAnimationIntervals() {
+    for (var i = 0; i < _menuList.length; ++i) {
+      final startTime = _initialDelayTime + (_staggerTime * i);
+      final endTime = startTime + _itemSlideTime;
+      _itemSlideIntervals.add(
+        Interval(
+          startTime.inMilliseconds / _animationDuration.inMilliseconds,
+          endTime.inMilliseconds / _animationDuration.inMilliseconds,
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _staggeredController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      color: Colors.red,
+    );
+  }
 }

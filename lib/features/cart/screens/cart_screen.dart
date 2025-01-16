@@ -129,6 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       const SizedBox(height: Dimensions.paddingSizeSmall),
 
+
                                       !isDesktop ? PricingViewWidget(cartController: cartController) : const SizedBox(),
                                     ]),
                                   ),

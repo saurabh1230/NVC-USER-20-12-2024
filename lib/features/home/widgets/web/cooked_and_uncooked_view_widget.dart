@@ -46,7 +46,8 @@ class _CookedAndUnCookedViewState extends State<CookedAndUnCookedView> {
                 splashColor: Colors.transparent, // Remove the splash color
                 hoverColor: Colors.transparent, // Re
                 onTap: ()
-                {Get.toNamed(RouteHelper.getCookedUnCookedCategoryProductRoute(
+                {                  Get.find<RestaurantController>().setRestaurantType('1');
+                  Get.toNamed(RouteHelper.getCookedUnCookedCategoryProductRoute(
                           0, "cooked",));
                 Get.find<RestaurantController>().clearRestaurantParticularProductList();
                         // Get.find<CategoryController>().getSubCategoryList(catController.cat![0].id.toString());
@@ -84,14 +85,11 @@ class _CookedAndUnCookedViewState extends State<CookedAndUnCookedView> {
                 splashColor: Colors.transparent, // Remove the splash color
                 hoverColor: Colors.transparent, // Remove the highlight color
                 onTap: ()  {
-                // String id = catController.unCookedCat![0].id.toString();
-                  // Get.find<CategoryController>().getFilCategoryList("2");
+                  Get.find<RestaurantController>().setRestaurantType('2');
                 Get.toNamed(RouteHelper.getUnCookedCategoryProductRoute(
                 0, "uncooked",
                 ));
                 Get.find<RestaurantController>().clearRestaurantParticularProductList();
-                // Get.find<CategoryController>().getSubCategoryList(catController.unCookedCat![0].id.toString());
-
                 },
                 child: Column(
                   children: [

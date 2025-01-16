@@ -43,56 +43,17 @@ class UnCookedProductScreenState extends State<UnCookedProductScreen> with Ticke
   @override
   void initState() {
     super.initState();
-    Get.find<CategoryController>().clearSubCategoryList();
-    Get.find<CategoryController>().getUncookedProducts(1,"uncooked",false);
-    Get.find<CategoryController>().getFilterRestaurantList(1, "2", false,);
-    Get.find<RestaurantController>().setRestaurantType('2');
-    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent
-          && Get.find<CategoryController>().categoryProductList != null
-          && !Get.find<CategoryController>().isLoading) {
-        int pageSize = (Get.find<CategoryController>().pageSize! / 10).ceil();
-        if (Get.find<CategoryController>().offset < pageSize) {
-          debugPrint('end of the page');
-          Get.find<CategoryController>().showBottomLoader();
-          if(Get.find<CategoryController>().selectedCookedCategoryId == null) {
-            Get.find<CategoryController>().getUncookedProducts(Get.find<CategoryController>().offset+1,"uncooked",false);
-          } else {
-            Get.find<CategoryController>().getCategoryProductList(
-              Get.find<CategoryController>().subCategoryIndex == 0 ? widget.categoryID
-                  : Get.find<CategoryController>().subCategoryList![Get.find<CategoryController>().subCategoryIndex].id.toString(),
-              Get.find<CategoryController>().offset+1, Get.find<CategoryController>().type, false,
-            );
-          }
-
-        }
-      }
+  
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.find<RestaurantController>().getRestaurantUncookedList(1,false);
     });
+
+    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (catController) {
-      List<Product>? products;
-      List<Restaurant>? restaurants;
-      if(catController.categoryProductList != null && catController.searchProductList != null) {
-        products = [];
-        if (catController.isSearching) {
-          products.addAll(catController.searchProductList!);
-        } else {
-          products.addAll(catController.categoryProductList!);
-        }
-      }
-      if(catController.categoryRestaurantList != null && catController.searchRestaurantList != null) {
-        restaurants = [];
-        if (catController.isSearching) {
-          restaurants.addAll(catController.searchRestaurantList!);
-        } else {
-          restaurants.addAll(catController.categoryRestaurantList!);
-        }
-      }
-
       return PopScope(
         canPop: Navigator.canPop(context),
         onPopInvoked: (val) async {
@@ -175,7 +136,8 @@ class UnCookedProductScreenState extends State<UnCookedProductScreen> with Ticke
               // const SizedBox(height: Dimensions.paddingSizeDefault,),
               Container(
                 width: Get.size.width,
-                padding: EdgeInsets.only(/*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
+                padding: EdgeInsets.only(
+                  /*left:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : 200,
                 right:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault,*/
                     top:   Dimensions.paddingSizeSmall,
                     bottom:  ResponsiveHelper.isTab(context)  ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeDefault),

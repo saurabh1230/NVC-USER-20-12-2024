@@ -16,19 +16,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationScreen extends StatefulWidget {
+class EmailVerificationScreen extends StatefulWidget {
   final String? number;
   final bool fromSignUp;
   final String? token;
   final String password;
-  const VerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
+  const EmailVerificationScreen({super.key, required this.number, required this.password, required this.fromSignUp,
     required this.token});
 
   @override
-  VerificationScreenState createState() => VerificationScreenState();
+  EmailVerificationScreenState createState() => EmailVerificationScreenState();
 }
 
-class VerificationScreenState extends State<VerificationScreen> {
+class EmailVerificationScreenState extends State<EmailVerificationScreen> {
   String? _number;
   Timer? _timer;
   int _seconds = 0;
@@ -95,9 +95,12 @@ class VerificationScreenState extends State<VerificationScreen> {
                         Text('enter_the_verification_sent_to'.tr,
                         textAlign: TextAlign.center,
                         style: robotoRegular.copyWith(color: Theme.of(context).disabledColor) ,),
-                     Text('$_number',
+                            Text('Linked Email',
                        textAlign: TextAlign.center,
                     style: robotoRegular.copyWith(color: Theme.of(context).primaryColor) ,)
+                    //  Text('$_number',
+                    //    textAlign: TextAlign.center,
+                    // style: robotoRegular.copyWith(color: Theme.of(context).primaryColor) ,)
 
                       ],
                     ):
@@ -105,7 +108,7 @@ class VerificationScreenState extends State<VerificationScreen> {
                   RichText(textAlign: TextAlign.center,
                       text: TextSpan(children: [
                     TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
-                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color:  Theme.of(context).primaryColor)),
+                    TextSpan(text: ' Linked Email', style: robotoMedium.copyWith(color:  Theme.of(context).primaryColor)),
                   ])),
                 ],
                 ),
@@ -191,39 +194,39 @@ class VerificationScreenState extends State<VerificationScreen> {
               ) : const SizedBox.shrink(),
               const SizedBox(height: Dimensions.paddingSizeDefault),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 29),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text(
-                    'did_not_receive_the_code'.tr,
-                    style: robotoRegular.copyWith(color: Theme.of(context).disabledColor),
-                  ),
-                  TextButton(
-                    onPressed: _seconds < 1 ? () {
-                      if(widget.fromSignUp) {
-                        Get.find<AuthController>().login(_number, widget.password).then((value) {
-                          if (value.isSuccess) {
-                            _startTimer();
-                            showCustomSnackBar('resend_code_successful'.tr, isError: false);
-                          } else {
-                            showCustomSnackBar(value.message);
-                          }
-                        });
-                      }else {
-                        verificationController.forgetPassword(_number).then((value) {
-                          if (value.isSuccess) {
-                            _startTimer();
-                            showCustomSnackBar('resend_code_successful'.tr, isError: false);
-                          } else {
-                            showCustomSnackBar(value.message);
-                          }
-                        });
-                      }
-                    } : null,
-                    child: Text('${'Resend It'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
-                  ),
-                ]),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 29),
+              //   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              //     Text(
+              //       'did_not_receive_the_code'.tr,
+              //       style: robotoRegular.copyWith(color: Theme.of(context).disabledColor),
+              //     ),
+              //     TextButton(
+              //       onPressed: _seconds < 1 ? () {
+              //         if(widget.fromSignUp) {
+              //           Get.find<AuthController>().login(_number, widget.password).then((value) {
+              //             if (value.isSuccess) {
+              //               _startTimer();
+              //               showCustomSnackBar('resend_code_successful'.tr, isError: false);
+              //             } else {
+              //               showCustomSnackBar(value.message);
+              //             }
+              //           });
+              //         }else {
+              //           verificationController.forgetPassword(_number).then((value) {
+              //             if (value.isSuccess) {
+              //               _startTimer();
+              //               showCustomSnackBar('resend_code_successful'.tr, isError: false);
+              //             } else {
+              //               showCustomSnackBar(value.message);
+              //             }
+              //           });
+              //         }
+              //       } : null,
+              //       child: Text('${'Resend It'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
+              //     ),
+              //   ]),
+              // ),
 
             ]);
           }),

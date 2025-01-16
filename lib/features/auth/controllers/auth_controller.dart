@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:stackfood_multivendor/common/models/response_model.dart';
+import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
@@ -6,6 +9,9 @@ import 'package:stackfood_multivendor/features/auth/domain/models/signup_body_mo
 import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
 import 'package:stackfood_multivendor/features/auth/domain/services/auth_service_interface.dart';
 import 'package:get/get.dart';
+import 'package:stackfood_multivendor/helper/responsive_helper.dart';
+import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:stackfood_multivendor/util/app_constants.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthServiceInterface authServiceInterface;
@@ -155,5 +161,89 @@ class AuthController extends GetxController implements GetxService {
   String getGuestNumber() {
     return authServiceInterface.getGuestNumber();
   }
+
+
+  Future<void> handleResponse(SignUpBodyModel signUpBody, String countryCode, context) async {
+  _isLoading = true;
+  update();
+  String numberWithCountryCode = signUpBody.phone!;
+  
+  // Define the API endpoint
+  final Uri url = Uri.parse('${AppConstants.baseUrl}/api/v1/auth/sign-up');
+  
+  // Define headers
+  Map<String, String> headers = {
+    'Content-Type': 'application/json', // Adjust content type if necessary
+  };
+  
+  try {
+    // Show loading indicator
+    print("SignUpBody: ${signUpBody.toJson()}"); // Log request body
+    print("Request URL: $url"); // Log the request URL
+    print("Request Headers: $headers"); // Log the request headers
+    
+    // Send POST request
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(signUpBody), // Encode the body to JSON
+    );
+    
+    print("Response Status Code: ${response.statusCode}"); // Log the status code
+    print("Response Body: ${response.body}"); // Log the response body
+    
+    // Handle the response
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      
+      String token = responseBody['token']; // Extract the token
+      int isPhoneVerified = responseBody['is_phone_verified'];
+      String phoneVerifyEndUrl = responseBody['phone_verify_end_url'];
+      
+      // Handle customer verification logic
+      if (Get.find<SplashController>().configModel!.customerVerification!) {
+        List<int> encoded = utf8.encode(signUpBody.password!);
+        String data = base64Encode(encoded);
+        
+        // Navigate to the verification route with token
+        Get.toNamed(
+          RouteHelper.getVerificationRoute(
+            numberWithCountryCode,
+            token,
+            RouteHelper.signUp,
+            data,
+          ),
+        );
+      } else {
+        // No verification required, go to profile or location screen
+        Get.find<ProfileController>().getUserInfo();
+        Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
+        if (ResponsiveHelper.isDesktop(context)) {
+          Get.back();
+        }
+      }
+    } else {
+      // Handle errors
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      if (responseBody.containsKey('errors')) {
+        String errorMessage = responseBody['errors'][0]['message'];
+        print("Error: $errorMessage"); // Log the error message
+        showCustomSnackBar(errorMessage); // Show error in custom snackbar
+      } else {
+        print("Error: ${response.reasonPhrase}"); // Log generic error message
+        showCustomSnackBar('Error: ${response.reasonPhrase}'); // Show generic error
+      }
+    }
+  } catch (e) {
+    // Handle exception
+    print("Exception: $e"); // Log exception details
+    showCustomSnackBar('Server is down, please try again later');
+  } finally {
+    _isLoading = false;
+    update();
+    // Hide loading indicator
+  }
+}
+
 
 }

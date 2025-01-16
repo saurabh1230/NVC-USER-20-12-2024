@@ -176,10 +176,58 @@ class RestaurantController extends GetxController implements GetxService {
     }
   }
 
+  Future<void> getRestaurantUncookedList(int offset, bool reload, {bool fromMap = false,}) async {
+    if(reload) {
+      _restaurantModel = null;
+      update();
+    }
+    RestaurantModel? restaurantModel = await restaurantServiceInterface.getRestaurantList(offset, '2', _topRated, _discount, _veg, _nonVeg, fromMap: fromMap);
+    if (restaurantModel != null) {
+      if (offset == 1) {
+        _restaurantModel = restaurantModel;
+      }else {
+        _restaurantModel!.totalSize = restaurantModel.totalSize;
+        _restaurantModel!.offset = restaurantModel.offset;
+        _restaurantModel!.restaurants!.addAll(restaurantModel.restaurants!);
+      }
+      update();
+    }
+  }
+  Future<void> getRestaurantCookedList(int offset, bool reload, {bool fromMap = false,}) async {
+    if(reload) {
+      _restaurantModel = null;
+      update();
+    }
+    RestaurantModel? restaurantModel = await restaurantServiceInterface.getRestaurantList(offset, '1', _topRated, _discount, _veg, _nonVeg, fromMap: fromMap);
+    if (restaurantModel != null) {
+      if (offset == 1) {
+        _restaurantModel = restaurantModel;
+      }else {
+        _restaurantModel!.totalSize = restaurantModel.totalSize;
+        _restaurantModel!.offset = restaurantModel.offset;
+        _restaurantModel!.restaurants!.addAll(restaurantModel.restaurants!);
+      }
+      update();
+    }
+  }
+
+
+
   void setRestaurantType(String type) {
+    print('check this by cooked uncooked');
     _restaurantType = type;
     getRestaurantList(1, true);
+        update();
   }
+
+// void setRestaurantUpdateType(String type) {
+//     print('check this by cooked uncooked');
+//     _restaurantType = type;
+//     getRestaurantList(1, true);
+//     update();
+//   }
+
+
 
   void setTopRated() {
     _topRated = restaurantServiceInterface.setTopRated(_topRated);

@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final ConfigModel? _configModel = Get.find<SplashController>().configModel;
   bool _isLogin = false;
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
   @override
@@ -108,9 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double scrollPoint = 0.0;
     return GetBuilder<LocalizationController>(builder: (localizationController) {
-      return Scaffold(
+      return Scaffold(key: _scaffoldKey,
+      
         appBar: ResponsiveHelper.isDesktop(context) ?  WebMenuBar() : null,
-        endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
+        endDrawer: const MenuDrawerWidget(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: ResponsiveHelper.isMobile(context) ?
         SafeArea(
@@ -145,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 /// App Bar
                 SliverAppBar(
-                  pinned: true, toolbarHeight: 10, expandedHeight: ResponsiveHelper.isTab(context) ? 72 : GetPlatform.isWeb ? 72 : 50,
+                  pinned: true, toolbarHeight: 10, expandedHeight: ResponsiveHelper.isTab(context) ? 92 : GetPlatform.isWeb ? 92 : 70,
                   floating: false, elevation: 0, /*automaticallyImplyLeading: false,*/
                   backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).primaryColor,
                   flexibleSpace: FlexibleSpaceBar(
@@ -203,6 +205,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )),
                               InkWell(
+                                child: GetBuilder<NotificationController>(builder: (notificationController) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor.withOpacity(0.9),
+                                        borderRadius: BorderRadius.circular(Dimensions.radiusSmall)
+                                    ),
+                                    padding: EdgeInsets.all(Dimensions.paddingSizeExtraSmall - (scrollPoint * Dimensions.paddingSizeExtraSmall)),
+                                    child: Stack(children: [
+                                      Icon(Icons.menu, size: 25 - (scrollPoint * 25), color: Theme.of(context).primaryColor),
+                                      notificationController.hasNotification ? Positioned(top: 0, right: 0, child: Container(
+                                        height: 10 - (scrollPoint * 10), width: 10 - (scrollPoint * 10), decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor, shape: BoxShape.circle,
+                                        border: Border.all(width: 1, color: Theme.of(context).cardColor),
+                                      ),
+                                      )) : const SizedBox(),
+                                    ]),
+                                  );
+                                }),
+                                onTap: () {
+                            _scaffoldKey.currentState?.openEndDrawer();
+
+                                },
+                              ),
+                              const SizedBox(width: 10,),
+                               InkWell(
                                 child: GetBuilder<NotificationController>(builder: (notificationController) {
                                   return Container(
                                     decoration: BoxDecoration(

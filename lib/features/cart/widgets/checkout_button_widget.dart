@@ -83,9 +83,14 @@ class CheckoutButtonWidget extends StatelessWidget {
                   builder: (cartController) {
                     return CustomButtonWidget(
                       radius: 10,
-                      buttonText: 'proceed_to_checkout'.tr,
+                      buttonText:restaurantController.restaurant == null ? 'Please wait' : 'proceed_to_checkout'.tr,
                       onPressed: cartController.isLoading ? null : () {
-                        _processToCheckoutButtonPressed(restaurantController);
+                        if(restaurantController.restaurant == null) {
+
+                        } else {
+                           _processToCheckoutButtonPressed(restaurantController);
+                        }
+         
                         // borzoControl.getBorzoDeliveryFees(
                         //     AddressHelper.getAddressFromSharedPref()!.address!,
                         //     AddressHelper.getAddressFromSharedPref()!.latitude!,
