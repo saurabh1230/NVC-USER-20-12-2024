@@ -1,27 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_widget.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/restaurant/widgets/heading_widget.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/helper/extensions.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/cart_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/veg_filter_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/common/widgets/hover_widgets/hover_zoom_widget.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/restaurant/widgets/heading_widget.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/helper/extensions.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/images.dart';
+import 'package:non_veg_city/util/styles.dart';
+import 'package:non_veg_city/common/widgets/cart_widget.dart';
+import 'package:non_veg_city/common/widgets/footer_view_widget.dart';
+import 'package:non_veg_city/common/widgets/menu_drawer_widget.dart';
+import 'package:non_veg_city/common/widgets/veg_filter_widget.dart';
+import 'package:non_veg_city/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_horizontal_view_widget.dart';
+import 'package:non_veg_city/features/restaurant/screens/restaurant_horizontal_view_widget.dart';
 
 
 class PetFoodAndBakeryFoodScreen extends StatefulWidget {

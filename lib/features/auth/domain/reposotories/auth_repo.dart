@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/signup_body_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/reposotories/auth_repo_interface.dart';
-import 'package:stackfood_multivendor/helper/address_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/address/domain/models/address_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/signup_body_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/social_log_in_body_model.dart';
+import 'package:non_veg_city/features/auth/domain/reposotories/auth_repo_interface.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,11 +76,15 @@ class AuthRepo implements AuthRepoInterface<SignUpBodyModel> {
   }
 
   @override
-  Future<Response> login({String? phone, String? password}) async {
+  Future<Response> login({String? phone, }) async {
     String guestId = getGuestId();
     Map<String, String> data = {
+      "guest_id" : guestId,
       "phone": phone!,
-      "password": password!,
+      "login_type" : "otp",
+      "type" : "phone"
+
+      // "password": password!,
     };
     if(guestId.isNotEmpty) {
       data.addAll({"guest_id": guestId});

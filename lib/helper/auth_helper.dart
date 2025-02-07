@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class AuthHelper {

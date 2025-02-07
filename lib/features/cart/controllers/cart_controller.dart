@@ -1,12 +1,12 @@
-import 'package:stackfood_multivendor/common/models/online_cart_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/services/cart_service_interface.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/helper/auth_helper.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
-import 'package:stackfood_multivendor/helper/price_converter.dart';
+import 'package:non_veg_city/common/models/online_cart_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/cart/domain/models/cart_model.dart';
+import 'package:non_veg_city/features/cart/domain/services/cart_service_interface.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/helper/auth_helper.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
+import 'package:non_veg_city/helper/price_converter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 

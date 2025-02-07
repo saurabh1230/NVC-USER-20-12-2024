@@ -1,5 +1,5 @@
-import 'package:stackfood_multivendor/features/language/domain/models/language_model.dart';
-import 'package:stackfood_multivendor/util/images.dart';
+import 'package:non_veg_city/features/language/domain/models/language_model.dart';
+import 'package:non_veg_city/util/images.dart';
 import 'package:get/get.dart';
 
 class AppConstants {
@@ -9,7 +9,7 @@ class AppConstants {
   static const bool payInWevView = false;
   static const String webHostedUrl = 'https://nonvegcity.com';
   // static const String baseUrl = 'https://lab2.invoidea.in/nvc/public';
-    static const String baseUrl = 'https://nonvegcity.com/panel/public';
+  static const String baseUrl = 'https://nonvegcity.com/panel/public';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String restaurantProductUri = '/api/v1/products/latest';

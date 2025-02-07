@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
-import 'package:stackfood_multivendor/features/address/domain/reposotories/address_repo_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/features/address/domain/models/address_model.dart';
+import 'package:non_veg_city/features/address/domain/reposotories/address_repo_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get.dart';
 
 class AddressRepo implements AddressRepoInterface<AddressModel> {

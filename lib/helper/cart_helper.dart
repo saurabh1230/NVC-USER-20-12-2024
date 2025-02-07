@@ -1,9 +1,9 @@
-import 'package:stackfood_multivendor/common/models/online_cart_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart' as pv;
-import 'package:stackfood_multivendor/helper/price_converter.dart';
+import 'package:non_veg_city/common/models/online_cart_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/cart/domain/models/cart_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart' as pv;
+import 'package:non_veg_city/helper/price_converter.dart';
 
 class CartHelper {
   static List<OrderVariation> getSelectedVariations ({required List<pv.Variation>? productVariations, required List<List<bool?>> selectedVariations}) {

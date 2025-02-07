@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:stackfood_multivendor/api/api_checker.dart';
+import 'package:non_veg_city/api/api_checker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
-import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/features/address/domain/models/address_model.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';

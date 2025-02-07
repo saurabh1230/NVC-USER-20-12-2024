@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/vehicle_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/zone_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/reposotories/deliveryman_registration_repo_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/auth/domain/models/vehicle_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/zone_model.dart';
+import 'package:non_veg_city/features/auth/domain/reposotories/deliveryman_registration_repo_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
 class DeliverymanRegistrationRepo implements DeliverymanRegistrationRepoInterface{

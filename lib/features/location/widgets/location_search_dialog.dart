@@ -1,8 +1,8 @@
 
-import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
-import 'package:stackfood_multivendor/features/location/domain/models/prediction_model.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
+import 'package:non_veg_city/features/location/controllers/location_controller.dart';
+import 'package:non_veg_city/features/location/domain/models/prediction_model.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geolocator/geolocator.dart';

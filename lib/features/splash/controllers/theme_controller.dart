@@ -1,4 +1,4 @@
-// import 'package:stackfood_multivendor/features/splash/domain/services/splash_service_interface.dart';
+// import 'package:non_veg_city/features/splash/domain/services/splash_service_interface.dart';
 // import 'package:get/get.dart';
 //
 // class ThemeController extends GetxController implements GetxService {

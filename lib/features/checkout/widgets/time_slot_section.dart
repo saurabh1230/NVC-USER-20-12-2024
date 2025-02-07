@@ -1,10 +1,10 @@
-import 'package:stackfood_multivendor/features/checkout/controllers/checkout_controller.dart';
-import 'package:stackfood_multivendor/features/checkout/widgets/time_slot_bottom_sheet.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/checkout/controllers/checkout_controller.dart';
+import 'package:non_veg_city/features/checkout/widgets/time_slot_bottom_sheet.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';

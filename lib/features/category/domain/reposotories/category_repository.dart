@@ -1,9 +1,9 @@
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/category/domain/models/category_model.dart';
-import 'package:stackfood_multivendor/features/category/domain/reposotories/category_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/category/domain/models/category_model.dart';
+import 'package:non_veg_city/features/category/domain/reposotories/category_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get.dart';
 
 class CategoryRepository implements CategoryRepositoryInterface {

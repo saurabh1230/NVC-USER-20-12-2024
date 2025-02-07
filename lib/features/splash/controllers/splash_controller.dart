@@ -1,13 +1,13 @@
-import 'package:stackfood_multivendor/common/widgets/custom_loader_widget.dart';
-import 'package:stackfood_multivendor/features/address/controllers/address_controller.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
-import 'package:stackfood_multivendor/features/location/widgets/pick_map_dialog.dart';
-import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
-import 'package:stackfood_multivendor/features/splash/domain/services/splash_service_interface.dart';
-import 'package:stackfood_multivendor/helper/address_helper.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:non_veg_city/common/widgets/custom_loader_widget.dart';
+import 'package:non_veg_city/features/address/controllers/address_controller.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/location/controllers/location_controller.dart';
+import 'package:non_veg_city/features/location/widgets/pick_map_dialog.dart';
+import 'package:non_veg_city/features/splash/domain/models/config_model.dart';
+import 'package:non_veg_city/features/splash/domain/services/splash_service_interface.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

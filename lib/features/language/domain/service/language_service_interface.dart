@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/language/domain/models/language_model.dart';
+import 'package:non_veg_city/features/language/domain/models/language_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class LanguageServiceInterface {

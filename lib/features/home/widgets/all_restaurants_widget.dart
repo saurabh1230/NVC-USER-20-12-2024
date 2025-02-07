@@ -1,16 +1,16 @@
-import 'package:stackfood_multivendor/common/widgets/home_category_product_view.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/home/widgets/restaurants_view_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
+import 'package:non_veg_city/common/widgets/home_category_product_view.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/home/widgets/restaurants_view_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/common/widgets/paginated_list_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/all_restaurant_screen.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/cooked_uncooked_home_products.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/restaurant/screens/all_restaurant_screen.dart';
+import 'package:non_veg_city/features/restaurant/screens/cooked_uncooked_home_products.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 
 import 'arrow_icon_button_widget.dart';
 import 'home_all_product_view_widget.dart';

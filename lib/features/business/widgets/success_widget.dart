@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/features/auth/widgets/registration_stepper_widget.dart';
-import 'package:stackfood_multivendor/features/business/controllers/business_controller.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/auth/widgets/registration_stepper_widget.dart';
+import 'package:non_veg_city/features/business/controllers/business_controller.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/images.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/common/widgets/product_view_widget.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
 
 import '../../../common/models/product_model.dart';
 import '../../../common/widgets/home_category_product_view.dart';

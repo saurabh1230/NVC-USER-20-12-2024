@@ -1,12 +1,12 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/chat/domain/models/conversation_model.dart';
-import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
-import 'package:stackfood_multivendor/features/profile/domain/models/userinfo_model.dart';
-import 'package:stackfood_multivendor/features/profile/domain/services/profile_service_interface.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/chat/domain/models/conversation_model.dart';
+import 'package:non_veg_city/features/favourite/controllers/favourite_controller.dart';
+import 'package:non_veg_city/features/profile/domain/models/userinfo_model.dart';
+import 'package:non_veg_city/features/profile/domain/services/profile_service_interface.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -1,9 +1,9 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/reposotories/restaurant_registration_repo_interface.dart';
-import 'package:stackfood_multivendor/features/auth/domain/services/restaurant_registration_service_interface.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/splash/domain/models/config_model.dart';
+import 'package:non_veg_city/features/auth/domain/reposotories/restaurant_registration_repo_interface.dart';
+import 'package:non_veg_city/features/auth/domain/services/restaurant_registration_service_interface.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

@@ -1,9 +1,9 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/wallet/domain/models/fund_bonus_model.dart';
-import 'package:stackfood_multivendor/features/wallet/domain/models/wallet_model.dart';
-import 'package:stackfood_multivendor/features/wallet/domain/repositories/wallet_repository_interface.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/wallet/domain/models/fund_bonus_model.dart';
+import 'package:non_veg_city/features/wallet/domain/models/wallet_model.dart';
+import 'package:non_veg_city/features/wallet/domain/repositories/wallet_repository_interface.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';

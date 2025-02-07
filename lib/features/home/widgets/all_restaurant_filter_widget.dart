@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/home/widgets/filter_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/restaurant_filter_button_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/home/widgets/filter_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/restaurant_filter_button_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class AllRestaurantFilterWidget extends StatelessWidget {

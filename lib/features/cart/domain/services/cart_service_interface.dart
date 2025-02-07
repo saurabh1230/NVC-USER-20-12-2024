@@ -1,8 +1,8 @@
 
-import 'package:stackfood_multivendor/common/models/online_cart_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
+import 'package:non_veg_city/common/models/online_cart_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/cart/domain/models/cart_model.dart';
 
 abstract class CartServiceInterface {
   Future<List<OnlineCartModel>> addMultipleCartItemOnline(List<OnlineCart> carts);

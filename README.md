@@ -1,4 +1,4 @@
-# stackfood_multivendor
+# non_veg_city
 
 A new Flutter application.
 

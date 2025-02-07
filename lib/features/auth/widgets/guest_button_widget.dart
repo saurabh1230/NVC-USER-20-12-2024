@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

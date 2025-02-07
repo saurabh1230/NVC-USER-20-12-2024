@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/splash/domain/repositories/splash_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/splash/domain/repositories/splash_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';

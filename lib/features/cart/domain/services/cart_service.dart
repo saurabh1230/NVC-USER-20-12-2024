@@ -1,11 +1,11 @@
-import 'package:stackfood_multivendor/common/models/online_cart_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/repositories/cart_repository_interface.dart';
-import 'package:stackfood_multivendor/features/cart/domain/services/cart_service_interface.dart';
-import 'package:stackfood_multivendor/helper/price_converter.dart';
+import 'package:non_veg_city/common/models/online_cart_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/cart/domain/models/cart_model.dart';
+import 'package:non_veg_city/features/cart/domain/repositories/cart_repository_interface.dart';
+import 'package:non_veg_city/features/cart/domain/services/cart_service_interface.dart';
+import 'package:non_veg_city/helper/price_converter.dart';
 import 'package:get/get_utils/get_utils.dart';
 
 class CartService implements CartServiceInterface {

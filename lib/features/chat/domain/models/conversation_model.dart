@@ -1,5 +1,5 @@
 
-import 'package:stackfood_multivendor/features/chat/domain/models/message_model.dart';
+import 'package:non_veg_city/features/chat/domain/models/message_model.dart';
 
 class ConversationsModel {
   int? totalSize;

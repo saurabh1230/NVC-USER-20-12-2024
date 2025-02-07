@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/coupon/domain/models/coupon_model.dart';
-import 'package:stackfood_multivendor/features/coupon/domain/reposotories/coupon_repository_interface.dart';
-import 'package:stackfood_multivendor/features/coupon/domain/services/coupon_service_interface.dart';
+import 'package:non_veg_city/features/coupon/domain/models/coupon_model.dart';
+import 'package:non_veg_city/features/coupon/domain/reposotories/coupon_repository_interface.dart';
+import 'package:non_veg_city/features/coupon/domain/services/coupon_service_interface.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 

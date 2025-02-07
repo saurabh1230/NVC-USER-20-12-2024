@@ -1,25 +1,25 @@
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/auth/widgets/sign_in_widget.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/features/profile/widgets/profile_button_widget.dart';
-import 'package:stackfood_multivendor/features/profile/widgets/profile_card_widget.dart';
-import 'package:stackfood_multivendor/features/profile/widgets/web_profile_widget.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
-import 'package:stackfood_multivendor/helper/extensions.dart';
-import 'package:stackfood_multivendor/helper/price_converter.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/confirmation_dialog_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/web_menu_bar.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/auth/widgets/sign_in_widget.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/features/profile/widgets/profile_button_widget.dart';
+import 'package:non_veg_city/features/profile/widgets/profile_card_widget.dart';
+import 'package:non_veg_city/features/profile/widgets/web_profile_widget.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/theme_controller.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
+import 'package:non_veg_city/helper/extensions.dart';
+import 'package:non_veg_city/helper/price_converter.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/images.dart';
+import 'package:non_veg_city/util/styles.dart';
+import 'package:non_veg_city/common/widgets/confirmation_dialog_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_image_widget.dart';
+import 'package:non_veg_city/common/widgets/footer_view_widget.dart';
+import 'package:non_veg_city/common/widgets/menu_drawer_widget.dart';
+import 'package:non_veg_city/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../home/widgets/arrow_icon_button_widget.dart';
@@ -48,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     bool isDesktop = ResponsiveHelper.isDesktop(context);
     bool isLoggedIn = Get.find<AuthController>().isLoggedIn();
     final bool showWalletCard = Get.find<SplashController>().configModel!.customerWalletStatus == 1
@@ -56,15 +57,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: isDesktop ?  WebMenuBar() : null,
       endDrawer: const MenuDrawerWidget(), endDrawerEnableOpenDragGesture: false,
       backgroundColor: isDesktop ? Theme.of(context).colorScheme.background : Theme.of(context).cardColor,
-      body: GetBuilder<ProfileController>(builder: (profileController) {
+      body: 
+      GetBuilder<ProfileController>(builder: (profileController) {
+
         return (isLoggedIn && profileController.userInfoModel == null) ? const Center(
           child: CircularProgressIndicator(),
         ) : Center(
           child: SingleChildScrollView(
             controller: scrollController,
             child: FooterViewWidget(
+
               minHeight: isLoggedIn ?  isDesktop ? 0.4 : 0.6 : 0.35,
-              child: (isLoggedIn && isDesktop) ? const WebProfileWidget() : Container(
+              child: (isLoggedIn && isDesktop) ? 
+              const WebProfileWidget() : 
+              // SizedBox()
+              Container(
                 color: Theme.of(context).primaryColor.withOpacity(0.2),
                 width: Dimensions.webMaxWidth, height: context.height,
                 child: Center(
@@ -74,15 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeExtraLarge),
                       child:   Column(crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Align(alignment: Alignment.topLeft,
-                              child: isDesktop ? ArrowIconButtonWidget(isLeft: true,
-                                paddingLeft: Dimensions.paddingSizeSmall,
-                                onTap: () {
-                                // Get.back();
-                                Get.toNamed(RouteHelper.getMainRoute(1.toString()));
-                                },
-                              ) : const SizedBox()
-                          ),
+                          // Align(alignment: Alignment.topLeft,
+                          //     child: isDesktop ? ArrowIconButtonWidget(isLeft: true,
+                          //       paddingLeft: Dimensions.paddingSizeSmall,
+                          //       onTap: () {
+                          //       // Get.back();
+                          //       Get.toNamed(RouteHelper.getMainRoute(1.toString()));
+                          //       },
+                          //     ) : const SizedBox()
+                          // ),
                           Text('profile'.tr, style: robotoLight.copyWith(fontSize: Dimensions.fontSizeOverLarge)),
                         ],
                       ),
@@ -231,10 +238,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }) : const SizedBox(),
                           SizedBox(height: isLoggedIn ? Dimensions.paddingSizeSmall : 0),
 
-                          isLoggedIn ? profileController.userInfoModel!.socialId == null ? ProfileButtonWidget(icon: Icons.lock, title: 'change_password'.tr, onTap: () {
-                            Get.toNamed(RouteHelper.getResetPasswordRoute('', '', 'password-change'));
-                          }) : const SizedBox() : const SizedBox(),
-                          SizedBox(height: isLoggedIn ? profileController.userInfoModel!.socialId == null ? Dimensions.paddingSizeSmall : 0 : 0),
+                          // isLoggedIn ? profileController.userInfoModel!.socialId == null ? ProfileButtonWidget(icon: Icons.lock, title: 'change_password'.tr, onTap: () {
+                          //   Get.toNamed(RouteHelper.getResetPasswordRoute('', '', 'password-change'));
+                          // }) : const SizedBox() : const SizedBox(),
+                          // SizedBox(height: isLoggedIn ? profileController.userInfoModel!.socialId == null ? Dimensions.paddingSizeSmall : 0 : 0),
 
                           isLoggedIn ? ProfileButtonWidget(
                             icon: Icons.delete,

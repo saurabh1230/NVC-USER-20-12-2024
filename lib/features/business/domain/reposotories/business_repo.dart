@@ -1,9 +1,9 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/business/domain/models/business_plan_body.dart';
-import 'package:stackfood_multivendor/features/business/domain/models/package_model.dart';
-import 'package:stackfood_multivendor/features/business/domain/reposotories/business_repo_interface.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/business/domain/models/business_plan_body.dart';
+import 'package:non_veg_city/features/business/domain/models/package_model.dart';
+import 'package:non_veg_city/features/business/domain/reposotories/business_repo_interface.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as html;
 

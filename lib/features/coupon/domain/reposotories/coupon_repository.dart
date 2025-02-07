@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/coupon/domain/models/coupon_model.dart';
-import 'package:stackfood_multivendor/features/coupon/domain/reposotories/coupon_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/coupon/domain/models/coupon_model.dart';
+import 'package:non_veg_city/features/coupon/domain/reposotories/coupon_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect/connect.dart';
 
 class CouponRepository implements CouponRepositoryInterface {

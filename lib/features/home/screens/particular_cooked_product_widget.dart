@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/common/widgets/particular_category_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/category/screens/home_food_type_products.dart';
-import 'package:stackfood_multivendor/features/home/screens/home_category_products.dart';
-import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:non_veg_city/common/widgets/particular_category_view_widget.dart';
+import 'package:non_veg_city/common/widgets/product_view_widget.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/category/screens/home_food_type_products.dart';
+import 'package:non_veg_city/features/home/screens/home_category_products.dart';
+import 'package:non_veg_city/features/home/widgets/arrow_icon_button_widget.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
 
 import '../../../common/models/product_model.dart';
 import '../../../common/widgets/home_category_product_view.dart';

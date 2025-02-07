@@ -1,5 +1,5 @@
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
 
 class ProductHelper {
 

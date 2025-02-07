@@ -1,16 +1,16 @@
-import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/restaurants_card_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/home/widgets/arrow_icon_button_widget.dart';
+import 'package:non_veg_city/features/home/widgets/restaurants_card_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class WebNewOnStackFoodViewWidget extends StatelessWidget {
+class WebNewOnNvcViewWidget extends StatelessWidget {
   final bool isLatest;
-  const WebNewOnStackFoodViewWidget({super.key, required this.isLatest});
+  const WebNewOnNvcViewWidget({super.key, required this.isLatest});
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +53,11 @@ class WebNewOnStackFoodViewWidget extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return RestaurantsCardWidget(
-                    isNewOnStackFood: true,
+                    isNewOnnvcFood: true,
                     restaurant: restController.latestRestaurantList![index],
                   );
                 },
-              ) : const RestaurantsCardShimmer(isNewOnStackFood: true),
+              ) : const RestaurantsCardShimmer(isNewOnnvcFood: true),
             ],
           ),
 

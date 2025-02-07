@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/features/restaurant/domain/models/recommended_product_model.dart';
-import 'package:stackfood_multivendor/interface/repository_interface.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/features/restaurant/domain/models/recommended_product_model.dart';
+import 'package:non_veg_city/interface/repository_interface.dart';
 
 abstract class RestaurantRepositoryInterface extends RepositoryInterface {
   @override

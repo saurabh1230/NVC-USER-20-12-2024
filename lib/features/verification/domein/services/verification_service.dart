@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/reposotories/auth_repo_interface.dart';
-import 'package:stackfood_multivendor/features/verification/domein/reposotories/verification_repo_interface.dart';
-import 'package:stackfood_multivendor/features/verification/domein/services/verification_service_interface.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/features/auth/domain/reposotories/auth_repo_interface.dart';
+import 'package:non_veg_city/features/verification/domein/reposotories/verification_repo_interface.dart';
+import 'package:non_veg_city/features/verification/domein/services/verification_service_interface.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
 class VerificationService implements VerificationServiceInterface {

@@ -1,31 +1,31 @@
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/order_model.dart';
-import 'package:stackfood_multivendor/features/address/controllers/address_controller.dart';
-import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
-import 'package:stackfood_multivendor/features/address/widgets/address_card_widget.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/offline_method_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/timeslote_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/services/checkout_service_interface.dart';
-import 'package:stackfood_multivendor/features/checkout/widgets/order_successfull_dialog_widget.dart';
-import 'package:stackfood_multivendor/features/checkout/widgets/partial_pay_dialog.dart';
-import 'package:stackfood_multivendor/features/coupon/controllers/coupon_controller.dart';
-import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
-import 'package:stackfood_multivendor/features/loyalty/controllers/loyalty_controller.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/helper/address_helper.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_dropdown_widget.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/features/order/domain/models/order_model.dart';
+import 'package:non_veg_city/features/address/controllers/address_controller.dart';
+import 'package:non_veg_city/features/address/domain/models/address_model.dart';
+import 'package:non_veg_city/features/address/widgets/address_card_widget.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/checkout/domain/models/offline_method_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/timeslote_model.dart';
+import 'package:non_veg_city/features/checkout/domain/services/checkout_service_interface.dart';
+import 'package:non_veg_city/features/checkout/widgets/order_successfull_dialog_widget.dart';
+import 'package:non_veg_city/features/checkout/widgets/partial_pay_dialog.dart';
+import 'package:non_veg_city/features/coupon/controllers/coupon_controller.dart';
+import 'package:non_veg_city/features/language/controllers/localization_controller.dart';
+import 'package:non_veg_city/features/loyalty/controllers/loyalty_controller.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
+import 'package:non_veg_city/common/widgets/custom_dropdown_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -264,6 +264,7 @@ class CheckoutController extends GetxController implements GetxService {
   }
 
   Future<void> initCheckoutData(int? restaurantID) async {
+    print('initCheckoutData');
     Get.find<CouponController>().removeCouponData(false);
     clearPrevData();
     await Get.find<RestaurantController>().getRestaurantDetails(Restaurant(id: restaurantID));
@@ -494,9 +495,10 @@ class CheckoutController extends GetxController implements GetxService {
   }
 
   Future<void> initializeTimeSlot(Restaurant restaurant) async {
+    print('time slots');
+    print(Get.find<SplashController>().configModel!.scheduleOrderSlotDuration);
     _timeSlots = await checkoutServiceInterface.initializeTimeSlot(restaurant, Get.find<SplashController>().configModel!.scheduleOrderSlotDuration);
     _allTimeSlots = await checkoutServiceInterface.initializeTimeSlot(restaurant, Get.find<SplashController>().configModel!.scheduleOrderSlotDuration);
-
     _validateSlot(_allTimeSlots!, DateTime.now(), notify: false);
   }
 

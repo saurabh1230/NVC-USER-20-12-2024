@@ -1,25 +1,25 @@
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/checkout/controllers/checkout_controller.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart' as place_order_model;
-import 'package:stackfood_multivendor/features/checkout/domain/models/pricing_view_model.dart';
-import 'package:stackfood_multivendor/features/checkout/widgets/payment_method_bottom_sheet.dart';
-import 'package:stackfood_multivendor/features/coupon/controllers/coupon_controller.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/address/domain/models/address_model.dart';
-import 'package:stackfood_multivendor/features/cart/domain/models/cart_model.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/location/controllers/location_controller.dart';
-import 'package:stackfood_multivendor/helper/address_helper.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
-import 'package:stackfood_multivendor/helper/price_converter.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/checkout/controllers/checkout_controller.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart' as place_order_model;
+import 'package:non_veg_city/features/checkout/domain/models/pricing_view_model.dart';
+import 'package:non_veg_city/features/checkout/widgets/payment_method_bottom_sheet.dart';
+import 'package:non_veg_city/features/coupon/controllers/coupon_controller.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/address/domain/models/address_model.dart';
+import 'package:non_veg_city/features/cart/domain/models/cart_model.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/location/controllers/location_controller.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
+import 'package:non_veg_city/helper/price_converter.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/custom_button_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,30 +73,40 @@ class OrderPlaceButton extends StatelessWidget {
             radius: Dimensions.radiusDefault,
             isLoading: checkoutController.isLoading,
             onPressed: () {
+              print('check one');
+              print(_processScheduleStartDate());
+                       print( _processScheduleEndDate());
               DateTime scheduleStartDate = _processScheduleStartDate();
               DateTime scheduleEndDate = _processScheduleEndDate();
+              print('check one one');
+                    print('check one two');
               bool isAvailable = _checkAvailability(scheduleStartDate, scheduleEndDate);
-              bool isGuestLogIn = Get.find<AuthController>().isGuestLoggedIn();
+              // bool isGuestLogIn = Get.find<AuthController>().isGuestLoggedIn();
               bool datePicked = _isDatePicked();
-
+          print('check two');
+          
               if(checkoutController.isDmTipSave && checkoutController.selectedTips != AppConstants.tips.length - 1) {
                 Get.find<AuthController>().saveDmTipIndex(checkoutController.selectedTips.toString());
               }
+               print('check three');
               if(!checkoutController.isDmTipSave){
                 Get.find<AuthController>().saveDmTipIndex('0');
               }
-
-              if(_showsWarningMessage(context, isGuestLogIn, datePicked, isAvailable)) {
+           print('check four');
+              if(_showsWarningMessage(context, false, datePicked, isAvailable)) {
                 debugPrint('Warning shows');
-              } else {
+              } 
+              else {
 
-
-                AddressModel? finalAddress = _processFinalAddress(isGuestLogIn);
+           print('check five');
+                AddressModel? finalAddress = _processFinalAddress(false);
                 List<place_order_model.OnlineCart> carts = _generateOnlineCartList();
                 List<place_order_model.SubscriptionDays> days = _generateSubscriptionDays();
-                PlaceOrderBodyModel placeOrderBody = _preparePlaceOrderModel(carts, scheduleStartDate, finalAddress, isGuestLogIn, days);
+                PlaceOrderBodyModel placeOrderBody = _preparePlaceOrderModel(carts, scheduleStartDate, finalAddress, false, days);
 
                 if(checkoutController.paymentMethodIndex == 3){
+                  
+           print('check six');
                   print('check paymentMethodIndex');
                   Get.toNamed(RouteHelper.getOfflinePaymentScreen(placeOrderBody: placeOrderBody, zoneId: checkoutController.restaurant!.zoneId!, total: total, maxCodOrderAmount: maxCodOrderAmount,
                     fromCart: fromCart, isCodActive: isCashOnDeliveryActive,
@@ -106,6 +116,7 @@ class OrderPlaceButton extends StatelessWidget {
                     ),
                   ));
                 }else{
+                             print('check seven');
                   checkoutController.placeOrder(placeOrderBody, checkoutController.restaurant!.zoneId!, total, maxCodOrderAmount, fromCart, isCashOnDeliveryActive);
                 }
 
@@ -126,18 +137,52 @@ class OrderPlaceButton extends StatelessWidget {
     return datePicked;
   }
 
-  DateTime _processScheduleStartDate() {
-    DateTime scheduleStartDate = DateTime.now();
-    if(checkoutController.timeSlots != null || checkoutController.timeSlots!.isNotEmpty) {
-      DateTime date = checkoutController.selectedDateSlot == 0 ? DateTime.now()
-          : checkoutController.selectedDateSlot == 1 ? DateTime.now().add(const Duration(days: 1)) : checkoutController.selectedCustomDate?? DateTime.now();
+DateTime _processScheduleStartDate() {
+  print('_processScheduleStartDate');
+    print(checkoutController.timeSlots);
+  DateTime scheduleStartDate = DateTime.now();
+  
+  if (checkoutController.timeSlots != null && checkoutController.timeSlots!.isNotEmpty) {
+    print('check ime slots');
+    DateTime date = checkoutController.selectedDateSlot == 0 
+        ? DateTime.now()
+        : checkoutController.selectedDateSlot == 1 
+            ? DateTime.now().add(const Duration(days: 1)) 
+            : checkoutController.selectedCustomDate ?? DateTime.now();
+
+    // Ensure selectedTimeSlot is not null and within valid range
+    if (checkoutController.selectedTimeSlot != null && 
+        checkoutController.selectedTimeSlot! >= 0 && 
+        checkoutController.selectedTimeSlot! < checkoutController.timeSlots!.length) {
+
       DateTime startTime = checkoutController.timeSlots![checkoutController.selectedTimeSlot!].startTime!;
-      scheduleStartDate = DateTime(date.year, date.month, date.day, startTime.hour, startTime.minute+1);
+      scheduleStartDate = DateTime(date.year, date.month, date.day, startTime.hour, startTime.minute + 1);
+    } else {
+          print('check ime slots two');
+      print("Error: Invalid selectedTimeSlot index.");
     }
-    return scheduleStartDate;
+  } else {
+      print('check ime slots three');
+    print("Error: timeSlots is null or empty.");
   }
+        print('check ime slots four');
+  return scheduleStartDate;
+}
+
+  // DateTime _processScheduleStartDate() {
+  //   print('_processScheduleStartDate');
+  //   DateTime scheduleStartDate = DateTime.now();
+  //   if(checkoutController.timeSlots != null || checkoutController.timeSlots!.isNotEmpty) {
+  //     DateTime date = checkoutController.selectedDateSlot == 0 ? DateTime.now()
+  //         : checkoutController.selectedDateSlot == 1 ? DateTime.now().add(const Duration(days: 1)) : checkoutController.selectedCustomDate?? DateTime.now();
+  //     DateTime startTime = checkoutController.timeSlots![checkoutController.selectedTimeSlot!].startTime!;
+  //     scheduleStartDate = DateTime(date.year, date.month, date.day, startTime.hour, startTime.minute+1);
+  //   }
+  //   return scheduleStartDate;
+  // }
 
   DateTime _processScheduleEndDate() {
+     print('_processScheduleEndDate');
     DateTime scheduleEndDate = DateTime.now();
     if(checkoutController.timeSlots != null || checkoutController.timeSlots!.isNotEmpty) {
       DateTime date = checkoutController.selectedDateSlot == 0 ? DateTime.now()
@@ -309,39 +354,83 @@ class OrderPlaceButton extends StatelessWidget {
 
   PlaceOrderBodyModel _preparePlaceOrderModel(List<place_order_model.OnlineCart> carts, DateTime scheduleStartDate, AddressModel? finalAddress, bool isGuestLogIn, List<place_order_model.SubscriptionDays> days) {
     return PlaceOrderBodyModel(
-      cart: carts,
-      couponDiscountAmount: Get.find<CouponController>().discount,
-      distance: checkoutController.distance,
-      couponDiscountTitle: Get.find<CouponController>().discount! > 0 ? Get.find<CouponController>().coupon!.title : null,
-      scheduleAt: !checkoutController.restaurant!.scheduleOrder! ? null : (checkoutController.selectedDateSlot == 0
-          && checkoutController.selectedTimeSlot == 0) ? null : DateConverter.dateToDateAndTime(scheduleStartDate),
-      orderAmount: total, orderNote: checkoutController.noteController.text, orderType: checkoutController.orderType,
-      paymentMethod: checkoutController.paymentMethodIndex == 0 ? 'cash_on_delivery'
-          : checkoutController.paymentMethodIndex == 1 ? 'wallet'
-          : checkoutController.paymentMethodIndex == 2 ? 'digital_payment' : 'offline_payment',
-      couponCode: (Get.find<CouponController>().discount! > 0 || (Get.find<CouponController>().coupon != null
-          && Get.find<CouponController>().freeDelivery)) ? Get.find<CouponController>().coupon!.code : null,
-      restaurantId: cartList[0].product!.restaurantId,
-      address: finalAddress!.address, latitude: finalAddress.latitude, longitude: finalAddress.longitude, addressType: finalAddress.addressType,
-      contactPersonName: finalAddress.contactPersonName ?? '${Get.find<ProfileController>().userInfoModel!.fName} '
-          '${Get.find<ProfileController>().userInfoModel!.lName}',
-      contactPersonNumber: finalAddress.contactPersonNumber ?? Get.find<ProfileController>().userInfoModel!.phone,
-      discountAmount: discount, taxAmount: tax, cutlery: Get.find<CartController>().addCutlery ? 1 : 0,
-      road: isGuestLogIn ? finalAddress.road??'' : checkoutController.streetNumberController.text.trim(),
-      house: isGuestLogIn ? finalAddress.house??'' : checkoutController.houseController.text.trim(),
-      floor: isGuestLogIn ? finalAddress.floor??'' : checkoutController.floorController.text.trim(),
-      dmTips: (/*checkoutController.orderType == 'take_away' ||*/ checkoutController.subscriptionOrder || checkoutController.selectedTips == 0) ? '' : checkoutController.tips.toString(),
-      subscriptionOrder: checkoutController.subscriptionOrder ? '1' : '0',
-      subscriptionType: checkoutController.subscriptionType, subscriptionQuantity: subscriptionQty.toString(),
-      subscriptionDays: days,
-      subscriptionStartAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.start) : '',
-      subscriptionEndAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.end) : '',
-      unavailableItemNote: Get.find<CartController>().notAvailableIndex != -1 ? Get.find<CartController>().notAvailableList[Get.find<CartController>().notAvailableIndex] : '',
-      deliveryInstruction: checkoutController.selectedInstruction != -1 ? AppConstants.deliveryInstructionList[checkoutController.selectedInstruction] : '',
-      partialPayment: checkoutController.isPartialPay ? 1 : 0, guestId: isGuestLogIn ? int.parse(Get.find<AuthController>().getGuestId()) : 0,
-      isBuyNow: fromCart ? 0 : 1, guestEmail: isGuestLogIn ? finalAddress.email : null,
-      deliveryPrice: deliveryCharge!,
-    );
+  cart: carts,
+  couponDiscountAmount: Get.find<CouponController>().discount,
+  distance: checkoutController.distance,
+  couponDiscountTitle: Get.find<CouponController>().discount! > 0 ? Get.find<CouponController>().coupon!.title : null,
+  scheduleAt: null, // Removed time slot logic
+  orderAmount: total,
+  orderNote: checkoutController.noteController.text,
+  orderType: checkoutController.orderType,
+  paymentMethod: checkoutController.paymentMethodIndex == 0 ? 'cash_on_delivery'
+      : checkoutController.paymentMethodIndex == 1 ? 'wallet'
+      : checkoutController.paymentMethodIndex == 2 ? 'digital_payment' : 'offline_payment',
+  couponCode: (Get.find<CouponController>().discount! > 0 || (Get.find<CouponController>().coupon != null
+      && Get.find<CouponController>().freeDelivery)) ? Get.find<CouponController>().coupon!.code : null,
+  restaurantId: cartList[0].product!.restaurantId,
+  address: finalAddress!.address,
+  latitude: finalAddress.latitude,
+  longitude: finalAddress.longitude,
+  addressType: finalAddress.addressType,
+  contactPersonName: finalAddress.contactPersonName ?? '${Get.find<ProfileController>().userInfoModel!.fName} '
+      '${Get.find<ProfileController>().userInfoModel!.lName}',
+  contactPersonNumber: finalAddress.contactPersonNumber ?? Get.find<ProfileController>().userInfoModel!.phone,
+  discountAmount: discount,
+  taxAmount: tax,
+  cutlery: Get.find<CartController>().addCutlery ? 1 : 0,
+  road: isGuestLogIn ? finalAddress.road ?? '' : checkoutController.streetNumberController.text.trim(),
+  house: isGuestLogIn ? finalAddress.house ?? '' : checkoutController.houseController.text.trim(),
+  floor: isGuestLogIn ? finalAddress.floor ?? '' : checkoutController.floorController.text.trim(),
+  dmTips: checkoutController.subscriptionOrder || checkoutController.selectedTips == 0 ? '' : checkoutController.tips.toString(),
+  subscriptionOrder: checkoutController.subscriptionOrder ? '1' : '0',
+  subscriptionType: checkoutController.subscriptionType,
+  subscriptionQuantity: subscriptionQty.toString(),
+  subscriptionDays: days,
+  subscriptionStartAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.start) : '',
+  subscriptionEndAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.end) : '',
+  unavailableItemNote: Get.find<CartController>().notAvailableIndex != -1 ? Get.find<CartController>().notAvailableList[Get.find<CartController>().notAvailableIndex] : '',
+  deliveryInstruction: checkoutController.selectedInstruction != -1 ? AppConstants.deliveryInstructionList[checkoutController.selectedInstruction] : '',
+  partialPayment: checkoutController.isPartialPay ? 1 : 0,
+  guestId: isGuestLogIn ? int.parse(Get.find<AuthController>().getGuestId()) : 0,
+  isBuyNow: fromCart ? 0 : 1,
+  guestEmail: isGuestLogIn ? finalAddress.email : null,
+  deliveryPrice: deliveryCharge!,
+);
+
+    // return PlaceOrderBodyModel(
+    //   cart: carts,
+    //   couponDiscountAmount: Get.find<CouponController>().discount,
+    //   distance: checkoutController.distance,
+    //   couponDiscountTitle: Get.find<CouponController>().discount! > 0 ? Get.find<CouponController>().coupon!.title : null,
+    //   scheduleAt: !checkoutController.restaurant!.scheduleOrder! ? null : (checkoutController.selectedDateSlot == 0
+    //       && checkoutController.selectedTimeSlot == 0) ? null : DateConverter.dateToDateAndTime(scheduleStartDate),
+    //   orderAmount: total, orderNote: checkoutController.noteController.text, orderType: checkoutController.orderType,
+    //   paymentMethod: checkoutController.paymentMethodIndex == 0 ? 'cash_on_delivery'
+    //       : checkoutController.paymentMethodIndex == 1 ? 'wallet'
+    //       : checkoutController.paymentMethodIndex == 2 ? 'digital_payment' : 'offline_payment',
+    //   couponCode: (Get.find<CouponController>().discount! > 0 || (Get.find<CouponController>().coupon != null
+    //       && Get.find<CouponController>().freeDelivery)) ? Get.find<CouponController>().coupon!.code : null,
+    //   restaurantId: cartList[0].product!.restaurantId,
+    //   address: finalAddress!.address, latitude: finalAddress.latitude, longitude: finalAddress.longitude, addressType: finalAddress.addressType,
+    //   contactPersonName: finalAddress.contactPersonName ?? '${Get.find<ProfileController>().userInfoModel!.fName} '
+    //       '${Get.find<ProfileController>().userInfoModel!.lName}',
+    //   contactPersonNumber: finalAddress.contactPersonNumber ?? Get.find<ProfileController>().userInfoModel!.phone,
+    //   discountAmount: discount, taxAmount: tax, cutlery: Get.find<CartController>().addCutlery ? 1 : 0,
+    //   road: isGuestLogIn ? finalAddress.road??'' : checkoutController.streetNumberController.text.trim(),
+    //   house: isGuestLogIn ? finalAddress.house??'' : checkoutController.houseController.text.trim(),
+    //   floor: isGuestLogIn ? finalAddress.floor??'' : checkoutController.floorController.text.trim(),
+    //   dmTips: (/*checkoutController.orderType == 'take_away' ||*/ checkoutController.subscriptionOrder || checkoutController.selectedTips == 0) ? '' : checkoutController.tips.toString(),
+    //   subscriptionOrder: checkoutController.subscriptionOrder ? '1' : '0',
+    //   subscriptionType: checkoutController.subscriptionType, subscriptionQuantity: subscriptionQty.toString(),
+    //   subscriptionDays: days,
+    //   subscriptionStartAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.start) : '',
+    //   subscriptionEndAt: checkoutController.subscriptionOrder ? DateConverter.dateToDateAndTime(checkoutController.subscriptionRange!.end) : '',
+    //   unavailableItemNote: Get.find<CartController>().notAvailableIndex != -1 ? Get.find<CartController>().notAvailableList[Get.find<CartController>().notAvailableIndex] : '',
+    //   deliveryInstruction: checkoutController.selectedInstruction != -1 ? AppConstants.deliveryInstructionList[checkoutController.selectedInstruction] : '',
+    //   partialPayment: checkoutController.isPartialPay ? 1 : 0, guestId: isGuestLogIn ? int.parse(Get.find<AuthController>().getGuestId()) : 0,
+    //   isBuyNow: fromCart ? 0 : 1, guestEmail: isGuestLogIn ? finalAddress.email : null,
+    //   deliveryPrice: deliveryCharge!,
+    // );
   }
 
 }

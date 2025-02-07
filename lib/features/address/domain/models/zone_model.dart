@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:stackfood_multivendor/features/location/domain/models/zone_response_model.dart';
+import 'package:non_veg_city/features/location/domain/models/zone_response_model.dart';
 
 class ZoneModel {
   List<int>? zoneIds;

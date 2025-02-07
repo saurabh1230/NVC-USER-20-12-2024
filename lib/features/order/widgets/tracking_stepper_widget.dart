@@ -1,5 +1,5 @@
-import 'package:stackfood_multivendor/features/order/widgets/custom_stepper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
+import 'package:non_veg_city/features/order/widgets/custom_stepper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

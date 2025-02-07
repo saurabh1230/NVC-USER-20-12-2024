@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/features/search/domain/repositories/search_repository_interface.dart';
-import 'package:stackfood_multivendor/features/search/domain/services/search_service_interface.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/features/search/domain/repositories/search_repository_interface.dart';
+import 'package:non_veg_city/features/search/domain/services/search_service_interface.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
 class SearchService implements SearchServiceInterface {

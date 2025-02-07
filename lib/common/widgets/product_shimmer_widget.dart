@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:stackfood_multivendor/common/widgets/rating_bar_widget.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/rating_bar_widget.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

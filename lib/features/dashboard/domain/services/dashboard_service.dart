@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/dashboard/domain/services/dashboard_service_interface.dart';
+import 'package:non_veg_city/features/dashboard/domain/services/dashboard_service_interface.dart';
 
 class DashboardService implements DashboardServiceInterface {
 

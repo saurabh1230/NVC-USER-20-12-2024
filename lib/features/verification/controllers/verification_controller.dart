@@ -1,8 +1,11 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/features/verification/domein/services/verification_service_interface.dart';
-import 'package:get/get.dart';
+import 'dart:convert';
 
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/features/verification/domein/services/verification_service_interface.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 class VerificationController extends GetxController implements GetxService {
   final VerificationServiceInterface verificationServiceInterface;
 
@@ -81,4 +84,6 @@ class VerificationController extends GetxController implements GetxService {
       update();
     }
   }
+
+
 }

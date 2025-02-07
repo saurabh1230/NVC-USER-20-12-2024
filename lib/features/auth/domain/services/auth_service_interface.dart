@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/signup_body_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/signup_body_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/social_log_in_body_model.dart';
 
 abstract class AuthServiceInterface{
 
@@ -27,4 +27,7 @@ abstract class AuthServiceInterface{
   String getUserToken();
   Future<void> saveGuestNumber(String number);
   String getGuestNumber();
+
+
+  
 }

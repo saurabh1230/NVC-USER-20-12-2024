@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/notification/domain/models/notification_model.dart';
+import 'package:non_veg_city/features/notification/domain/models/notification_model.dart';
 
 abstract class NotificationServiceInterface {
   Future<List<NotificationModel>?> getList();

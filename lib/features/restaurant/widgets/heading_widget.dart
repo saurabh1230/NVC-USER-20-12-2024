@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/home/widgets/arrow_icon_button_widget.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 class HeadingWidget extends StatelessWidget {
   final String title;
   final Function() tap;

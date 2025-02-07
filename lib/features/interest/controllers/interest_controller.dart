@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/category/domain/models/category_model.dart';
-import 'package:stackfood_multivendor/features/interest/domain/services/interest_service_interface.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/category/domain/models/category_model.dart';
+import 'package:non_veg_city/features/interest/domain/services/interest_service_interface.dart';
 import 'package:get/get.dart';
 
 class InterestController extends GetxController implements GetxService {

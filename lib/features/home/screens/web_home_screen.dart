@@ -1,35 +1,36 @@
-import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
-import 'package:stackfood_multivendor/features/home/controllers/home_controller.dart';
-import 'package:stackfood_multivendor/features/home/screens/mobile_all_restaurant.dart';
-import 'package:stackfood_multivendor/features/home/screens/particular_cooked_product_widget.dart';
-import 'package:stackfood_multivendor/features/home/screens/pet_food_items.dart';
-import 'package:stackfood_multivendor/features/home/screens/petfood_and_masala_particle_view.dart';
-import 'package:stackfood_multivendor/features/home/widgets/all_restaurant_filter_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/all_restaurants_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/bad_weather_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/best_review_item_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/enjoy_off_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/order_again_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/popular_foods_nearby_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/popular_restaurants_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/today_trends_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/web/cooked_and_uncooked_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/web/web_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/web/web_cuisine_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/web/web_loaction_and_refer_banner_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/web/web_new_on_stackfood_view_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/what_on_your_mind_view_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/pet_food_section.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/popular_fish_items.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_image_widget.dart';
+import 'package:non_veg_city/features/home/controllers/home_controller.dart';
+import 'package:non_veg_city/features/home/screens/mobile_all_restaurant.dart';
+import 'package:non_veg_city/features/home/screens/particular_cooked_product_widget.dart';
+import 'package:non_veg_city/features/home/screens/pet_food_items.dart';
+import 'package:non_veg_city/features/home/screens/petfood_and_masala_particle_view.dart';
+import 'package:non_veg_city/features/home/widgets/all_restaurant_filter_widget.dart';
+import 'package:non_veg_city/features/home/widgets/all_restaurants_widget.dart';
+import 'package:non_veg_city/features/home/widgets/bad_weather_widget.dart';
+import 'package:non_veg_city/features/home/widgets/best_review_item_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/enjoy_off_banner_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/order_again_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/popular_foods_nearby_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/popular_restaurants_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/today_trends_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/web/cooked_and_uncooked_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/web/web_banner_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/web/web_cuisine_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/web/web_loaction_and_refer_banner_view_widget.dart';
+import 'package:non_veg_city/features/home/widgets/web/web_new_on_nvc_view_widget.dart';
+
+import 'package:non_veg_city/features/home/widgets/what_on_your_mind_view_widget.dart';
+import 'package:non_veg_city/features/restaurant/screens/pet_food_section.dart';
+import 'package:non_veg_city/features/restaurant/screens/popular_fish_items.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/splash/domain/models/config_model.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/footer_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/util/styles.dart';
 
 import '../../../common/models/product_model.dart';
 import '../../../common/widgets/product_view_widget.dart';
@@ -159,7 +160,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                 //
                 /*const WebLocationAndReferBannerViewWidget(),*/
 
-                _configModel!.newRestaurant == 1 ? const WebNewOnStackFoodViewWidget(isLatest: true) : const SizedBox(),
+                _configModel!.newRestaurant == 1 ? const WebNewOnNvcViewWidget(isLatest: true) : const SizedBox(),
 
 
                 // AllVendorsWidget(/*scrollController: widget.scrollController*/),

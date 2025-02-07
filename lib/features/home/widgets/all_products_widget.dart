@@ -1,7 +1,7 @@
-// import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-// import 'package:stackfood_multivendor/features/home/widgets/restaurants_view_widget.dart';
-// import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-// import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
+// import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+// import 'package:non_veg_city/features/home/widgets/restaurants_view_widget.dart';
+// import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+// import 'package:non_veg_city/common/widgets/paginated_list_view_widget.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // // class AllRestaurantsWidget extends StatelessWidget {

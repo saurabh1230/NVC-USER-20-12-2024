@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/product/domain/models/basic_campaign_model.dart';
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
+import 'package:non_veg_city/features/product/domain/models/basic_campaign_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
 
 class BannerModel {
   List<BasicCampaignModel>? campaigns;

@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/verification/controllers/verification_controller.dart';
-import 'package:stackfood_multivendor/features/verification/screens/new_pass_screen.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_button_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_dialog_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/verification/controllers/verification_controller.dart';
+import 'package:non_veg_city/features/verification/screens/new_pass_screen.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/images.dart';
+import 'package:non_veg_city/util/styles.dart';
+import 'package:non_veg_city/common/widgets/custom_app_bar_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_button_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_dialog_widget.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -81,7 +81,7 @@ class VerificationScreenState extends State<VerificationScreen> {
             color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
             boxShadow: [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 10, spreadRadius: 1)],
           ) : null,
-          child: GetBuilder<VerificationController>(builder: (verificationController) {
+          child: GetBuilder<AuthController>(builder: (verificationController) {
             return Column(children: [
                 Image.asset(Images.logo,height: ResponsiveHelper.isMobile(context) ? 130 : 200 ,),
 
@@ -115,7 +115,7 @@ class VerificationScreenState extends State<VerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 25),
                 child: PinCodeTextField(
-                  length: 4,
+                  length: 6,
                   appContext: context,
                   keyboardType: TextInputType.number,
                   animationType: AnimationType.slide,
@@ -140,52 +140,53 @@ class VerificationScreenState extends State<VerificationScreen> {
                 ),
               ),
 
-              verificationController.verificationCode.length == 4 ? Padding(
+              verificationController.verificationCode.length == 6 ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: CustomButtonWidget(
                   radius: Dimensions.radiusDefault,
                   buttonText: 'verify'.tr,
-                  isLoading: verificationController.isLoading,
+                  isLoading: verificationController.isVerifyLoading,
                   onPressed: () {
+                    verificationController.verifyPhoneLogin(otp: verificationController.verificationCode,phone: _number!);
                     // Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
-                    if(widget.fromSignUp) {
-                      verificationController.verifyPhone(_number, widget.token).then((value) {
-                        if(value.isSuccess) {
-                          showAnimatedDialog(context, Center(
-                            child: Container(
-                              width: 300,
-                              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraLarge),
-                              decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)),
-                              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                                Image.asset(Images.checked, width: 100, height: 100),
-                                const SizedBox(height: Dimensions.paddingSizeLarge),
-                                Text('verified'.tr, style: robotoBold.copyWith(
-                                  fontSize: 30, color: Theme.of(context).textTheme.bodyLarge!.color,
-                                  decoration: TextDecoration.none,
-                                )),
-                              ]),
-                            ),
-                          ), dismissible: false);
-                          Future.delayed(const Duration(seconds: 2), () {
-                            Get.offNamed(RouteHelper.getAccessLocationRoute('verification'));
-                          });
-                        }else {
-                          showCustomSnackBar(value.message);
-                        }
-                      });
-                    }else {
-                      verificationController.verifyToken(_number).then((value) {
-                        if(value.isSuccess) {
-                          if(ResponsiveHelper.isDesktop(context)){
-                            Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: false, fromDialog: true )));
-                          }else{
-                            Get.toNamed(RouteHelper.getResetPasswordRoute(_number, verificationController.verificationCode, 'reset-password'));
-                          }
-                        }else {
-                          showCustomSnackBar(value.message);
-                        }
-                      });
-                    }
+                    // if(widget.fromSignUp) {
+                    //   verificationController.verifyPhone(_number, widget.token).then((value) {
+                    //     if(value.isSuccess) {
+                    //       showAnimatedDialog(context, Center(
+                    //         child: Container(
+                    //           width: 300,
+                    //           padding: const EdgeInsets.all(Dimensions.paddingSizeExtraLarge),
+                    //           decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)),
+                    //           child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    //             Image.asset(Images.checked, width: 100, height: 100),
+                    //             const SizedBox(height: Dimensions.paddingSizeLarge),
+                    //             Text('verified'.tr, style: robotoBold.copyWith(
+                    //               fontSize: 30, color: Theme.of(context).textTheme.bodyLarge!.color,
+                    //               decoration: TextDecoration.none,
+                    //             )),
+                    //           ]),
+                    //         ),
+                    //       ), dismissible: false);
+                    //       Future.delayed(const Duration(seconds: 2), () {
+                    //         Get.offNamed(RouteHelper.getAccessLocationRoute('verification'));
+                    //       });
+                    //     }else {
+                    //       showCustomSnackBar(value.message);
+                    //     }
+                    //   });
+                    // }else {
+                    //   verificationController.verifyToken(_number).then((value) {
+                    //     if(value.isSuccess) {
+                    //       if(ResponsiveHelper.isDesktop(context)){
+                    //         Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: false, fromDialog: true )));
+                    //       }else{
+                    //         Get.toNamed(RouteHelper.getResetPasswordRoute(_number, verificationController.verificationCode, 'reset-password'));
+                    //       }
+                    //     }else {
+                    //       showCustomSnackBar(value.message);
+                    //     }
+                    //   });
+                    // }
                   },
                 ),
               ) : const SizedBox.shrink(),
@@ -200,25 +201,27 @@ class VerificationScreenState extends State<VerificationScreen> {
                   ),
                   TextButton(
                     onPressed: _seconds < 1 ? () {
-                      if(widget.fromSignUp) {
-                        Get.find<AuthController>().login(_number, widget.password).then((value) {
-                          if (value.isSuccess) {
-                            _startTimer();
-                            showCustomSnackBar('resend_code_successful'.tr, isError: false);
-                          } else {
-                            showCustomSnackBar(value.message);
-                          }
-                        });
-                      }else {
-                        verificationController.forgetPassword(_number).then((value) {
-                          if (value.isSuccess) {
-                            _startTimer();
-                            showCustomSnackBar('resend_code_successful'.tr, isError: false);
-                          } else {
-                            showCustomSnackBar(value.message);
-                          }
-                        });
-                      }
+                      verificationController.loginUser(phone: _number.toString());
+                           _startTimer();
+                      // if(widget.fromSignUp) {
+                      //   Get.find<AuthController>().login(_number, widget.password).then((value) {
+                      //     if (value.isSuccess) {
+                      //       _startTimer();
+                      //       showCustomSnackBar('resend_code_successful'.tr, isError: false);
+                      //     } else {
+                      //       showCustomSnackBar(value.message);
+                      //     }
+                      //   });
+                      // }else {
+                      //   // verificationController.forgetPassword(_number).then((value) {
+                      //   //   if (value.isSuccess) {
+                      //   //     _startTimer();
+                      //   //     showCustomSnackBar('resend_code_successful'.tr, isError: false);
+                      //   //   } else {
+                      //   //     showCustomSnackBar(value.message);
+                      //   //   }
+                      //   // });
+                      // }
                     } : null,
                     child: Text('${'Resend It'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
                   ),

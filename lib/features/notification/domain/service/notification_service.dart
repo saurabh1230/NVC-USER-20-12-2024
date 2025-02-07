@@ -1,7 +1,7 @@
-import 'package:stackfood_multivendor/features/notification/domain/models/notification_model.dart';
-import 'package:stackfood_multivendor/features/notification/domain/repository/notification_repository_interface.dart';
-import 'package:stackfood_multivendor/features/notification/domain/service/notification_service_interface.dart';
-import 'package:stackfood_multivendor/helper/date_converter.dart';
+import 'package:non_veg_city/features/notification/domain/models/notification_model.dart';
+import 'package:non_veg_city/features/notification/domain/repository/notification_repository_interface.dart';
+import 'package:non_veg_city/features/notification/domain/service/notification_service_interface.dart';
+import 'package:non_veg_city/helper/date_converter.dart';
 
 class NotificationService implements NotificationServiceInterface {
   final NotificationRepositoryInterface notificationRepositoryInterface;

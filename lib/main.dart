@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
-import 'package:stackfood_multivendor/features/language/controllers/localization_controller.dart';
-import 'package:stackfood_multivendor/features/notification/domain/models/notification_body_model.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
-import 'package:stackfood_multivendor/features/favourite/controllers/favourite_controller.dart';
-import 'package:stackfood_multivendor/features/splash/domain/models/deep_link_body.dart';
-import 'package:stackfood_multivendor/helper/notification_helper.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/theme/dark_theme.dart';
-import 'package:stackfood_multivendor/theme/light_theme.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/messages.dart';
-import 'package:stackfood_multivendor/common/widgets/cookies_view_widget.dart';
+import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/home/screens/home_screen.dart';
+import 'package:non_veg_city/features/language/controllers/localization_controller.dart';
+import 'package:non_veg_city/features/notification/domain/models/notification_body_model.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/theme_controller.dart';
+import 'package:non_veg_city/features/favourite/controllers/favourite_controller.dart';
+import 'package:non_veg_city/features/splash/domain/models/deep_link_body.dart';
+import 'package:non_veg_city/helper/notification_helper.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/theme/dark_theme.dart';
+import 'package:non_veg_city/theme/light_theme.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/messages.dart';
+import 'package:non_veg_city/common/widgets/cookies_view_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -56,7 +56,7 @@ Future<void> main() async {
   //     apiKey: 'AIzaSyCeaw_gVN0iQwFHyuF8pQ6PbVDmSVQw8AY',
   //     appId: '1:1049699819506:web:a4b5e3bedc729aab89956b',
   //     messagingSenderId: '1049699819506',
-  //     projectId: 'stackfood-bd3ee',
+  //     projectId: '-bd3ee',
   //   ));
   //   MetaSEO().config();
   // }else {
@@ -111,15 +111,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
     _route();
   }
 
   Future<void> _route() async {
-    // if(GetPlatform.isWeb) {
       Get.find<SplashController>().initSharedData();
       if(!Get.find<AuthController>().isLoggedIn() && !Get.find<AuthController>().isGuestLoggedIn() /*&& !ResponsiveHelper.isDesktop(Get.context!)*/) {
-        await Get.find<AuthController>().guestLogin();
+      await Get.find<AuthController>().guestLogin();
       }
       if(Get.find<AuthController>().isLoggedIn() || Get.find<AuthController>().isGuestLoggedIn()) {
         Get.find<CartController>().getCartDataOnline();

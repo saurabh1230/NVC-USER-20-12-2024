@@ -1,4 +1,4 @@
-// import 'package:stackfood_multivendor/util/app_constants.dart';
+// import 'package:non_veg_city/util/app_constants.dart';
 // import 'package:flutter/material.dart';
 //
 // ThemeData dark = ThemeData(

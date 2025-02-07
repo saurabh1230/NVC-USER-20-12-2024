@@ -1,9 +1,9 @@
 
-import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
-import 'package:stackfood_multivendor/features/language/domain/models/language_model.dart';
-import 'package:stackfood_multivendor/features/language/domain/service/language_service_interface.dart';
-import 'package:stackfood_multivendor/helper/address_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/features/home/screens/home_screen.dart';
+import 'package:non_veg_city/features/language/domain/models/language_model.dart';
+import 'package:non_veg_city/features/language/domain/service/language_service_interface.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,9 +1,9 @@
-// import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-// import 'package:stackfood_multivendor/features/auth/controllers/auth_controller.dart';
-// import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
-// import 'package:stackfood_multivendor/util/dimensions.dart';
-// import 'package:stackfood_multivendor/util/images.dart';
-// import 'package:stackfood_multivendor/util/styles.dart';
+// import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+// import 'package:non_veg_city/features/auth/controllers/auth_controller.dart';
+// import 'package:non_veg_city/features/auth/domain/models/social_log_in_body_model.dart';
+// import 'package:non_veg_city/util/dimensions.dart';
+// import 'package:non_veg_city/util/images.dart';
+// import 'package:non_veg_city/util/styles.dart';
 // import 'package:flutter/material.dart';
 // // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:get/get.dart';

@@ -1,15 +1,15 @@
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/common/widgets/paginated_list_view_widget.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_app_bar_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/menu_drawer_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/web_page_title_widget.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/common/widgets/paginated_list_view_widget.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/util/app_constants.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/custom_app_bar_widget.dart';
+import 'package:non_veg_city/common/widgets/footer_view_widget.dart';
+import 'package:non_veg_city/common/widgets/menu_drawer_widget.dart';
+import 'package:non_veg_city/common/widgets/product_view_widget.dart';
+import 'package:non_veg_city/common/widgets/web_page_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

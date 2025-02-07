@@ -1,10 +1,10 @@
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_horizontal_view_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/features/restaurant/screens/restaurant_horizontal_view_widget.dart';
 
-import 'package:stackfood_multivendor/features/search/controllers/search_controller.dart' as search;
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/common/widgets/footer_view_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
+import 'package:non_veg_city/features/search/controllers/search_controller.dart' as search;
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/footer_view_widget.dart';
+import 'package:non_veg_city/common/widgets/product_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

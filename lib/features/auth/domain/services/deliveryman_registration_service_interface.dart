@@ -1,8 +1,8 @@
 
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/splash/domain/models/config_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/vehicle_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/zone_model.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/splash/domain/models/config_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/vehicle_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/zone_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 

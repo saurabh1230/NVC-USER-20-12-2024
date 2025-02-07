@@ -1,10 +1,10 @@
-import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/restaurants_card_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/home/widgets/arrow_icon_button_widget.dart';
+import 'package:non_veg_city/features/home/widgets/restaurants_card_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +54,7 @@ class OrderAgainViewWidget extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
                     child: RestaurantsCardWidget(
-                      isNewOnStackFood: false,
+                      isNewOnnvcFood: false,
                       restaurant: restController.orderAgainRestaurantList![index],
                     ),
                   );

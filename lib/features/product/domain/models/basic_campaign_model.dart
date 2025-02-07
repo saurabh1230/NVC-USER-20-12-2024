@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
 
 class BasicCampaignModel {
   int? id;

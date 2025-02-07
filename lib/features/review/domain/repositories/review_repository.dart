@@ -1,10 +1,10 @@
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/common/models/review_model.dart';
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/product/domain/models/review_body_model.dart';
-import 'package:stackfood_multivendor/features/review/domain/repositories/review_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/common/models/review_model.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/product/domain/models/review_body_model.dart';
+import 'package:non_veg_city/features/review/domain/repositories/review_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get.dart';
 
 class ReviewRepository implements ReviewRepositoryInterface {

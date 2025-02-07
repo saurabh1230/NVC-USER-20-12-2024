@@ -1,19 +1,19 @@
-import 'package:stackfood_multivendor/common/widgets/custom_ink_well_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/hover_widgets/hover_zoom_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/icon_with_text_row_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/overflow_container_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/theme_controller.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/images.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_image_widget.dart';
-import 'package:stackfood_multivendor/common/widgets/not_available_widget.dart';
-import 'package:stackfood_multivendor/features/restaurant/screens/restaurant_screen.dart';
+import 'package:non_veg_city/common/widgets/custom_ink_well_widget.dart';
+import 'package:non_veg_city/common/widgets/hover_widgets/hover_zoom_widget.dart';
+import 'package:non_veg_city/features/home/widgets/icon_with_text_row_widget.dart';
+import 'package:non_veg_city/features/home/widgets/overflow_container_widget.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/theme_controller.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/images.dart';
+import 'package:non_veg_city/util/styles.dart';
+import 'package:non_veg_city/common/widgets/custom_image_widget.dart';
+import 'package:non_veg_city/common/widgets/not_available_widget.dart';
+import 'package:non_veg_city/features/restaurant/screens/restaurant_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,8 +24,8 @@ import '../../restaurant/screens/restaurant_screen_web.dart';
 
 class RestaurantsCardWidget extends StatelessWidget {
   final Restaurant restaurant;
-  final bool? isNewOnStackFood;
-  const RestaurantsCardWidget({super.key, this.isNewOnStackFood, required this.restaurant});
+  final bool? isNewOnnvcFood;
+  const RestaurantsCardWidget({super.key, this.isNewOnnvcFood, required this.restaurant});
 
 
   @override
@@ -36,7 +36,7 @@ class RestaurantsCardWidget extends StatelessWidget {
     );
     return HoverZoom(
       child: Container(
-        width: isNewOnStackFood! ? ResponsiveHelper.isMobile(context) ? 350 : 380  : ResponsiveHelper.isMobile(context) ? 330: 355,
+        width: isNewOnnvcFood! ? ResponsiveHelper.isMobile(context) ? 350 : 380  : ResponsiveHelper.isMobile(context) ? 330: 355,
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2)),
@@ -67,7 +67,7 @@ class RestaurantsCardWidget extends StatelessWidget {
                         HoverZoom(
                           child: Container(
                             padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                            height: isNewOnStackFood! ? 98 : 78, width: isNewOnStackFood! ? 98 : 78,
+                            height: isNewOnnvcFood! ? 98 : 78, width: isNewOnnvcFood! ? 98 : 78,
                             decoration:  BoxDecoration(
                               color: Theme.of(context).cardColor,
                               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
@@ -79,7 +79,7 @@ class RestaurantsCardWidget extends StatelessWidget {
                                 placeholder: Images.placeholder,
                                 image: '${Get.find<SplashController>().configModel!.baseUrls!.restaurantCoverPhotoUrl}'
                                     '/${restaurant.coverPhoto}',
-                                    fit: BoxFit.cover, height: isNewOnStackFood! ? 98 : 78, width: isNewOnStackFood! ? 98 : 78,
+                                    fit: BoxFit.cover, height: isNewOnnvcFood! ? 98 : 78, width: isNewOnnvcFood! ? 98 : 78,
                               ),
                             ),
                           ),
@@ -112,24 +112,24 @@ class RestaurantsCardWidget extends StatelessWidget {
 
                           Row(mainAxisAlignment: MainAxisAlignment.start, children: [
 
-                            isNewOnStackFood! ? restaurant.freeDelivery! ? ImageWithTextRowWidget(
+                            isNewOnnvcFood! ? restaurant.freeDelivery! ? ImageWithTextRowWidget(
                               widget: Image.asset(Images.deliveryIcon, height: 20, width: 20),
                               text: 'free'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
                             ) : const SizedBox() : IconWithTextRowWidget(
                               icon: Icons.star_border, text: restaurant.avgRating!.toStringAsFixed(1),
                               style: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall)
                             ),
-                            isNewOnStackFood! ? const SizedBox(width : Dimensions.paddingSizeExtraSmall) : const SizedBox(width: Dimensions.paddingSizeSmall),
+                            isNewOnnvcFood! ? const SizedBox(width : Dimensions.paddingSizeExtraSmall) : const SizedBox(width: Dimensions.paddingSizeSmall),
 
-                            isNewOnStackFood! ? ImageWithTextRowWidget(
+                            isNewOnnvcFood! ? ImageWithTextRowWidget(
                               widget: Image.asset(Images.distanceKm, height: 20, width: 20),
                               text: '${distance > 100 ? '100+' : distance.toStringAsFixed(2)} ${'km'.tr}',
                               style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
                             ) : restaurant.freeDelivery! ? ImageWithTextRowWidget(widget: Image.asset(Images.deliveryIcon, height: 20, width: 20),
                                 text: 'free'.tr, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)) : const SizedBox(),
-                            isNewOnStackFood! ? const SizedBox(width : Dimensions.paddingSizeExtraSmall) : restaurant.freeDelivery! ? const SizedBox(width: Dimensions.paddingSizeSmall) : const SizedBox(),
+                            isNewOnnvcFood! ? const SizedBox(width : Dimensions.paddingSizeExtraSmall) : restaurant.freeDelivery! ? const SizedBox(width: Dimensions.paddingSizeSmall) : const SizedBox(),
 
-                          /*  isNewOnStackFood! ? ImageWithTextRowWidget(
+                          /*  isNewOnnvcFood! ? ImageWithTextRowWidget(
                                 widget: Image.asset(Images.itemCount, height: 20, width: 20),
                                 text: '${restaurant.foodsCount} + ${'item'.tr}',
                                 style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)
@@ -145,9 +145,9 @@ class RestaurantsCardWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                isNewOnStackFood!? const SizedBox() : const SizedBox(height: Dimensions.paddingSizeSmall),
+                isNewOnnvcFood!? const SizedBox() : const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                isNewOnStackFood! ? const SizedBox() : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                isNewOnnvcFood! ? const SizedBox() : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   restaurant.foods != null && restaurant.foods!.isNotEmpty ? Expanded(
                     child: Stack(children: [
 
@@ -205,14 +205,14 @@ class RestaurantsCardWidget extends StatelessWidget {
 
 
 class RestaurantsCardShimmer extends StatelessWidget {
-  final bool? isNewOnStackFood;
-  const RestaurantsCardShimmer({super.key, this.isNewOnStackFood});
+  final bool? isNewOnnvcFood;
+  const RestaurantsCardShimmer({super.key, this.isNewOnnvcFood});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: isNewOnStackFood! ? 300 : ResponsiveHelper.isDesktop(context) ? 160 : 130,
-      child: isNewOnStackFood! ? GridView.builder(
+      height: isNewOnnvcFood! ? 300 : ResponsiveHelper.isDesktop(context) ? 160 : 130,
+      child: isNewOnnvcFood! ? GridView.builder(
         padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
         itemCount: 6,
         shrinkWrap: true,

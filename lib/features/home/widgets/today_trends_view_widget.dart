@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/features/product/controllers/campaign_controller.dart';
-import 'package:stackfood_multivendor/features/home/widgets/item_card_widget.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/product/controllers/campaign_controller.dart';
+import 'package:non_veg_city/features/home/widgets/item_card_widget.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

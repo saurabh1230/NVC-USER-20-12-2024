@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/delivery_log_model.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/order_cancellation_body.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/order_model.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/pause_log_model.dart';
-import 'package:stackfood_multivendor/features/order/domain/models/refund_model.dart';
-import 'package:stackfood_multivendor/features/order/domain/repositories/order_repository_interface.dart';
-import 'package:stackfood_multivendor/helper/auth_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/order/domain/models/delivery_log_model.dart';
+import 'package:non_veg_city/features/order/domain/models/order_cancellation_body.dart';
+import 'package:non_veg_city/features/order/domain/models/order_model.dart';
+import 'package:non_veg_city/features/order/domain/models/pause_log_model.dart';
+import 'package:non_veg_city/features/order/domain/models/refund_model.dart';
+import 'package:non_veg_city/features/order/domain/repositories/order_repository_interface.dart';
+import 'package:non_veg_city/helper/auth_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect.dart';
 import 'package:image_picker/image_picker.dart';
 

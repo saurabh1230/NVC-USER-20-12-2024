@@ -1,13 +1,13 @@
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/cart/widgets/checkout_button_widget.dart';
-import 'package:stackfood_multivendor/features/cart/widgets/cutlary_view_widget.dart';
-import 'package:stackfood_multivendor/features/cart/widgets/not_available_product_view_widget.dart';
-import 'package:stackfood_multivendor/features/checkout/widgets/delivery_instruction_view.dart';
-import 'package:stackfood_multivendor/features/restaurant/controllers/restaurant_controller.dart';
-import 'package:stackfood_multivendor/helper/price_converter.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/util/styles.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/cart/widgets/checkout_button_widget.dart';
+import 'package:non_veg_city/features/cart/widgets/cutlary_view_widget.dart';
+import 'package:non_veg_city/features/cart/widgets/not_available_product_view_widget.dart';
+import 'package:non_veg_city/features/checkout/widgets/delivery_instruction_view.dart';
+import 'package:non_veg_city/features/restaurant/controllers/restaurant_controller.dart';
+import 'package:non_veg_city/helper/price_converter.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class PricingViewWidget extends StatelessWidget {

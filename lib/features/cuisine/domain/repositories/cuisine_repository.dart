@@ -1,8 +1,8 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/cuisine/domain/models/cuisine_model.dart';
-import 'package:stackfood_multivendor/features/cuisine/domain/models/cuisine_restaurants_model.dart';
-import 'package:stackfood_multivendor/features/cuisine/domain/repositories/cuisine_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/cuisine/domain/models/cuisine_model.dart';
+import 'package:non_veg_city/features/cuisine/domain/models/cuisine_restaurants_model.dart';
+import 'package:non_veg_city/features/cuisine/domain/repositories/cuisine_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect/connect.dart';
 
 class CuisineRepository implements CuisineRepositoryInterface {

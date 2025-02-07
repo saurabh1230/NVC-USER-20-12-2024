@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/offline_method_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/models/place_order_body_model.dart';
-import 'package:stackfood_multivendor/features/checkout/domain/repositories/checkout_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/checkout/domain/models/offline_method_model.dart';
+import 'package:non_veg_city/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:non_veg_city/features/checkout/domain/repositories/checkout_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

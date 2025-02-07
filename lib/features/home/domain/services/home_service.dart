@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/home/domain/models/banner_model.dart';
-import 'package:stackfood_multivendor/features/home/domain/repositories/home_repository_interface.dart';
-import 'package:stackfood_multivendor/features/home/domain/services/home_service_interface.dart';
+import 'package:non_veg_city/features/home/domain/models/banner_model.dart';
+import 'package:non_veg_city/features/home/domain/repositories/home_repository_interface.dart';
+import 'package:non_veg_city/features/home/domain/services/home_service_interface.dart';
 
 class HomeService implements HomeServiceInterface {
   final HomeRepositoryInterface homeRepositoryInterface;

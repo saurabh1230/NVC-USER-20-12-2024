@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/features/category/controllers/category_controller.dart';
-import 'package:stackfood_multivendor/features/home/widgets/arrow_icon_button_widget.dart';
-import 'package:stackfood_multivendor/features/home/widgets/item_card_widget.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
+import 'package:non_veg_city/features/category/controllers/category_controller.dart';
+import 'package:non_veg_city/features/home/widgets/arrow_icon_button_widget.dart';
+import 'package:non_veg_city/features/home/widgets/item_card_widget.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
 
 import '../../../common/models/product_model.dart';
 import '../../../common/models/restaurant_model.dart';

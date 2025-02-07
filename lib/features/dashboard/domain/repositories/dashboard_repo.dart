@@ -1,4 +1,4 @@
-import 'package:stackfood_multivendor/features/dashboard/domain/repositories/dashboard_repo_interface.dart';
+import 'package:non_veg_city/features/dashboard/domain/repositories/dashboard_repo_interface.dart';
 
 class DashboardRepo implements DashboardRepoInterface{
   @override

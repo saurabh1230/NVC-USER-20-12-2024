@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:stackfood_multivendor/util/images.dart';
+import 'package:non_veg_city/util/images.dart';
 import 'package:flutter/material.dart';
 
 class CustomImageWidget extends StatelessWidget {

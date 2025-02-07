@@ -1,6 +1,6 @@
 
-import 'package:stackfood_multivendor/common/models/product_model.dart';
-import 'package:stackfood_multivendor/common/models/restaurant_model.dart';
+import 'package:non_veg_city/common/models/product_model.dart';
+import 'package:non_veg_city/common/models/restaurant_model.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
 abstract class SearchServiceInterface {

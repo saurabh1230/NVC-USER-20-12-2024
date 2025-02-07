@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/features/auth/controllers/restaurant_registration_controller.dart';
-import 'package:stackfood_multivendor/util/dimensions.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_dropdown_widget.dart';
+import 'package:non_veg_city/features/auth/controllers/restaurant_registration_controller.dart';
+import 'package:non_veg_city/util/dimensions.dart';
+import 'package:non_veg_city/common/widgets/custom_dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

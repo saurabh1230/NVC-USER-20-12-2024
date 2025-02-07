@@ -1,21 +1,24 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:stackfood_multivendor/common/models/response_model.dart';
-import 'package:stackfood_multivendor/common/widgets/custom_snackbar_widget.dart';
-import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
-import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
-import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/signup_body_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
-import 'package:stackfood_multivendor/features/auth/domain/services/auth_service_interface.dart';
+import 'package:non_veg_city/common/models/response_model.dart';
+import 'package:non_veg_city/common/widgets/custom_snackbar_widget.dart';
+import 'package:non_veg_city/features/auth/domain/reposotories/auth_repo.dart';
+import 'package:non_veg_city/features/cart/controllers/cart_controller.dart';
+import 'package:non_veg_city/features/profile/controllers/profile_controller.dart';
+import 'package:non_veg_city/features/splash/controllers/splash_controller.dart';
+import 'package:non_veg_city/features/auth/domain/models/signup_body_model.dart';
+import 'package:non_veg_city/features/auth/domain/models/social_log_in_body_model.dart';
+import 'package:non_veg_city/features/auth/domain/services/auth_service_interface.dart';
 import 'package:get/get.dart';
-import 'package:stackfood_multivendor/helper/responsive_helper.dart';
-import 'package:stackfood_multivendor/helper/route_helper.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/helper/address_helper.dart';
+import 'package:non_veg_city/helper/responsive_helper.dart';
+import 'package:non_veg_city/helper/route_helper.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthServiceInterface authServiceInterface;
-  AuthController({required this.authServiceInterface}) {
+  final AuthRepo authrepo;
+  AuthController({required this.authServiceInterface, required this.authrepo }) {
     _notification = authServiceInterface.isNotificationActive();
   }
 
@@ -33,6 +36,11 @@ class AuthController extends GetxController implements GetxService {
 
   bool _notification = true;
   bool get notification => _notification;
+
+
+  String _verificationCode = '';
+  String get verificationCode => _verificationCode;
+
 
   Future<ResponseModel> login(String? phone, String password, {bool alreadyInApp = false}) async {
     _isLoading = true;
@@ -163,6 +171,13 @@ class AuthController extends GetxController implements GetxService {
   }
 
 
+  void updateVerificationCode(String query, {bool canUpdate = true}) {
+    _verificationCode = query;
+    if(canUpdate){
+      update();
+    }
+  }
+
   Future<void> handleResponse(SignUpBodyModel signUpBody, String countryCode, context) async {
   _isLoading = true;
   update();
@@ -204,7 +219,7 @@ class AuthController extends GetxController implements GetxService {
       if (Get.find<SplashController>().configModel!.customerVerification!) {
         List<int> encoded = utf8.encode(signUpBody.password!);
         String data = base64Encode(encoded);
-        
+        print('Check one');
         // Navigate to the verification route with token
         Get.toNamed(
           RouteHelper.getVerificationRoute(
@@ -215,6 +230,7 @@ class AuthController extends GetxController implements GetxService {
           ),
         );
       } else {
+                print('Check two');
         // No verification required, go to profile or location screen
         Get.find<ProfileController>().getUserInfo();
         Get.find<SplashController>().navigateToLocationScreen(RouteHelper.signUp);
@@ -223,6 +239,7 @@ class AuthController extends GetxController implements GetxService {
         }
       }
     } else {
+         print('Check three');
       // Handle errors
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody.containsKey('errors')) {
@@ -235,6 +252,7 @@ class AuthController extends GetxController implements GetxService {
       }
     }
   } catch (e) {
+       print('Check four');
     // Handle exception
     print("Exception: $e"); // Log exception details
     showCustomSnackBar('Server is down, please try again later');
@@ -244,6 +262,143 @@ class AuthController extends GetxController implements GetxService {
     // Hide loading indicator
   }
 }
+
+
+  bool _isloginLoading = false;
+  bool get isloginLoading => _isloginLoading;
+
+Future<Map<String, dynamic>?> loginUser({
+  required String phone,
+}) async {
+  _isloginLoading = true;
+  update();
+  print("Loading: $_isloginLoading");
+
+  try {
+    var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    var request = http.Request(
+        'POST', Uri.parse("https://nonvegcity.com/panel/api/v1/auth/login"));
+
+    print('Check Guest Id ============== >  ${getGuestId()}');
+    request.bodyFields = {
+      'guest_id': getGuestId(),
+      'phone': phone,
+      'login_type': "otp",
+      'type': "phone",
+    };
+    request.headers.addAll(headers);
+
+    print("Request URL: ${request.url}");
+    print("Request Headers: ${request.headers}");
+    print("Request Body: ${request.bodyFields}");
+
+    http.StreamedResponse response = await request.send();
+
+    print("Response Status: ${response.statusCode}");
+    print("Response Headers: ${response.headers}");
+    String responseString = await response.stream.bytesToString();
+    print("Response Body: $responseString");
+
+    if (response.statusCode == 200) {
+             _isloginLoading = false;
+        update();
+     await Get.toNamed(RouteHelper.getVerificationRoute(phone, '', RouteHelper.signUp, ''));
+  
+      // return jsonDecode(responseString);
+    } else {
+      var responseData = jsonDecode(responseString);
+      if (responseData['errors'] != null && responseData['errors'].isNotEmpty) {
+        String errorMessage = responseData['errors'][0]['message'];
+      showCustomSnackBar(errorMessage);
+      }
+        _isloginLoading = false;
+    update();
+    }
+  } catch (e) {
+    print("Exception: $e");
+   
+    return null;
+  } finally {
+    _isloginLoading = false;
+    update();
+    print("Loading: $_isloginLoading");
+  }
+}
+
+
+  bool _isVerifyLoading = false;
+  bool get isVerifyLoading => _isVerifyLoading;
+
+  Future<Map<String, dynamic>?> verifyPhoneLogin({
+  required String phone,
+  required String otp,
+}) async {
+  _isVerifyLoading = true;
+  update();
+  print("Loading: $_isVerifyLoading");
+
+  try {
+    var headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    var request = http.Request('POST', Uri.parse("https://nonvegcity.com/panel/api/v1/auth/verify-phone"));
+
+    request.bodyFields = {
+      'guest_id': Get.find<AuthController>().getGuestId(),
+      'phone': phone,
+      'login_type': "otp",
+      'verification_type': "phone",
+      'otp': otp,
+    };
+    request.headers.addAll(headers);
+
+    print("Request URL: ${request.url}");
+    print("Request Headers: ${request.headers}");
+    print("Request Body: ${request.bodyFields}");
+
+    http.StreamedResponse response = await request.send();
+
+    print("Response Status: ${response.statusCode}");
+    print("Response Headers: ${response.headers}");
+    String responseString = await response.stream.bytesToString();
+    print("Response Body: $responseString");
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(responseString);
+
+      if (responseData['token'] != null) {
+        String token = responseData['token'];
+        await authrepo.saveUserToken(token);
+        await authrepo.updateToken();
+        Get.find<ProfileController>().getUserInfo();
+        Get.find<CartController>().getCartDataOnline();
+        print("Token Saved: $token");
+        await Get.find<SplashController>().navigateToLocationScreen('sign-in', offNamed: true);
+      } else {
+        print("Error: Token is missing in the response");
+      }
+    } else if (response.statusCode == 404) {
+      // Handle incorrect OTP error
+      var responseData = jsonDecode(responseString);
+      String errorMessage = responseData['message'] ?? "OTP verification failed";
+      print("Error: $errorMessage");
+      showCustomSnackBar(errorMessage);
+    } else {
+      print("Error: ${response.reasonPhrase}");
+      showCustomSnackBar(response.reasonPhrase ?? "Something went wrong");
+    }
+  } catch (e) {
+    print("Exception: $e");
+    showCustomSnackBar("Unexpected error occurred. Please try again.");
+  } finally {
+    _isVerifyLoading = false;
+    update();
+    print("Loading: $_isVerifyLoading");
+  }
+}
+
+
+
 
 
 }

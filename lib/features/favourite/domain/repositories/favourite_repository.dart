@@ -1,6 +1,6 @@
-import 'package:stackfood_multivendor/api/api_client.dart';
-import 'package:stackfood_multivendor/features/favourite/domain/repositories/favourite_repository_interface.dart';
-import 'package:stackfood_multivendor/util/app_constants.dart';
+import 'package:non_veg_city/api/api_client.dart';
+import 'package:non_veg_city/features/favourite/domain/repositories/favourite_repository_interface.dart';
+import 'package:non_veg_city/util/app_constants.dart';
 import 'package:get/get_connect/connect.dart';
 
 class FavouriteRepository implements FavouriteRepositoryInterface<Response> {
